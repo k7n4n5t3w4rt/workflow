@@ -25,7 +25,7 @@ const createButton = (
 
         await renderer.xr.setSession(session);
 
-        button.textContent = "STOP SIM";
+        button.textContent = "RESET";
         button.style.display = "";
 
         currentSession = session;
