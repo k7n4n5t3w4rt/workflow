@@ -4,7 +4,7 @@
 // --------------------------------------------------
 import cube1AnimeOptions from "./cube1AnimeOptions.js";
 import cube2AnimeOptions from "./cube2AnimeOptions.js";
-import globalSettings from "../../globalSettings.js";
+import globalSettings from "./globalSettings.js";
 
 const move = (
   cubes /*: Cubes */,

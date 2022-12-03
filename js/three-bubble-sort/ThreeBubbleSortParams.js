@@ -20,7 +20,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import globalSettings from "../globalSettings.js";
+import globalSettings from "./actions/globalSettings.js";
 
 setSeed(seedString("threebubblesortparams"));
 
