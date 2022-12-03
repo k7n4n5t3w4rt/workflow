@@ -15,8 +15,6 @@ export default (
   scaleXm /*: number */,
   scaleYm /*: number */,
   scaleZm /*: number */,
-  cols /*: number */,
-  rows /*: number */,
 ) /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
     const xCm /*: number */ = scaleXm / 100;

@@ -77,17 +77,7 @@ export default (
   // calling the move() function on each render to animate the pixels
   controller.addEventListener(
     "select",
-    onSelectBuildPixelGrid(
-      reticleStuff,
-      cubes,
-      cols,
-      rows,
-      xCm,
-      yCm,
-      zCm,
-      scene,
-      camera,
-    ),
+    onSelectBuildPixelGrid(reticleStuff, cubes, xCm, yCm, zCm, scene, camera),
   );
   scene.add(controller);
 

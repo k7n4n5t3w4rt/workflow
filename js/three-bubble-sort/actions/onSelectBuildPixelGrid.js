@@ -11,8 +11,6 @@ import pixelGrid from "./pixelGrid.js";
 export default (
   reticleStuff /*: ReticleStuff */,
   cubes /*: Cubes */,
-  cols /*: number */,
-  rows /*: number */,
   xCm /*: number */,
   yCm /*: number */,
   zCm /*: number */,
@@ -26,8 +24,6 @@ export default (
   if (cubes.active === undefined || cubes.active === false) {
     // Build the grid of pixels
     const { pixelGridGroup, pixelGridCubes } = pixelGrid(
-      cols,
-      rows,
       xCm,
       yCm,
       zCm,

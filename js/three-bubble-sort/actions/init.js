@@ -15,8 +15,6 @@ import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
 
 export default (
-  cols /*: number */,
-  rows /*: number */,
   xCm /*: number */,
   yCm /*: number */,
   zCm /*: number */,
@@ -49,8 +47,8 @@ export default (
     50,
   );
   camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(rows / 2)) * yCm;
-  camera.position.x = Math.abs(parseInt(cols / 2)) * xCm;
+  camera.position.y = Math.abs(parseInt(4 / 2)) * yCm;
+  camera.position.x = Math.abs(parseInt(5 / 2)) * xCm;
 
   // https://threejs.org/docs/#api/en/lights/HemisphereLight
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
@@ -77,17 +75,7 @@ export default (
   // calling the move() function on each render to animate the pixels
   controller.addEventListener(
     "select",
-    onSelectBuildPixelGrid(
-      reticleStuff,
-      cubes,
-      cols,
-      rows,
-      xCm,
-      yCm,
-      zCm,
-      scene,
-      camera,
-    ),
+    onSelectBuildPixelGrid(reticleStuff, cubes, xCm, yCm, zCm, scene, camera),
   );
   scene.add(controller);
 
@@ -115,8 +103,6 @@ export default (
     xCm,
     yCm,
     zCm,
-    cols,
-    rows,
   );
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
 };

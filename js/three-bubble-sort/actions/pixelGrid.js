@@ -8,8 +8,6 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 
 export default (
-  cols /*: number */,
-  rows /*: number */,
   scaleXm /*: number */,
   scaleYm /*: number */,
   scaleZm /*: number */,
@@ -24,8 +22,8 @@ export default (
   const pixelGridGroup = new THREE.Group();
 
   const pixelGridCubes /*: Array<Cube> */ = [];
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 5; j++) {
       const cellColour = 255 - Math.ceil(255 * Math.random());
       const geometry = new THREE.BoxGeometry(xCm, yCm, zCm);
 
