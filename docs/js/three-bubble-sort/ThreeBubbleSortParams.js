@@ -20,7 +20,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import Globals from "../globals.js";
+import globalSettings from "../globalSettings.js";
 
 setSeed(seedString("threebubblesortparams"));
 
@@ -131,8 +131,8 @@ export default (props /*: Props */) /*: string */ => {
   ) /*: function */ => (
     e /*: SyntheticInputEvent<HTMLInputElement> */,
   ) /*: void */ => {
-    // Set the Globals for use in real-time, non-Preact JS
-    Globals()[param] = e.target.value;
+    // Set the global param for use in real-time, non-Preact JS
+    globalSettings(param, parseInt(e.target.value));
     dispatch({
       type: "CHANGE_PARAM",
       payload: { param, value: e.target.value },

@@ -2,7 +2,7 @@
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import Globals from "../../globals.js";
+import globalSettings from "../../globalSettings.js";
 
 const createButton = (
   renderer /*: function */,
@@ -25,7 +25,7 @@ const createButton = (
 
         await renderer.xr.setSession(session);
 
-        button.textContent = "STOP AR";
+        button.textContent = "STOP SIM";
         button.style.display = "";
 
         currentSession = session;
@@ -37,7 +37,7 @@ const createButton = (
         currentSession.removeEventListener("end", onSessionEnded);
         // button.textContent = "START AR";
         // currentSession = null;
-        window.location.assign(`/?speed=${Globals().speed}`);
+        window.location.assign(`/?speed=${globalSettings().speed}`);
       }
     }
 
@@ -45,7 +45,7 @@ const createButton = (
     button.style.cursor = "pointer";
     button.style.left = "calc(50% - 50px)";
     button.style.width = "100px";
-    button.textContent = "START AR";
+    button.textContent = "START SIM";
 
     button.onmouseenter = function () {
       button.style.opacity = "1.0";

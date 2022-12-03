@@ -32,6 +32,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
+import globalSettings from "../globalSettings.js";
 
 setSeed(seedString("bubblesort"));
 
@@ -66,6 +67,11 @@ export default (props /*: Props */) /*: string */ => {
   const scaleY = Math.abs(Math.floor(parseFloat(props.scaley)) || 10);
   const scaleZ = Math.abs(Math.floor(parseFloat(props.scalez)) || 10);
 
+  // Just set it for now, if it isn't already set. In move.js, we get it directly
+  if (globalSettings().speed === undefined) {
+    globalSettings("speed", speed);
+  }
+
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
     cols,
     rows,
@@ -78,7 +84,7 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(() => {
     // setupMobileDebug();
     let stats = createStats();
-    init(state.cols, state.rows, state.scaleX, state.scaleY, state.scaleZ);
+    init(cols, rows, scaleX, scaleY, scaleZ);
   }, []);
 
   return html`

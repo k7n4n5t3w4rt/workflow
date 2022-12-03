@@ -4,7 +4,7 @@
 // --------------------------------------------------
 import cube1AnimeOptions from "./cube1AnimeOptions.js";
 import cube2AnimeOptions from "./cube2AnimeOptions.js";
-import Globals from "../../globals.js";
+import globalSettings from "../../globalSettings.js";
 
 const move = (
   cubes /*: Cubes */,
@@ -20,7 +20,7 @@ const move = (
   //
   //		/js/three-bubble-sort/actions/pixelGrid.js (Line 34)
   //
-  const speed = Globals().speed;
+  const speed = globalSettings().speed;
   let movingCube1 /*: boolean */ = true;
   let movingCube2 /*: boolean */ = true;
   const currentIndex /*: number */ = cubes.currentIndex;

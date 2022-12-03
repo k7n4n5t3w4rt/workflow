@@ -13,7 +13,6 @@ import onWindowResize from "../calculations/onWindowResize.js";
 import onSelectBuildPixelGrid from "./onSelectBuildPixelGrid.js";
 import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
-import Globals from "../../globals.js";
 
 export default (
   cols /*: number */,
