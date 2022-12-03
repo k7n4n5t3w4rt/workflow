@@ -4,10 +4,10 @@
 // --------------------------------------------------
 import cube1AnimeOptions from "./cube1AnimeOptions.js";
 import cube2AnimeOptions from "./cube2AnimeOptions.js";
+import Globals from "../../globals.js";
 
 const move = (
   cubes /*: Cubes */,
-  speed /*: number */,
   scaleZ /*: number */,
   anime /*: function */,
 ) /*: Cubes */ => {
@@ -20,6 +20,7 @@ const move = (
   //
   //		/js/three-bubble-sort/actions/pixelGrid.js (Line 34)
   //
+  const speed = Globals().speed;
   let movingCube1 /*: boolean */ = true;
   let movingCube2 /*: boolean */ = true;
   const currentIndex /*: number */ = cubes.currentIndex;
@@ -67,26 +68,26 @@ const move = (
           x: [
             {
               value: cube1.position.x - 2 * scaleZ,
-              duration: (1000 * speed) / 2,
+              duration: 1000 / speed / 2,
               delay: 0,
             },
             {
               value: cube1.position.x,
-              duration: 1000 * speed,
+              duration: 1000 / speed,
               delay: 0,
             },
           ],
           z: [
             {
               value: cube2.position.z,
-              duration: 1000 * speed,
+              duration: 1000 / speed,
               delay: 0,
             },
           ],
           y: [
             {
               value: cube2.position.y,
-              duration: 1000 * speed,
+              duration: 1000 / speed,
               delay: 0,
             },
           ],
@@ -109,17 +110,17 @@ const move = (
           x: [
             {
               value: cube2.position.x + 2 * scaleZ,
-              duration: (1000 * speed) / 2,
+              duration: 1000 / speed / 2,
               delay: 0,
             },
             {
               value: cube2.position.x,
-              duration: 1000 * speed,
+              duration: 1000 / speed,
               delay: 0,
             },
           ],
-          z: [{ value: cube1StartPos.z, duration: 1000 * speed, delay: 0 }],
-          y: [{ value: cube1StartPos.y, duration: 1000 * speed, delay: 0 }],
+          z: [{ value: cube1StartPos.z, duration: 1000 / speed, delay: 0 }],
+          y: [{ value: cube1StartPos.y, duration: 1000 / speed, delay: 0 }],
           delay: 500,
           easing: "easeInOutCirc",
           complete: function (anim) {

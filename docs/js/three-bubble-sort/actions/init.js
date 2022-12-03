@@ -13,11 +13,11 @@ import onWindowResize from "../calculations/onWindowResize.js";
 import onSelectBuildPixelGrid from "./onSelectBuildPixelGrid.js";
 import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
+import Globals from "../../globals.js";
 
 export default (
   cols /*: number */,
   rows /*: number */,
-  speed /*: number */,
   scaleX /*: number */,
   scaleY /*: number */,
   scaleZ /*: number */,
@@ -99,17 +99,13 @@ export default (
   ARContainer.appendChild(stats.dom);
 
   const domOverlayDiv = document.getElementById("dom-overlay");
-  const button = ARButton.createButton(
-    `/?speed=${speed}&scalex=${scaleX}&scaley=${scaleY}&scalez=${scaleZ}&cols=${cols}&rows=${rows}`,
-    renderer,
-    {
-      requiredFeatures: ["hit-test"],
-      optionalFeatures: ["dom-overlay"],
-      domOverlay: {
-        root: domOverlayDiv,
-      },
+  const button = ARButton.createButton(`/?speed=${Globals().speed}`, renderer, {
+    requiredFeatures: ["hit-test"],
+    optionalFeatures: ["dom-overlay"],
+    domOverlay: {
+      root: domOverlayDiv,
     },
-  );
+  });
 
   // document.body.appendChild(button);
   // $FlowFixMe
@@ -117,7 +113,6 @@ export default (
 
   animate(
     { stats, scene, camera, renderer, reticleStuff, cubes },
-    speed,
     scaleX,
     scaleY,
     scaleZ,

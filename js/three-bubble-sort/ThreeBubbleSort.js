@@ -76,17 +76,17 @@ export default (props /*: Props */) /*: string */ => {
   });
 
   useEffect(() => {
-    setupMobileDebug();
+    // setupMobileDebug();
     let stats = createStats();
     init(state.cols, state.rows, state.scaleX, state.scaleY, state.scaleZ);
-  });
+  }, []);
 
   return html`
     <div id="bubble-sort" className="${styles.bubbleSort}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
+        <${Params} speed="${state.speed}" dispatch="${dispatch}" />
       </div>
-      <${Params} speed="${state.speed}" dispatch="${dispatch}" />
     </div>
   `;
 };

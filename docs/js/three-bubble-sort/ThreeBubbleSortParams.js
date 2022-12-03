@@ -20,16 +20,44 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
+import Globals from "../globals.js";
 
 setSeed(seedString("threebubblesortparams"));
 
 const [styles] = createStyles({
   paramsContainer: {
+    position: "absolute",
+    zIndex: "10000",
     boxSizing: "border-box",
     width: "100%",
     height: "100%",
     padding: "1rem",
     paddingTop: "3rem",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  },
+  settings: {
+    position: "absolute",
+    zIndex: "10000",
+    boxSizing: "border-box",
+    bottom: ".4rem",
+    right: ".4rem",
+    cursor: "pointer",
+  },
+  settingsIcon: {
+    fontSize: "54px",
+    color: "white",
+  },
+  settingsClose: {
+    position: "absolute",
+    zIndex: "20000",
+    boxSizing: "border-box",
+    top: ".4rem",
+    right: ".4rem",
+    cursor: "pointer",
+  },
+  settingsCloseIcon: {
+    fontSize: "54px",
+    color: "white",
   },
 });
 
@@ -52,11 +80,7 @@ rawStyles({
     fontWeight: "bold",
     textShadow: "2px 2px 2px grey",
   },
-  ["input[type=text]"]: {
-    boxSizing: "border-box !important",
-    backgroundColor: "white !important",
-    padding: "0.5rem !important",
-  },
+  ["input[type=range]"]: {},
 });
 
 /*::
@@ -72,22 +96,43 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
-  const cols /*: number */ = props.cols;
-  const rows /*: number */ = props.rows;
   const speed /*: number */ = props.speed;
-  const scaleX /*: number */ = props.scaleX;
-  const scaleY /*: number */ = props.scaleY;
-  const scaleZ /*: number */ = props.scaleZ;
   const dispatch /*: function */ = props.dispatch;
+  const [paramToggle, setParamToggle] = useState(false);
 
-  useEffect(() => {});
+  useEffect(() => {
+    const paramsContainer = document.getElementById("params-container");
+    const settingsIcon = document.getElementById("settings-icon");
+    const settingsCloseIcon = document.getElementById("settings-close-icon");
+    if (
+      paramsContainer !== null &&
+      settingsIcon !== null &&
+      settingsCloseIcon !== null
+    ) {
+      if (paramToggle === true) {
+        paramsContainer.style.display = "block";
+        settingsIcon.style.display = "none";
+        settingsCloseIcon.style.display = "block";
+      } else {
+        paramsContainer.style.display = "none";
+        settingsIcon.style.display = "block";
+        settingsCloseIcon.style.display = "none";
+      }
+    }
+  }, [paramToggle]);
 
-  const changeCols = (
+  const toggleParam = () => {
+    setParamToggle(!paramToggle);
+  };
+
+  const changeParam = (
     dispatch /*: function */,
     param /*: string */,
   ) /*: function */ => (
     e /*: SyntheticInputEvent<HTMLInputElement> */,
   ) /*: void */ => {
+    // Set the Globals for use in real-time, non-Preact JS
+    Globals()[param] = e.target.value;
     dispatch({
       type: "CHANGE_PARAM",
       payload: { param, value: e.target.value },
@@ -95,40 +140,17 @@ export default (props /*: Props */) /*: string */ => {
   };
 
   return html`
+    <div
+      id="settings-close-icon"
+      className="${styles.settingsClose}"
+      onClick="${toggleParam}"
+    >
+      <span className="material-icons ${styles.settingsIcon}">
+        close
+      </span>
+    </div>
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
-        <div>
-          <label for="cols">Columns:</label>
-          <output id="colsOutput" name="colsOutput" for="cols"
-            >${cols.toString()}</output
-          >
-          <input
-            type="range"
-            id="cols"
-            name="cols"
-            min="1"
-            max="100"
-            step="1"
-            value="${cols.toString()}"
-            onChange=${changeCols(dispatch, "cols")}
-          />
-        </div>
-        <div>
-          <label for="rows">Rows:</label>
-          <output id="rowsOutput" name="rowsOutput" for="rows"
-            >${rows.toString()}</output
-          >
-          <input
-            type="range"
-            name="rows"
-            id="rows"
-            min="1"
-            max="100"
-            step="1"
-            onChange=${changeCols(dispatch, "rows")}
-            value="${rows.toString()}"
-          />
-        </div>
         <div>
           <label for="speed">Speed:</label>
           <output id="speedOutput" name="speedOutput" for="speed"
@@ -139,64 +161,22 @@ export default (props /*: Props */) /*: string */ => {
             id="speed"
             name="speed"
             min="1"
-            max="100"
+            max="10"
             step="1"
-            onChange=${changeCols(dispatch, "speed")}
+            onChange=${changeParam(dispatch, "speed")}
             value="${speed.toString()}"
           />
         </div>
-        <div>
-          <label for="scaleX">Xcm:</label>
-          <output
-            id="scaleXOutput"
-            name="scaleXOutput"
-            min="1"
-            max="100"
-            step="1"
-            for="scaleX"
-            >${scaleX.toString()}</output
-          >
-          <input
-            type="range"
-            id="scaleX"
-            name="scaleX"
-            onChange=${changeCols(dispatch, "scaleX")}
-            value="${scaleX.toString()}"
-          />
-        </div>
-        <div>
-          <label for="scaleY">Ycm:</label>
-          <output id="scaleYOutput" name="scaleYOutput" for="scaleY"
-            >${scaleY.toString()}</output
-          >
-          <input
-            type="range"
-            id="scaleY"
-            name="scaleY"
-            min="1"
-            max="100"
-            step="1"
-            onChange=${changeCols(dispatch, "scaleY")}
-            value="${scaleY.toString()}"
-          />
-        </div>
-        <div>
-          <label for="scaleZ">Zcm:</label>
-          <output id="scaleZOutput" name="scaleZOutput" for="scaleZ"
-            >${scaleZ.toString()}</output
-          >
-          <input
-            type="range"
-            id="scaleZ"
-            name="scaleZ"
-            min="1"
-            max="100"
-            step="1"
-            onChange=${changeCols(dispatch, "scaleZ")}
-            value="${scaleZ.toString()}"
-          />
-        </div>
       </fieldset>
+    </div>
+    <div
+      id="settings-icon"
+      className="${styles.settings}"
+      onClick="${toggleParam}"
+    >
+      <span className="material-icons ${styles.settingsIcon}">
+        settings
+      </span>
     </div>
   `;
 };

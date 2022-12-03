@@ -30,9 +30,34 @@ const [styles] = createStyles({
     zIndex: "10000",
     boxSizing: "border-box",
     width: "100%",
-    height: "30%",
+    height: "100%",
     padding: "1rem",
     paddingTop: "3rem",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  },
+  settings: {
+    position: "absolute",
+    zIndex: "10000",
+    boxSizing: "border-box",
+    bottom: ".4rem",
+    right: ".4rem",
+    cursor: "pointer",
+  },
+  settingsIcon: {
+    fontSize: "54px",
+    color: "white",
+  },
+  settingsClose: {
+    position: "absolute",
+    zIndex: "20000",
+    boxSizing: "border-box",
+    top: ".4rem",
+    right: ".4rem",
+    cursor: "pointer",
+  },
+  settingsCloseIcon: {
+    fontSize: "54px",
+    color: "white",
   },
 });
 
@@ -55,11 +80,7 @@ rawStyles({
     fontWeight: "bold",
     textShadow: "2px 2px 2px grey",
   },
-  ["input[type=text]"]: {
-    boxSizing: "border-box !important",
-    backgroundColor: "white !important",
-    padding: "0.5rem !important",
-  },
+  ["input[type=range]"]: {},
 });
 
 /*::
@@ -77,10 +98,34 @@ export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
   const speed /*: number */ = props.speed;
   const dispatch /*: function */ = props.dispatch;
+  const [paramToggle, setParamToggle] = useState(false);
 
-  useEffect(() => {});
+  useEffect(() => {
+    const paramsContainer = document.getElementById("params-container");
+    const settingsIcon = document.getElementById("settings-icon");
+    const settingsCloseIcon = document.getElementById("settings-close-icon");
+    if (
+      paramsContainer !== null &&
+      settingsIcon !== null &&
+      settingsCloseIcon !== null
+    ) {
+      if (paramToggle === true) {
+        paramsContainer.style.display = "block";
+        settingsIcon.style.display = "none";
+        settingsCloseIcon.style.display = "block";
+      } else {
+        paramsContainer.style.display = "none";
+        settingsIcon.style.display = "block";
+        settingsCloseIcon.style.display = "none";
+      }
+    }
+  }, [paramToggle]);
 
-  const changeCols = (
+  const toggleParam = () => {
+    setParamToggle(!paramToggle);
+  };
+
+  const changeParam = (
     dispatch /*: function */,
     param /*: string */,
   ) /*: function */ => (
@@ -95,6 +140,15 @@ export default (props /*: Props */) /*: string */ => {
   };
 
   return html`
+    <div
+      id="settings-close-icon"
+      className="${styles.settingsClose}"
+      onClick="${toggleParam}"
+    >
+      <span className="material-icons ${styles.settingsIcon}">
+        close
+      </span>
+    </div>
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
         <div>
@@ -109,11 +163,20 @@ export default (props /*: Props */) /*: string */ => {
             min="1"
             max="10"
             step="1"
-            onChange=${changeCols(dispatch, "speed")}
+            onChange=${changeParam(dispatch, "speed")}
             value="${speed.toString()}"
           />
         </div>
       </fieldset>
+    </div>
+    <div
+      id="settings-icon"
+      className="${styles.settings}"
+      onClick="${toggleParam}"
+    >
+      <span className="material-icons ${styles.settingsIcon}">
+        settings
+      </span>
     </div>
   `;
 };
