@@ -78,14 +78,7 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(() => {
     setupMobileDebug();
     let stats = createStats();
-    init(
-      state.cols,
-      state.rows,
-      state.speed,
-      state.scaleX,
-      state.scaleY,
-      state.scaleZ,
-    );
+    init(state.cols, state.rows, state.scaleX, state.scaleY, state.scaleZ);
   });
 
   return html`
@@ -93,15 +86,7 @@ export default (props /*: Props */) /*: string */ => {
       <div id="dom-overlay">
         <div id="console-ui"></div>
       </div>
-      <${Params}
-        cols="${state.cols}"
-        rows="${state.rows}"
-        speed="${state.speed}"
-        scaleX="${state.scaleX}"
-        scaleY="${state.scaleY}"
-        scaleZ="${state.scaleZ}"
-        dispatch="${dispatch}"
-      />
+      <${Params} speed="${state.speed}" dispatch="${dispatch}" />
     </div>
   `;
 };

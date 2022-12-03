@@ -16,7 +16,7 @@ test(
     const scaleZ = 1;
     let testCubes = cubes1;
     for (let i = 0; i < 12; i++) {
-      testCubes = move(testCubes, speed, scaleZ, anime);
+      testCubes = move(testCubes, scaleZ, anime);
     }
     should(JSON.stringify(testCubes)).be.exactly(JSON.stringify(cubesOrdered));
   },
@@ -30,7 +30,7 @@ test(
     const scaleZ = 1;
     let testCubes = cubes2;
     for (let i = 0; i < 12; i++) {
-      testCubes = move(testCubes, speed, scaleZ, anime);
+      testCubes = move(testCubes, scaleZ, anime);
     }
     should(JSON.stringify(testCubes)).be.exactly(JSON.stringify(cubesOrdered));
   },
@@ -42,7 +42,7 @@ test("Move | Returns the cubes array in order  if the items passed in are in rev
   const scaleZ = 1;
   let testCubes = cubes3;
   for (let i = 0; i < 12; i++) {
-    testCubes = move(testCubes, speed, scaleZ, anime);
+    testCubes = move(testCubes, scaleZ, anime);
   }
   should(JSON.stringify(testCubes)).be.exactly(JSON.stringify(cubesOrdered));
 });
