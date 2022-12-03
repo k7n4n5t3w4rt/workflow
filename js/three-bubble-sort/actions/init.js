@@ -99,7 +99,7 @@ export default (
   ARContainer.appendChild(stats.dom);
 
   const domOverlayDiv = document.getElementById("dom-overlay");
-  const button = ARButton.createButton(`/?speed=${Globals().speed}`, renderer, {
+  const button = ARButton.createButton(renderer, {
     requiredFeatures: ["hit-test"],
     optionalFeatures: ["dom-overlay"],
     domOverlay: {

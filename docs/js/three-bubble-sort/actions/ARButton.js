@@ -1,6 +1,10 @@
 // @flow
+// --------------------------------------------------
+// HELPERS
+// --------------------------------------------------
+import Globals from "../../globals.js";
+
 const createButton = (
-  locationString /*: string */,
   renderer /*: function */,
   sessionInit /*: Object */ = {},
 ) /*: void | HTMLAnchorElement | HTMLButtonElement */ => {
@@ -33,7 +37,7 @@ const createButton = (
         currentSession.removeEventListener("end", onSessionEnded);
         // button.textContent = "START AR";
         // currentSession = null;
-        window.location.assign(locationString);
+        window.location.assign(`/?speed=${Globals().speed}`);
       }
     }
 
