@@ -16,9 +16,9 @@ export default (
   scene /*: Object */,
   reticleStuff /*: Object */,
 ) /*: {pixelGridGroup:Object, pixelGridCubes:Array<Cube>} */ => {
-  const scaleX /*: number */ = scaleXm / 100;
-  const scaleY /*: number */ = scaleYm / 100;
-  const scaleZ /*: number */ = scaleZm / 100;
+  const xCm /*: number */ = scaleXm / 100;
+  const yCm /*: number */ = scaleYm / 100;
+  const zCm /*: number */ = scaleZm / 100;
   //create a group and add the two cubes
   //These cubes can now be rotated / scaled etc as a group
   const pixelGridGroup = new THREE.Group();
@@ -27,15 +27,15 @@ export default (
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       const cellColour = 255 - Math.ceil(255 * Math.random());
-      const geometry = new THREE.BoxGeometry(scaleX, scaleY, scaleZ);
+      const geometry = new THREE.BoxGeometry(xCm, yCm, zCm);
 
       const material = new THREE.MeshBasicMaterial({
         color: `rgb(${cellColour},${cellColour},${cellColour})`,
       });
       const cube = new THREE.Mesh(geometry, material);
 
-      cube.position.z = j * scaleZ;
-      cube.position.y = i * scaleY;
+      cube.position.z = j * zCm;
+      cube.position.y = i * yCm;
       cube.bubble_value = cellColour;
       cube.castShadow = true;
       pixelGridGroup.add(cube);

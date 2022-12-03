@@ -53,9 +53,9 @@ type Props = {
 	cols: string,
 	rows: string,
 	speed: string,
-	scalex: string,
-	scaley: string,
-	scalez: string,
+	xcm: string,
+	ycm: string,
+	zcm: string,
 }
 */
 export default (props /*: Props */) /*: string */ => {
@@ -63,9 +63,9 @@ export default (props /*: Props */) /*: string */ => {
   const cols = Math.abs(parseInt(props.cols) || 5);
   const rows = Math.abs(parseInt(props.rows) || 4);
   const speed = Math.abs(parseFloat(props.speed) || 1);
-  const scaleX = Math.abs(Math.floor(parseFloat(props.scalex)) || 10);
-  const scaleY = Math.abs(Math.floor(parseFloat(props.scaley)) || 10);
-  const scaleZ = Math.abs(Math.floor(parseFloat(props.scalez)) || 10);
+  const xCm = Math.abs(Math.floor(parseFloat(props.xcm)) || 10);
+  const yCm = Math.abs(Math.floor(parseFloat(props.ycm)) || 10);
+  const zCm = Math.abs(Math.floor(parseFloat(props.zcm)) || 10);
 
   // Just set it for now, if it isn't already set. In move.js, we get it directly
   if (globalSettings().speed === undefined) {
@@ -77,15 +77,15 @@ export default (props /*: Props */) /*: string */ => {
     cols,
     rows,
     speed,
-    scaleX,
-    scaleY,
-    scaleZ,
+    xCm,
+    yCm,
+    zCm,
   });
 
   useEffect(() => {
     // setupMobileDebug();
     let stats = createStats();
-    init(cols, rows, scaleX, scaleY, scaleZ);
+    init(cols, rows, xCm, yCm, zCm);
   }, []);
 
   return html`

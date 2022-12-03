@@ -8,7 +8,7 @@ import globalSettings from "./globalSettings.js";
 
 const move = (
   cubes /*: Cubes */,
-  scaleZ /*: number */,
+  zCm /*: number */,
   anime /*: function */,
 ) /*: Cubes */ => {
   // NOTE:
@@ -67,7 +67,7 @@ const move = (
           targets: [cube1.position],
           x: [
             {
-              value: cube1.position.x - 2 * scaleZ,
+              value: cube1.position.x - 2 * zCm,
               duration: 1000 / speed / 2,
               delay: 0,
             },
@@ -109,7 +109,7 @@ const move = (
           targets: [cube2.position],
           x: [
             {
-              value: cube2.position.x + 2 * scaleZ,
+              value: cube2.position.x + 2 * zCm,
               duration: 1000 / speed / 2,
               delay: 0,
             },

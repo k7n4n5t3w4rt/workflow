@@ -6,9 +6,9 @@ import render from "./render.js";
 
 const animate = (
   sceneData /*: SceneData */,
-  scaleX /*: number */,
-  scaleY /*: number */,
-  scaleZ /*: number */,
+  xCm /*: number */,
+  yCm /*: number */,
+  zCm /*: number */,
   cols /*: number */,
   rows /*: number */,
 ) /*: SceneData  */ => {
@@ -16,7 +16,7 @@ const animate = (
   // const { stats, scene, camera, renderer, reticleStuff } = sceneData;
 
   sceneData.renderer.setAnimationLoop(
-    render(sceneData, scaleX, scaleY, scaleZ, cols, rows),
+    render(sceneData, xCm, yCm, zCm, cols, rows),
   );
   return { stats, scene, camera, renderer, reticleStuff, cubes };
 };

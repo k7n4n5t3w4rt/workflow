@@ -4,7 +4,7 @@ export default (
   cube1 /*: Cube */,
   cube2 /*: Cube */,
   speed /*: number */,
-  scaleZ /*: number */,
+  zCm /*: number */,
   movingCube1 /*: boolean */,
   movingCube2 /*: boolean */,
   cubes /*: Cubes */,
@@ -16,7 +16,7 @@ export default (
     targets: [cube2.position],
     x: [
       {
-        value: cube2.position.x + 2 * scaleZ,
+        value: cube2.position.x + 2 * zCm,
         duration: (1000 * speed) / 2,
         delay: 0,
       },

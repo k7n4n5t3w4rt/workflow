@@ -17,9 +17,9 @@ import addReticleToScene from "../calculations/addReticleToScene.js";
 export default (
   cols /*: number */,
   rows /*: number */,
-  scaleX /*: number */,
-  scaleY /*: number */,
-  scaleZ /*: number */,
+  xCm /*: number */,
+  yCm /*: number */,
+  zCm /*: number */,
 ) /*: void */ => {
   // Initialise some objects for the global state
   let sceneData /*: SceneData */ = {};
@@ -49,8 +49,8 @@ export default (
     50,
   );
   camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(rows / 2)) * scaleY;
-  camera.position.x = Math.abs(parseInt(cols / 2)) * scaleX;
+  camera.position.y = Math.abs(parseInt(rows / 2)) * yCm;
+  camera.position.x = Math.abs(parseInt(cols / 2)) * xCm;
 
   // https://threejs.org/docs/#api/en/lights/HemisphereLight
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
@@ -82,9 +82,9 @@ export default (
       cubes,
       cols,
       rows,
-      scaleX,
-      scaleY,
-      scaleZ,
+      xCm,
+      yCm,
+      zCm,
       scene,
       camera,
     ),
@@ -112,9 +112,9 @@ export default (
 
   animate(
     { stats, scene, camera, renderer, reticleStuff, cubes },
-    scaleX,
-    scaleY,
-    scaleZ,
+    xCm,
+    yCm,
+    zCm,
     cols,
     rows,
   );

@@ -88,9 +88,9 @@ type Props = {
 	cols: number,
 	rows: number,
 	speed: number,
-	scaleX: number,
-	scaleY: number,
-	scaleZ: number,
+	xCm: number,
+	yCm: number,
+	zCm: number,
 	dispatch: function
 }
 */

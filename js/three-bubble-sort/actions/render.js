@@ -19,9 +19,9 @@ export default (
   rows /*: number */,
 ) /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
-    const scaleX /*: number */ = scaleXm / 100;
-    const scaleY /*: number */ = scaleYm / 100;
-    const scaleZ /*: number */ = scaleZm / 100;
+    const xCm /*: number */ = scaleXm / 100;
+    const yCm /*: number */ = scaleYm / 100;
+    const zCm /*: number */ = scaleZm / 100;
     if (frame) {
       // 1. create a hit test source once and keep it for all the frames
       // this gets called only once
@@ -63,7 +63,7 @@ export default (
       }
 
       if (cubes.pixelGrid !== undefined && cubes.active === true) {
-        move(cubes, scaleZ, anime);
+        move(cubes, zCm, anime);
       }
       sceneData.stats.update();
       renderer.render(scene, camera);

@@ -13,9 +13,9 @@ export default (
   cubes /*: Cubes */,
   cols /*: number */,
   rows /*: number */,
-  scaleX /*: number */,
-  scaleY /*: number */,
-  scaleZ /*: number */,
+  xCm /*: number */,
+  yCm /*: number */,
+  zCm /*: number */,
   scene /*: Object */,
   camera /*: Object */,
 ) /*: () => void */ => () /*: void */ => {
@@ -28,9 +28,9 @@ export default (
     const { pixelGridGroup, pixelGridCubes } = pixelGrid(
       cols,
       rows,
-      scaleX,
-      scaleY,
-      scaleZ,
+      xCm,
+      yCm,
+      zCm,
       scene,
       reticleStuff,
     );
