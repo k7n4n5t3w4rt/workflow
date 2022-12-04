@@ -23,11 +23,8 @@ export default (
   let sceneData /*: SceneData */ = {};
   // Setting an empty object, to be passed by reference and filled
   const cubes /*: Cubes */ = {
-    pixelGridGroup: {},
-    pixelGrid: [],
-    moving: false,
     active: false,
-    currentIndex: 0,
+    pixelGridGroup: {},
   };
 
   // The stats display for AR

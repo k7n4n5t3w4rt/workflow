@@ -15,20 +15,16 @@ import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
 
 export default (
-  cols /*: number */,
-  rows /*: number */,
   xCm /*: number */,
   yCm /*: number */,
   zCm /*: number */,
 ) /*: void */ => {
   // Initialise some objects for the global state
   let sceneData /*: SceneData */ = {};
+  // Setting an empty object, to be passed by reference and filled
   const cubes /*: Cubes */ = {
-    pixelGridGroup: {},
-    pixelGrid: [],
-    moving: false,
     active: false,
-    currentIndex: 0,
+    pixelGridGroup: {},
   };
 
   // The stats display for AR
@@ -49,8 +45,8 @@ export default (
     50,
   );
   camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(rows / 2)) * yCm;
-  camera.position.x = Math.abs(parseInt(cols / 2)) * xCm;
+  camera.position.y = Math.abs(parseInt(4 / 2)) * yCm;
+  camera.position.x = Math.abs(parseInt(5 / 2)) * xCm;
 
   // https://threejs.org/docs/#api/en/lights/HemisphereLight
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
@@ -105,8 +101,6 @@ export default (
     xCm,
     yCm,
     zCm,
-    cols,
-    rows,
   );
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
 };

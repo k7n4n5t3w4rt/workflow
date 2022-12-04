@@ -45,10 +45,6 @@ export default (
       // Move cube1
       movingCube1 = false;
       if (movingCube2 === false) {
-        cubes.moving = false;
-        cubes.currentIndex = nextIndex;
-        cubes.pixelGrid[currentIndex] = cube2;
-        cubes.pixelGrid[nextIndex] = cube1;
         return cubes;
       }
     },

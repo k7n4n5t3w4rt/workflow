@@ -34,10 +34,6 @@ export default (
       //   completeLogEl.value = 'completed : ' + anim.completed;
       movingCube2 = false;
       if (movingCube1 === false) {
-        cubes.moving = false;
-        cubes.currentIndex = nextIndex;
-        cubes.pixelGrid[currentIndex] = cube2;
-        cubes.pixelGrid[nextIndex] = cube1;
         return cubes;
       }
     },

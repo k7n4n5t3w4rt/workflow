@@ -60,7 +60,7 @@ export default (
         // reticleStuff.hitTestSource = null;
       }
 
-      if (cubes.pixelGrid !== undefined && cubes.active === true) {
+      if (cubes.active === true) {
         move(cubes, zCm, anime);
       }
       sceneData.stats.update();

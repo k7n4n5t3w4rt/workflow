@@ -2,7 +2,7 @@
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import globalSettings from "../../globalSettings.js";
+import globalSettings from "./globalSettings.js";
 
 const createButton = (
   renderer /*: function */,

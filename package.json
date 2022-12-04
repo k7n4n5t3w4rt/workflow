@@ -1,6 +1,6 @@
 {
-  "name": "goodthing",
-  "description": "For making new Preact projects with server-side rendering, es modules and NO compilation during development",
+  "name": "workflow",
+  "description": "Visualising flow of work.",
   "version": "1.0.0",
   "author": "Kynan Stewart",
   "bugs": {
@@ -36,17 +36,9 @@
   "scripts": {
     "browsersync": "cd public && browser-sync start --server",
     "browsersync:proxy": "browser-sync start --proxy 'localhost:4000' --files \".\"",
-    "build": "snowpack build",
-    "cloudrun:build": "gcloud builds submit --tag gcr.io/helpful-emitter-147506/benkobot-frontend",
-    "cloudrun:deploy": "gcloud run deploy --image gcr.io/helpful-emitter-147506/benkobot-frontend --platform managed",
+    "build": "npm run generate && npm run github-pages",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "deploy": "npm run generate && npm run github-pages",
-    "docker:build": "docker build -t benkobot-frontend .",
-    "docker:clean:containers": "docker rm -f $(docker ps -a -q)",
-    "docker:clean:images": "docker rmi -f $(docker images -a -q)",
-    "docker:compose": "docker-compose up --build",
-    "docker:run": "docker run -p 4000:4000 benkobot-frontend --build",
     "esinstall": "node esinstall.js",
     "fixpack": "fixpack",
     "flow": "flow check",

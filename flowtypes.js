@@ -25,11 +25,8 @@ type Cube = {
 };
 
 type Cubes = {
-  pixelGridGroup: Object,
-  pixelGrid: Array<Cube>,
-  moving: boolean,
   active: boolean,
-  currentIndex: number,
+  pixelGridGroup: Object,
 };
 
 type ReticleStuff = {

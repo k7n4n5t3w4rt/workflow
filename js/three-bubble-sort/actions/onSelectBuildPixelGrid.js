@@ -23,18 +23,8 @@ export default (
 
   if (cubes.active === undefined || cubes.active === false) {
     // Build the grid of pixels
-    const { pixelGridGroup, pixelGridCubes } = pixelGrid(
-      xCm,
-      yCm,
-      zCm,
-      scene,
-      reticleStuff,
-    );
-    cubes.pixelGrid = pixelGridCubes;
-    cubes.pixelGridGroup = pixelGridGroup;
-    cubes.moving = false;
+    cubes.pixelGridGroup = pixelGrid(xCm, yCm, zCm, scene, reticleStuff);
     cubes.active = true;
-    cubes.currentIndex = 0;
 
     // console.log("cubes = ", JSON.stringify(cubes));
 
@@ -45,6 +35,8 @@ export default (
     // Rotate the group on the Y axis (around it's centre, always the 0,0,0 point)
     cubes.pixelGridGroup.rotateY(radians);
     // Last thing: set the position of the cube based on the location of  the reticle
-    pixelGridGroup.position.setFromMatrixPosition(reticleStuff.reticle.matrix);
+    cubes.pixelGridGroup.position.setFromMatrixPosition(
+      reticleStuff.reticle.matrix,
+    );
   }
 };

@@ -4,7 +4,7 @@
 // --------------------------------------------------
 import render from "./render.js";
 
-const animate = (
+export default (
   sceneData /*: SceneData */,
   xCm /*: number */,
   yCm /*: number */,
@@ -16,5 +16,3 @@ const animate = (
   sceneData.renderer.setAnimationLoop(render(sceneData, xCm, yCm, zCm));
   return { stats, scene, camera, renderer, reticleStuff, cubes };
 };
-
-export default animate;
