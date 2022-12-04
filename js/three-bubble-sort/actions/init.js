@@ -21,6 +21,7 @@ export default (
 ) /*: void */ => {
   // Initialise some objects for the global state
   let sceneData /*: SceneData */ = {};
+  // Setting an empty object, to be passed by reference and filled
   const cubes /*: Cubes */ = {
     pixelGridGroup: {},
     pixelGrid: [],
