@@ -17,7 +17,7 @@ const execFactory = async (e /*: Error */, testies /*: Array<string> */) => {
   );
   // console.log("HERE");
   console.log(`1..${faucetMessages.length}`);
-  faucetMessages.forEach((message /*: string */) => {
+  faucetMessages.sort().forEach((message /*: string */) => {
     console.log(message);
   });
 };
