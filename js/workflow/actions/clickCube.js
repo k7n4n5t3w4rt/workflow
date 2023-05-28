@@ -11,7 +11,6 @@ export default (
   scaleXm /*: number */,
   scaleYm /*: number */,
   scaleZm /*: number */,
-  scene /*: Object */,
 ) /*: Object */ => {
   const xCm /*: number */ = scaleXm / 100;
   const yCm /*: number */ = scaleYm / 100;
@@ -32,6 +31,5 @@ export default (
   cube.bubble_value = cellColour;
   cube.castShadow = true;
   clickCubeGroup.add(cube);
-  scene.add(clickCubeGroup);
   return clickCubeGroup;
 };

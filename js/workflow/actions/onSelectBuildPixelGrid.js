@@ -27,8 +27,10 @@ export default (
 
     if (cubes.active === undefined || cubes.active === false) {
       // Build the grid of pixels
-      cubes.clickCubeGroup = clickCubeGroup(xCm, yCm, zCm, scene);
-      cubes.pixelGridGroup = pixelGridGroup(xCm, yCm, zCm, scene);
+      cubes.clickCubeGroup = clickCubeGroup(xCm, yCm, zCm);
+      scene.add(cubes.clickCubeGroup);
+      cubes.pixelGridGroup = pixelGridGroup(xCm, yCm, zCm);
+      scene.add(cubes.pixelGridGroup);
       cubes.active = true;
 
       // console.log("cubes = ", JSON.stringify(cubes));
