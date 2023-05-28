@@ -6,6 +6,7 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
+import click from "./click.js";
 import move from "./move.js";
 import initializeHitTestSource from "./initializeHitTestSource.js";
 import anime from "../../../web_modules/animejs.js";
@@ -60,9 +61,8 @@ export default (
         // reticleStuff.hitTestSource = null;
       }
 
-      if (cubes.active === true) {
-        move(cubes, zCm, anime);
-      }
+      // if (cubes.active === true) {
+      // }
       sceneData.stats.update();
       renderer.render(scene, camera);
     }

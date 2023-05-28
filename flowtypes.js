@@ -27,6 +27,7 @@ type Cube = {
 type Cubes = {
   active: boolean,
   pixelGridGroup: Object,
+  clickCubeGroup: Object,
 };
 
 type ReticleStuff = {

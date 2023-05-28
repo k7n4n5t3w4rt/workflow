@@ -18,7 +18,7 @@ import { html } from "../../web_modules/htm/preact.js";
 // --------------------------------------------------
 // COMPONENTS
 // --------------------------------------------------
-import Params from "./ThreeBubbleSortParams.js";
+import Params from "./WorkflowParams.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
@@ -34,10 +34,10 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import globalSettings from "./actions/globalSettings.js";
 
-setSeed(seedString("bubblesort"));
+setSeed(seedString("workflow"));
 
 const [styles] = createStyles({
-  bubbleSort: {
+  workflow: {
     width: "100%",
     height: "100%",
     backgroundImage: "url(/img/bg1.png)",
@@ -85,7 +85,7 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
 
   return html`
-    <div id="bubble-sort" className="${styles.bubbleSort}">
+    <div id="workflow" className="${styles.workflow}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
         <${Params} speed="${state.speed}" dispatch="${dispatch}" />

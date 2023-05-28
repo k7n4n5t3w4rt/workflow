@@ -22,7 +22,7 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import globalSettings from "./actions/globalSettings.js";
 
-setSeed(seedString("threebubblesortparams"));
+setSeed(seedString("workflowparams"));
 
 const [styles] = createStyles({
   paramsContainer: {
@@ -125,19 +125,16 @@ export default (props /*: Props */) /*: string */ => {
     setParamToggle(!paramToggle);
   };
 
-  const changeParam = (
-    dispatch /*: function */,
-    param /*: string */,
-  ) /*: function */ => (
-    e /*: SyntheticInputEvent<HTMLInputElement> */,
-  ) /*: void */ => {
-    // Set the global param for use in real-time, non-Preact JS
-    globalSettings(param, parseInt(e.target.value));
-    dispatch({
-      type: "CHANGE_PARAM",
-      payload: { param, value: e.target.value },
-    });
-  };
+  const changeParam =
+    (dispatch /*: function */, param /*: string */) /*: function */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      // Set the global param for use in real-time, non-Preact JS
+      globalSettings(param, parseInt(e.target.value));
+      dispatch({
+        type: "CHANGE_PARAM",
+        payload: { param, value: e.target.value },
+      });
+    };
 
   return html`
     <div
@@ -145,9 +142,7 @@ export default (props /*: Props */) /*: string */ => {
       className="${styles.settingsClose}"
       onClick="${toggleParam}"
     >
-      <span className="material-icons ${styles.settingsIcon}">
-        close
-      </span>
+      <span className="material-icons ${styles.settingsIcon}"> close </span>
     </div>
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
@@ -174,9 +169,7 @@ export default (props /*: Props */) /*: string */ => {
       className="${styles.settings}"
       onClick="${toggleParam}"
     >
-      <span className="material-icons ${styles.settingsIcon}">
-        settings
-      </span>
+      <span className="material-icons ${styles.settingsIcon}"> settings </span>
     </div>
   `;
 };

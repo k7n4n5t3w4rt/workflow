@@ -18,7 +18,7 @@ const move = (
   // Each cube object is a REFERENCE to a THREE.js Mesh object that
   // was atached to the THREE.js scene in:
   //
-  //		/js/three-bubble-sort/actions/pixelGrid.js (Line 34)
+  //		/js/workflow/actions/pixelGrid.js (Line 34)
   //
   const speed = globalSettings().speed;
 

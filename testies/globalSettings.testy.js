@@ -1,6 +1,6 @@
 // @flow
 import { test, testPromise, should } from "../server/testy.js";
-import globalSettings from "../js/three-bubble-sort/actions/globalSettings.js";
+import globalSettings from "../js/workflow/actions/globalSettings.js";
 import glob from "glob";
 
 const skip = false;

@@ -25,16 +25,17 @@ export default (
   const cubes /*: Cubes */ = {
     active: false,
     pixelGridGroup: {},
+    clickCubeGroup: {},
   };
 
   // The stats display for AR
   const stats = createStats();
   const ARContainer = document.createElement("div");
   ARContainer.id = "ar-container";
-  const bubbleSort = document.getElementById("bubble-sort");
+  const workflow = document.getElementById("workflow");
   // document.body.appendChild(container);
   // $FlowFixMe - Flow doesn't know about the DOM
-  bubbleSort.appendChild(ARContainer);
+  workflow.appendChild(ARContainer);
 
   // Make the scene, camera, geometry, etc.
   const scene /*: Object */ = new THREE.Scene();
@@ -102,5 +103,6 @@ export default (
     yCm,
     zCm,
   );
+
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
 };
