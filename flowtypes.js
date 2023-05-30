@@ -1,4 +1,4 @@
-type config = {
+type Config = {
   CONTAINER_ID: string,
   SHOW_WORKING: boolean,
   FPS: number,
@@ -11,6 +11,18 @@ type config = {
   LOOP: boolean,
   RELOAD_INTERVAL: number,
   FINISH_COUNTER: Object,
+};
+
+type GlobalSettings = {
+  speed: number,
+  xCm: number,
+  yCm: number,
+  zCm: number,
+};
+
+type GlobalState = {
+  sceneData: SceneData,
+  cubes: Cubes,
 };
 
 type Position = {
@@ -26,8 +38,8 @@ type Cube = {
 
 type Cubes = {
   active: boolean,
-  pixelGridGroup: Object,
-  clickCubeGroup: Object,
+  workFlowItems: Array<Object>,
+  clickCube: Object,
 };
 
 type ReticleStuff = {

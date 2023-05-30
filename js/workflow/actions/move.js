@@ -7,10 +7,10 @@ import cube2AnimeOptions from "./cube2AnimeOptions.js";
 import globalSettings from "./globalSettings.js";
 
 const move = (
-  cubes /*: Cubes */,
+  workFlowItem /*: Object */,
   zCm /*: number */,
   anime /*: function */,
-) /*: Cubes */ => {
+) /*: void */ => {
   // NOTE:
   // This might not be very clear so:
   //
@@ -24,24 +24,24 @@ const move = (
 
   // Move cube1
   anime({
-    targets: [cubes.pixelGridGroup.children[0].position],
+    targets: [workFlowItem.position],
     x: [
       {
-        value: cubes.pixelGridGroup.children[0].position.x,
+        value: workFlowItem.position.x,
         duration: 1000 / speed,
         delay: 0,
       },
     ],
     z: [
       {
-        value: cubes.pixelGridGroup.children[0].position.z,
+        value: workFlowItem.position.z,
         duration: 1000 / speed,
         delay: 0,
       },
     ],
     y: [
       {
-        value: cubes.pixelGridGroup.children[0].position.y,
+        value: workFlowItem.position.y,
         duration: 1000 / speed,
         delay: 0,
       },
@@ -53,7 +53,6 @@ const move = (
       // Move the next cube...
     },
   });
-  return cubes;
 };
 
 export default move;

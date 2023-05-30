@@ -4,20 +4,18 @@
 // --------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
-// HELPERS
+// GLOBALS
 // --------------------------------------------------
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 
-export default (
-  scaleXm /*: number */,
-  scaleYm /*: number */,
-  scaleZm /*: number */,
-  scene /*: Object */,
-) /*: Object */ => {
-  const xCm /*: number */ = scaleXm / 100;
-  const yCm /*: number */ = scaleYm / 100;
-  const zCm /*: number */ = scaleZm / 100;
+export default () /*: Object */ => {
+  const xCm = globalSettings().xCm;
+  const yCm = globalSettings().yCm;
+  const zCm = globalSettings().zCm;
+
   // Cubes in a group can be rotated / scaled etc as a group
-  const clickCubeGroup = new THREE.Group();
+  // const clickCubeGroup = new THREE.Group();
 
   const cellColour = 255;
   const geometry = new THREE.BoxGeometry(xCm, yCm, zCm);
@@ -31,7 +29,5 @@ export default (
   cube.position.y = yCm;
   cube.bubble_value = cellColour;
   cube.castShadow = true;
-  clickCubeGroup.add(cube);
-  scene.add(clickCubeGroup);
-  return clickCubeGroup;
+  return cube;
 };

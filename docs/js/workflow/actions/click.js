@@ -1,16 +1,18 @@
 // @flow
 // --------------------------------------------------
-// HELPERS
+// GLOBALS
 // --------------------------------------------------
 import globalSettings from "./globalSettings.js";
-import pixelGridGroup from "./pixelGridGroup";
-import pixelGridGroupAddCube from "./pixelGridGroupAddCube.js";
+import globalState from "./globalState.js";
+// --------------------------------------------------
+// HELPERS
+// --------------------------------------------------
+import anime from "../../../web_modules/animejs.js";
+import workFlowItem from "./workFlowItem.js";
 
-const click = (
-  clickCube /*: Object */,
-  pixelGridGroup /*: Object */,
-  anime /*: function */,
-) /*: boolean */ => {
+const click = () /*: boolean */ => {
+  const sceneData = globalState().sceneData;
+  const cubes = globalState().cubes;
   // NOTE:
   // This might not be very clear so:
   //
@@ -24,15 +26,15 @@ const click = (
 
   // Move cube1
   anime({
-    targets: [clickCube.rotation],
-    y: clickCube.rotation.y + Math.PI / 2,
+    targets: [cubes.clickCube.rotation],
+    y: cubes.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
     complete: function (anim) {
-      console.log("Click complete.");
-      click(clickCube, anime);
-      // Move the next cube...
-      pixelGridGroupAddCube(pixelGridGroup);
+      const nextWorkFlowItem = workFlowItem();
+      console.log("Adding a new workFlowItem: " + nextWorkFlowItem.position.x);
+      sceneData.scene.add(nextWorkFlowItem);
+      click();
     },
   });
   return true;

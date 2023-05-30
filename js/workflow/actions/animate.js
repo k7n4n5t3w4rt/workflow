@@ -1,18 +1,16 @@
 // @flow
 // --------------------------------------------------
+// GLOBALS
+// --------------------------------------------------
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
+// --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
 import render from "./render.js";
 
-export default (
-  sceneData /*: SceneData */,
-  xCm /*: number */,
-  yCm /*: number */,
-  zCm /*: number */,
-) /*: SceneData  */ => {
-  const { stats, scene, camera, renderer, reticleStuff, cubes } = sceneData;
-  // const { stats, scene, camera, renderer, reticleStuff } = sceneData;
+export default () /*: void  */ => {
+  const sceneData = globalState().sceneData;
 
-  sceneData.renderer.setAnimationLoop(render(sceneData, xCm, yCm, zCm));
-  return { stats, scene, camera, renderer, reticleStuff, cubes };
+  sceneData.renderer.setAnimationLoop(render());
 };

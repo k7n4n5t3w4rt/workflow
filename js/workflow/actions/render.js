@@ -4,6 +4,11 @@
 // --------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
+// GLOBALS
+// --------------------------------------------------
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
+// --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
 import click from "./click.js";
@@ -11,49 +16,43 @@ import move from "./move.js";
 import initializeHitTestSource from "./initializeHitTestSource.js";
 import anime from "../../../web_modules/animejs.js";
 
-export default (
-  sceneData /*: SceneData */,
-  scaleXm /*: number */,
-  scaleYm /*: number */,
-  scaleZm /*: number */,
-) /*: () => Promise<any>  */ => {
+export default () /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
-    const xCm /*: number */ = scaleXm / 100;
-    const yCm /*: number */ = scaleYm / 100;
-    const zCm /*: number */ = scaleZm / 100;
+    const sceneData = globalState().sceneData;
+
     if (frame) {
       // 1. create a hit test source once and keep it for all the frames
       // this gets called only once
       // Could I move this to animate()?
       if (!sceneData.reticleStuff.hitTestSourceInitialized) {
-        sceneData = await initializeHitTestSource(sceneData);
+        await initializeHitTestSource();
       }
 
-      const { stats, scene, camera, renderer, reticleStuff, cubes } = sceneData;
-
-      if (reticleStuff.active) {
+      if (sceneData.reticleStuff.active) {
         // 2. get hit test results
-        if (reticleStuff.hitTestSourceInitialized) {
+        if (sceneData.reticleStuff.hitTestSourceInitialized) {
           // we get the hit test results for a particular frame
           const hitTestResults = frame.getHitTestResults(
-            reticleStuff.hitTestSource,
+            sceneData.reticleStuff.hitTestSource,
           );
 
           // XRHitTestResults The hit test may find multiple surfaces. The first one in the array is the one closest to the camera.
           if (hitTestResults.length > 0) {
             const hit = hitTestResults[0];
             // Get a pose from the hit test result. The pose represents the pose of a point on a surface.
-            const pose = hit.getPose(reticleStuff.localSpace);
+            const pose = hit.getPose(sceneData.reticleStuff.localSpace);
 
-            reticleStuff.reticle.visible = true;
+            sceneData.reticleStuff.reticle.visible = true;
             // Transform/move the reticle image to the hit test position
-            reticleStuff.reticle.matrix.fromArray(pose.transform.matrix);
+            sceneData.reticleStuff.reticle.matrix.fromArray(
+              pose.transform.matrix,
+            );
           } else {
-            reticleStuff.reticle.visible = false;
+            sceneData.reticleStuff.reticle.visible = false;
           }
         }
       } else {
-        reticleStuff.reticle.visible = false;
+        sceneData.reticleStuff.reticle.visible = false;
         // -------------------------------------
         // Weirdly, this kills the rendering
         // -------------------------------------
@@ -64,7 +63,7 @@ export default (
       // if (cubes.active === true) {
       // }
       sceneData.stats.update();
-      renderer.render(scene, camera);
+      sceneData.renderer.render(sceneData.scene, sceneData.camera);
     }
   };
 };

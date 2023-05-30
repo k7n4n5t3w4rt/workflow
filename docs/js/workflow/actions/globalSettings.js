@@ -3,7 +3,8 @@
 export default (
   key /*: string | typeof undefined  */,
   value /*: number | typeof undefined  */,
-) /*: {speed: number} */ => {
+) /*: GlobalSettings */ => {
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
   // Returning an empty object if globalSettings is undefined at
   // least lets us check for the existence of individual parameters
   // without also needing to check that the object is not undefined

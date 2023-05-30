@@ -123,7 +123,7 @@ export function gridDisplay() /*: gridDisplayObject */ {
     // body
   }
 
-  function toggleShowWorking(config /*: config */) /*: void */ {
+  function toggleShowWorking(config /*: Config */) /*: void */ {
     config.SHOW_WORKING = !config.SHOW_WORKING;
     config.CLICK = getClick(
       config.SHOW_WORKING,

@@ -4,29 +4,32 @@
 // --------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
+// GLOBALS
+// --------------------------------------------------
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
+// --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
 import ARButton from "./ARButton.js";
 import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
 import createStats from "../../create_stats.js";
 import onWindowResize from "../calculations/onWindowResize.js";
-import onSelectBuildPixelGrid from "./onSelectBuildPixelGrid.js";
+import onSelectBuildPixelGrid from "./onSelectStart.js";
 import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
 
-export default (
-  xCm /*: number */,
-  yCm /*: number */,
-  zCm /*: number */,
-) /*: void */ => {
-  // Initialise some objects for the global state
-  let sceneData /*: SceneData */ = {};
+export default () /*: void */ => {
+  const xCm = globalSettings().xCm;
+  const yCm = globalSettings().yCm;
+  const zCm = globalSettings().zCm;
+
   // Setting an empty object, to be passed by reference and filled
-  const cubes /*: Cubes */ = {
+  globalState("cubes", {
     active: false,
-    pixelGridGroup: {},
-    clickCubeGroup: {},
-  };
+    workFlowItems: [],
+    clickCube: {},
+  });
 
   // The stats display for AR
   const stats = createStats();
@@ -72,10 +75,7 @@ export default (
   const controller = renderer.xr.getController(0);
   // On select (tap in AR mode), build the pixel grid and start
   // calling the move() function on each render to animate the pixels
-  controller.addEventListener(
-    "select",
-    onSelectBuildPixelGrid(reticleStuff, cubes, xCm, yCm, zCm, scene, camera),
-  );
+  controller.addEventListener("select", onSelectBuildPixelGrid());
   scene.add(controller);
 
   //   // https://threejs.org/docs/#examples/en/controls/OrbitControls
@@ -97,12 +97,16 @@ export default (
   // $FlowFixMe
   domOverlayDiv.appendChild(button);
 
-  animate(
-    { stats, scene, camera, renderer, reticleStuff, cubes },
-    xCm,
-    yCm,
-    zCm,
-  );
+  // Initialise some objects for the global state
+  globalState("sceneData", {
+    stats,
+    scene,
+    camera,
+    renderer,
+    reticleStuff,
+  });
+
+  animate();
 
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
 };

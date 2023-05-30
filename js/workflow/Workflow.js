@@ -33,6 +33,7 @@ import {
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
 import globalSettings from "./actions/globalSettings.js";
+import globalState from "./actions/globalState.js";
 
 setSeed(seedString("workflow"));
 
@@ -50,8 +51,6 @@ const [styles] = createStyles({
 
 /*::
 type Props = {
-	cols: string,
-	rows: string,
 	speed: string,
 	xcm: string,
 	ycm: string,
@@ -60,28 +59,22 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
-  const speed = Math.abs(parseFloat(props.speed) || 1);
-  const xCm = Math.abs(Math.floor(parseFloat(props.xcm)) || 10);
-  const yCm = Math.abs(Math.floor(parseFloat(props.ycm)) || 10);
-  const zCm = Math.abs(Math.floor(parseFloat(props.zcm)) || 10);
-
-  // Just set it for now, if it isn't already set. In move.js, we get it directly
-  if (globalSettings().speed === undefined) {
-    globalSettings("speed", speed);
-    globalSettings("click", 1000 / speed);
-  }
+  globalSettings("speed", Math.abs(parseFloat(props.speed) || 1));
+  globalSettings("xCm", Math.abs(Math.floor(parseFloat(props.xcm)) || 0.1));
+  globalSettings("yCm", Math.abs(Math.floor(parseFloat(props.ycm)) || 0.1));
+  globalSettings("zCm", Math.abs(Math.floor(parseFloat(props.zcm)) || 0.1));
 
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
-    speed,
-    xCm,
-    yCm,
-    zCm,
+    speed: globalSettings().speed,
+    xCm: globalSettings().xCm,
+    yCm: globalSettings().yCm,
+    zCm: globalSettings().zCm,
   });
 
   useEffect(() => {
     // setupMobileDebug();
     let stats = createStats();
-    init(xCm, yCm, zCm);
+    init();
   }, []);
 
   return html`
