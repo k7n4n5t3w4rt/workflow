@@ -25,21 +25,29 @@ type GlobalState = {
   cubes: Cubes,
 };
 
+type Cubes = {
+  active: boolean,
+  workFlowItems: Array<Cube>,
+  clickCube: Cube,
+};
+
+type Cube = {
+  position: Position,
+  rotateY: (radians: number) => void,
+  rotation: Rotation,
+};
+
 type Position = {
+  setFromMatrixPosition: (matrix: Object) => void,
   x: number,
   y: number,
   z: number,
 };
 
-type Cube = {
-  position: Position,
-  bubble_value: number,
-};
-
-type Cubes = {
-  active: boolean,
-  workFlowItems: Array<Object>,
-  clickCube: Object,
+type Rotation = {
+  x: number,
+  y: number,
+  z: number,
 };
 
 type ReticleStuff = {

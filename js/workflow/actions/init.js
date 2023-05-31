@@ -48,6 +48,7 @@ export default () /*: void */ => {
     0.01,
     50,
   );
+  // Does this really get used? Probably not in AR mode
   camera.position.z = 1;
   camera.position.y = Math.abs(parseInt(4 / 2)) * yCm;
   camera.position.x = Math.abs(parseInt(5 / 2)) * xCm;
@@ -93,7 +94,6 @@ export default () /*: void */ => {
     },
   });
 
-  // document.body.appendChild(button);
   // $FlowFixMe
   domOverlayDiv.appendChild(button);
 
