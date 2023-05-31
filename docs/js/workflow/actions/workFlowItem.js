@@ -6,9 +6,8 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
-import global from "rollup-plugin-node-polyfills/polyfills/global";
+import gSettings from "./gSettings.js";
+import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
@@ -18,9 +17,9 @@ export default () /*: Object */ => {
   // const workFlowItemsGroup = new THREE.Group();
   const cellColour = 255;
   const geometry = new THREE.BoxGeometry(
-    globalSettings().xCm,
-    globalSettings().yCm,
-    globalSettings().zCm,
+    gSettings().xCm,
+    gSettings().yCm,
+    gSettings().zCm,
   );
 
   const material = new THREE.MeshBasicMaterial({
@@ -28,14 +27,14 @@ export default () /*: Object */ => {
   });
   const cube = new THREE.Mesh(geometry, material);
 
-  const nextCubeId = globalState().cubes.workFlowItems.length;
+  const nextCubeId = gState().cubes.workFlowItems.length;
   cube.position.setFromMatrixPosition(
-    globalState().sceneData.reticleStuff.reticle.matrix,
+    gState().sceneData.reticleStuff.reticle.matrix,
   );
-  cube.position.y = globalSettings().yCm * 2;
+  cube.position.y = gSettings().yCm * 2;
   cube.position.z = cube.position.z + nextCubeId * -0.2;
   cube.bubble_value = cellColour;
   cube.castShadow = true;
-  globalState().cubes.workFlowItems.push(cube);
+  gState().cubes.workFlowItems.push(cube);
   return cube;
 };

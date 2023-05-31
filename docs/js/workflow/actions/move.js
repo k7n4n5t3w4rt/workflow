@@ -4,7 +4,7 @@
 // --------------------------------------------------
 import cube1AnimeOptions from "./cube1AnimeOptions.js";
 import cube2AnimeOptions from "./cube2AnimeOptions.js";
-import globalSettings from "./globalSettings.js";
+import gSettings from "./gSettings.js";
 
 const move = (
   workFlowItem /*: Object */,
@@ -20,7 +20,7 @@ const move = (
   //
   //		/js/workflow/actions/pixelGrid.js (Line 34)
   //
-  const speed = globalSettings().speed;
+  const speed = gSettings().speed;
 
   // Move cube1
   anime({

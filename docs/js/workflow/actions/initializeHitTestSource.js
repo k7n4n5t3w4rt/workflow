@@ -2,8 +2,8 @@
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import gSettings from "./gSettings.js";
+import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
@@ -12,7 +12,7 @@ import globalState from "./globalState.js";
 // The purpose of this function is to get a) a hit test source and b) a reference space
 
 export default async () /*: Promise<void> */ => {
-  const sceneData = globalState().sceneData;
+  const sceneData = gState().sceneData;
   const session = sceneData.renderer.xr.getSession();
 
   // Reference spaces express relationships between an origin and the world.

@@ -6,8 +6,8 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import gSettings from "./gSettings.js";
+import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
@@ -20,12 +20,12 @@ import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
 
 export default () /*: void */ => {
-  const xCm = globalSettings().xCm;
-  const yCm = globalSettings().yCm;
-  const zCm = globalSettings().zCm;
+  const xCm = gSettings().xCm;
+  const yCm = gSettings().yCm;
+  const zCm = gSettings().zCm;
 
   // Setting an empty object, to be passed by reference and filled
-  globalState("cubes", {
+  gState("cubes", {
     active: false,
     workFlowItems: [],
     clickCube: {},
@@ -98,7 +98,7 @@ export default () /*: void */ => {
   domOverlayDiv.appendChild(button);
 
   // Initialise some objects for the global state
-  globalState("sceneData", {
+  gState("sceneData", {
     stats,
     scene,
     camera,

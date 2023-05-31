@@ -6,13 +6,13 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import gSettings from "./gSettings.js";
+import gState from "./gState.js";
 
 export default () /*: Object */ => {
-  const xCm = globalSettings().xCm;
-  const yCm = globalSettings().yCm;
-  const zCm = globalSettings().zCm;
+  const xCm = gSettings().xCm;
+  const yCm = gSettings().yCm;
+  const zCm = gSettings().zCm;
 
   // Cubes in a group can be rotated / scaled etc as a group
   // const clickCubeGroup = new THREE.Group();

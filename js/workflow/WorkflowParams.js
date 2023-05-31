@@ -20,7 +20,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import globalSettings from "./actions/globalSettings.js";
+import gSettings from "./actions/gSettings.js";
 
 setSeed(seedString("workflowparams"));
 
@@ -129,7 +129,7 @@ export default (props /*: Props */) /*: string */ => {
     (dispatch /*: function */, param /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
-      globalSettings(param, parseInt(e.target.value));
+      gSettings(param, parseInt(e.target.value));
       dispatch({
         type: "CHANGE_PARAM",
         payload: { param, value: e.target.value },

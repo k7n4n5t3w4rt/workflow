@@ -2,15 +2,15 @@
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import gSettings from "./gSettings.js";
+import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
 import render from "./render.js";
 
 export default () /*: void  */ => {
-  const sceneData = globalState().sceneData;
+  const sceneData = gState().sceneData;
 
   sceneData.renderer.setAnimationLoop(render());
 };

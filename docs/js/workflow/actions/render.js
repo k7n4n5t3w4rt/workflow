@@ -6,8 +6,8 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import gSettings from "./gSettings.js";
+import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
@@ -18,7 +18,7 @@ import anime from "../../../web_modules/animejs.js";
 
 export default () /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
-    const sceneData = globalState().sceneData;
+    const sceneData = gState().sceneData;
 
     if (frame) {
       // 1. create a hit test source once and keep it for all the frames

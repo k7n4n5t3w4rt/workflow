@@ -1,16 +1,16 @@
 // @flow
 import { test, testPromise, should } from "../server/testy.js";
-import globalSettings from "../js/workflow/actions/globalSettings.js";
+import gSettings from "../js/workflow/actions/gSettings.js";
 import glob from "glob";
 
 const skip = false;
 
-test("globalSettings | returns an empty object if the globalThis.globalSettings object is not set", () /*: void */ => {
-  should(JSON.stringify(globalSettings())).be.exactly(JSON.stringify({}));
+test("gSettings | returns an empty object if the globalThis.gSettings object is not set", () /*: void */ => {
+  should(JSON.stringify(gSettings())).be.exactly(JSON.stringify({}));
 });
 
-test("globalSettings | Passing in a key/value pair sets the parameter", () /*: void */ => {
-  should(JSON.stringify(globalSettings("speed", 2))).be.exactly(
+test("gSettings | Passing in a key/value pair sets the parameter", () /*: void */ => {
+  should(JSON.stringify(gSettings("speed", 2))).be.exactly(
     JSON.stringify({ speed: 2 }),
   );
 });

@@ -32,8 +32,8 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import globalSettings from "./actions/globalSettings.js";
-import globalState from "./actions/globalState.js";
+import gSettings from "./actions/gSettings.js";
+import gState from "./actions/gState.js";
 
 setSeed(seedString("workflow"));
 
@@ -59,24 +59,15 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
-  globalSettings("speed", Math.abs(parseFloat(props.speed) || 1));
+  gSettings("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
-  globalSettings(
-    "xCm",
-    Math.abs(Math.floor(parseFloat(props.xcm)) / 100 || 0.1),
-  );
-  globalSettings(
-    "yCm",
-    Math.abs(Math.floor(parseFloat(props.ycm)) / 100 || 0.1),
-  );
-  globalSettings(
-    "zCm",
-    Math.abs(Math.floor(parseFloat(props.zcm)) / 100 || 0.1),
-  );
+  gSettings("xCm", Math.abs(Math.floor(parseFloat(props.xcm)) / 100 || 0.1));
+  gSettings("yCm", Math.abs(Math.floor(parseFloat(props.ycm)) / 100 || 0.1));
+  gSettings("zCm", Math.abs(Math.floor(parseFloat(props.zcm)) / 100 || 0.1));
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
-    speed: globalSettings().speed,
+    speed: gSettings().speed,
   });
 
   useEffect(() => {

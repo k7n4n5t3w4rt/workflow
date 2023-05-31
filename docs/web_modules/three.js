@@ -7655,9 +7655,10 @@ class Color {
         case "rgb":
         case "rgba":
           if (
-            (color = /^\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
-              components,
-            ))
+            (color =
+              /^\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
+                components,
+              ))
           ) {
             // rgb(255,0,0) rgba(255,0,0,0.5)
             this.r = Math.min(255, parseInt(color[1], 10)) / 255;
@@ -7670,9 +7671,10 @@ class Color {
           }
 
           if (
-            (color = /^\s*(\d+)\%\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
-              components,
-            ))
+            (color =
+              /^\s*(\d+)\%\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
+                components,
+              ))
           ) {
             // rgb(100%,0%,0%) rgba(100%,0%,0%,0.5)
             this.r = Math.min(100, parseInt(color[1], 10)) / 100;
@@ -7689,9 +7691,10 @@ class Color {
         case "hsl":
         case "hsla":
           if (
-            (color = /^\s*(\d*\.?\d+)\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
-              components,
-            ))
+            (color =
+              /^\s*(\d*\.?\d+)\s*,\s*(\d+)\%\s*,\s*(\d+)\%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(
+                components,
+              ))
           ) {
             // hsl(120,50%,50%) hsla(120,50%,50%,0.5)
             const h = parseFloat(color[1]) / 360;
@@ -8518,9 +8521,9 @@ class BufferGeometry extends EventDispatcher {
 
   setIndex(index) {
     if (Array.isArray(index)) {
-      this.index = new (arrayMax(index) > 65535
-        ? Uint32BufferAttribute
-        : Uint16BufferAttribute)(index, 1);
+      this.index = new (
+        arrayMax(index) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute
+      )(index, 1);
     } else {
       this.index = index;
     }
@@ -10661,14 +10664,8 @@ class CubeCamera extends Object3D {
 
     const renderTarget = this.renderTarget;
 
-    const [
-      cameraPX,
-      cameraNX,
-      cameraPY,
-      cameraNY,
-      cameraPZ,
-      cameraNZ,
-    ] = this.children;
+    const [cameraPX, cameraNX, cameraPY, cameraNY, cameraPZ, cameraNZ] =
+      this.children;
 
     const currentXrEnabled = renderer.xr.enabled;
     const currentRenderTarget = renderer.getRenderTarget();
@@ -13313,7 +13310,7 @@ function WebGLCapabilities(gl, extensions, parameters) {
 function WebGLClipping(properties) {
   const scope = this;
 
-  let globalState = null,
+  let gState = null,
     numGlobalPlanes = 0,
     localClippingEnabled = false,
     renderingShadows = false;
@@ -13337,7 +13334,7 @@ function WebGLClipping(properties) {
 
     localClippingEnabled = enableLocalClipping;
 
-    globalState = projectPlanes(planes, camera, 0);
+    gState = projectPlanes(planes, camera, 0);
     numGlobalPlanes = planes.length;
 
     return enabled;
@@ -13386,7 +13383,7 @@ function WebGLClipping(properties) {
       dstArray = projectPlanes(planes, camera, lGlobal, useCache);
 
       for (let i = 0; i !== lGlobal; ++i) {
-        dstArray[i] = globalState[i];
+        dstArray[i] = gState[i];
       }
 
       materialProperties.clippingState = dstArray;
@@ -13396,8 +13393,8 @@ function WebGLClipping(properties) {
   };
 
   function resetGlobalState() {
-    if (uniform.value !== globalState) {
-      uniform.value = globalState;
+    if (uniform.value !== gState) {
+      uniform.value = gState;
       uniform.needsUpdate = numGlobalPlanes > 0;
     }
 
@@ -14773,9 +14770,9 @@ function WebGLGeometries(gl, attributes, info, bindingStates) {
       }
     }
 
-    const attribute = new (arrayMax(indices) > 65535
-      ? Uint32BufferAttribute
-      : Uint16BufferAttribute)(indices, 1);
+    const attribute = new (
+      arrayMax(indices) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute
+    )(indices, 1);
     attribute.version = version;
 
     // Updating index buffer in VAO now. See WebGLBindingStates
@@ -16390,8 +16387,10 @@ function includeReplacer(match, include) {
 
 // Unroll Loops
 
-const deprecatedUnrollLoopPattern = /#pragma unroll_loop[\s]+?for \( int i \= (\d+)\; i < (\d+)\; i \+\+ \) \{([\s\S]+?)(?=\})\}/g;
-const unrollLoopPattern = /#pragma unroll_loop_start\s+for\s*\(\s*int\s+i\s*=\s*(\d+)\s*;\s*i\s*<\s*(\d+)\s*;\s*i\s*\+\+\s*\)\s*{([\s\S]+?)}\s+#pragma unroll_loop_end/g;
+const deprecatedUnrollLoopPattern =
+  /#pragma unroll_loop[\s]+?for \( int i \= (\d+)\; i < (\d+)\; i \+\+ \) \{([\s\S]+?)(?=\})\}/g;
+const unrollLoopPattern =
+  /#pragma unroll_loop_start\s+for\s*\(\s*int\s+i\s*=\s*(\d+)\s*;\s*i\s*<\s*(\d+)\s*;\s*i\s*\+\+\s*\)\s*{([\s\S]+?)}\s+#pragma unroll_loop_end/g;
 
 function unrollLoops(string) {
   return string
@@ -17254,9 +17253,8 @@ function WebGLPrograms(
       ? scene.environment
       : null;
 
-    const envMap = (material.isMeshStandardMaterial
-      ? cubeuvmaps
-      : cubemaps
+    const envMap = (
+      material.isMeshStandardMaterial ? cubeuvmaps : cubemaps
     ).get(material.envMap || environment);
 
     const shaderID = shaderIDs[material.type];
@@ -21366,8 +21364,9 @@ function WebGLTextures(
 
     setTexture2D(renderTarget.depthTexture, 0);
 
-    const webglDepthTexture = properties.get(renderTarget.depthTexture)
-      .__webglTexture;
+    const webglDepthTexture = properties.get(
+      renderTarget.depthTexture,
+    ).__webglTexture;
     const samples = getRenderTargetSamples(renderTarget);
 
     if (renderTarget.depthTexture.format === DepthFormat) {
@@ -21428,9 +21427,8 @@ function WebGLTextures(
             36160,
             renderTargetProperties.__webglFramebuffer[i],
           );
-          renderTargetProperties.__webglDepthbuffer[
-            i
-          ] = _gl.createRenderbuffer();
+          renderTargetProperties.__webglDepthbuffer[i] =
+            _gl.createRenderbuffer();
           setupRenderBufferStorage(
             renderTargetProperties.__webglDepthbuffer[i],
             renderTarget,
@@ -21540,8 +21538,10 @@ function WebGLTextures(
         }
       } else if (renderTarget.useRenderbuffer) {
         if (isWebGL2) {
-          renderTargetProperties.__webglMultisampledFramebuffer = _gl.createFramebuffer();
-          renderTargetProperties.__webglColorRenderbuffer = _gl.createRenderbuffer();
+          renderTargetProperties.__webglMultisampledFramebuffer =
+            _gl.createFramebuffer();
+          renderTargetProperties.__webglColorRenderbuffer =
+            _gl.createRenderbuffer();
 
           _gl.bindRenderbuffer(
             36161,
@@ -21578,7 +21578,8 @@ function WebGLTextures(
           _gl.bindRenderbuffer(36161, null);
 
           if (renderTarget.depthBuffer) {
-            renderTargetProperties.__webglDepthRenderbuffer = _gl.createRenderbuffer();
+            renderTargetProperties.__webglDepthRenderbuffer =
+              _gl.createRenderbuffer();
             setupRenderBufferStorage(
               renderTargetProperties.__webglDepthRenderbuffer,
               renderTarget,
@@ -24639,9 +24640,8 @@ function WebGLRenderer(parameters = {}) {
       ? scene.environment
       : null;
     materialProperties.fog = scene.fog;
-    materialProperties.envMap = (material.isMeshStandardMaterial
-      ? cubeuvmaps
-      : cubemaps
+    materialProperties.envMap = (
+      material.isMeshStandardMaterial ? cubeuvmaps : cubemaps
     ).get(material.envMap || materialProperties.environment);
 
     if (programs === undefined) {
@@ -24759,9 +24759,8 @@ function WebGLRenderer(parameters = {}) {
       _currentRenderTarget === null
         ? _this.outputEncoding
         : _currentRenderTarget.texture.encoding;
-    const envMap = (material.isMeshStandardMaterial
-      ? cubeuvmaps
-      : cubemaps
+    const envMap = (
+      material.isMeshStandardMaterial ? cubeuvmaps : cubemaps
     ).get(material.envMap || environment);
     const vertexAlphas =
       material.vertexColors === true &&
@@ -25178,15 +25177,15 @@ function WebGLRenderer(parameters = {}) {
         isRenderTarget3D = true;
       }
 
-      const __webglFramebuffer = properties.get(renderTarget)
-        .__webglFramebuffer;
+      const __webglFramebuffer =
+        properties.get(renderTarget).__webglFramebuffer;
 
       if (renderTarget.isWebGLCubeRenderTarget) {
         framebuffer = __webglFramebuffer[activeCubeFace];
         isCube = true;
       } else if (renderTarget.useRenderbuffer) {
-        framebuffer = properties.get(renderTarget)
-          .__webglMultisampledFramebuffer;
+        framebuffer =
+          properties.get(renderTarget).__webglMultisampledFramebuffer;
       } else {
         framebuffer = __webglFramebuffer;
       }
@@ -26128,26 +26127,8 @@ class Sprite extends Object3D {
       _geometry = new BufferGeometry();
 
       const float32Array = new Float32Array([
-        -0.5,
-        -0.5,
-        0,
-        0,
-        0,
-        0.5,
-        -0.5,
-        0,
-        1,
-        0,
-        0.5,
-        0.5,
-        0,
-        1,
-        1,
-        -0.5,
-        0.5,
-        0,
-        0,
-        1,
+        -0.5, -0.5, 0, 0, 0, 0.5, -0.5, 0, 1, 0, 0.5, 0.5, 0, 1, 1, -0.5, 0.5,
+        0, 0, 1,
       ]);
 
       const interleavedBuffer = new InterleavedBuffer(float32Array, 5);
@@ -28406,113 +28387,11 @@ class DodecahedronGeometry extends PolyhedronGeometry {
     ];
 
     const indices = [
-      3,
-      11,
-      7,
-      3,
-      7,
-      15,
-      3,
-      15,
-      13,
-      7,
-      19,
-      17,
-      7,
-      17,
-      6,
-      7,
-      6,
-      15,
-      17,
-      4,
-      8,
-      17,
-      8,
-      10,
-      17,
-      10,
-      6,
-      8,
-      0,
-      16,
-      8,
-      16,
-      2,
-      8,
-      2,
-      10,
-      0,
-      12,
-      1,
-      0,
-      1,
-      18,
-      0,
-      18,
-      16,
-      6,
-      10,
-      2,
-      6,
-      2,
-      13,
-      6,
-      13,
-      15,
-      2,
-      16,
-      18,
-      2,
-      18,
-      3,
-      2,
-      3,
-      13,
-      18,
-      1,
-      9,
-      18,
-      9,
-      11,
-      18,
-      11,
-      3,
-      4,
-      14,
-      12,
-      4,
-      12,
-      0,
-      4,
-      0,
-      8,
-      11,
-      9,
-      5,
-      11,
-      5,
-      19,
-      11,
-      19,
-      7,
-      19,
-      5,
-      14,
-      19,
-      14,
-      4,
-      19,
-      4,
-      17,
-      1,
-      12,
-      14,
-      1,
-      14,
-      5,
-      1,
-      5,
+      3, 11, 7, 3, 7, 15, 3, 15, 13, 7, 19, 17, 7, 17, 6, 7, 6, 15, 17, 4, 8,
+      17, 8, 10, 17, 10, 6, 8, 0, 16, 8, 16, 2, 8, 2, 10, 0, 12, 1, 0, 1, 18, 0,
+      18, 16, 6, 10, 2, 6, 2, 13, 6, 13, 15, 2, 16, 18, 2, 18, 3, 2, 3, 13, 18,
+      1, 9, 18, 9, 11, 18, 11, 3, 4, 14, 12, 4, 12, 0, 4, 0, 8, 11, 9, 5, 11, 5,
+      19, 11, 19, 7, 19, 5, 14, 19, 14, 4, 19, 4, 17, 1, 12, 14, 1, 14, 5, 1, 5,
       9,
     ];
 
@@ -30879,8 +30758,8 @@ function isValidDiagonal(a, b) {
     a.prev.i !== b.i &&
     !intersectsPolygon(a, b) && // dones't intersect other edges
     ((locallyInside(a, b) &&
-    locallyInside(b, a) &&
-    middleInside(a, b) && // locally visible
+      locallyInside(b, a) &&
+      middleInside(a, b) && // locally visible
       (area(a.prev, a, b.prev) || area(a, b.prev, b))) || // does not create opposite-facing sectors
       (equals(a, b) &&
         area(a.prev, a, a.next) > 0 &&
@@ -31871,66 +31750,9 @@ class IcosahedronGeometry extends PolyhedronGeometry {
     ];
 
     const indices = [
-      0,
-      11,
-      5,
-      0,
-      5,
-      1,
-      0,
-      1,
-      7,
-      0,
-      7,
-      10,
-      0,
-      10,
-      11,
-      1,
-      5,
-      9,
-      5,
-      11,
-      4,
-      11,
-      10,
-      2,
-      10,
-      7,
-      6,
-      7,
-      1,
-      8,
-      3,
-      9,
-      4,
-      3,
-      4,
-      2,
-      3,
-      2,
-      6,
-      3,
-      6,
-      8,
-      3,
-      8,
-      9,
-      4,
-      9,
-      5,
-      2,
-      4,
-      11,
-      6,
-      2,
-      10,
-      8,
-      6,
-      7,
-      9,
-      8,
-      1,
+      0, 11, 5, 0, 5, 1, 0, 1, 7, 0, 7, 10, 0, 10, 11, 1, 5, 9, 5, 11, 4, 11,
+      10, 2, 10, 7, 6, 7, 1, 8, 3, 9, 4, 3, 4, 2, 3, 2, 6, 3, 6, 8, 3, 8, 9, 4,
+      9, 5, 2, 4, 11, 6, 2, 10, 8, 6, 7, 9, 8, 1,
     ];
 
     super(vertices, indices, radius, detail);
@@ -32115,30 +31937,7 @@ class OctahedronGeometry extends PolyhedronGeometry {
     const vertices = [1, 0, 0, -1, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 1, 0, 0, -1];
 
     const indices = [
-      0,
-      2,
-      4,
-      0,
-      4,
-      3,
-      0,
-      3,
-      5,
-      0,
-      5,
-      2,
-      1,
-      2,
-      5,
-      1,
-      5,
-      3,
-      1,
-      3,
-      4,
-      1,
-      4,
-      2,
+      0, 2, 4, 0, 4, 3, 0, 3, 5, 0, 5, 2, 1, 2, 5, 1, 5, 3, 1, 3, 4, 1, 4, 2,
     ];
 
     super(vertices, indices, radius, detail);
@@ -40334,9 +40133,8 @@ class PropertyBinding {
 
     // select getter / setter
     this.getValue = this.GetterByBindingType[bindingType];
-    this.setValue = this.SetterByBindingTypeAndVersioning[bindingType][
-      versioning
-    ];
+    this.setValue =
+      this.SetterByBindingTypeAndVersioning[bindingType][versioning];
   }
 
   unbind() {
@@ -42435,36 +42233,8 @@ class SpotLightHelper extends Object3D {
     const geometry = new BufferGeometry();
 
     const positions = [
-      0,
-      0,
-      0,
-      0,
-      0,
-      1,
-      0,
-      0,
-      0,
-      1,
-      0,
-      1,
-      0,
-      0,
-      0,
-      -1,
-      0,
-      1,
-      0,
-      0,
-      0,
-      0,
-      1,
-      1,
-      0,
-      0,
-      0,
-      0,
-      -1,
-      1,
+      0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0, 1, 1,
+      0, 0, 0, 0, -1, 1,
     ];
 
     for (let i = 0, j = 1, l = 32; i < l; i++, j++) {
@@ -43149,30 +42919,7 @@ const _box = /*@__PURE__*/ new Box3();
 class BoxHelper extends LineSegments {
   constructor(object, color = 0xffff00) {
     const indices = new Uint16Array([
-      0,
-      1,
-      1,
-      2,
-      2,
-      3,
-      3,
-      0,
-      4,
-      5,
-      5,
-      6,
-      6,
-      7,
-      7,
-      4,
-      0,
-      4,
-      1,
-      5,
-      2,
-      6,
-      3,
-      7,
+      0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7,
     ]);
     const positions = new Float32Array(8 * 3);
 
@@ -43272,57 +43019,12 @@ class BoxHelper extends LineSegments {
 class Box3Helper extends LineSegments {
   constructor(box, color = 0xffff00) {
     const indices = new Uint16Array([
-      0,
-      1,
-      1,
-      2,
-      2,
-      3,
-      3,
-      0,
-      4,
-      5,
-      5,
-      6,
-      6,
-      7,
-      7,
-      4,
-      0,
-      4,
-      1,
-      5,
-      2,
-      6,
-      3,
-      7,
+      0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7,
     ]);
 
     const positions = [
-      1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-      -1,
-      -1,
-      -1,
-      -1,
-      1,
-      -1,
-      -1,
+      1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, 1, 1, -1, -1, 1, -1, -1, -1, -1,
+      1, -1, -1,
     ];
 
     const geometry = new BufferGeometry();
@@ -43360,36 +43062,8 @@ class PlaneHelper extends Line {
     const color = hex;
 
     const positions = [
-      1,
-      -1,
-      1,
-      -1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-      1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      1,
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-      0,
+      1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, 1,
+      1, 1, 0, 0, 1, 0, 0, 0,
     ];
 
     const geometry = new BufferGeometry();
@@ -43405,24 +43079,7 @@ class PlaneHelper extends Line {
     this.size = size;
 
     const positions2 = [
-      1,
-      1,
-      1,
-      -1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-      1,
-      1,
-      1,
-      -1,
-      -1,
-      1,
-      1,
-      -1,
-      1,
+      1, 1, 1, -1, 1, 1, -1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1,
     ];
 
     const geometry2 = new BufferGeometry();
