@@ -2,15 +2,10 @@
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import cube1AnimeOptions from "./cube1AnimeOptions.js";
-import cube2AnimeOptions from "./cube2AnimeOptions.js";
+import anime from "../../../web_modules/animejs.js";
 import gSettings from "./gSettings.js";
 
-const move = (
-  workFlowItem /*: Object */,
-  zCm /*: number */,
-  anime /*: function */,
-) /*: void */ => {
+const move = (workFlowItem /*: Object */) /*: void */ => {
   // NOTE:
   // This might not be very clear so:
   //
@@ -25,28 +20,9 @@ const move = (
   // Move cube1
   anime({
     targets: [workFlowItem.position],
-    x: [
-      {
-        value: workFlowItem.position.x,
-        duration: 1000 / speed,
-        delay: 0,
-      },
-    ],
-    z: [
-      {
-        value: workFlowItem.position.z,
-        duration: 1000 / speed,
-        delay: 0,
-      },
-    ],
-    y: [
-      {
-        value: workFlowItem.position.y,
-        duration: 1000 / speed,
-        delay: 0,
-      },
-    ],
-    delay: 500,
+    z: workFlowItem.position.z + gSettings().zCm,
+    duration: 1000 / speed,
+    delay: 0,
     easing: "easeInOutCirc",
     complete: function (anim) {
       console.log("Move complete.");

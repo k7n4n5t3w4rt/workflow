@@ -22,8 +22,8 @@ import Params from "./WorkflowParams.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
+// import setupMobileDebug from "../setup_mobile_debug.js";
 import AppReducer from "../appReducer.js";
-import setupMobileDebug from "../setup_mobile_debug.js";
 import createStats from "../create_stats.js";
 import init from "./actions/init.js";
 import seedString from "../simple_css_seed.js";
@@ -55,15 +55,21 @@ type Props = {
 	xcm: string,
 	ycm: string,
 	zcm: string,
+  teamsnumber: string,
+  teamsize: string
 }
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
   gSettings("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
-  gSettings("xCm", Math.abs(Math.floor(parseFloat(props.xcm)) / 100 || 0.1));
-  gSettings("yCm", Math.abs(Math.floor(parseFloat(props.ycm)) / 100 || 0.1));
-  gSettings("zCm", Math.abs(Math.floor(parseFloat(props.zcm)) / 100 || 0.1));
+  gSettings("xCm", cleanInt(props.xcm) / 100 || 0.1);
+  gSettings("yCm", cleanInt(props.ycm) / 100 || 0.1);
+  gSettings("zCm", cleanInt(props.zcm) / 100 || 0.1);
+  // Set the number of teams to 1 so that we have one workflow
+  gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
+  // Set the number of people per team to 1 so that nothing changes for now
+  gSettings("teamSize", cleanInt(props.teamsize) || 1);
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
@@ -85,3 +91,10 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
+
+// --------------------------------------------------
+// HELPER FUNCTIONS
+// --------------------------------------------------
+function cleanInt(getVar /*: string */) /*: number */ {
+  return Math.abs(Math.floor(parseFloat(getVar)) || 0);
+}

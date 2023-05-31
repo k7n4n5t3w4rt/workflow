@@ -24,7 +24,7 @@ export default () /*: void */ => {
   const yCm = gSettings().yCm;
   const zCm = gSettings().zCm;
 
-  // Setting an empty object, to be passed by reference and filled
+  // Setting an empty cubes object in the global state
   gState("cubes", {
     active: false,
     workFlowItems: [],

@@ -18,6 +18,8 @@ type GlobalSettings = {
   xCm: number,
   yCm: number,
   zCm: number,
+  teamsNumber: number,
+  teamSize: number,
 };
 
 type GlobalState = {
@@ -32,10 +34,13 @@ type Cubes = {
 };
 
 type Cube = {
+  // Display properties
   position: Position,
   rotateY: (radians: number) => void,
   rotation: Rotation,
   bubble_value: number,
+  // Workflow propterites
+  effort: number,
 };
 
 type Position = {
