@@ -36,11 +36,13 @@ export default () /*: Object */ => {
   cube.position.z = cube.position.z + nextCubeId * -0.2;
   cube.bubble_value = cellColour;
   cube.castShadow = true;
-  // [2] Set the effort value of the workFlowItem
+  // [2] Set the status of the workFlowItem
+  cube.status = "Open";
+  // [3] Set the effort value of the workFlowItem
   cube.effort = randomNumberBetween(1, 10);
-  // [3] Set the team number of the workFlowItem
+  // [4] Set the team number of the workFlowItem
   cube.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
-  // [3] Add the cube to the array of all workFlowItems
+  // [5] Add the cube to the array of all workFlowItems
   gState().cubes.workFlowItems.push(cube);
   return cube;
 };

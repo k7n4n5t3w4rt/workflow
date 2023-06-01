@@ -28,7 +28,25 @@ type GlobalState = {
 };
 
 type Cubes = {
-  active: boolean,
+  status:
+    | "Open"
+    | "Wait1"
+    | "Touch1"
+    | "Wait2"
+    | "Touch2"
+    | "Wait3"
+    | "Touch3"
+    | "Wait4"
+    | "Touch4"
+    | "Wait5"
+    | "Touch5"
+    | "Wait6"
+    | "Touch6"
+    | "Wait7"
+    | "Touch7"
+    | "Wait8"
+    | "Touch8"
+    | "Done",
   workFlowItems: Array<Cube>,
   clickCube: Cube,
 };

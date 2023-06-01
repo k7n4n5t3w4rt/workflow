@@ -20,22 +20,20 @@ export default () /*: () => void */ => () /*: void */ => {
     gState().sceneData.reticleStuff.active = false;
   }
 
-  if (gState().cubes.active === undefined || gState().cubes.active === false) {
-    // Build the grid of pixels
-    gState().cubes.clickCube = clickCube();
-    gState().sceneData.scene.add(gState().cubes.clickCube);
+  // Build the grid of pixels
+  gState().cubes.clickCube = clickCube();
+  gState().sceneData.scene.add(gState().cubes.clickCube);
 
-    // Get the direction in which the camera is looking
-    const vector = new THREE.Vector3();
-    gState().sceneData.camera.getWorldDirection(vector);
-    const radians = Math.atan2(vector.x, vector.z);
-    // Rotate the group on the Y axis (around it's centre, always the 0,0,0 point)
-    gState().cubes.clickCube.rotateY(radians);
-    // Last thing: set the position of the cube based on the location of  the reticle
-    gState().cubes.clickCube.position.setFromMatrixPosition(
-      gState().sceneData.reticleStuff.reticle.matrix,
-    );
-  }
+  // Get the direction in which the camera is looking
+  const vector = new THREE.Vector3();
+  gState().sceneData.camera.getWorldDirection(vector);
+  const radians = Math.atan2(vector.x, vector.z);
+  // Rotate the group on the Y axis (around it's centre, always the 0,0,0 point)
+  gState().cubes.clickCube.rotateY(radians);
+  // Last thing: set the position of the cube based on the location of  the reticle
+  gState().cubes.clickCube.position.setFromMatrixPosition(
+    gState().sceneData.reticleStuff.reticle.matrix,
+  );
 
   click();
 };

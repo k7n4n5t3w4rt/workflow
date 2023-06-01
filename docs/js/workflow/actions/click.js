@@ -11,7 +11,7 @@ import anime from "../../../web_modules/animejs.js";
 import workFlowItem from "./workFlowItem.js";
 import move from "./move.js";
 
-const click = () /*: boolean */ => {
+const click = () /*: void */ => {
   // [1] Rotate the clickCube
   anime({
     targets: [gState().cubes.clickCube.rotation],
@@ -38,7 +38,6 @@ const click = () /*: boolean */ => {
       click();
     },
   });
-  return true;
 };
 
 export default click;
