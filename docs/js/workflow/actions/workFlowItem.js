@@ -28,7 +28,7 @@ export default () /*: Object */ => {
   const cube = new THREE.Mesh(geometry, material);
 
   // [1] Set the position and scene properties of the cube
-  const nextCubeId = gState().cubes.workFlowItems.length;
+  const nextCubeId = gState().objects.workFlowItems.length;
   cube.position.setFromMatrixPosition(
     gState().sceneData.reticleStuff.reticle.matrix,
   );
@@ -37,13 +37,16 @@ export default () /*: Object */ => {
   cube.bubble_value = cellColour;
   cube.castShadow = true;
   // [2] Set the status of the workFlowItem
-  cube.status = "Open";
+  cube.status = gSettings().workflowStatuses[0];
   // [3] Set the effort value of the workFlowItem
-  cube.effort = randomNumberBetween(1, 10);
+  cube.effort = randomNumberBetween(
+    gSettings().workflowItem.effort.min,
+    gSettings().workflowItem.effort.max,
+  );
   // [4] Set the team number of the workFlowItem
   cube.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
   // [5] Add the cube to the array of all workFlowItems
-  gState().cubes.workFlowItems.push(cube);
+  gState().objects.workFlowItems.push(cube);
   return cube;
 };
 

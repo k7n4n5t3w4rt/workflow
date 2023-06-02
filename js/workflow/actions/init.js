@@ -16,17 +16,16 @@ import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/
 import createStats from "../../create_stats.js";
 import onWindowResize from "../calculations/onWindowResize.js";
 import onSelectBuildPixelGrid from "./onSelectStart.js";
-import animate from "./animate.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
+import render from "./render.js";
 
 export default () /*: void */ => {
   const xCm = gSettings().xCm;
   const yCm = gSettings().yCm;
   const zCm = gSettings().zCm;
 
-  // Setting an empty cubes object in the global state
-  gState("cubes", {
-    active: false,
+  // Setting an empty "objects" object in the global state
+  gState("objects", {
     workFlowItems: [],
     clickCube: {},
   });
@@ -106,7 +105,7 @@ export default () /*: void */ => {
     reticleStuff,
   });
 
-  animate();
+  gState().sceneData.renderer.setAnimationLoop(render());
 
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
 };

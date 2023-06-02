@@ -69,7 +69,18 @@ export default (props /*: Props */) /*: string */ => {
   // Set the number of teams to 1 so that we have one workflow
   gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
-  gSettings("teamSize", cleanInt(props.teamsize) || 1);
+  gSettings("teamSize", cleanInt(props.teamsize) || 400);
+  // Populate the workflowStatus array
+  gSettings("workflowStatuses", [
+    { name: "Open", category: "backlog" },
+    { name: "To Do", category: "wait" },
+    { name: "Doing", category: "touch" },
+    { name: "Ready for Review", category: "wait" },
+    { name: "In Review", category: "external" },
+    { name: "Done", category: "complete" },
+  ]);
+  // workFlowItem properties
+  gSettings("workflowItem", { effort: { min: 14, max: 500 } });
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {

@@ -1,18 +1,9 @@
-// type Config = {
-//   CONTAINER_ID: string,
-//   SHOW_WORKING: boolean,
-//   FPS: number,
-//   ACCELLERATION: number,
-//   CLICK?: number,
-//   COLS: number,
-//   ROWS: number,
-//   MAX_SECONDS_TRANSITION_INTERVAL: number,
-//   CONSTANT_TRANSITION_SPEED: boolean,
-//   LOOP: boolean,
-//   RELOAD_INTERVAL: number,
-//   FINISH_COUNTER: Object,
-// };
+import Workflow from "./js/workflow/Workflow";
+import workflowItem from "./js/workflow/actions/workflowItem";
 
+// --------------------------------------------------
+// gSettings
+// --------------------------------------------------
 type GlobalSettings = {
   speed: number,
   xCm: number,
@@ -20,55 +11,61 @@ type GlobalSettings = {
   zCm: number,
   teamsNumber: number,
   teamSize: number,
+  workflowStatuses: Array<WorkflowStatuses>,
+  workflowItem: WorkflowItemSettings,
 };
 
+type WorkflowItemSettings = {
+  effort: {
+    min: number,
+    max: number,
+  },
+};
+
+type WorkflowStatuses = {
+  name: string,
+  category: "open" | "wait" | "touch" | "external" | "complete",
+};
+
+// --------------------------------------------------
+// gState
+// --------------------------------------------------
 type GlobalState = {
   sceneData: SceneData,
-  cubes: Cubes,
+  objects: Objects,
 };
 
-type Cubes = {
-  status:
-    | "Open"
-    | "Wait1"
-    | "Touch1"
-    | "Wait2"
-    | "Touch2"
-    | "Wait3"
-    | "Touch3"
-    | "Wait4"
-    | "Touch4"
-    | "Wait5"
-    | "Touch5"
-    | "Wait6"
-    | "Touch6"
-    | "Wait7"
-    | "Touch7"
-    | "Wait8"
-    | "Touch8"
-    | "Done",
-  workFlowItems: Array<Cube>,
-  clickCube: Cube,
+type Objects = {
+  workFlowItems: Array<WorkflowItemState>,
+  clickCube: SimpleCube,
 };
 
-type Cube = {
-  // Display properties
-  position: Position,
+type SimpleCube = {
+  position: CubePosition,
   rotateY: (radians: number) => void,
-  rotation: Rotation,
+  rotation: CubeRotation,
   bubble_value: number,
-  // Workflow propterites
-  effort: number,
 };
 
-type Position = {
+type WorkflowItemState = {
+  // Display properties
+  position: CubePosition,
+  rotateY: (radians: number) => void,
+  rotation: CubeRotation,
+  bubble_value: number,
+  // Workflow properties
+  effortTotal: number,
+  effortRemaining: number,
+};
+
+type CubePosition = {
   setFromMatrixPosition: (matrix: Object) => void,
   x: number,
   y: number,
   z: number,
 };
 
-type Rotation = {
+type CubeRotation = {
   x: number,
   y: number,
   z: number,
@@ -89,9 +86,11 @@ type SceneData = {
   camera: Object,
   renderer: Object,
   reticleStuff: ReticleStuff,
-  cubes: Cubes,
 };
 
+// --------------------------------------------------
+// MODULES
+// --------------------------------------------------
 declare module "finalhandler" {
   declare module.exports: any;
 }

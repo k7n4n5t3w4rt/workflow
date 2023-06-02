@@ -2,7 +2,7 @@
 
 export default (
   key /*: string | typeof undefined  */,
-  value /*: number | typeof undefined  */,
+  value /*: any | typeof undefined  */,
 ) /*: GlobalSettings */ => {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis
   // Returning an empty object if gSettings is undefined at
