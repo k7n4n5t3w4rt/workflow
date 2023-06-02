@@ -22,6 +22,22 @@ export default () /*: Object */ => {
     gSettings().zCm,
   );
 
+  // Calculate the effortTotal for the workFlowItem
+  // ...before we finish with the geometry so that
+  // we can use the value to set the scale of the cube
+  const cubeEffortTotal = randomNumberBetween(
+    gSettings().workflowItem.effort.min,
+    gSettings().workflowItem.effort.max,
+  );
+  const scaleAdjustedForEffort =
+    cubeEffortTotal / gSettings().workflowItem.effort.max;
+  console.log(`scaleAdjustedForEffort: ${scaleAdjustedForEffort}`);
+  geometry.scale(
+    scaleAdjustedForEffort,
+    scaleAdjustedForEffort,
+    scaleAdjustedForEffort,
+  );
+
   const material = new THREE.MeshBasicMaterial({
     color: `rgb(${cellColour},${cellColour},${cellColour})`,
   });
@@ -42,12 +58,9 @@ export default () /*: Object */ => {
   // [2] Set the status of the workFlowItem
   cube.status = gSettings().workflowStatuses[0];
   // [3] Set the effort values of the workFlowItem
-  cube.effortTotal = randomNumberBetween(
-    gSettings().workflowItem.effort.min,
-    gSettings().workflowItem.effort.max,
-  );
+  cube.effortTotal = cubeEffortTotal;
   cube.effortRemaining = cube.effortTotal;
-  // [4] Set the workflowStatusesIndex so we can pull the
+  // [5] Set the workflowStatusesIndex so we can pull the
   // status info from the gSettings().workflowStatuses array
   cube.workflowStatusesIndex = 0;
   // [5] Set the team number of the workFlowItem

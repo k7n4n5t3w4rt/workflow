@@ -45,8 +45,13 @@ const moveWorkflowItems = (workFlowItem /*: WorkflowItem */) => {
     );
     return false;
   }
-  // [3.1] Check if all the effort has been expended, and...
-  if (workFlowItem.effortRemaining === 0) {
+  // [3.1] Check if all the effort has been expended...
+  // ...or if the workFlowItem is in a "wait" state
+  if (
+    workFlowItem.effortRemaining === 0 ||
+    gSettings().workflowStatuses[workFlowItem.workflowStatusesIndex]
+      .category === "wait"
+  ) {
     // ...move the workFlowItem, or...
     workFlowItem.effortRemaining = workFlowItem.effortTotal;
     move(workFlowItem);
