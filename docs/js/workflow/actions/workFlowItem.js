@@ -11,7 +11,6 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import base64url from "../../../web_modules/base64url.js";
 
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group

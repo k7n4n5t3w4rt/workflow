@@ -33,6 +33,7 @@ type GlobalState = {
 };
 
 type Objects = {
+  startPosition: CubePosition,
   workFlowItems: Array<WorkflowItem>,
   clickCube: SimpleCube,
 };
@@ -59,6 +60,7 @@ type WorkflowItem = {
 
 type CubePosition = {
   setFromMatrixPosition: (matrix: Object) => void,
+  clone: () => CubePosition,
   x: number,
   y: number,
   z: number,
@@ -171,9 +173,5 @@ declare module "../../web_modules/three/examples/jsm/loaders/TGALoader.js" {
 }
 
 declare module "../../../web_modules/animejs.js" {
-  declare module.exports: any;
-}
-
-declare module "../../../web_modules/base64url.js" {
   declare module.exports: any;
 }

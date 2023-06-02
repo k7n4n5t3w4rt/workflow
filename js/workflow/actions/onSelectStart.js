@@ -33,6 +33,9 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().objects.clickCube.position.setFromMatrixPosition(
     gState().sceneData.reticleStuff.reticle.matrix,
   );
+  // Set the start position for all the workflow items
+  gState().objects.startPosition = gState().objects.clickCube.position.clone();
+  gState().objects.startPosition.y = 0;
 
   click();
 };

@@ -11,7 +11,6 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import base64url from "../../../web_modules/base64url.js";
 
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group
@@ -30,11 +29,14 @@ export default () /*: Object */ => {
   // [0] Set the name to the uuid so we can delete it later
   cube.name = cube.uuid;
   // [1] Set the position and scene properties of the cube
-  cube.position.setFromMatrixPosition(
-    gState().sceneData.reticleStuff.reticle.matrix,
-  );
-  cube.position.y = gSettings().yCm * 2;
-  cube.position.z = cube.position.z + cube.id * -0.2;
+  cube.position.x = gState().objects.startPosition.x;
+  cube.position.z = gState().objects.startPosition.z - Math.random();
+  cube.position.y = gState().objects.startPosition.y + Math.random();
+  // Math.round(Math.random()) will give you 0 or 1
+  // Multiplying the result by 2 will give you 0 or 2
+  // And then subtracting 1 gives you -1 or 1.
+  cube.position.x =
+    cube.position.x + Math.random() * Math.round(Math.random()) * 2 - 1;
   cube.bubble_value = cellColour;
   cube.castShadow = true;
   // [2] Set the status of the workFlowItem
