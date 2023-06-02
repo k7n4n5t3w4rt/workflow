@@ -11,7 +11,7 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import workFlowItem from "./workflowItem.js";
+import workflowItem from "./workflowItem.js";
 import clickCube from "./clickCube.js";
 import click from "./click.js";
 
@@ -33,6 +33,9 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().objects.clickCube.position.setFromMatrixPosition(
     gState().sceneData.reticleStuff.reticle.matrix,
   );
+  // Set the start position for all the workflow items
+  gState().objects.startPosition = gState().objects.clickCube.position.clone();
+  gState().objects.startPosition.y = 0;
 
   click();
 };

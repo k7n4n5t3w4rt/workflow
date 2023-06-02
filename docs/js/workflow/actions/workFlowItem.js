@@ -11,49 +11,62 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
+import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
+import randomNumberBetween from "./randomNumberBetween.js";
 
 export default () /*: Object */ => {
-  // Cubes in a group can be rotated / scaled etc as a group
-  // const workFlowItemsGroup = new THREE.Group();
-  const cellColour = 255;
+  // Basic properties of the cube
   const geometry = new THREE.BoxGeometry(
     gSettings().xCm,
     gSettings().yCm,
     gSettings().zCm,
   );
 
-  const material = new THREE.MeshBasicMaterial({
-    color: `rgb(${cellColour},${cellColour},${cellColour})`,
-  });
-  const cube = new THREE.Mesh(geometry, material);
-  // [0] Set the name to the uuid so we can delete it later
-  cube.name = cube.uuid;
-  // [1] Set the position and scene properties of the cube
-  cube.position.setFromMatrixPosition(
-    gState().sceneData.reticleStuff.reticle.matrix,
-  );
-  cube.position.y = gSettings().yCm * 2;
-  cube.position.z = cube.position.z + cube.id * -0.2;
-  cube.bubble_value = cellColour;
-  cube.castShadow = true;
-  // [2] Set the status of the workFlowItem
-  cube.status = gSettings().workflowStatuses[0];
-  // [3] Set the effort values of the workFlowItem
-  cube.effortTotal = randomNumberBetween(
+  // Calculate the effortTotal for the workflowItem
+  // ...before we finish with the geometry so that
+  // we can use the value to set the scale of the cube
+  // in the geometry which is efficient, apparently.
+  const cubeEffortTotal = randomNumberBetween(
     gSettings().workflowItem.effort.min,
     gSettings().workflowItem.effort.max,
   );
+  const scaleAdjustedForEffort =
+    cubeEffortTotal / gSettings().workflowItem.effort.max;
+  geometry.scale(
+    scaleAdjustedForEffort,
+    scaleAdjustedForEffort,
+    scaleAdjustedForEffort,
+  );
+
+  // Make it white to start with
+  const cellColour = 255;
+  const material = new THREE.MeshBasicMaterial({
+    color: `rgb(${cellColour},${cellColour},${cellColour})`,
+  });
+
+  // Create the cube
+  const cube = new THREE.Mesh(geometry, material);
+  cube.castShadow = true;
+  // Set the name to the uuid so we can delete it later
+  cube.name = cube.uuid;
+
+  // [1] Set the position
+  cube.position.x = gState().objects.startPosition.x;
+  cube.position.z = gState().objects.startPosition.z - Math.random();
+  cube.position.y = gState().objects.startPosition.y + Math.random();
+  cube.position.x =
+    cube.position.x + Math.random() * randomPositiveOrNegative();
+  // [2] Set the status of the workflowItem
+  cube.status = gSettings().workflowStatuses[0];
+  // [3] Set the effort values of the workflowItem
+  cube.effortTotal = cubeEffortTotal;
   cube.effortRemaining = cube.effortTotal;
-  // [4] Set the workflowStatusesIndex so we can pull the
+  // [5] Set the workflowStatusesIndex so we can pull the
   // status info from the gSettings().workflowStatuses array
   cube.workflowStatusesIndex = 0;
-  // [5] Set the team number of the workFlowItem
+  // [5] Set the team number of the workflowItem
   cube.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
-  // [6] Add the cube to the array of all workFlowItems
-  gState().objects.workFlowItems.push(cube);
+  // [6] Add the cube to the array of all workflowItems
+  gState().objects.workflowItems.push(cube);
   return cube;
 };
-
-function randomNumberBetween(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}

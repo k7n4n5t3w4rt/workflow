@@ -79,7 +79,7 @@ export default (props /*: Props */) /*: string */ => {
     { name: "In Review", category: "external" },
     { name: "Done", category: "complete" },
   ]);
-  // workFlowItem properties
+  // workflowItem properties
   gSettings("workflowItem", { effort: { min: 14, max: 500 } });
 
   // I'm not really using the state, but leaving it here just in case

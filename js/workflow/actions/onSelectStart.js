@@ -11,7 +11,7 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import workFlowItem from "./workflowItem.js";
+import workflowItem from "./workflowItem.js";
 import clickCube from "./clickCube.js";
 import click from "./click.js";
 

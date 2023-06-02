@@ -26,7 +26,7 @@ export default () /*: void */ => {
 
   // Setting an empty "objects" object in the global state
   gState("objects", {
-    workFlowItems: [],
+    workflowItems: [],
     clickCube: {},
   });
 

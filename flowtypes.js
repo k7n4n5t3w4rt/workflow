@@ -34,7 +34,7 @@ type GlobalState = {
 
 type Objects = {
   startPosition: CubePosition,
-  workFlowItems: Array<WorkflowItem>,
+  workflowItems: Array<WorkflowItem>,
   clickCube: SimpleCube,
 };
 

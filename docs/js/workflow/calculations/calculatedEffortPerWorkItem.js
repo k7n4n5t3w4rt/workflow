@@ -2,7 +2,7 @@
 export default (
   teamsNumber /*: number */,
   teamSize /*: number */,
-  workFlowItemsLength /*: number */,
+  workflowItemsLength /*: number */,
 ) /*: number */ => {
-  return (teamsNumber * teamSize) / workFlowItemsLength;
+  return (teamsNumber * teamSize) / workflowItemsLength;
 };
