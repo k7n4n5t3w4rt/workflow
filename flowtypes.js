@@ -1,6 +1,3 @@
-import Workflow from "./js/workflow/Workflow";
-import workflowItem from "./js/workflow/actions/workflowItem";
-
 // --------------------------------------------------
 // gSettings
 // --------------------------------------------------
@@ -36,7 +33,7 @@ type GlobalState = {
 };
 
 type Objects = {
-  workFlowItems: Array<WorkflowItemState>,
+  workFlowItems: Array<WorkflowItem>,
   clickCube: SimpleCube,
 };
 
@@ -47,15 +44,17 @@ type SimpleCube = {
   bubble_value: number,
 };
 
-type WorkflowItemState = {
+type WorkflowItem = {
   // Display properties
   position: CubePosition,
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
   bubble_value: number,
   // Workflow properties
+  name: string,
   effortTotal: number,
   effortRemaining: number,
+  workflowStatusesIndex: number,
 };
 
 type CubePosition = {
@@ -166,9 +165,15 @@ declare module "../../web_modules/three/examples/jsm/controls/OrbitControls.js" 
 declare module "../../../web_modules/three/examples/jsm/controls/OrbitControls.js" {
   declare module.exports: any;
 }
+
 declare module "../../web_modules/three/examples/jsm/loaders/TGALoader.js" {
   declare module.exports: any;
 }
+
 declare module "../../../web_modules/animejs.js" {
+  declare module.exports: any;
+}
+
+declare module "../../../web_modules/base64url.js" {
   declare module.exports: any;
 }

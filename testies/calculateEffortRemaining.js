@@ -1,7 +1,7 @@
 // @flow
 import { test, testPromise, should } from "../server/testy.js";
 import glob from "glob";
-import { calculateEffortRemaining } from "../js/workflow/calculations/calculateEffortRemaining.js";
+import calculateEffortRemaining from "../js/workflow/calculations/calculateEffortRemaining.js";
 
 const skip = false;
 

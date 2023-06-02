@@ -1,4 +1,4 @@
-import { x, L, m, h } from './common/preact.module-c2015350.js';
+import { toChildArray as P, cloneElement as E, Component as k, createElement as y } from './preact.js';
 
 var EMPTY$1 = {};
 
@@ -250,7 +250,7 @@ var Router = (function (Component$$1) {
 
 	/** Check if the given URL can be matched against any children */
 	Router.prototype.canRoute = function canRoute (url) {
-		var children = x(this.props.children);
+		var children = P(this.props.children);
 		return this.getMatchingChildren(children, url, false).length > 0;
 	};
 
@@ -307,7 +307,7 @@ var Router = (function (Component$$1) {
 						assign(newProps, matches);
 						delete newProps.ref;
 						delete newProps.key;
-						return L(vnode, newProps);
+						return E(vnode, newProps);
 					}
 					return vnode;
 				}
@@ -319,7 +319,7 @@ var Router = (function (Component$$1) {
 		var onChange = ref.onChange;
 		var url = ref$1.url;
 
-		var active = this.getMatchingChildren(x(children), url, true);
+		var active = this.getMatchingChildren(P(children), url, true);
 
 		var current = active[0] || null;
 
@@ -341,13 +341,13 @@ var Router = (function (Component$$1) {
 	};
 
 	return Router;
-}(m));
+}(k));
 
 var Link = function (props) { return (
-	h('a', assign({ onClick: handleLinkClick }, props))
+	y('a', assign({ onClick: handleLinkClick }, props))
 ); };
 
-var Route = function (props) { return h(props.component, props); };
+var Route = function (props) { return y(props.component, props); };
 
 Router.subscribers = subscribers;
 Router.getCurrentUrl = getCurrentUrl;

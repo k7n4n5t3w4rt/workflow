@@ -1,6 +1,7 @@
 {
   "imports": {
     "animejs": "./animejs.js",
+    "base64url": "./base64url.js",
     "htm": "./htm.js",
     "htm/preact": "./htm/preact.js",
     "immer": "./immer.js",

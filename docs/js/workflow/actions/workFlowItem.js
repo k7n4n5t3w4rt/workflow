@@ -11,6 +11,7 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
+import base64url from "../../../web_modules/base64url.js";
 
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group
@@ -26,26 +27,30 @@ export default () /*: Object */ => {
     color: `rgb(${cellColour},${cellColour},${cellColour})`,
   });
   const cube = new THREE.Mesh(geometry, material);
-
+  // [0] Set the name to the uuid so we can delete it later
+  cube.name = cube.uuid;
   // [1] Set the position and scene properties of the cube
-  const nextCubeId = gState().objects.workFlowItems.length;
   cube.position.setFromMatrixPosition(
     gState().sceneData.reticleStuff.reticle.matrix,
   );
   cube.position.y = gSettings().yCm * 2;
-  cube.position.z = cube.position.z + nextCubeId * -0.2;
+  cube.position.z = cube.position.z + cube.id * -0.2;
   cube.bubble_value = cellColour;
   cube.castShadow = true;
   // [2] Set the status of the workFlowItem
   cube.status = gSettings().workflowStatuses[0];
-  // [3] Set the effort value of the workFlowItem
-  cube.effort = randomNumberBetween(
+  // [3] Set the effort values of the workFlowItem
+  cube.effortTotal = randomNumberBetween(
     gSettings().workflowItem.effort.min,
     gSettings().workflowItem.effort.max,
   );
-  // [4] Set the team number of the workFlowItem
+  cube.effortRemaining = cube.effortTotal;
+  // [4] Set the workflowStatusesIndex so we can pull the
+  // status info from the gSettings().workflowStatuses array
+  cube.workflowStatusesIndex = 0;
+  // [5] Set the team number of the workFlowItem
   cube.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
-  // [5] Add the cube to the array of all workFlowItems
+  // [6] Add the cube to the array of all workFlowItems
   gState().objects.workFlowItems.push(cube);
   return cube;
 };

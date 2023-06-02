@@ -9,7 +9,7 @@ const move = (workFlowItem /*: Object */) /*: void */ => {
   // Move cube1
   anime({
     targets: [workFlowItem.position],
-    z: workFlowItem.position.z + gSettings().zCm * 2,
+    z: workFlowItem.position.z + gSettings().zCm * 4,
     // Every team has its own row of cubes.
     y: workFlowItem.teamNumber * gSettings().yCm * 2,
     duration: 1000 / gSettings().speed,
@@ -17,7 +17,7 @@ const move = (workFlowItem /*: Object */) /*: void */ => {
     easing: "easeInOutCirc",
     complete: function (anim) {
       // console.log("Move complete.");
-      // workFlowItem.status = gSettings().workflowStatuses[1];
+      workFlowItem.workflowStatusesIndex++;
     },
   });
 };

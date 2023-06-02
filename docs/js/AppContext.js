@@ -2,8 +2,8 @@
 import conf from "./config.js";
 import { h, render, createContext } from "../web_modules/preact.js";
 import { useReducer } from "../web_modules/preact/hooks.js";
-import {html} from "../web_modules/htm/preact.js";
-import produce from "../web_modules/immer.js";
+import { html } from "../web_modules/htm/preact.js";
+import { produce } from "../web_modules/immer.js";
 import stateStorage from "./state_storage.js";
 import Router from "../web_modules/preact-router.js";
 
@@ -45,10 +45,8 @@ const AppProvider /*: function */ = (props /*: Props */) => {
       //
       // Load data from stateStorage
       // https://developer.mozilla.org/en-US/docs/Web/API/Storage
-      let sessionStateString /*: string | null | typeof undefined */ = stateStorage.getItem(
-        "state",
-        state.rememberme,
-      );
+      let sessionStateString /*: string | null | typeof undefined */ =
+        stateStorage.getItem("state", state.rememberme);
       if (
         JSON.stringify(state) === JSON.stringify({}) &&
         (typeof sessionStateString === "undefined" ||

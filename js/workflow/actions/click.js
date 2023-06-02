@@ -10,8 +10,9 @@ import gState from "./gState.js";
 import anime from "../../../web_modules/animejs.js";
 import workFlowItem from "./workflowItem.js";
 import move from "./move.js";
-import { calculateEffortRemaining } from "../calculations/calculateEffortRemaining.js";
-import { calculatedEffortPerWorkItem } from "../calculations/calculatedEffortPerWorkItem.js";
+import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
+import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
+import isDone from "../calculations/isDone.js";
 
 const click = () /*: void */ => {
   // [1] Rotate the clickCube
@@ -21,33 +22,45 @@ const click = () /*: void */ => {
     duration: 1000,
     easing: "easeInOutSine",
     complete: function (anim) {
-      const nextWorkFlowItem = workFlowItem();
       // [2] Add the new workFlowItem to the scene
-      console.log("Adding a new workFlowItem: " + nextWorkFlowItem.position.x);
+      const nextWorkFlowItem = workFlowItem();
       gState().sceneData.scene.add(nextWorkFlowItem);
       // [3] Move all the workFlowItems one step forward
-      gState().objects.workFlowItems.forEach((workFlowItem) => {
-        // [3.1] Check if all the effort has been expended, and...
-        if (workFlowItem.effortRemaining === 0) {
-          // ...move the workFlowItem, or...
-          workFlowItem.effortRemaining = workFlowItem.effortTotal;
-          move(workFlowItem);
-        } else {
-          // ...decrement the effort counter
-          workFlowItem.effortRemaining = calculateEffortRemaining(
-            workFlowItem.effortRemaining,
-            calculatedEffortPerWorkItem(
-              gSettings().teamsNumber,
-              gSettings().teamSize,
-              gState().objects.workFlowItems.length,
-            ),
-          );
-        }
-      });
+      gState().objects.workFlowItems =
+        gState().objects.workFlowItems.filter(moveWorkflowItems);
       // [4] Call click() again
       click();
     },
   });
 };
 
+const moveWorkflowItems = (workFlowItem /*: WorkflowItem */) => {
+  // Filter out any workFlowItems that are Done
+  if (
+    isDone(workFlowItem.workflowStatusesIndex, gSettings().workflowStatuses)
+  ) {
+    console.log(`WorkFlowItem ${workFlowItem.name} is done.`);
+    gState().sceneData.scene.remove(
+      gState().sceneData.scene.getObjectByName(workFlowItem.name),
+    );
+    return false;
+  }
+  // [3.1] Check if all the effort has been expended, and...
+  if (workFlowItem.effortRemaining === 0) {
+    // ...move the workFlowItem, or...
+    workFlowItem.effortRemaining = workFlowItem.effortTotal;
+    move(workFlowItem);
+  } else {
+    // ...decrement the effort counter
+    workFlowItem.effortRemaining = calculateEffortRemaining(
+      workFlowItem.effortRemaining,
+      calculatedEffortPerWorkItem(
+        gSettings().teamsNumber,
+        gSettings().teamSize,
+        gState().objects.workFlowItems.length,
+      ),
+    );
+  }
+  return true;
+};
 export default click;

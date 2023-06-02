@@ -54,8 +54,6 @@ function registerPosthook(posthook) {
   posthooks.push(posthook);
 }
 
-var accumulatedSheetContents = null;
-
 function isNestedSelector(r) {
   return /&/g.test(r);
 }
@@ -180,34 +178,37 @@ function replaceBackReferences(out, sheetContents) {
   }, outputSheetContents);
 }
 
-function flushSheetContents(sheetContents) {
-  // In case we're in come weird test environment that doesn't support JSDom
-  if (typeof document !== 'undefined' && document.head && document.head.appendChild) {
+function createSheet(sheetContents) {
+  if (typeof document !== 'undefined' && document.head && document.head.appendChild && typeof document.createElement === 'function') {
     var styleTag = document.createElement('style');
     styleTag.innerHTML = sheetContents;
-    document.head.appendChild(styleTag);
+    return styleTag;
   }
+
+  return null;
+}
+
+function flushSheetContents(sheetContents, options) {
+  // In case we're in come weird test environment that doesn't support JSDom
+  var styleTag = createSheet(sheetContents);
+
+  if (styleTag) {
+    var _options$insertAfter, _options$insertBefore;
+
+    if (options != null && options.insertAfter && options != null && options.insertBefore) {
+      throw new Error('Both insertAfter and insertBefore were provided. Please choose only one.');
+    }
+
+    if (options != null && (_options$insertAfter = options.insertAfter) != null && _options$insertAfter.after) options.insertAfter.after(styleTag);else if (options != null && (_options$insertBefore = options.insertBefore) != null && _options$insertBefore.before) options.insertBefore.before(styleTag);else document.head.appendChild(styleTag);
+  }
+
+  return styleTag;
 }
 
 function coerceCreateStylesOptions(options) {
   return {
-    accumulate: (options === null || options === void 0 ? void 0 : options.accumulate) || false,
     flush: options && typeof options.flush === 'boolean' ? options.flush : true
   };
-}
-
-var accumulatedTimeout;
-
-function accumulateSheetContents(sheetContents, options) {
-  if (!accumulatedSheetContents) accumulatedSheetContents = [];
-  accumulatedSheetContents.push(sheetContents);
-  if (accumulatedTimeout) accumulatedTimeout = clearTimeout(accumulatedTimeout);
-  accumulatedTimeout = setTimeout(function () {
-    flushSheetContents(accumulatedSheetContents.reduce(function (prev, contents) {
-      return "" + prev + contents;
-    }, ''));
-    accumulatedSheetContents = null;
-  }, 0);
 }
 
 function rawStyles(rules, options) {
@@ -218,7 +219,7 @@ function rawStyles(rules, options) {
       mediaQueriesContents = _execCreateStyles4[2];
 
   var mergedContents = "" + sheetContents + mediaQueriesContents;
-  if (coerced.accumulate) accumulateSheetContents(mergedContents);else if (coerced.flush) flushSheetContents(mergedContents);
+  if (coerced.flush) flushSheetContents(mergedContents, options);
   return mergedContents;
 }
 function keyframes(frames, options) {
@@ -229,7 +230,6 @@ function keyframes(frames, options) {
       keyframesContents = _execCreateStyles5[1];
 
   var sheetContents = "@keyframes " + keyframeName + "{" + keyframesContents + "}";
-  if (coerced.accumulate) accumulateSheetContents(sheetContents);
   if (coerced.flush) flushSheetContents(sheetContents);
   return [keyframeName, sheetContents];
 }
@@ -243,8 +243,29 @@ function createStyles(rules, options) {
 
   var mergedContents = "" + sheetContents + mediaQueriesContents;
   var replacedSheetContents = replaceBackReferences(out, mergedContents);
-  if (coerced.accumulate) accumulateSheetContents(replacedSheetContents);else if (coerced.flush) flushSheetContents(replacedSheetContents);
-  return [out, replacedSheetContents];
+  var sheet = null;
+
+  var updateSheet = function updateSheet(updatedRules) {
+    if (sheet) {
+      var _execCreateStyles7 = execCreateStyles(updatedRules, {
+        flush: false
+      }, null),
+          updatedOut = _execCreateStyles7[0],
+          updatedSheetContents = _execCreateStyles7[1],
+          updatedMediaQueriesContents = _execCreateStyles7[2];
+
+      var updatedMergedContents = "" + updatedSheetContents + updatedMediaQueriesContents;
+      var updatedReplacedSheetContents = replaceBackReferences(out, updatedMergedContents);
+      sheet.innerHTML = updatedReplacedSheetContents;
+      return [updatedOut, updatedReplacedSheetContents];
+    }
+
+    return null;
+  };
+
+  if (coerced.flush) sheet = flushSheetContents(replacedSheetContents, options); // Need this TS cast to get solid code assist from the consumption-side
+
+  return [out, replacedSheetContents, updateSheet];
 }
 
 export { createStyles, keyframes, rawStyles, registerPosthook, setSeed };
