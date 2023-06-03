@@ -19,7 +19,8 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   const nextWorkflowStatusesIndex = workflowItem.workflowStatusesIndex + 1;
 
   if (
-    // If the workflowItem is moving into a touch status
+    // If the workflowItem is currently in the backlog we want to
+    // start from the official starting line
     gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
       .category === "backlog"
   ) {
@@ -44,10 +45,14 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
     newPosition.x =
       newPosition.x *
-      (numberOfWorkflowItemsWithTheNextWorkflowStatus / numberOfWorkflowItems);
+      ((numberOfWorkflowItemsWithTheNextWorkflowStatus /
+        numberOfWorkflowItems) *
+        2);
     newPosition.y =
       newPosition.y *
-      (numberOfWorkflowItemsWithTheNextWorkflowStatus / numberOfWorkflowItems);
+      ((numberOfWorkflowItemsWithTheNextWorkflowStatus /
+        numberOfWorkflowItems) *
+        2);
   } else if (
     // If the workflowItem is moving into a done status
     gSettings().workflowStatuses[nextWorkflowStatusesIndex] !== undefined &&
@@ -62,6 +67,15 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newPosition.z = workflowItem.position.z + gSettings().zCm * 8;
   }
   workflowItem.material.color = newColor;
+  anime({
+    targets: [workflowItem.material.color],
+    r: newColor.r,
+    g: newColor.g,
+    b: newColor.b,
+    duration: 500 / gSettings().speed,
+    delay: 0,
+    easing: "linear",
+  });
   anime({
     targets: [workflowItem.position],
     x: newPosition.x,
