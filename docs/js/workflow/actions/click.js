@@ -15,26 +15,34 @@ import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWork
 import isDone from "../calculations/isDone.js";
 
 const click = () /*: void */ => {
-  // [1] Rotate the clickCube
+  // Rotate the clickCube
   anime({
     targets: [gState().objects.clickCube.rotation],
     y: gState().objects.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
     complete: function (anim) {
-      // [2] Add the new workflowItem to the scene
+      // Get the new workflowItem
       const nextWorkFlowItem = workflowItem();
+      // Add the new workflowItem to the array of all workflowItems
+      gState().objects.workflowItems.push(nextWorkFlowItem);
+      // Add the new workflowItem to the scene
       gState().sceneData.scene.add(nextWorkFlowItem);
-      // [3] Move all the workflowItems one step forward
-      gState().objects.workflowItems =
-        gState().objects.workflowItems.filter(moveWorkflowItems);
-      // [4] Call click() again
+      // Filter out workflowItems in the Done status
+      gState().objects.workflowItems = gState().objects.workflowItems.filter(
+        removeDoneWorkflowItems,
+      );
+      // Move all the remaining workflowItems
+      gState().objects.workflowItems.forEach(moveWorkflowItems);
+      // Call click() again
       click();
     },
   });
 };
 
-const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
+const removeDoneWorkflowItems = (
+  workflowItem /*: WorkflowItem */,
+) /*: boolean */ => {
   // Filter out any workflowItems that are Done
   if (
     isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
@@ -43,63 +51,30 @@ const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );
+    gState().objects.valueSphere.geometry.scale(
+      gState().objects.valueSphere.scale.x + 1 / workflowItem.effortTotal,
+      gState().objects.valueSphere.scale.y + 1 / workflowItem.effortTotal,
+      gState().objects.valueSphere.scale.z + 1 / workflowItem.effortTotal,
+    );
     return false;
   }
-  // [3.1] Check if all the effort has been expended...
-  // ...or if the workflowItem is in a "wait" state
+  return true;
+};
+
+const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
+  // Check if all the effort has been expended...
+  // ...or if the workflowItem is in a "wait" or "backlog" state
   if (
     workflowItem.effortRemaining === 0 ||
     gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "wait"
+      .category === "wait" ||
+    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
+      .category === "backlog"
   ) {
-    // ...move the workflowItem, or...
+    // Move the workflowItem
+    move(workflowItem);
+    // Reset the effort counter
     workflowItem.effortRemaining = workflowItem.effortTotal;
-
-    // Some defaults
-    const newPosition = {
-      x: workflowItem.position.x,
-      y: workflowItem.position.y,
-      z: workflowItem.position.z + gSettings().zCm * 3,
-    };
-
-    const newColor = {
-      r: workflowItem.material.color.r,
-      g: workflowItem.material.color.g,
-      b: workflowItem.material.color.b,
-    };
-
-    // // If the workflowItem is at the end of the workflowStatuses array
-    // const nextWorkflowStatusesIndex = workflowItem.workflowStatusesIndex + 1;
-    // // If the workflowItem is at the start of the workflowStatuses array
-    // // then we need to set the endPositionZ to the global start position
-    // if (
-    //   // If the workflowItem is moving into a touch status
-    //   nextWorkflowStatusesIndex < gSettings().workflowStatuses.length &&
-    //   gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "touch"
-    // ) {
-    //   const numberOfWorkflowItemsWithTheNextWorkflowStatus =
-    //     gState().objects.workflowItems.reduce(
-    //       findWorkflowItemsWithTheSameStatus(
-    //         workflowItem.workflowStatusesIndex + 1,
-    //       ),
-    //       0,
-    //     );
-    //   const numberOfWorkflowItems = gState().objects.workflowItems.length;
-    //   endPositionX =
-    //     (endPositionX * numberOfWorkflowItemsWithTheNextWorkflowStatus) /
-    //     numberOfWorkflowItems;
-    //   endPositionY =
-    //     (endPositionY * numberOfWorkflowItemsWithTheNextWorkflowStatus) /
-    //     numberOfWorkflowItems;
-    // } else if (
-    //   nextWorkflowStatusesIndex < gSettings().workflowStatuses.length &&
-    //   gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "done"
-    // ) {
-    //   endPositionX = gState().objects.startPosition.x;
-    //   endPositionY = gState().objects.startPosition.y;
-    // }
-
-    move(workflowItem, newPosition, newColor);
   } else {
     // ...decrement the effort counter
     workflowItem.effortRemaining = calculateEffortRemaining(
@@ -113,4 +88,5 @@ const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
   }
   return true;
 };
+
 export default click;

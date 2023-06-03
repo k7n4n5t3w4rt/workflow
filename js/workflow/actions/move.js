@@ -10,7 +10,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   const newPosition = {};
   newPosition.x = workflowItem.position.x;
   newPosition.y = workflowItem.position.y;
-  newPosition.z = workflowItem.position.z + gSettings().zCm * 4;
+  newPosition.z = workflowItem.position.z + gSettings().stepCm;
   const newColor = {};
   newColor.r = 255;
   newColor.g = 0;
@@ -24,7 +24,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
       .category === "backlog"
   ) {
-    newPosition.z = gState().objects.startPosition.z + gSettings().zCm * 2;
+    newPosition.z = gState().objects.startPosition.z + gSettings().stepCm;
   }
 
   if (
@@ -62,9 +62,11 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newColor.r = 255;
     newColor.g = 255;
     newColor.b = 255;
-    newPosition.x = 0;
-    newPosition.y = 0;
-    newPosition.z = workflowItem.position.z + gSettings().zCm * 8;
+    newPosition.x = gState().objects.startPosition.x;
+    newPosition.y = gState().objects.startPosition.y;
+    newPosition.z =
+      gState().objects.startPosition.z +
+      gSettings().stepCm * gSettings().workflowStatuses.length;
   }
   workflowItem.material.color = newColor;
   anime({

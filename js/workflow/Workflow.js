@@ -55,6 +55,7 @@ type Props = {
 	xcm: string,
 	ycm: string,
 	zcm: string,
+	stepcm: string,
   teamsnumber: string,
   teamsize: string
 }
@@ -66,6 +67,7 @@ export default (props /*: Props */) /*: string */ => {
   gSettings("xCm", cleanInt(props.xcm) / 100 || 0.1);
   gSettings("yCm", cleanInt(props.ycm) / 100 || 0.1);
   gSettings("zCm", cleanInt(props.zcm) / 100 || 0.1);
+  gSettings("stepCm", cleanInt(props.stepcm) / 100 || gSettings().zCm * 4);
   // Set the number of teams to 1 so that we have one workflow
   gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now

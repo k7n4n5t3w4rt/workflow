@@ -1,5 +1,9 @@
 // @flow
 // --------------------------------------------------
+// THREE.js
+// --------------------------------------------------
+import * as THREE from "../../../web_modules/three.js";
+// --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
 import gSettings from "./gSettings.js";
@@ -51,6 +55,14 @@ const removeDoneWorkflowItems = (
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );
+    const valueProp =
+      workflowItem.effortTotal / gSettings().workflowItem.effort.max;
+    gState().objects.valueSphere.scale.x =
+      gState().objects.valueSphere.scale.x + valueProp;
+    gState().objects.valueSphere.scale.y =
+      gState().objects.valueSphere.scale.y + valueProp;
+    gState().objects.valueSphere.scale.z =
+      gState().objects.valueSphere.scale.z + valueProp;
     return false;
   }
   return true;

@@ -6,6 +6,7 @@ type GlobalSettings = {
   xCm: number,
   yCm: number,
   zCm: number,
+  stepCm: number,
   teamsNumber: number,
   teamSize: number,
   workflowStatuses: Array<WorkflowStatuses>,
@@ -36,13 +37,27 @@ type Objects = {
   startPosition: CubePosition,
   workflowItems: Array<WorkflowItem>,
   clickCube: SimpleCube,
+  valueSphere: SimpleSphere,
 };
 
 type SimpleCube = {
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+  },
   position: CubePosition,
+  scale: SimpleScale,
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
-  bubble_value: number,
+};
+
+type SimpleSphere = {
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+  },
+  position: CubePosition,
+  scale: SimpleScale,
+  rotateY: (radians: number) => void,
+  rotation: CubeRotation,
 };
 
 type WorkflowItem = {
@@ -60,6 +75,12 @@ type WorkflowItem = {
 };
 
 type SimplePosition = {
+  x: number,
+  y: number,
+  z: number,
+};
+
+type SimpleScale = {
   x: number,
   y: number,
   z: number,

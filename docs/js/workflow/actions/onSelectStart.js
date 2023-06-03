@@ -14,6 +14,7 @@ import gState from "./gState.js";
 import workflowItem from "./workflowItem.js";
 import clickCube from "./clickCube.js";
 import click from "./click.js";
+import valueSphere from "./valueSphere.js";
 
 export default () /*: () => void */ => () /*: void */ => {
   if (gState().sceneData.reticleStuff.reticle.visible) {
@@ -22,6 +23,9 @@ export default () /*: () => void */ => () /*: void */ => {
 
   gState().objects.clickCube = clickCube();
   gState().sceneData.scene.add(gState().objects.clickCube);
+
+  gState().objects.valueSphere = valueSphere();
+  gState().sceneData.scene.add(gState().objects.valueSphere);
 
   // Get the direction in which the camera is looking
   const vector = new THREE.Vector3();
