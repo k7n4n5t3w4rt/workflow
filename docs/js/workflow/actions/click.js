@@ -54,7 +54,52 @@ const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
   ) {
     // ...move the workflowItem, or...
     workflowItem.effortRemaining = workflowItem.effortTotal;
-    move(workflowItem);
+
+    // Some defaults
+    const newPosition = {
+      x: workflowItem.position.x,
+      y: workflowItem.position.y,
+      z: workflowItem.position.z + gSettings().zCm * 3,
+    };
+
+    const newColor = {
+      r: workflowItem.material.color.r,
+      g: workflowItem.material.color.g,
+      b: workflowItem.material.color.b,
+    };
+
+    // // If the workflowItem is at the end of the workflowStatuses array
+    // const nextWorkflowStatusesIndex = workflowItem.workflowStatusesIndex + 1;
+    // // If the workflowItem is at the start of the workflowStatuses array
+    // // then we need to set the endPositionZ to the global start position
+    // if (
+    //   // If the workflowItem is moving into a touch status
+    //   nextWorkflowStatusesIndex < gSettings().workflowStatuses.length &&
+    //   gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "touch"
+    // ) {
+    //   const numberOfWorkflowItemsWithTheNextWorkflowStatus =
+    //     gState().objects.workflowItems.reduce(
+    //       findWorkflowItemsWithTheSameStatus(
+    //         workflowItem.workflowStatusesIndex + 1,
+    //       ),
+    //       0,
+    //     );
+    //   const numberOfWorkflowItems = gState().objects.workflowItems.length;
+    //   endPositionX =
+    //     (endPositionX * numberOfWorkflowItemsWithTheNextWorkflowStatus) /
+    //     numberOfWorkflowItems;
+    //   endPositionY =
+    //     (endPositionY * numberOfWorkflowItemsWithTheNextWorkflowStatus) /
+    //     numberOfWorkflowItems;
+    // } else if (
+    //   nextWorkflowStatusesIndex < gSettings().workflowStatuses.length &&
+    //   gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "done"
+    // ) {
+    //   endPositionX = gState().objects.startPosition.x;
+    //   endPositionY = gState().objects.startPosition.y;
+    // }
+
+    move(workflowItem, newPosition, newColor);
   } else {
     // ...decrement the effort counter
     workflowItem.effortRemaining = calculateEffortRemaining(

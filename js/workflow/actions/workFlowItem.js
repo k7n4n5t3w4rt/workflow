@@ -51,11 +51,11 @@ export default () /*: Object */ => {
   cube.name = cube.uuid;
 
   // [1] Set the position
-  cube.position.x = gState().objects.startPosition.x;
+  cube.position.x =
+    gState().objects.startPosition.x +
+    Math.random() * randomPositiveOrNegative();
   cube.position.z = gState().objects.startPosition.z - Math.random();
   cube.position.y = gState().objects.startPosition.y + Math.random();
-  cube.position.x =
-    cube.position.x + Math.random() * randomPositiveOrNegative();
   // [2] Set the status of the workflowItem
   cube.status = gSettings().workflowStatuses[0];
   // [3] Set the effort values of the workflowItem
@@ -66,7 +66,5 @@ export default () /*: Object */ => {
   cube.workflowStatusesIndex = 0;
   // [5] Set the team number of the workflowItem
   cube.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
-  // [6] Add the cube to the array of all workflowItems
-  gState().objects.workflowItems.push(cube);
   return cube;
 };

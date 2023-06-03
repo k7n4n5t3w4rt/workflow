@@ -48,6 +48,7 @@ type SimpleCube = {
 type WorkflowItem = {
   // Display properties
   position: CubePosition,
+  material: { color: CubeColor },
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
   bubble_value: number,
@@ -58,6 +59,12 @@ type WorkflowItem = {
   workflowStatusesIndex: number,
 };
 
+type SimplePosition = {
+  x: number,
+  y: number,
+  z: number,
+};
+
 type CubePosition = {
   setFromMatrixPosition: (matrix: Object) => void,
   clone: () => CubePosition,
@@ -66,6 +73,11 @@ type CubePosition = {
   z: number,
 };
 
+type CubeColor = {
+  r: number,
+  g: number,
+  b: number,
+};
 type CubeRotation = {
   x: number,
   y: number,

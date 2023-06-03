@@ -73,7 +73,6 @@ export default (props /*: Props */) /*: string */ => {
   // Populate the workflowStatus array
   gSettings("workflowStatuses", [
     { name: "Open", category: "backlog" },
-    { name: "To Do", category: "wait" },
     { name: "Doing", category: "touch" },
     { name: "Ready for Review", category: "wait" },
     { name: "In Review", category: "external" },

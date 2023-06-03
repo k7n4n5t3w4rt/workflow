@@ -7,41 +7,70 @@ import gSettings from "./gSettings.js";
 import gState from "./gState.js";
 
 const move = (workflowItem /*: Object */) /*: void */ => {
-  let startPositionX = workflowItem.position.x;
-  let startPositionY = workflowItem.position.y;
-  let startPositionZ = workflowItem.position.z;
-  // If the workflowItem is at the start of the workflowStatuses array
-  // then we need to set the startPositionZ to the global start position
-  if (workflowItem.workflowStatusesIndex === 0) {
-    startPositionZ = gState().objects.startPosition.z;
-  } else if (
-    // If the workflowItem is in a touch status
+  const newPosition = {};
+  newPosition.x = workflowItem.position.x;
+  newPosition.y = workflowItem.position.y;
+  newPosition.z = workflowItem.position.z + gSettings().zCm * 4;
+  const newColor = {};
+  newColor.r = 255;
+  newColor.g = 0;
+  newColor.b = 0;
+
+  const nextWorkflowStatusesIndex = workflowItem.workflowStatusesIndex + 1;
+
+  if (
+    // If the workflowItem is moving into a touch status
     gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "touch"
+      .category === "backlog"
   ) {
-    const numberOfWorkflowItemsWithThisWorkflowStatus =
+    newPosition.z = gState().objects.startPosition.z + gSettings().zCm * 2;
+  }
+
+  if (
+    // If the workflowItem is moving into a touch status
+    gSettings().workflowStatuses[nextWorkflowStatusesIndex] !== undefined &&
+    gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "touch"
+  ) {
+    newColor.r = 0;
+    newColor.g = 255;
+    newColor.b = 0;
+    const numberOfWorkflowItemsWithTheNextWorkflowStatus =
       gState().objects.workflowItems.reduce(
-        findWorkflowItemsWithTheSameStatus(workflowItem.workflowStatusesIndex),
+        findWorkflowItemsWithTheSameStatus(
+          workflowItem.workflowStatusesIndex + 1,
+        ),
         0,
       );
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
-    startPositionX =
-      (startPositionX * numberOfWorkflowItemsWithThisWorkflowStatus) /
-      numberOfWorkflowItems;
-    startPositionY =
-      (startPositionY * numberOfWorkflowItemsWithThisWorkflowStatus) /
-      numberOfWorkflowItems;
+    newPosition.x =
+      newPosition.x *
+      (numberOfWorkflowItemsWithTheNextWorkflowStatus / numberOfWorkflowItems);
+    newPosition.y =
+      newPosition.y *
+      (numberOfWorkflowItemsWithTheNextWorkflowStatus / numberOfWorkflowItems);
+  } else if (
+    // If the workflowItem is moving into a done status
+    gSettings().workflowStatuses[nextWorkflowStatusesIndex] !== undefined &&
+    gSettings().workflowStatuses[nextWorkflowStatusesIndex].category ===
+      "complete"
+  ) {
+    newColor.r = 255;
+    newColor.g = 255;
+    newColor.b = 255;
+    newPosition.x = 0;
+    newPosition.y = 0;
+    newPosition.z = workflowItem.position.z + gSettings().zCm * 8;
   }
+  workflowItem.material.color = newColor;
   anime({
     targets: [workflowItem.position],
-    x: startPositionX,
-    y: startPositionY,
-    z: startPositionZ + gSettings().zCm * 2,
+    x: newPosition.x,
+    y: newPosition.y,
+    z: newPosition.z,
     duration: 1000 / gSettings().speed,
     delay: 0,
     easing: "easeInOutCirc",
-    complete: function (anim) {
-      // console.log("Move complete.");
+    complete: (anim) /*: void */ => {
       workflowItem.workflowStatusesIndex++;
     },
   });

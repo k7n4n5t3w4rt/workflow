@@ -15,26 +15,34 @@ import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWork
 import isDone from "../calculations/isDone.js";
 
 const click = () /*: void */ => {
-  // [1] Rotate the clickCube
+  // Rotate the clickCube
   anime({
     targets: [gState().objects.clickCube.rotation],
     y: gState().objects.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
     complete: function (anim) {
-      // [2] Add the new workflowItem to the scene
+      // Get the new workflowItem
       const nextWorkFlowItem = workflowItem();
+      // Add the new workflowItem to the array of all workflowItems
+      gState().objects.workflowItems.push(nextWorkFlowItem);
+      // Add the new workflowItem to the scene
       gState().sceneData.scene.add(nextWorkFlowItem);
-      // [3] Move all the workflowItems one step forward
-      gState().objects.workflowItems =
-        gState().objects.workflowItems.filter(moveWorkflowItems);
-      // [4] Call click() again
+      // Filter out workflowItems in the Done status
+      gState().objects.workflowItems = gState().objects.workflowItems.filter(
+        removeDoneWorkflowItems,
+      );
+      // Move all the remaining workflowItems
+      gState().objects.workflowItems.forEach(moveWorkflowItems);
+      // Call click() again
       click();
     },
   });
 };
 
-const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
+const removeDoneWorkflowItems = (
+  workflowItem /*: WorkflowItem */,
+) /*: boolean */ => {
   // Filter out any workflowItems that are Done
   if (
     isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
@@ -45,16 +53,23 @@ const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
     );
     return false;
   }
-  // [3.1] Check if all the effort has been expended...
-  // ...or if the workflowItem is in a "wait" state
+  return true;
+};
+
+const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
+  // Check if all the effort has been expended...
+  // ...or if the workflowItem is in a "wait" or "backlog" state
   if (
     workflowItem.effortRemaining === 0 ||
     gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "wait"
+      .category === "wait" ||
+    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
+      .category === "backlog"
   ) {
-    // ...move the workflowItem, or...
-    workflowItem.effortRemaining = workflowItem.effortTotal;
+    // Move the workflowItem
     move(workflowItem);
+    // Reset the effort counter
+    workflowItem.effortRemaining = workflowItem.effortTotal;
   } else {
     // ...decrement the effort counter
     workflowItem.effortRemaining = calculateEffortRemaining(
@@ -68,4 +83,5 @@ const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
   }
   return true;
 };
+
 export default click;
