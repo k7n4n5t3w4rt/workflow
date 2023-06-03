@@ -41,5 +41,11 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().objects.startPosition = gState().objects.clickCube.position.clone();
   gState().objects.startPosition.y = 0;
 
+  gState().objects.valueSphere.position.x = gState().objects.startPosition.x;
+  gState().objects.valueSphere.position.y = gState().objects.startPosition.y;
+  gState().objects.valueSphere.position.z =
+    gState().objects.startPosition.z +
+    gSettings().stepCm * gSettings().workflowStatuses.length;
+
   click();
 };

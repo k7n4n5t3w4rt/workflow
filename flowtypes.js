@@ -31,13 +31,14 @@ type WorkflowStatuses = {
 type GlobalState = {
   sceneData: SceneData,
   objects: Objects,
+  valueQueue: ValueQueue,
 };
 
 type Objects = {
   startPosition: CubePosition,
   workflowItems: Array<WorkflowItem>,
   clickCube: SimpleCube,
-  valueSphere: SimpleSphere,
+  valueSphere: ValueSphere,
 };
 
 type SimpleCube = {
@@ -50,7 +51,7 @@ type SimpleCube = {
   rotation: CubeRotation,
 };
 
-type SimpleSphere = {
+type ValueSphere = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
@@ -58,6 +59,7 @@ type SimpleSphere = {
   scale: SimpleScale,
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
+  rollingTotal: number,
 };
 
 type WorkflowItem = {
@@ -120,6 +122,13 @@ type SceneData = {
   camera: Object,
   renderer: Object,
   reticleStuff: ReticleStuff,
+};
+
+type ValueQueue = {
+  dequeue: () => void,
+  enqueue: (item: number) => void,
+  total: () => number,
+  length: () => number,
 };
 
 // --------------------------------------------------

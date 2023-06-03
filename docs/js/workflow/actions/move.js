@@ -62,9 +62,11 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newColor.r = 255;
     newColor.g = 255;
     newColor.b = 255;
-    newPosition.x = 0;
-    newPosition.y = 0;
-    newPosition.z = workflowItem.position.z + gSettings().stepCm * 2;
+    newPosition.x = gState().objects.startPosition.x;
+    newPosition.y = gState().objects.startPosition.y;
+    newPosition.z =
+      gState().objects.startPosition.z +
+      gSettings().stepCm * gSettings().workflowStatuses.length;
   }
   workflowItem.material.color = newColor;
   anime({

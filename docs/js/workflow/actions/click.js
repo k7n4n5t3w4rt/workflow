@@ -1,5 +1,9 @@
 // @flow
 // --------------------------------------------------
+// THREE.js
+// --------------------------------------------------
+import * as THREE from "../../../web_modules/three.js";
+// --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
 import gSettings from "./gSettings.js";
@@ -28,7 +32,23 @@ const click = () /*: void */ => {
       gState().objects.workflowItems.push(nextWorkFlowItem);
       // Add the new workflowItem to the scene
       gState().sceneData.scene.add(nextWorkFlowItem);
-      // Filter out workflowItems in the Done status
+      // Update the size of the valueSphere
+      const collectedValue = gState().objects.workflowItems.reduce(
+        collectValue,
+        0,
+      );
+      if (gState().valueQueue.length() > 60) {
+        gState().valueQueue.dequeue();
+      }
+      gState().valueQueue.enqueue(collectedValue);
+      gState().objects.valueSphere.rollingTotal = gState().valueQueue.total();
+      gState().objects.valueSphere.scale.x =
+        gState().objects.valueSphere.rollingTotal;
+      gState().objects.valueSphere.scale.y =
+        gState().objects.valueSphere.rollingTotal;
+      gState().objects.valueSphere.scale.z =
+        gState().objects.valueSphere.rollingTotal;
+      // Filter out the Done ones
       gState().objects.workflowItems = gState().objects.workflowItems.filter(
         removeDoneWorkflowItems,
       );
@@ -40,6 +60,20 @@ const click = () /*: void */ => {
   });
 };
 
+const collectValue = (
+  accumulator /*: number */,
+  workflowItem /*: WorkflowItem */,
+) /*: number */ => {
+  if (
+    isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
+  ) {
+    return (
+      accumulator +
+      workflowItem.effortTotal / gSettings().workflowItem.effort.max
+    );
+  }
+  return accumulator;
+};
 const removeDoneWorkflowItems = (
   workflowItem /*: WorkflowItem */,
 ) /*: boolean */ => {
@@ -50,11 +84,6 @@ const removeDoneWorkflowItems = (
     console.log(`WorkFlowItem ${workflowItem.name} is done.`);
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(workflowItem.name),
-    );
-    gState().objects.valueSphere.geometry.scale(
-      gState().objects.valueSphere.scale.x + 1 / workflowItem.effortTotal,
-      gState().objects.valueSphere.scale.y + 1 / workflowItem.effortTotal,
-      gState().objects.valueSphere.scale.z + 1 / workflowItem.effortTotal,
     );
     return false;
   }
