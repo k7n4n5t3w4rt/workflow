@@ -10,24 +10,22 @@ import gSettings from "./gSettings.js";
 import gState from "./gState.js";
 
 export default () /*: Object */ => {
-  const xCm = gSettings().xCm;
-  const yCm = gSettings().yCm;
-  const zCm = gSettings().zCm;
-
   // Cubes in a group can be rotated / scaled etc as a group
   // const clickCubeGroup = new THREE.Group();
 
-  const cellColour = 255;
-  const geometry = new THREE.BoxGeometry(xCm, yCm, zCm);
+  const geometry = new THREE.BoxGeometry(
+    gSettings().x,
+    gSettings().y,
+    gSettings().z,
+  );
 
   const material = new THREE.MeshBasicMaterial({
-    color: `rgb(${cellColour},${cellColour},${cellColour})`,
+    color: `rgb(255,255,255)`,
   });
   const cube = new THREE.Mesh(geometry, material);
 
-  cube.position.z = zCm;
-  cube.position.y = yCm;
-  cube.bubble_value = cellColour;
+  cube.position.z = gSettings().z;
+  cube.position.y = gSettings().y;
   cube.castShadow = true;
   return cube;
 };

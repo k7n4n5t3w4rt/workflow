@@ -115,24 +115,32 @@ function filterOutDoneItems() /*: void */ {
 const removeDoneWorkflowItems = (
   workflowItem /*: WorkflowItem */,
 ) /*: boolean */ => {
-  // Filter out any workflowItems that are Done
+  // Note: No need to delete the workflowItem object becase
+  // it will be filtered out of the array
   if (isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)) {
-    console.log(`WorkFlowItem ${workflowItem.name} is done.`);
+    // Filter out any workflowItems that are Done
     gState().objects.workflowStepTotals.doneTotal++;
     updateValueQueue(workflowItem.volume);
-    console.log(`workflowItem.volume: ${workflowItem.volume}`);
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );
+    return false;
+  } else if (workflowItem.age > 365) {
+    // Filter out any workflowItems that are older than a year
     return false;
   }
   return true;
 };
 
 //--------------------------------------------------
-// moveWorkflowItem()
+// moveWorkflowItemAndUpdateProperties()
 //--------------------------------------------------
-const moveWorkflowItem = (workflowItem /*: WorkflowItem */) => {
+const moveWorkflowItemAndUpdateProperties = (
+  workflowItem /*: WorkflowItem */,
+) => {
+  // First, make it a day older
+  updateAgeOrRemoveFromScene(workflowItem);
+
   // Check if all the effort has been expended...
   // ...or if the workflowItem is in a "wait" or "backlog" state
   if (
@@ -161,10 +169,28 @@ const moveWorkflowItem = (workflowItem /*: WorkflowItem */) => {
 };
 
 //--------------------------------------------------
+// updateAgeOrRemoveFromScene()
+//--------------------------------------------------
+function updateAgeOrRemoveFromScene(workflowItem) {
+  if (workflowItem.age < 365) {
+    workflowItem.age++;
+    if (workflowItem.age <= 365 && workflowItem.age % 10 === 0) {
+      workflowItem.material.opacity = 1 - workflowItem.age / 365;
+      workflowItem.material.needsUpdate = true;
+    }
+  } else {
+    console.log(`WorkFlowItem ${workflowItem.name} is too old.`);
+    gState().sceneData.scene.remove(
+      gState().sceneData.scene.getObjectByName(workflowItem.name),
+    );
+  }
+}
+
+//--------------------------------------------------
 // moveAllWorkflowItems()
 //--------------------------------------------------
 function moveAllWorkflowItems() {
-  gState().objects.workflowItems.forEach(moveWorkflowItem);
+  gState().objects.workflowItems.forEach(moveWorkflowItemAndUpdateProperties);
 }
 
 export default click;

@@ -46,14 +46,12 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
     newPosition.x =
       newPosition.x *
-      ((gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
-        numberOfWorkflowItems) *
-        2);
+      (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+        numberOfWorkflowItems);
     newPosition.y =
       newPosition.y *
-      ((gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
-        numberOfWorkflowItems) *
-        2);
+      (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+        numberOfWorkflowItems);
   } else if (
     // If the workflowItem is moving into a done status
     gSettings().workflowSteps[nextWorkflowStepsIndex].status === "done"
@@ -68,15 +66,15 @@ const move = (workflowItem /*: Object */) /*: void */ => {
       gSettings().stepCm * gSettings().workflowSteps.length;
   }
   workflowItem.material.color = newColor;
-  anime({
-    targets: [workflowItem.material.color],
-    r: newColor.r,
-    g: newColor.g,
-    b: newColor.b,
-    duration: 100 / gSettings().speed,
-    delay: 0,
-    easing: "linear",
-  });
+  // anime({
+  //   targets: [workflowItem.material.color],
+  //   r: newColor.r,
+  //   g: newColor.g,
+  //   b: newColor.b,
+  //   duration: 100 / gSettings().speed,
+  //   delay: 0,
+  //   easing: "linear",
+  // });
   anime({
     targets: [workflowItem.position],
     x: newPosition.x,

@@ -3,9 +3,14 @@
 // --------------------------------------------------
 type GlobalSettings = {
   speed: number,
+  x: number,
+  y: number,
+  z: number,
   xCm: number,
   yCm: number,
   zCm: number,
+  scale: number,
+  scaleCm: number,
   stepCm: number,
   teamsNumber: number,
   teamSize: number,
@@ -80,12 +85,13 @@ type WorkflowItem = {
   position: CubePosition,
   scale: SimpleScale,
   volume: number,
-  material: { color: CubeColor },
+  material: { color: CubeColorm, opacity: number, needsUpdate: boolean },
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
   bubble_value: number,
   // Workflow properties
   name: string,
+  age: number,
   effortTotal: number,
   effortRemaining: number,
   workflowStepsIndex: number,
@@ -117,6 +123,7 @@ type CubeColor = {
   g: number,
   b: number,
 };
+
 type CubeRotation = {
   x: number,
   y: number,

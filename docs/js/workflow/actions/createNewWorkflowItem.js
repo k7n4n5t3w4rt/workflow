@@ -17,9 +17,9 @@ import randomNumberBetween from "./randomNumberBetween.js";
 export default () /*: void */ => {
   // Basic properties of the cube
   const geometry = new THREE.BoxGeometry(
-    gSettings().xCm,
-    gSettings().yCm,
-    gSettings().zCm,
+    gSettings().x,
+    gSettings().y,
+    gSettings().z,
   );
 
   // Calculate the effortTotal for the workflowItem
@@ -47,10 +47,13 @@ export default () /*: void */ => {
   const workflowItem = new THREE.Mesh(geometry, material);
   workflowItem.castShadow = true;
   workflowItem.receiveShadow = true;
-  workflowItem.volume = Math.pow(gSettings().xCm * scaleAdjustedForEffort, 3);
+  workflowItem.volume = Math.pow(gSettings().x * scaleAdjustedForEffort, 3);
 
   // Set the name to the uuid so we can delete it later
   workflowItem.name = workflowItem.uuid;
+
+  // Set the age to 0
+  workflowItem.age = 0;
 
   // Set the position
   workflowItem.position.setFromMatrixPosition(

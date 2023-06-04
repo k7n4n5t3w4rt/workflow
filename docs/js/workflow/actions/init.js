@@ -39,8 +39,8 @@ export default () /*: void */ => {
   );
   // Does this really get used? Probably not in AR mode
   camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(4 / 2)) * gSettings().yCm;
-  camera.position.x = Math.abs(parseInt(5 / 2)) * gSettings().xCm;
+  camera.position.y = Math.abs(parseInt(4 / 2)) * gSettings().y;
+  camera.position.x = Math.abs(parseInt(5 / 2)) * gSettings().x;
 
   // https://threejs.org/docs/#api/en/lights/HemisphereLight
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
