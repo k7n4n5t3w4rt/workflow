@@ -17,6 +17,7 @@ import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
+import newSphereRadius from "../calculations/newSphereRadius.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
@@ -79,33 +80,24 @@ const updateValueQueue = (workflowItemValue /*: number */) /*: void */ => {
   gState().valueQueue.enqueue(workflowItemValue);
 };
 
-// const collectValue = (
-//   accumulator /*: number */,
-//   workflowItem /*: WorkflowItem */,
-// ) /*: number */ => {
-//   if (
-//     isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)
-//   ) {
-//     return (
-//       accumulator +
-//       workflowItem.effortTotal / gSettings().workflowItem.effort.max
-//     );
-//   }
-//   return accumulator;
-// };
-
 //--------------------------------------------------
 // updateValueSphereDisplayProps()
 //--------------------------------------------------
 function updateValueSphereDisplayProps() {
   gState().objects.valueSphere.rollingTotal = gState().valueQueue.total();
-  gState().objects.valueSphere.scale.x =
-    gState().objects.valueSphere.rollingTotal;
-  gState().objects.valueSphere.scale.y =
-    gState().objects.valueSphere.rollingTotal;
-  gState().objects.valueSphere.scale.z =
-    gState().objects.valueSphere.rollingTotal;
+  const newRadius = Math.cbrt(
+    gState().objects.valueSphere.rollingTotal / ((4 / 3) * Math.PI),
+  );
+  // Update the sphere's geometry
+  gState().objects.valueSphere.geometry.dispose();
+  gState().objects.valueSphere.geometry = new THREE.SphereGeometry(
+    newRadius,
+    32,
+    32,
+  );
 }
+
+function updateSphereRadius(newVolume) {}
 
 //--------------------------------------------------
 // filterOutDoneItems()
@@ -123,9 +115,8 @@ const removeDoneWorkflowItems = (
   if (isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)) {
     console.log(`WorkFlowItem ${workflowItem.name} is done.`);
     gState().objects.workflowStepTotals.doneTotal++;
-    updateValueQueue(
-      workflowItem.effortTotal / gSettings().workflowItem.effort.max,
-    );
+    updateValueQueue(workflowItem.volume);
+    console.log(`workflowItem.volume: ${workflowItem.volume}`);
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );

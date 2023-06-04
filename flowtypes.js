@@ -54,6 +54,7 @@ type SimpleCube = {
   },
   position: CubePosition,
   scale: SimpleScale,
+  material: { color: CubeColor },
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
 };
@@ -61,9 +62,11 @@ type SimpleCube = {
 type ValueSphere = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
+    dispose: () => void,
   },
   position: CubePosition,
   scale: SimpleScale,
+  volume: number,
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
   rollingTotal: number,
@@ -71,7 +74,12 @@ type ValueSphere = {
 
 type WorkflowItem = {
   // Display properties
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+  },
   position: CubePosition,
+  scale: SimpleScale,
+  volume: number,
   material: { color: CubeColor },
   rotateY: (radians: number) => void,
   rotation: CubeRotation,

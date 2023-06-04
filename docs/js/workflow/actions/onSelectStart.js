@@ -13,7 +13,7 @@ import gState from "./gState.js";
 // --------------------------------------------------
 import clickCube from "./clickCube.js";
 import click from "./click.js";
-import valueSphere from "./valueSphere.js";
+import createValueSphere from "./createValueSphere.js";
 
 export default () /*: () => void */ => () /*: void */ => {
   // Hide the reticle
@@ -41,7 +41,7 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().objects.startPosition.y = 0;
 
   // Create the valueSphere
-  gState().objects.valueSphere = valueSphere();
+  gState().objects.valueSphere = createValueSphere();
   gState().sceneData.scene.add(gState().objects.valueSphere);
   gState().objects.valueSphere.position.x = gState().objects.startPosition.x;
   gState().objects.valueSphere.position.y = gState().objects.startPosition.y;

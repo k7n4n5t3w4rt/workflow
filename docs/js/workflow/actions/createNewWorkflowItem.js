@@ -46,6 +46,8 @@ export default () /*: void */ => {
   // Create the cube
   const workflowItem = new THREE.Mesh(geometry, material);
   workflowItem.castShadow = true;
+  workflowItem.receiveShadow = true;
+  workflowItem.volume = Math.pow(gSettings().xCm * scaleAdjustedForEffort, 3);
 
   // Set the name to the uuid so we can delete it later
   workflowItem.name = workflowItem.uuid;
