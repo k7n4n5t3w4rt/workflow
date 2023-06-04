@@ -30,7 +30,7 @@ const click = () /*: void */ => {
     complete: () /*: void */ => {
       if (gState().clicks % gSettings().valueUpdateInterval === 0) {
         filterOutDoneItems();
-        updateValueSphereDisplayProps();
+        resizeValueSphere();
         updateTotalsForEachWorkflowStep();
       }
       createNewWorkflowItem();
@@ -81,14 +81,20 @@ const updateValueQueue = (workflowItemValue /*: number */) /*: void */ => {
 };
 
 //--------------------------------------------------
-// updateValueSphereDisplayProps()
+// resizeValueSphere()
 //--------------------------------------------------
-function updateValueSphereDisplayProps() {
+function resizeValueSphere() {
   gState().objects.valueSphere.rollingTotal = gState().valueQueue.total();
   const newRadius = Math.cbrt(
     gState().objects.valueSphere.rollingTotal / ((4 / 3) * Math.PI),
   );
-  // Update the sphere's geometry
+  // Doesn't work :(
+  // gState().objects.valueSphere.scale.set(newRadius, newRadius, newRadius);
+  // Nor does this :(
+  // gState().objects.valueSphere.scale.x = newRadius;
+  // gState().objects.valueSphere.scale.y = newRadius;
+  // gState().objects.valueSphere.scale.z = newRadius;
+  // This does though :)
   gState().objects.valueSphere.geometry.dispose();
   gState().objects.valueSphere.geometry = new THREE.SphereGeometry(
     newRadius,
@@ -96,8 +102,6 @@ function updateValueSphereDisplayProps() {
     32,
   );
 }
-
-function updateSphereRadius(newVolume) {}
 
 //--------------------------------------------------
 // filterOutDoneItems()

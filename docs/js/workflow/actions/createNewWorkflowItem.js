@@ -53,18 +53,16 @@ export default () /*: void */ => {
   workflowItem.name = workflowItem.uuid;
 
   // Set the position
-  workflowItem.position.x =
-    gState().objects.startPosition.x +
-    Math.random() * randomPositiveOrNegative();
-  workflowItem.position.z = gState().objects.startPosition.z - Math.random();
+  workflowItem.position.setFromMatrixPosition(
+    gState().sceneData.reticleStuff.reticle.matrix,
+  );
+  workflowItem.position.x += Math.random() * randomPositiveOrNegative();
   workflowItem.position.y = gState().objects.startPosition.y + Math.random();
-
-  // Set the status of the workflowItem
-  workflowItem.status = gSettings().workflowSteps[0];
+  workflowItem.position.z = gState().objects.startPosition.z - Math.random();
 
   // Set the effort values of the workflowItem
-  workflowItem.effortTotal = workflowItemEffortTotal;
-  workflowItem.effortRemaining = workflowItem.effortTotal;
+  workflowItem.effortRemaining = workflowItem.effortTotal =
+    workflowItemEffortTotal;
 
   // Set the workflowStepsIndex so we can pull the
   // status info from the gSettings().workflowSteps array

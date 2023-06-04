@@ -52,9 +52,7 @@ const [styles] = createStyles({
 /*::
 type Props = {
 	speed: string,
-	xcm: string,
-	ycm: string,
-	zcm: string,
+	scalecm: string,
 	stepcm: string,
   teamsnumber: string,
   teamsize: string
@@ -64,9 +62,9 @@ export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
   gSettings("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
-  gSettings("xCm", cleanInt(props.xcm) / 100 || 0.1);
-  gSettings("yCm", cleanInt(props.ycm) / 100 || 0.1);
-  gSettings("zCm", cleanInt(props.zcm) / 100 || 0.1);
+  gSettings("xCm", cleanInt(props.scalecm) / 100 || 0.02);
+  gSettings("yCm", cleanInt(props.scalecm) / 100 || 0.02);
+  gSettings("zCm", cleanInt(props.scalecm) / 100 || 0.02);
   gSettings("stepCm", cleanInt(props.stepcm) / 100 || gSettings().zCm * 4);
   // Set the number of teams to 1 so that we have one workflow
   gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);

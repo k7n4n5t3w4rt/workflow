@@ -101,6 +101,7 @@ type SimpleScale = {
   x: number,
   y: number,
   z: number,
+  set: (number, number, number) => void,
 };
 
 type CubePosition = {

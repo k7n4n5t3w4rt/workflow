@@ -43,10 +43,11 @@ export default () /*: () => void */ => () /*: void */ => {
   // Create the valueSphere
   gState().objects.valueSphere = createValueSphere();
   gState().sceneData.scene.add(gState().objects.valueSphere);
-  gState().objects.valueSphere.position.x = gState().objects.startPosition.x;
+  gState().objects.valueSphere.position.setFromMatrixPosition(
+    gState().sceneData.reticleStuff.reticle.matrix,
+  );
   gState().objects.valueSphere.position.y = gState().objects.startPosition.y;
-  gState().objects.valueSphere.position.z =
-    gState().objects.startPosition.z +
+  gState().objects.valueSphere.position.z +=
     gSettings().stepCm * gSettings().workflowSteps.length;
 
   // Start the clubes flying

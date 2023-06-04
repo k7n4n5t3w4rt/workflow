@@ -13,7 +13,7 @@ export default () /*: Object */ => {
   // spheres in a group can be rotated / scaled etc as a group
   // const clicksphereGroup = new THREE.Group();
 
-  const geometry = new THREE.SphereGeometry(0, 32, 32);
+  const geometry = new THREE.SphereGeometry(0.01, 32, 32);
 
   const material = new THREE.MeshBasicMaterial({
     color: `rgb(250,250,210)`,
