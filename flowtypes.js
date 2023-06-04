@@ -39,7 +39,11 @@ type GlobalState = {
 type Objects = {
   startPosition: CubePosition,
   workflowItems: Array<WorkflowItem>,
-  workflowStepTotals: { [string]: number },
+  workflowStepTotals: {
+    [string]: number,
+    touchTotal: number,
+    doneTotal: number,
+  },
   clickCube: SimpleCube,
   valueSphere: ValueSphere,
 };

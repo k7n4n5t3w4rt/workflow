@@ -43,19 +43,16 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newColor.r = 0;
     newColor.g = 255;
     newColor.b = 0;
-    const numberOfWorkflowItemsWithTheNextWorkflowStep =
-      gState().objects.workflowItems.reduce(
-        findWorkflowItemsWithTheSameStep(workflowItem.workflowStepsIndex + 1),
-        0,
-      );
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
     newPosition.x =
       newPosition.x *
-      ((numberOfWorkflowItemsWithTheNextWorkflowStep / numberOfWorkflowItems) *
+      ((gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+        numberOfWorkflowItems) *
         2);
     newPosition.y =
       newPosition.y *
-      ((numberOfWorkflowItemsWithTheNextWorkflowStep / numberOfWorkflowItems) *
+      ((gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+        numberOfWorkflowItems) *
         2);
   } else if (
     // If the workflowItem is moving into a done status
