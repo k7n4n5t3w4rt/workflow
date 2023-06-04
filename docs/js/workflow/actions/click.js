@@ -12,68 +12,81 @@ import gState from "./gState.js";
 // HELPERS
 // --------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
-import workflowItem from "./workflowItem.js";
+import createNewWorkflowItem from "./createNewWorkflowItem.js";
 import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
 
 const click = () /*: void */ => {
+  gState().clicks++;
   // Rotate the clickCube
   anime({
     targets: [gState().objects.clickCube.rotation],
     y: gState().objects.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
-    complete: function (anim) {
-      // Get the new workflowItem
-      const nextWorkFlowItem = workflowItem();
-      // Add the new workflowItem to the array of all workflowItems
-      gState().objects.workflowItems.push(nextWorkFlowItem);
-      // Add the new workflowItem to the scene
-      gState().sceneData.scene.add(nextWorkFlowItem);
-      // Update the size of the valueSphere
-      const collectedValue = gState().objects.workflowItems.reduce(
-        collectValue,
-        0,
-      );
-      if (gState().valueQueue.length() > 60) {
-        gState().valueQueue.dequeue();
+    complete: function () {
+      createNewWorkflowItem();
+      if (gState().clicks % gSettings().valueUpdateInterval === 0) {
+        filterOutDoneItems();
+        updateValueSphereDisplayProps();
       }
-      gState().valueQueue.enqueue(collectedValue);
-      gState().objects.valueSphere.rollingTotal = gState().valueQueue.total();
-      gState().objects.valueSphere.scale.x =
-        gState().objects.valueSphere.rollingTotal;
-      gState().objects.valueSphere.scale.y =
-        gState().objects.valueSphere.rollingTotal;
-      gState().objects.valueSphere.scale.z =
-        gState().objects.valueSphere.rollingTotal;
-      // Filter out the Done ones
-      gState().objects.workflowItems = gState().objects.workflowItems.filter(
-        removeDoneWorkflowItems,
-      );
-      // Move all the remaining workflowItems
-      gState().objects.workflowItems.forEach(moveWorkflowItems);
-      // Call click() again
+      moveAllWorkflowItems();
       click();
     },
   });
 };
 
-const collectValue = (
-  accumulator /*: number */,
-  workflowItem /*: WorkflowItem */,
-) /*: number */ => {
-  if (
-    isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
-  ) {
-    return (
-      accumulator +
-      workflowItem.effortTotal / gSettings().workflowItem.effort.max
-    );
+//--------------------------------------------------
+// updateValueQueue()
+//--------------------------------------------------
+const updateValueQueue = (workflowItemValue /*: number */) /*: void */ => {
+  // Collect the value of all the Done workflowItems
+  if (gState().valueQueue.length() > gSettings().valueUpdateInterval) {
+    gState().valueQueue.dequeue();
   }
-  return accumulator;
+  // const collectedValue = gState().objects.workflowItems.reduce(collectValue, 0);
+  gState().valueQueue.enqueue(workflowItemValue);
 };
+
+// const collectValue = (
+//   accumulator /*: number */,
+//   workflowItem /*: WorkflowItem */,
+// ) /*: number */ => {
+//   if (
+//     isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
+//   ) {
+//     return (
+//       accumulator +
+//       workflowItem.effortTotal / gSettings().workflowItem.effort.max
+//     );
+//   }
+//   return accumulator;
+// };
+
+//--------------------------------------------------
+// updateValueSphereDisplayProps()
+//--------------------------------------------------
+function updateValueSphereDisplayProps() {
+  gState().objects.valueSphere.rollingTotal = gState().valueQueue.total();
+  gState().objects.valueSphere.scale.x =
+    gState().objects.valueSphere.rollingTotal;
+  gState().objects.valueSphere.scale.y =
+    gState().objects.valueSphere.rollingTotal;
+  gState().objects.valueSphere.scale.z =
+    gState().objects.valueSphere.rollingTotal;
+}
+
+//--------------------------------------------------
+// filterOutDoneItems()
+//--------------------------------------------------
+function filterOutDoneItems() /*: void */ {
+  gState().objects.workflowItems = gState().objects.workflowItems.filter(
+    removeDoneWorkflowItems,
+  );
+}
+
 const removeDoneWorkflowItems = (
   workflowItem /*: WorkflowItem */,
 ) /*: boolean */ => {
@@ -82,6 +95,9 @@ const removeDoneWorkflowItems = (
     isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
   ) {
     console.log(`WorkFlowItem ${workflowItem.name} is done.`);
+    updateValueQueue(
+      workflowItem.effortTotal / gSettings().workflowItem.effort.max,
+    );
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );
@@ -90,7 +106,10 @@ const removeDoneWorkflowItems = (
   return true;
 };
 
-const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
+//--------------------------------------------------
+// moveWorkflowItem()
+//--------------------------------------------------
+const moveWorkflowItem = (workflowItem /*: WorkflowItem */) => {
   // Check if all the effort has been expended...
   // ...or if the workflowItem is in a "wait" or "backlog" state
   if (
@@ -117,5 +136,12 @@ const moveWorkflowItems = (workflowItem /*: WorkflowItem */) => {
   }
   return true;
 };
+
+//--------------------------------------------------
+// moveAllWorkflowItems()
+//--------------------------------------------------
+function moveAllWorkflowItems() {
+  gState().objects.workflowItems.forEach(moveWorkflowItem);
+}
 
 export default click;

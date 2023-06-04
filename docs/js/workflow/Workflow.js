@@ -80,10 +80,11 @@ export default (props /*: Props */) /*: string */ => {
     { name: "In Test", category: "touch" },
     { name: "Ready for Review", category: "wait" },
     { name: "In Review", category: "touch" },
-    { name: "Done", category: "complete" },
+    { name: "Done", category: "done" },
   ]);
   // workflowItem properties
   gSettings("workflowItem", { effort: { min: 14, max: 500 } });
+  gSettings("valueUpdateInterval", 10);
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {

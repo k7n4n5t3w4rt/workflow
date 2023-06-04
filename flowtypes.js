@@ -11,6 +11,7 @@ type GlobalSettings = {
   teamSize: number,
   workflowStatuses: Array<WorkflowStatuses>,
   workflowItem: WorkflowItemSettings,
+  valueUpdateInterval: number,
 };
 
 type WorkflowItemSettings = {
@@ -22,13 +23,14 @@ type WorkflowItemSettings = {
 
 type WorkflowStatuses = {
   name: string,
-  category: "open" | "wait" | "touch" | "external" | "complete",
+  category: "open" | "wait" | "touch" | "external" | "done",
 };
 
 // --------------------------------------------------
 // gState
 // --------------------------------------------------
 type GlobalState = {
+  clicks: number,
   sceneData: SceneData,
   objects: Objects,
   valueQueue: ValueQueue,

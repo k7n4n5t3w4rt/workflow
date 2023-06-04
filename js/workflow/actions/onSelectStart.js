@@ -11,22 +11,19 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import workflowItem from "./workflowItem.js";
 import clickCube from "./clickCube.js";
 import click from "./click.js";
 import valueSphere from "./valueSphere.js";
 
 export default () /*: () => void */ => () /*: void */ => {
+  // Hide the reticle
   if (gState().sceneData.reticleStuff.reticle.visible) {
     gState().sceneData.reticleStuff.active = false;
   }
 
+  // Create the clickCube
   gState().objects.clickCube = clickCube();
   gState().sceneData.scene.add(gState().objects.clickCube);
-
-  gState().objects.valueSphere = valueSphere();
-  gState().sceneData.scene.add(gState().objects.valueSphere);
-
   // Get the direction in which the camera is looking
   const vector = new THREE.Vector3();
   gState().sceneData.camera.getWorldDirection(vector);
@@ -37,15 +34,21 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().objects.clickCube.position.setFromMatrixPosition(
     gState().sceneData.reticleStuff.reticle.matrix,
   );
+
   // Set the start position for all the workflow items
+  // based on where we put the cube, but higher up
   gState().objects.startPosition = gState().objects.clickCube.position.clone();
   gState().objects.startPosition.y = 0;
 
+  // Create the valueSphere
+  gState().objects.valueSphere = valueSphere();
+  gState().sceneData.scene.add(gState().objects.valueSphere);
   gState().objects.valueSphere.position.x = gState().objects.startPosition.x;
   gState().objects.valueSphere.position.y = gState().objects.startPosition.y;
   gState().objects.valueSphere.position.z =
     gState().objects.startPosition.z +
     gSettings().stepCm * gSettings().workflowStatuses.length;
 
+  // Start the clubes flying
   click();
 };

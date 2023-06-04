@@ -19,6 +19,15 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   const nextWorkflowStatusesIndex = workflowItem.workflowStatusesIndex + 1;
 
   if (
+    // If the workflowItem is currently in a Done state, we
+    // want to exit gracefully
+    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
+      .category === "done"
+  ) {
+    return;
+  }
+
+  if (
     // If the workflowItem is currently in the backlog we want to
     // start from the official starting line
     gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
@@ -29,7 +38,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
 
   if (
     // If the workflowItem is moving into a touch status
-    gSettings().workflowStatuses[nextWorkflowStatusesIndex] !== undefined &&
+    // make it green and move it one step forward
     gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "touch"
   ) {
     newColor.r = 0;
@@ -55,9 +64,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
         2);
   } else if (
     // If the workflowItem is moving into a done status
-    gSettings().workflowStatuses[nextWorkflowStatusesIndex] !== undefined &&
-    gSettings().workflowStatuses[nextWorkflowStatusesIndex].category ===
-      "complete"
+    gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "done"
   ) {
     newColor.r = 255;
     newColor.g = 255;
@@ -74,7 +81,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     r: newColor.r,
     g: newColor.g,
     b: newColor.b,
-    duration: 500 / gSettings().speed,
+    duration: 100 / gSettings().speed,
     delay: 0,
     easing: "linear",
   });
@@ -87,6 +94,13 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
+      if (
+        // If the workflowItem is moving into a done status
+        gSettings().workflowStatuses[nextWorkflowStatusesIndex].category ===
+        "done"
+      ) {
+        workflowItem.visible = false;
+      }
       workflowItem.workflowStatusesIndex++;
     },
   });

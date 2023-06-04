@@ -14,7 +14,7 @@ import gState from "./gState.js";
 import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
 import randomNumberBetween from "./randomNumberBetween.js";
 
-export default () /*: Object */ => {
+export default () /*: void */ => {
   // Basic properties of the cube
   const geometry = new THREE.BoxGeometry(
     gSettings().xCm,
@@ -26,12 +26,12 @@ export default () /*: Object */ => {
   // ...before we finish with the geometry so that
   // we can use the value to set the scale of the cube
   // in the geometry which is efficient, apparently.
-  const cubeEffortTotal = randomNumberBetween(
+  const workflowItemEffortTotal = randomNumberBetween(
     gSettings().workflowItem.effort.min,
     gSettings().workflowItem.effort.max,
   );
   const scaleAdjustedForEffort =
-    cubeEffortTotal / gSettings().workflowItem.effort.max;
+    workflowItemEffortTotal / gSettings().workflowItem.effort.max;
   geometry.scale(
     scaleAdjustedForEffort,
     scaleAdjustedForEffort,
@@ -39,32 +39,41 @@ export default () /*: Object */ => {
   );
 
   // Make it white to start with
-  const cellColour = 255;
   const material = new THREE.MeshBasicMaterial({
-    color: `rgb(${cellColour},${cellColour},${cellColour})`,
+    color: `rgb(255,255,255)`,
   });
 
   // Create the cube
-  const cube = new THREE.Mesh(geometry, material);
-  cube.castShadow = true;
-  // Set the name to the uuid so we can delete it later
-  cube.name = cube.uuid;
+  const workflowItem = new THREE.Mesh(geometry, material);
+  workflowItem.castShadow = true;
 
-  // [1] Set the position
-  cube.position.x =
+  // Set the name to the uuid so we can delete it later
+  workflowItem.name = workflowItem.uuid;
+
+  // Set the position
+  workflowItem.position.x =
     gState().objects.startPosition.x +
     Math.random() * randomPositiveOrNegative();
-  cube.position.z = gState().objects.startPosition.z - Math.random();
-  cube.position.y = gState().objects.startPosition.y + Math.random();
-  // [2] Set the status of the workflowItem
-  cube.status = gSettings().workflowStatuses[0];
-  // [3] Set the effort values of the workflowItem
-  cube.effortTotal = cubeEffortTotal;
-  cube.effortRemaining = cube.effortTotal;
-  // [5] Set the workflowStatusesIndex so we can pull the
+  workflowItem.position.z = gState().objects.startPosition.z - Math.random();
+  workflowItem.position.y = gState().objects.startPosition.y + Math.random();
+
+  // Set the status of the workflowItem
+  workflowItem.status = gSettings().workflowStatuses[0];
+
+  // Set the effort values of the workflowItem
+  workflowItem.effortTotal = workflowItemEffortTotal;
+  workflowItem.effortRemaining = workflowItem.effortTotal;
+
+  // Set the workflowStatusesIndex so we can pull the
   // status info from the gSettings().workflowStatuses array
-  cube.workflowStatusesIndex = 0;
-  // [5] Set the team number of the workflowItem
-  cube.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
-  return cube;
+  workflowItem.workflowStatusesIndex = 0;
+
+  // Set the team number of the workflowItem
+  workflowItem.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
+
+  // Add the new workflowItem to the array of all workflowItems
+  gState().objects.workflowItems.push(workflowItem);
+
+  // Add the new workflowItem to the scene
+  gState().sceneData.scene.add(workflowItem);
 };
