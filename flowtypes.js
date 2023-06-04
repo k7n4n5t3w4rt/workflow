@@ -1,6 +1,9 @@
 // --------------------------------------------------
 // gSettings
 // --------------------------------------------------
+import cli from "cypress/lib/cli";
+import children from "preact/src/diff/children";
+
 type GlobalSettings = {
   speed: number,
   death: number,
@@ -50,8 +53,21 @@ type Objects = {
     touchTotal: number,
     doneTotal: number,
   },
-  clickCube: SimpleCube,
+  clickCubeGroup: SimpleCubeGroup,
   valueSphere: ValueSphere,
+};
+
+type SimpleCubeGroup = {
+  add: (ValueSphere | WorkflowItem) => void,
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+  },
+  position: CubePosition,
+  scale: SimpleScale,
+  material: { color: CubeColor },
+  rotateY: (radians: number) => void,
+  rotation: CubeRotation,
+  clickCube: SimpleCube,
 };
 
 type SimpleCube = {

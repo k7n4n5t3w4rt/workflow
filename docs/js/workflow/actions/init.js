@@ -113,34 +113,35 @@ export default () /*: void */ => {
     renderer,
   });
 
-  function valueQueue() /*: void */ {
-    this.items = {};
-    this.headIndex = 0;
-    this.tailIndex = 0;
-
-    this.enqueue = (item /*: number */) /*: void */ => {
-      this.items[this.tailIndex] = item;
-      this.tailIndex++;
-    };
-
-    this.dequeue = () /*: number */ => {
-      const item = this.items[this.headIndex];
-      delete this.items[this.headIndex];
-      this.headIndex++;
-      return item;
-    };
-
-    this.total = () /*: number */ => {
-      let total = 0;
-      for (const index in this.items) {
-        total += this.items[index];
-      }
-      return total;
-    };
-
-    this.length = () /*: number */ => {
-      return this.tailIndex - this.headIndex;
-    };
-  }
   gState("valueQueue", new valueQueue());
 };
+
+function valueQueue() /*: void */ {
+  this.items = {};
+  this.headIndex = 0;
+  this.tailIndex = 0;
+
+  this.enqueue = (item /*: number */) /*: void */ => {
+    this.items[this.tailIndex] = item;
+    this.tailIndex++;
+  };
+
+  this.dequeue = () /*: number */ => {
+    const item = this.items[this.headIndex];
+    delete this.items[this.headIndex];
+    this.headIndex++;
+    return item;
+  };
+
+  this.total = () /*: number */ => {
+    let total = 0;
+    for (const index in this.items) {
+      total += this.items[index];
+    }
+    return total;
+  };
+
+  this.length = () /*: number */ => {
+    return this.tailIndex - this.headIndex;
+  };
+}

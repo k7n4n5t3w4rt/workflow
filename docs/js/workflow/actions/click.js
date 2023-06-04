@@ -23,8 +23,8 @@ const click = () /*: void */ => {
   gState().clicks++;
   // Rotate the clickCube
   anime({
-    targets: [gState().objects.clickCube.rotation],
-    y: gState().objects.clickCube.rotation.y + Math.PI / 2,
+    targets: [gState().objects.clickCubeGroup.clickCube.rotation],
+    y: gState().objects.clickCubeGroup.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
     complete: () /*: void */ => {

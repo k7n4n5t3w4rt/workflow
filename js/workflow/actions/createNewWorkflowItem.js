@@ -56,9 +56,9 @@ export default () /*: void */ => {
   workflowItem.age = 0;
 
   // Set the position
-  workflowItem.position.setFromMatrixPosition(
-    gState().sceneData.reticleStuff.reticle.matrix,
-  );
+  // workflowItem.position.setFromMatrixPosition(
+  //   gState().sceneData.reticleStuff.reticle.matrix,
+  // );
   workflowItem.position.x += Math.random() * randomPositiveOrNegative();
   workflowItem.position.y = gState().objects.startPosition.y + Math.random();
   workflowItem.position.z = gState().objects.startPosition.z - Math.random();
@@ -77,6 +77,7 @@ export default () /*: void */ => {
   // Add the new workflowItem to the array of all workflowItems
   gState().objects.workflowItems.push(workflowItem);
 
-  // Add the new workflowItem to the scene
-  gState().sceneData.scene.add(workflowItem);
+  // Add the new workflowItem to the clickCubeGroup and the scene
+  // gState().sceneData.scene.add(workflowItem);
+  gState().objects.clickCubeGroup.add(workflowItem);
 };
