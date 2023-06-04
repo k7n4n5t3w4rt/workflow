@@ -53,7 +53,7 @@ const [styles] = createStyles({
 type Props = {
 	speed: string,
 	scalecm: string,
-	stepcm: string,
+	step: string,
   teamsnumber: string,
   teamsize: string
 }
@@ -62,15 +62,12 @@ export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
   gSettings("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
-  gSettings("x", cleanInt(props.scalecm) / 100 || 0.02);
-  gSettings("y", cleanInt(props.scalecm) / 100 || 0.02);
-  gSettings("z", cleanInt(props.scalecm) / 100 || 0.02);
-  gSettings("x", cleanInt(props.scalecm) / 100 || 0.02);
-  gSettings("yCm", cleanInt(props.scalecm) || 2);
-  gSettings("zCm", cleanInt(props.scalecm) || 2);
-  gSettings("scale", cleanInt(props.scalecm) / 100 || 0.02);
   gSettings("scaleCm", cleanInt(props.scalecm) || 2);
-  gSettings("stepCm", cleanInt(props.stepcm) / 100 || gSettings().z * 4);
+  gSettings("scale", cleanInt(props.scalecm) / 100 || 0.02);
+  gSettings("x", gSettings().scale);
+  gSettings("y", gSettings().scale);
+  gSettings("z", gSettings().scale);
+  gSettings("step", cleanInt(props.step) / 100 || gSettings().z * 4);
   // Set the number of teams to 1 so that we have one workflow
   gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
@@ -86,8 +83,9 @@ export default (props /*: Props */) /*: string */ => {
     { name: "Done", status: "done" },
   ]);
   // workflowItem properties
-  gSettings("workflowItem", { effort: { min: 14, max: 500 } });
-  gSettings("valueUpdateInterval", 10);
+  gSettings("workflowItem", { effort: { min: 14, max: 520 } });
+  gSettings("valueUpdateInterval", 60);
+  gSettings("death", 260);
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {

@@ -28,7 +28,10 @@ const click = () /*: void */ => {
     duration: 1000,
     easing: "easeInOutSine",
     complete: () /*: void */ => {
-      if (gState().clicks % gSettings().valueUpdateInterval === 0) {
+      if (
+        gState().clicks % gSettings().valueUpdateInterval === 0 ||
+        gState().clicks === 1
+      ) {
         filterOutDoneItems();
         resizeValueSphere();
         updateTotalsForEachWorkflowStep();
@@ -125,7 +128,7 @@ const removeDoneWorkflowItems = (
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );
     return false;
-  } else if (workflowItem.age > 365) {
+  } else if (workflowItem.age >= gSettings().death) {
     // Filter out any workflowItems that are older than a year
     return false;
   }
@@ -172,10 +175,10 @@ const moveWorkflowItemAndUpdateProperties = (
 // updateAgeOrRemoveFromScene()
 //--------------------------------------------------
 function updateAgeOrRemoveFromScene(workflowItem) {
-  if (workflowItem.age < 365) {
+  if (workflowItem.age < gSettings().death) {
     workflowItem.age++;
-    if (workflowItem.age <= 365 && workflowItem.age % 10 === 0) {
-      workflowItem.material.opacity = 1 - workflowItem.age / 365;
+    if (workflowItem.age <= gSettings().death && workflowItem.age % 10 === 0) {
+      workflowItem.material.opacity = 1 - workflowItem.age / gSettings().death;
       workflowItem.material.needsUpdate = true;
     }
   } else {

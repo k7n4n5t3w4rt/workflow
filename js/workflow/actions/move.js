@@ -2,6 +2,7 @@
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
+import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
 import anime from "../../../web_modules/animejs.js";
 import gSettings from "./gSettings.js";
 import gState from "./gState.js";
@@ -10,7 +11,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   const newPosition = {};
   newPosition.x = workflowItem.position.x;
   newPosition.y = workflowItem.position.y;
-  newPosition.z = workflowItem.position.z + gSettings().stepCm;
+  newPosition.z = workflowItem.position.z + gSettings().step;
   const newColor = {};
   newColor.r = 0;
   newColor.g = 0;
@@ -32,7 +33,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
     "backlog"
   ) {
-    newPosition.z = gState().objects.startPosition.z + gSettings().stepCm;
+    newPosition.z = gState().objects.startPosition.z + gSettings().step;
   }
 
   if (
@@ -45,13 +46,15 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newColor.b = 255;
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
     newPosition.x =
-      newPosition.x *
-      (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
-        numberOfWorkflowItems);
+      newPosition.x +
+      randomPositiveOrNegative() *
+        (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+          numberOfWorkflowItems);
     newPosition.y =
-      newPosition.y *
-      (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
-        numberOfWorkflowItems);
+      newPosition.y +
+      randomPositiveOrNegative() *
+        (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+          numberOfWorkflowItems);
   } else if (
     // If the workflowItem is moving into a done status
     gSettings().workflowSteps[nextWorkflowStepsIndex].status === "done"
@@ -63,7 +66,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newPosition.y = gState().objects.startPosition.y;
     newPosition.z =
       gState().objects.startPosition.z +
-      gSettings().stepCm * gSettings().workflowSteps.length;
+      gSettings().step * gSettings().workflowSteps.length;
   }
   workflowItem.material.color = newColor;
   // anime({
