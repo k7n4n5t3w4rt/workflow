@@ -1,7 +1,7 @@
 // @flow
 export default (
-  workflowStatusesIndex /*: number */,
-  workflowStatuses /*: Array<WorkflowStatuses> */,
+  workflowStepsIndex /*: number */,
+  workflowSteps /*: Array<WorkflowSteps> */,
 ) /*: boolean */ => {
-  return workflowStatusesIndex === workflowStatuses.length - 1 ? true : false;
+  return workflowStepsIndex === workflowSteps.length - 1 ? true : false;
 };

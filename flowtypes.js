@@ -9,7 +9,7 @@ type GlobalSettings = {
   stepCm: number,
   teamsNumber: number,
   teamSize: number,
-  workflowStatuses: Array<WorkflowStatuses>,
+  workflowSteps: Array<WorkflowSteps>,
   workflowItem: WorkflowItemSettings,
   valueUpdateInterval: number,
 };
@@ -21,9 +21,9 @@ type WorkflowItemSettings = {
   },
 };
 
-type WorkflowStatuses = {
+type WorkflowSteps = {
   name: string,
-  category: "open" | "wait" | "touch" | "external" | "done",
+  status: "open" | "wait" | "touch" | "external" | "done",
 };
 
 // --------------------------------------------------
@@ -75,7 +75,7 @@ type WorkflowItem = {
   name: string,
   effortTotal: number,
   effortRemaining: number,
-  workflowStatusesIndex: number,
+  workflowStepsIndex: number,
 };
 
 type SimplePosition = {

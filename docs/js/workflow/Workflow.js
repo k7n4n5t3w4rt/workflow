@@ -72,15 +72,15 @@ export default (props /*: Props */) /*: string */ => {
   gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
   gSettings("teamSize", cleanInt(props.teamsize) || 400);
-  // Populate the workflowStatus array
-  gSettings("workflowStatuses", [
-    { name: "Open", category: "backlog" },
-    { name: "Doing", category: "touch" },
-    { name: "Ready for Test", category: "wait" },
-    { name: "In Test", category: "touch" },
-    { name: "Ready for Review", category: "wait" },
-    { name: "In Review", category: "touch" },
-    { name: "Done", category: "done" },
+  // Populate the workflowStep array
+  gSettings("workflowSteps", [
+    { name: "Open", status: "backlog" },
+    { name: "Doing", status: "touch" },
+    { name: "Ready for Test", status: "wait" },
+    { name: "In Test", status: "touch" },
+    { name: "Ready for Review", status: "wait" },
+    { name: "In Review", status: "touch" },
+    { name: "Done", status: "done" },
   ]);
   // workflowItem properties
   gSettings("workflowItem", { effort: { min: 14, max: 500 } });

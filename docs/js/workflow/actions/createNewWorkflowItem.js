@@ -58,15 +58,15 @@ export default () /*: void */ => {
   workflowItem.position.y = gState().objects.startPosition.y + Math.random();
 
   // Set the status of the workflowItem
-  workflowItem.status = gSettings().workflowStatuses[0];
+  workflowItem.status = gSettings().workflowSteps[0];
 
   // Set the effort values of the workflowItem
   workflowItem.effortTotal = workflowItemEffortTotal;
   workflowItem.effortRemaining = workflowItem.effortTotal;
 
-  // Set the workflowStatusesIndex so we can pull the
-  // status info from the gSettings().workflowStatuses array
-  workflowItem.workflowStatusesIndex = 0;
+  // Set the workflowStepsIndex so we can pull the
+  // status info from the gSettings().workflowSteps array
+  workflowItem.workflowStepsIndex = 0;
 
   // Set the team number of the workflowItem
   workflowItem.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);

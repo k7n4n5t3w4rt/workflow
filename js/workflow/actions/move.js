@@ -16,13 +16,12 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   newColor.g = 0;
   newColor.b = 0;
 
-  const nextWorkflowStatusesIndex = workflowItem.workflowStatusesIndex + 1;
+  const nextWorkflowStepsIndex = workflowItem.workflowStepsIndex + 1;
 
   if (
     // If the workflowItem is currently in a Done state, we
     // want to exit gracefully
-    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "done"
+    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status === "done"
   ) {
     return;
   }
@@ -30,8 +29,8 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   if (
     // If the workflowItem is currently in the backlog we want to
     // start from the official starting line
-    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "backlog"
+    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+    "backlog"
   ) {
     newPosition.z = gState().objects.startPosition.z + gSettings().stepCm;
   }
@@ -39,32 +38,28 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   if (
     // If the workflowItem is moving into a touch status
     // make it green and move it one step forward
-    gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "touch"
+    gSettings().workflowSteps[nextWorkflowStepsIndex].status === "touch"
   ) {
     newColor.r = 0;
     newColor.g = 255;
     newColor.b = 0;
-    const numberOfWorkflowItemsWithTheNextWorkflowStatus =
+    const numberOfWorkflowItemsWithTheNextWorkflowStep =
       gState().objects.workflowItems.reduce(
-        findWorkflowItemsWithTheSameStatus(
-          workflowItem.workflowStatusesIndex + 1,
-        ),
+        findWorkflowItemsWithTheSameStep(workflowItem.workflowStepsIndex + 1),
         0,
       );
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
     newPosition.x =
       newPosition.x *
-      ((numberOfWorkflowItemsWithTheNextWorkflowStatus /
-        numberOfWorkflowItems) *
+      ((numberOfWorkflowItemsWithTheNextWorkflowStep / numberOfWorkflowItems) *
         2);
     newPosition.y =
       newPosition.y *
-      ((numberOfWorkflowItemsWithTheNextWorkflowStatus /
-        numberOfWorkflowItems) *
+      ((numberOfWorkflowItemsWithTheNextWorkflowStep / numberOfWorkflowItems) *
         2);
   } else if (
     // If the workflowItem is moving into a done status
-    gSettings().workflowStatuses[nextWorkflowStatusesIndex].category === "done"
+    gSettings().workflowSteps[nextWorkflowStepsIndex].status === "done"
   ) {
     newColor.r = 255;
     newColor.g = 255;
@@ -73,7 +68,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newPosition.y = gState().objects.startPosition.y;
     newPosition.z =
       gState().objects.startPosition.z +
-      gSettings().stepCm * gSettings().workflowStatuses.length;
+      gSettings().stepCm * gSettings().workflowSteps.length;
   }
   workflowItem.material.color = newColor;
   anime({
@@ -96,23 +91,22 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     complete: (anim) /*: void */ => {
       if (
         // If the workflowItem is moving into a done status
-        gSettings().workflowStatuses[nextWorkflowStatusesIndex].category ===
-        "done"
+        gSettings().workflowSteps[nextWorkflowStepsIndex].status === "done"
       ) {
         workflowItem.visible = false;
       }
-      workflowItem.workflowStatusesIndex++;
+      workflowItem.workflowStepsIndex++;
     },
   });
 };
 
-const findWorkflowItemsWithTheSameStatus =
-  (workflowStatusesIndex /*: number */) /*: function */ =>
+const findWorkflowItemsWithTheSameStep =
+  (workflowStepsIndex /*: number */) /*: function */ =>
   (
     accumulator /*: number */,
     currentWorkflowItem /*: WorkflowItem */,
   ) /*: number */ => {
-    if (currentWorkflowItem.workflowStatusesIndex === workflowStatusesIndex) {
+    if (currentWorkflowItem.workflowStepsIndex === workflowStepsIndex) {
       accumulator++;
     }
     return accumulator;

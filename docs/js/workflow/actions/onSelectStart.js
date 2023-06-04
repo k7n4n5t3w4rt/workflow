@@ -47,7 +47,7 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().objects.valueSphere.position.y = gState().objects.startPosition.y;
   gState().objects.valueSphere.position.z =
     gState().objects.startPosition.z +
-    gSettings().stepCm * gSettings().workflowStatuses.length;
+    gSettings().stepCm * gSettings().workflowSteps.length;
 
   // Start the clubes flying
   click();

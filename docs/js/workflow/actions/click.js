@@ -26,7 +26,8 @@ const click = () /*: void */ => {
     y: gState().objects.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
-    complete: function () {
+    complete: () /*: void */ => {
+      updateTotalsForEachWorkflowStep();
       createNewWorkflowItem();
       if (gState().clicks % gSettings().valueUpdateInterval === 0) {
         filterOutDoneItems();
@@ -37,6 +38,11 @@ const click = () /*: void */ => {
     },
   });
 };
+
+//--------------------------------------------------
+// updateTotalsForEachWorkflowStep()
+//--------------------------------------------------
+const updateTotalsForEachWorkflowStep = () /*: void */ => {};
 
 //--------------------------------------------------
 // updateValueQueue()
@@ -55,7 +61,7 @@ const updateValueQueue = (workflowItemValue /*: number */) /*: void */ => {
 //   workflowItem /*: WorkflowItem */,
 // ) /*: number */ => {
 //   if (
-//     isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
+//     isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)
 //   ) {
 //     return (
 //       accumulator +
@@ -91,9 +97,7 @@ const removeDoneWorkflowItems = (
   workflowItem /*: WorkflowItem */,
 ) /*: boolean */ => {
   // Filter out any workflowItems that are Done
-  if (
-    isDone(workflowItem.workflowStatusesIndex, gSettings().workflowStatuses)
-  ) {
+  if (isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)) {
     console.log(`WorkFlowItem ${workflowItem.name} is done.`);
     updateValueQueue(
       workflowItem.effortTotal / gSettings().workflowItem.effort.max,
@@ -114,10 +118,10 @@ const moveWorkflowItem = (workflowItem /*: WorkflowItem */) => {
   // ...or if the workflowItem is in a "wait" or "backlog" state
   if (
     workflowItem.effortRemaining === 0 ||
-    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "wait" ||
-    gSettings().workflowStatuses[workflowItem.workflowStatusesIndex]
-      .category === "backlog"
+    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+      "wait" ||
+    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+      "backlog"
   ) {
     // Move the workflowItem
     move(workflowItem);
