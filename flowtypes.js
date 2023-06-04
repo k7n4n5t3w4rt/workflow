@@ -9,7 +9,7 @@ type GlobalSettings = {
   stepCm: number,
   teamsNumber: number,
   teamSize: number,
-  workflowSteps: Array<WorkflowSteps>,
+  workflowSteps: Array<WorkflowStep>,
   workflowItem: WorkflowItemSettings,
   valueUpdateInterval: number,
 };
@@ -21,7 +21,7 @@ type WorkflowItemSettings = {
   },
 };
 
-type WorkflowSteps = {
+type WorkflowStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
 };
@@ -39,6 +39,7 @@ type GlobalState = {
 type Objects = {
   startPosition: CubePosition,
   workflowItems: Array<WorkflowItem>,
+  workflowStepTotals: { [string]: number },
   clickCube: SimpleCube,
   valueSphere: ValueSphere,
 };

@@ -99,6 +99,7 @@ export default () /*: void */ => {
   gState("objects", {
     workflowItems: [],
     clickCube: {},
+    workflowStepTotals: {},
   });
 
   gState("sceneData", {

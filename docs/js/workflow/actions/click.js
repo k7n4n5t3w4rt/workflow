@@ -42,7 +42,17 @@ const click = () /*: void */ => {
 //--------------------------------------------------
 // updateTotalsForEachWorkflowStep()
 //--------------------------------------------------
-const updateTotalsForEachWorkflowStep = () /*: void */ => {};
+const updateTotalsForEachWorkflowStep = () /*: void */ => {
+  gState().objects.workflowStepTotals = {};
+  gSettings().workflowSteps.forEach(
+    (workflowStep /*: WorkflowStep */, index /*: number */) /*: void */ => {
+      gState().objects.workflowStepTotals[index.toString()] = 0;
+    },
+  );
+  gState().objects.workflowItems.forEach(
+    (workFlowItem /*: WorkflowItem */) /*: void */ => {},
+  );
+};
 
 //--------------------------------------------------
 // updateValueQueue()
