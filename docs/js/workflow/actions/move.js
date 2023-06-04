@@ -12,7 +12,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   newPosition.y = workflowItem.position.y;
   newPosition.z = workflowItem.position.z + gSettings().stepCm;
   const newColor = {};
-  newColor.r = 255;
+  newColor.r = 0;
   newColor.g = 0;
   newColor.b = 0;
 
@@ -40,22 +40,18 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     // make it green and move it one step forward
     gSettings().workflowSteps[nextWorkflowStepsIndex].status === "touch"
   ) {
-    newColor.r = 0;
+    newColor.r = 255;
     newColor.g = 255;
-    newColor.b = 0;
+    newColor.b = 255;
     const numberOfWorkflowItems = gState().objects.workflowItems.length;
     newPosition.x =
       newPosition.x *
-      (((gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
-        numberOfWorkflowItems) *
-        gSettings().scaleCm) /
-        2);
+      (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+        numberOfWorkflowItems);
     newPosition.y =
       newPosition.y *
-      (((gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
-        numberOfWorkflowItems) *
-        gSettings().scaleCm) /
-        2);
+      (gState().objects.workflowStepTotals[nextWorkflowStepsIndex] /
+        numberOfWorkflowItems);
   } else if (
     // If the workflowItem is moving into a done status
     gSettings().workflowSteps[nextWorkflowStepsIndex].status === "done"
@@ -75,7 +71,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
   //   r: newColor.r,
   //   g: newColor.g,
   //   b: newColor.b,
-  //   duration: 100 / gSettings().speed,
+  //   duration: 1000 / gSettings().speed,
   //   delay: 0,
   //   easing: "linear",
   // });

@@ -20,7 +20,7 @@ export default () /*: Object */ => {
   );
 
   const material = new THREE.MeshBasicMaterial({
-    color: `rgb(255,255,255)`,
+    color: `rgb(135,206,235)`,
   });
   const cube = new THREE.Mesh(geometry, material);
 

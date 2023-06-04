@@ -16,7 +16,7 @@ export default () /*: Object */ => {
   const geometry = new THREE.SphereGeometry(0.01, 32, 32);
 
   const material = new THREE.MeshBasicMaterial({
-    color: `rgb(250,250,210)`,
+    color: `rgb(218,165,32)`,
   });
   const sphere = new THREE.Mesh(geometry, material);
 
