@@ -27,12 +27,12 @@ const click = () /*: void */ => {
     duration: 1000,
     easing: "easeInOutSine",
     complete: () /*: void */ => {
-      updateTotalsForEachWorkflowStep();
-      createNewWorkflowItem();
       if (gState().clicks % gSettings().valueUpdateInterval === 0) {
         filterOutDoneItems();
         updateValueSphereDisplayProps();
+        updateTotalsForEachWorkflowStep();
       }
+      createNewWorkflowItem();
       moveAllWorkflowItems();
       click();
     },
@@ -43,14 +43,27 @@ const click = () /*: void */ => {
 // updateTotalsForEachWorkflowStep()
 //--------------------------------------------------
 const updateTotalsForEachWorkflowStep = () /*: void */ => {
-  gState().objects.workflowStepTotals = {};
+  gState().objects.workflowStepTotals = {
+    touchTotal: 0,
+    doneTotal: gState().objects.workflowStepTotals.doneTotal,
+  };
   gSettings().workflowSteps.forEach(
     (workflowStep /*: WorkflowStep */, index /*: number */) /*: void */ => {
       gState().objects.workflowStepTotals[index.toString()] = 0;
     },
   );
   gState().objects.workflowItems.forEach(
-    (workFlowItem /*: WorkflowItem */) /*: void */ => {},
+    (workflowItem /*: WorkflowItem */) /*: void */ => {
+      gState().objects.workflowStepTotals[
+        workflowItem.workflowStepsIndex.toString()
+      ]++;
+      if (
+        gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+        "touch"
+      ) {
+        gState().objects.workflowStepTotals.touchTotal++;
+      }
+    },
   );
 };
 
@@ -109,6 +122,7 @@ const removeDoneWorkflowItems = (
   // Filter out any workflowItems that are Done
   if (isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)) {
     console.log(`WorkFlowItem ${workflowItem.name} is done.`);
+    gState().objects.workflowStepTotals.doneTotal++;
     updateValueQueue(
       workflowItem.effortTotal / gSettings().workflowItem.effort.max,
     );
@@ -144,7 +158,7 @@ const moveWorkflowItem = (workflowItem /*: WorkflowItem */) => {
       calculatedEffortPerWorkItem(
         gSettings().teamsNumber,
         gSettings().teamSize,
-        gState().objects.workflowItems.length,
+        gState().objects.workflowStepTotals.touchTotal,
       ),
     );
   }
