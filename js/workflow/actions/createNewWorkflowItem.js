@@ -59,9 +59,9 @@ export default () /*: void */ => {
   // workflowItem.position.setFromMatrixPosition(
   //   gState().sceneData.reticleStuff.reticle.matrix,
   // );
-  workflowItem.position.x += Math.random() * randomPositiveOrNegative();
-  workflowItem.position.y = gState().objects.startPosition.y + Math.random();
-  workflowItem.position.z = gState().objects.startPosition.z - Math.random();
+  workflowItem.position.x = gState().objects.startPosition.x;
+  workflowItem.position.y = gState().objects.startPosition.y;
+  workflowItem.position.z = gState().objects.startPosition.z;
 
   // Set the effort values of the workflowItem
   workflowItem.effortRemaining = workflowItem.effortTotal =

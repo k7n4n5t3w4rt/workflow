@@ -1,9 +1,6 @@
 // --------------------------------------------------
 // gSettings
 // --------------------------------------------------
-import cli from "cypress/lib/cli";
-import children from "preact/src/diff/children";
-
 type GlobalSettings = {
   speed: number,
   death: number,
