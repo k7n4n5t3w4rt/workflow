@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // HELPERS
 // --------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
-import createNewWrkflwItem from "./createNewFlwItem.js";
+import createNewWrkflwItem from "./newFlwItem.js";
 import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
@@ -33,7 +33,7 @@ const click = () /*: void */ => {
         gState().clicks < gSttngs().valueUpdateInterval
       ) {
         filterOutDoneItems();
-        resizeValueSphere();
+        resizeVSphere();
         updateTotalsForEachWrkflwStep();
       }
       createNewWrkflwItem();
@@ -83,22 +83,22 @@ const updateValueQueue = (wrkflwItemValue /*: number */) /*: void */ => {
 };
 
 //--------------------------------------------------
-// resizeValueSphere()
+// resizeVSphere()
 //--------------------------------------------------
-function resizeValueSphere() {
-  gState().objects.valueSphere.rollingTotal = gState().valueQueue.total();
+function resizeVSphere() {
+  gState().objects.vSphere.rollingTotal = gState().valueQueue.total();
   const newRadius = Math.cbrt(
-    gState().objects.valueSphere.rollingTotal / ((4 / 3) * Math.PI),
+    gState().objects.vSphere.rollingTotal / ((4 / 3) * Math.PI),
   );
   // Doesn't work :(
-  // gState().objects.valueSphere.scale.set(newRadius, newRadius, newRadius);
+  // gState().objects.vSphere.scale.set(newRadius, newRadius, newRadius);
   // Nor does this :(
-  // gState().objects.valueSphere.scale.x = newRadius;
-  // gState().objects.valueSphere.scale.y = newRadius;
-  // gState().objects.valueSphere.scale.z = newRadius;
+  // gState().objects.vSphere.scale.x = newRadius;
+  // gState().objects.vSphere.scale.y = newRadius;
+  // gState().objects.vSphere.scale.z = newRadius;
   // This does though :)
-  gState().objects.valueSphere.geometry.dispose();
-  gState().objects.valueSphere.geometry = new THREE.SphereGeometry(
+  gState().objects.vSphere.geometry.dispose();
+  gState().objects.vSphere.geometry = new THREE.SphereGeometry(
     newRadius,
     32,
     32,

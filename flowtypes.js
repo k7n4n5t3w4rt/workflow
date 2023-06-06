@@ -52,11 +52,11 @@ type Objects = {
     doneTotal: number,
   },
   clickCubeGroup: SimpleCubeGroup,
-  valueSphere: ValueSphere,
+  vSphere: VSphere,
 };
 
 type SimpleCubeGroup = {
-  add: (ValueSphere | WrkflwItem) => void,
+  add: (VSphere | WrkflwItem) => void,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
@@ -79,7 +79,7 @@ type SimpleCube = {
   rotation: CubeRotation,
 };
 
-type ValueSphere = {
+type VSphere = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
     dispose: () => void,

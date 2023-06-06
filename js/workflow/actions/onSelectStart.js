@@ -11,9 +11,9 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import clickCubeGroup from "./clickCube.js";
+import clickCubeGroup from "./newClickCube.js";
 import click from "./click.js";
-import createValueSphere from "./createValueSphere.js";
+import createValueSphere from "./newVSphere.js";
 
 export default () /*: () => void */ => () /*: void */ => {
   // Hide the reticle
@@ -45,14 +45,14 @@ export default () /*: () => void */ => () /*: void */ => {
     gSttngs().step * (gSttngs().wrkflwSteps.length + 2) * -1;
 
   // Create the valueSphere
-  gState().objects.valueSphere = createValueSphere();
-  // gState().sceneData.scene.add(gState().objects.valueSphere);
-  gState().objects.clickCubeGroup.add(gState().objects.valueSphere);
-  // gState().objects.valueSphere.position.setFromMatrixPosition(
+  gState().objects.vSphere = createValueSphere();
+  // gState().sceneData.scene.add(gState().objects.vSphere);
+  gState().objects.clickCubeGroup.add(gState().objects.vSphere);
+  // gState().objects.vSphere.position.setFromMatrixPosition(
   //   gState().sceneData.reticleStuff.reticle.matrix,
   // );
-  gState().objects.valueSphere.position.y = gState().objects.endPosition.y;
-  gState().objects.valueSphere.position.z = gState().objects.endPosition.z;
+  gState().objects.vSphere.position.y = gState().objects.endPosition.y;
+  gState().objects.vSphere.position.z = gState().objects.endPosition.z;
 
   // Start the clubes flying
   click();
