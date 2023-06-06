@@ -2,7 +2,7 @@
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 
 const createButton = (
   renderer /*: function */,
@@ -37,7 +37,7 @@ const createButton = (
         currentSession.removeEventListener("end", onSessionEnded);
         // button.textContent = "START AR";
         // currentSession = null;
-        window.location.assign(`/?speed=${gSettings().speed}`);
+        window.location.assign(`/?speed=${gSttngs().speed}`);
       }
     }
 

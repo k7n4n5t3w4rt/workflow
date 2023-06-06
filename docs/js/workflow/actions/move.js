@@ -4,31 +4,36 @@
 // --------------------------------------------------
 import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
 import anime from "../../../web_modules/animejs.js";
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import randomNumberBetween from "./randomNumberBetweenWhatever.js";
 
 const move = (workflowItem /*: Object */) /*: void */ => {
   const gThisStatus =
-    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status;
+    gSttngs().workflowSteps[workflowItem.workflowStepsIndex].status;
 
   if (gThisStatus === "done") {
     return;
   }
 
   const nextWorkflowStepsIndex = workflowItem.workflowStepsIndex + 1;
-  const gNextStatus = gSettings().workflowSteps[nextWorkflowStepsIndex].status;
+  const gNextStatus = gSttngs().workflowSteps[nextWorkflowStepsIndex].status;
 
   // const newPosition = { ...workflowItem.position };
   const newPosition = refineNewPosition(
     workflowItem,
     nextWorkflowStepsIndex,
     workflowItem.position,
-    gState().objects.workflowItems.length,
-    gState().objects.workflowStepTotals[nextWorkflowStepsIndex.toString()],
-    gSettings().workflowSteps.length,
+    gState().objects.startPosition,
+    gSttngs().workflowSteps.length,
+    gSttngs().scale *
+      10 *
+      calculateDistributionFix(
+        gState().objects.workflowStepTotals[nextWorkflowStepsIndex.toString()],
+        gState().objects.workflowItems.length,
+      ),
   );
-  newPosition.z -= gSettings().step;
+  newPosition.z -= gSttngs().step;
 
   let newColor = 0; // Black for "wait" status
 
@@ -48,7 +53,7 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     x: newPosition.x,
     y: newPosition.y,
     z: newPosition.z,
-    duration: 1000 / gSettings().speed,
+    duration: 1000 / gSttngs().speed,
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
@@ -70,35 +75,25 @@ const refineNewPosition = (
   workflowItem /*: WorkflowItem */,
   nextWorkflowStepsIndex /*: number */,
   workflowItemPosition /*: CubePosition */,
-  gNumberOfWorkflowItems /*: number */,
-  gNumberOfWorkflowItemsNextStatus /*: number */,
+  gStartPosition /*: CubePosition */,
   gNumberOfWorkflowSteps /*: number */,
+  range /*: number */,
 ) /*: CubePosition */ => {
   const position = { ...workflowItemPosition };
-  const range = gSettings().scale;
 
   // i.e. Don't do anything if the workflowItem is moving into "done"
   if (nextWorkflowStepsIndex < gNumberOfWorkflowSteps) {
-    const distributionFix = calculateDistributionFix(
-      nextWorkflowStepsIndex,
-      gNumberOfWorkflowItems,
-    );
-
     position.x =
-      Math.round(
-        randomPositiveOrNegative() *
-          randomNumberBetween(0, range) *
-          distributionFix *
-          100,
-      ) / 100;
+      gStartPosition.x +
+      (Math.round(
+        randomPositiveOrNegative() * randomNumberBetween(0, range) * 100,
+      ) /
+        100) *
+        randomPositiveOrNegative();
     position.y =
-      Math.round(
-        gState().objects.startPosition.y +
-          randomPositiveOrNegative() *
-            randomNumberBetween(0, range) *
-            distributionFix *
-            100,
-      ) / 100;
+      gStartPosition.y +
+      (Math.round(randomNumberBetween(0, range) * 100) / 100) *
+        randomPositiveOrNegative();
   }
   return position;
 };

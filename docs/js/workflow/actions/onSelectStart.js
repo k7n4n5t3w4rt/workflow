@@ -6,7 +6,7 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
@@ -39,10 +39,10 @@ export default () /*: () => void */ => () /*: void */ => {
   // based on where we put the cube, but higher up
   gState().objects.startPosition =
     gState().objects.clickCubeGroup.clickCube.position.clone();
-  gState().objects.startPosition.y = gSettings().scale * 10;
+  gState().objects.startPosition.y = gSttngs().scale * 10;
   gState().objects.endPosition = gState().objects.startPosition.clone();
   gState().objects.endPosition.z +=
-    gSettings().step * (gSettings().workflowSteps.length + 2) * -1;
+    gSttngs().step * (gSttngs().workflowSteps.length + 2) * -1;
 
   // Create the valueSphere
   gState().objects.valueSphere = createValueSphere();

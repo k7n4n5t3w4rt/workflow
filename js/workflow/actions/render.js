@@ -6,7 +6,7 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS

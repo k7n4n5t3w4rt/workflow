@@ -1,4 +1,4 @@
 //@flow
 export default (min /*: number */, max /*: number */) /*: number */ => {
-  return Math.random() * (max - min + 1) + min;
+  return Math.random() * (max - min) + min;
 };

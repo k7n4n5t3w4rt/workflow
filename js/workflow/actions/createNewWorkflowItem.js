@@ -6,7 +6,7 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
@@ -16,22 +16,18 @@ import randomNumberBetween from "./randomNumberBetweenIntegers.js";
 
 export default () /*: void */ => {
   // Basic properties of the cube
-  const geometry = new THREE.BoxGeometry(
-    gSettings().x,
-    gSettings().y,
-    gSettings().z,
-  );
+  const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
 
   // Calculate the effortTotal for the workflowItem
   // ...before we finish with the geometry so that
   // we can use the value to set the scale of the cube
   // in the geometry which is efficient, apparently.
   const workflowItemEffortTotal = randomNumberBetween(
-    gSettings().workflowItem.effort.min,
-    gSettings().workflowItem.effort.max,
+    gSttngs().workflowItem.effort.min,
+    gSttngs().workflowItem.effort.max,
   );
   const scaleAdjustedForEffort =
-    workflowItemEffortTotal / gSettings().workflowItem.effort.max;
+    workflowItemEffortTotal / gSttngs().workflowItem.effort.max;
   geometry.scale(
     scaleAdjustedForEffort,
     scaleAdjustedForEffort,
@@ -47,7 +43,7 @@ export default () /*: void */ => {
   const workflowItem = new THREE.Mesh(geometry, material);
   workflowItem.castShadow = true;
   workflowItem.receiveShadow = true;
-  workflowItem.volume = Math.pow(gSettings().x * scaleAdjustedForEffort, 3);
+  workflowItem.volume = Math.pow(gSttngs().x * scaleAdjustedForEffort, 3);
 
   // Set the name to the uuid so we can delete it later
   workflowItem.name = workflowItem.uuid;
@@ -68,11 +64,11 @@ export default () /*: void */ => {
     workflowItemEffortTotal;
 
   // Set the workflowStepsIndex so we can pull the
-  // status info from the gSettings().workflowSteps array
+  // status info from the gSttngs().workflowSteps array
   workflowItem.workflowStepsIndex = 0;
 
   // Set the team number of the workflowItem
-  workflowItem.teamNumber = randomNumberBetween(1, gSettings().teamsNumber);
+  workflowItem.teamNumber = randomNumberBetween(1, gSttngs().teamsNumber);
 
   // Add the new workflowItem to the array of all workflowItems
   gState().objects.workflowItems.push(workflowItem);

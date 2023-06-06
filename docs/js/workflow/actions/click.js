@@ -6,7 +6,7 @@ import * as THREE from "../../../web_modules/three.js";
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
@@ -29,8 +29,8 @@ const click = () /*: void */ => {
     easing: "easeInOutSine",
     complete: () /*: void */ => {
       if (
-        gState().clicks % gSettings().valueUpdateInterval === 0 ||
-        gState().clicks < gSettings().valueUpdateInterval
+        gState().clicks % gSttngs().valueUpdateInterval === 0 ||
+        gState().clicks < gSttngs().valueUpdateInterval
       ) {
         filterOutDoneItems();
         resizeValueSphere();
@@ -51,7 +51,7 @@ const updateTotalsForEachWorkflowStep = () /*: void */ => {
     touchTotal: 0,
     doneTotal: gState().objects.workflowStepTotals.doneTotal,
   };
-  gSettings().workflowSteps.forEach(
+  gSttngs().workflowSteps.forEach(
     (workflowStep /*: WorkflowStep */, index /*: number */) /*: void */ => {
       gState().objects.workflowStepTotals[index.toString()] = 0;
     },
@@ -62,7 +62,7 @@ const updateTotalsForEachWorkflowStep = () /*: void */ => {
         workflowItem.workflowStepsIndex.toString()
       ]++;
       if (
-        gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+        gSttngs().workflowSteps[workflowItem.workflowStepsIndex].status ===
         "touch"
       ) {
         gState().objects.workflowStepTotals.touchTotal++;
@@ -76,7 +76,7 @@ const updateTotalsForEachWorkflowStep = () /*: void */ => {
 //--------------------------------------------------
 const updateValueQueue = (workflowItemValue /*: number */) /*: void */ => {
   // Collect the value of all the Done workflowItems
-  if (gState().valueQueue.length() > gSettings().valueUpdateInterval) {
+  if (gState().valueQueue.length() > gSttngs().valueUpdateInterval) {
     gState().valueQueue.dequeue();
   }
   // const collectedValue = gState().objects.workflowItems.reduce(collectValue, 0);
@@ -120,7 +120,7 @@ const removeDoneWorkflowItems = (
 ) /*: boolean */ => {
   // Note: No need to delete the workflowItem object becase
   // it will be filtered out of the array
-  if (isDone(workflowItem.workflowStepsIndex, gSettings().workflowSteps)) {
+  if (isDone(workflowItem.workflowStepsIndex, gSttngs().workflowSteps)) {
     // Filter out any workflowItems that are Done
     gState().objects.workflowStepTotals.doneTotal++;
     updateValueQueue(workflowItem.volume);
@@ -128,7 +128,7 @@ const removeDoneWorkflowItems = (
       gState().sceneData.scene.getObjectByName(workflowItem.name),
     );
     return false;
-  } else if (workflowItem.age >= gSettings().death) {
+  } else if (workflowItem.age >= gSttngs().death) {
     // Filter out any workflowItems that are older than a year
     return false;
   }
@@ -148,9 +148,9 @@ const moveWorkflowItemAndUpdateProperties = (
   // ...or if the workflowItem is in a "wait" or "backlog" state
   if (
     workflowItem.effortRemaining === 0 ||
-    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+    gSttngs().workflowSteps[workflowItem.workflowStepsIndex].status ===
       "wait" ||
-    gSettings().workflowSteps[workflowItem.workflowStepsIndex].status ===
+    gSttngs().workflowSteps[workflowItem.workflowStepsIndex].status ===
       "backlog"
   ) {
     // Move the workflowItem
@@ -162,8 +162,8 @@ const moveWorkflowItemAndUpdateProperties = (
     workflowItem.effortRemaining = calculateEffortRemaining(
       workflowItem.effortRemaining,
       calculatedEffortPerWorkItem(
-        gSettings().teamsNumber,
-        gSettings().teamSize,
+        gSttngs().teamsNumber,
+        gSttngs().teamSize,
         gState().objects.workflowStepTotals.touchTotal,
       ),
     );
@@ -175,10 +175,10 @@ const moveWorkflowItemAndUpdateProperties = (
 // updateAgeOrRemoveFromScene()
 //--------------------------------------------------
 function updateAgeOrRemoveFromScene(workflowItem) {
-  if (workflowItem.age < gSettings().death) {
+  if (workflowItem.age < gSttngs().death) {
     workflowItem.age++;
-    if (workflowItem.age <= gSettings().death && workflowItem.age % 10 === 0) {
-      workflowItem.material.opacity = 1 - workflowItem.age / gSettings().death;
+    if (workflowItem.age <= gSttngs().death && workflowItem.age % 10 === 0) {
+      workflowItem.material.opacity = 1 - workflowItem.age / gSttngs().death;
       workflowItem.material.needsUpdate = true;
     }
   } else {

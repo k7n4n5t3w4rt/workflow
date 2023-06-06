@@ -32,7 +32,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import gSettings from "./actions/gSettings.js";
+import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
 
 setSeed(seedString("workflow"));
@@ -60,20 +60,20 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
-  gSettings("speed", Math.abs(parseFloat(props.speed) || 1));
+  gSttngs("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
-  gSettings("scaleCm", cleanInt(props.scalecm) || 2);
-  gSettings("scale", cleanInt(props.scalecm) / 100 || 0.02);
-  gSettings("x", gSettings().scale);
-  gSettings("y", gSettings().scale);
-  gSettings("z", gSettings().scale);
-  gSettings("step", cleanInt(props.step) / 100 || gSettings().scale * 5);
+  gSttngs("scaleCm", cleanInt(props.scalecm) || 2);
+  gSttngs("scale", cleanInt(props.scalecm) / 100 || 0.02);
+  gSttngs("x", gSttngs().scale);
+  gSttngs("y", gSttngs().scale);
+  gSttngs("z", gSttngs().scale);
+  gSttngs("step", cleanInt(props.step) / 100 || gSttngs().scale * 5);
   // Set the number of teams to 1 so that we have one workflow
-  gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
+  gSttngs("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
-  gSettings("teamSize", cleanInt(props.teamsize) || 400);
+  gSttngs("teamSize", cleanInt(props.teamsize) || 400);
   // Populate the workflowStep array
-  gSettings("workflowSteps", [
+  gSttngs("workflowSteps", [
     { name: "Open", status: "backlog" },
     { name: "Doing", status: "touch" },
     { name: "Ready for Test", status: "wait" },
@@ -83,13 +83,13 @@ export default (props /*: Props */) /*: string */ => {
     { name: "Done", status: "done" },
   ]);
   // workflowItem properties
-  gSettings("workflowItem", { effort: { min: 14, max: 520 } });
-  gSettings("valueUpdateInterval", 10);
-  gSettings("death", 260);
+  gSttngs("workflowItem", { effort: { min: 14, max: 520 } });
+  gSttngs("valueUpdateInterval", 10);
+  gSttngs("death", 260);
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
-    speed: gSettings().speed,
+    speed: gSttngs().speed,
   });
 
   useEffect(() => {

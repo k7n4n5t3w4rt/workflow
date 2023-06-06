@@ -2,7 +2,7 @@
 // --------------------------------------------------
 // GLOBALS
 // --------------------------------------------------
-import gSettings from "./gSettings.js";
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
