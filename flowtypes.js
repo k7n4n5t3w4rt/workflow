@@ -38,11 +38,7 @@ type WrkflwStep = {
 type GlobalState = {
   clicks: number,
   sceneData: SceneData,
-  objects: Objects,
-  valueQueue: ValueQueue,
-};
-
-type Objects = {
+  vQueue: VQueue,
   startPosition: CubePosition,
   endPosition: CubePosition,
   wrkflwItems: Array<WrkflwItem>,
@@ -162,7 +158,7 @@ type SceneData = {
   reticleStuff: ReticleStuff,
 };
 
-type ValueQueue = {
+type VQueue = {
   dequeue: () => void,
   enqueue: (item: number) => void,
   total: () => number,

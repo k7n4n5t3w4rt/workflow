@@ -23,8 +23,8 @@ const click = () /*: void */ => {
   gState().clicks++;
   // Rotate the clickCube
   anime({
-    targets: [gState().objects.clickCubeGroup.clickCube.rotation],
-    y: gState().objects.clickCubeGroup.clickCube.rotation.y + Math.PI / 2,
+    targets: [gState().clickCubeGroup.clickCube.rotation],
+    y: gState().clickCubeGroup.clickCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
     complete: () /*: void */ => {
@@ -47,27 +47,21 @@ const click = () /*: void */ => {
 // updateTotalsForEachWrkflwStep()
 //--------------------------------------------------
 const updateTotalsForEachWrkflwStep = () /*: void */ => {
-  gState().objects.wrkflwStepTotals = {
+  gState().wrkflwStepTotals = {
     touchTotal: 0,
-    doneTotal: gState().objects.wrkflwStepTotals.doneTotal,
+    doneTotal: gState().wrkflwStepTotals.doneTotal,
   };
   gSttngs().wrkflwSteps.forEach(
     (wrkflwStep /*: WrkflwStep */, index /*: number */) /*: void */ => {
-      gState().objects.wrkflwStepTotals[index.toString()] = 0;
+      gState().wrkflwStepTotals[index.toString()] = 0;
     },
   );
-  gState().objects.wrkflwItems.forEach(
-    (wrkflwItem /*: WrkflwItem */) /*: void */ => {
-      gState().objects.wrkflwStepTotals[
-        wrkflwItem.wrkflwStepsIndex.toString()
-      ]++;
-      if (
-        gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status === "touch"
-      ) {
-        gState().objects.wrkflwStepTotals.touchTotal++;
-      }
-    },
-  );
+  gState().wrkflwItems.forEach((wrkflwItem /*: WrkflwItem */) /*: void */ => {
+    gState().wrkflwStepTotals[wrkflwItem.wrkflwStepsIndex.toString()]++;
+    if (gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status === "touch") {
+      gState().wrkflwStepTotals.touchTotal++;
+    }
+  });
 };
 
 //--------------------------------------------------
@@ -75,43 +69,37 @@ const updateTotalsForEachWrkflwStep = () /*: void */ => {
 //--------------------------------------------------
 const updateValueQueue = (wrkflwItemValue /*: number */) /*: void */ => {
   // Collect the value of all the Done wrkflwItems
-  if (gState().valueQueue.length() > gSttngs().valueUpdateInterval) {
-    gState().valueQueue.dequeue();
+  if (gState().vQueue.length() > gSttngs().valueUpdateInterval) {
+    gState().vQueue.dequeue();
   }
-  // const collectedValue = gState().objects.wrkflwItems.reduce(collectValue, 0);
-  gState().valueQueue.enqueue(wrkflwItemValue);
+  // const collectedValue = gState().wrkflwItems.reduce(collectValue, 0);
+  gState().vQueue.enqueue(wrkflwItemValue);
 };
 
 //--------------------------------------------------
 // resizeVSphere()
 //--------------------------------------------------
 function resizeVSphere() {
-  gState().objects.vSphere.rollingTotal = gState().valueQueue.total();
+  gState().vSphere.rollingTotal = gState().vQueue.total();
   const newRadius = Math.cbrt(
-    gState().objects.vSphere.rollingTotal / ((4 / 3) * Math.PI),
+    gState().vSphere.rollingTotal / ((4 / 3) * Math.PI),
   );
   // Doesn't work :(
-  // gState().objects.vSphere.scale.set(newRadius, newRadius, newRadius);
+  // gState().vSphere.scale.set(newRadius, newRadius, newRadius);
   // Nor does this :(
-  // gState().objects.vSphere.scale.x = newRadius;
-  // gState().objects.vSphere.scale.y = newRadius;
-  // gState().objects.vSphere.scale.z = newRadius;
+  // gState().vSphere.scale.x = newRadius;
+  // gState().vSphere.scale.y = newRadius;
+  // gState().vSphere.scale.z = newRadius;
   // This does though :)
-  gState().objects.vSphere.geometry.dispose();
-  gState().objects.vSphere.geometry = new THREE.SphereGeometry(
-    newRadius,
-    32,
-    32,
-  );
+  gState().vSphere.geometry.dispose();
+  gState().vSphere.geometry = new THREE.SphereGeometry(newRadius, 32, 32);
 }
 
 //--------------------------------------------------
 // filterOutDoneItems()
 //--------------------------------------------------
 function filterOutDoneItems() /*: void */ {
-  gState().objects.wrkflwItems = gState().objects.wrkflwItems.filter(
-    removeDoneWrkflwItems,
-  );
+  gState().wrkflwItems = gState().wrkflwItems.filter(removeDoneWrkflwItems);
 }
 
 const removeDoneWrkflwItems = (wrkflwItem /*: WrkflwItem */) /*: boolean */ => {
@@ -119,7 +107,7 @@ const removeDoneWrkflwItems = (wrkflwItem /*: WrkflwItem */) /*: boolean */ => {
   // it will be filtered out of the array
   if (isDone(wrkflwItem.wrkflwStepsIndex, gSttngs().wrkflwSteps)) {
     // Filter out any wrkflwItems that are Done
-    gState().objects.wrkflwStepTotals.doneTotal++;
+    gState().wrkflwStepTotals.doneTotal++;
     updateValueQueue(wrkflwItem.volume);
     gState().sceneData.scene.remove(
       gState().sceneData.scene.getObjectByName(wrkflwItem.name),
@@ -157,7 +145,7 @@ const moveWrkflwItemAndUpdateProperties = (wrkflwItem /*: WrkflwItem */) => {
       calculatedEffortPerWorkItem(
         gSttngs().teamsNumber,
         gSttngs().teamSize,
-        gState().objects.wrkflwStepTotals.touchTotal,
+        gState().wrkflwStepTotals.touchTotal,
       ),
     );
   }
@@ -186,7 +174,7 @@ function updateAgeOrRemoveFromScene(wrkflwItem) {
 // moveAllWrkflwItems()
 //--------------------------------------------------
 function moveAllWrkflwItems() {
-  gState().objects.wrkflwItems.forEach(moveWrkflwItemAndUpdateProperties);
+  gState().wrkflwItems.forEach(moveWrkflwItemAndUpdateProperties);
 }
 
 export default click;

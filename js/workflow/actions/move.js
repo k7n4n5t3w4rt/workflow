@@ -2,11 +2,11 @@
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
+import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import anime from "../../../web_modules/animejs.js";
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-import randomNumberBetween from "./randomNumberBetweenWhatever.js";
+import rndmBetween from "./rndmBetweenWhatever.js";
 
 const move = (wrkflwItem /*: Object */) /*: void */ => {
   const gThisStatus = gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status;
@@ -23,13 +23,13 @@ const move = (wrkflwItem /*: Object */) /*: void */ => {
     wrkflwItem,
     nextWrkflwStepsIndex,
     wrkflwItem.position,
-    gState().objects.startPosition,
+    gState().startPosition,
     gSttngs().wrkflwSteps.length,
     gSttngs().scale *
       10 *
       calculateDistributionFix(
-        gState().objects.wrkflwStepTotals[nextWrkflwStepsIndex.toString()],
-        gState().objects.wrkflwItems.length,
+        gState().wrkflwStepTotals[nextWrkflwStepsIndex.toString()],
+        gState().wrkflwItems.length,
       ),
   );
   newPosition.z -= gSttngs().step;
@@ -40,9 +40,9 @@ const move = (wrkflwItem /*: Object */) /*: void */ => {
     newColor = 255;
   } else if (gNextStatus === "done") {
     newColor = 255;
-    newPosition.x = gState().objects.endPosition.x;
-    newPosition.y = gState().objects.endPosition.y;
-    newPosition.z = gState().objects.endPosition.z;
+    newPosition.x = gState().endPosition.x;
+    newPosition.y = gState().endPosition.y;
+    newPosition.z = gState().endPosition.z;
   }
 
   wrkflwItem.material.color = { r: newColor, g: newColor, b: newColor };
@@ -84,15 +84,11 @@ const refineNewPosition = (
   if (nextWrkflwStepsIndex < gNumberOfWrkflwSteps) {
     position.x =
       gStartPosition.x +
-      (Math.round(
-        randomPositiveOrNegative() * randomNumberBetween(0, range) * 100,
-      ) /
-        100) *
-        randomPositiveOrNegative();
+      (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
+        rndmPosOrNeg();
     position.y =
       gStartPosition.y +
-      (Math.round(randomNumberBetween(0, range) * 100) / 100) *
-        randomPositiveOrNegative();
+      (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
   }
   return position;
 };

@@ -95,16 +95,11 @@ export default () /*: void */ => {
   // Populate the global state
   // --------------------------------------------------
   gState("clicks", 0);
-  // Setting an empty "objects" object so we don't get Flow errors
-  gState("objects", {
-    wrkflwItems: [],
-    clickCube: {},
-    wrkflwStepTotals: {
-      touchTotal: 0,
-      doneTotal: 0,
-    },
-  });
-
+  gState("wrkflwItems", []);
+  gState("clickCube", {});
+  gState("wrkflwStepTotals", {});
+  gState("touchTotal", 0);
+  gState("doneTotal", 0);
   gState("sceneData", {
     stats,
     scene,
@@ -113,10 +108,10 @@ export default () /*: void */ => {
     renderer,
   });
 
-  gState("valueQueue", new valueQueue());
+  gState("vQueue", new vQueue());
 };
 
-function valueQueue() /*: void */ {
+function vQueue() /*: void */ {
   this.items = {};
   this.headIndex = 0;
   this.tailIndex = 0;

@@ -11,8 +11,8 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
-import randomNumberBetween from "./randomNumberBetweenIntegers.js";
+import rndmPosOrNeg from "./rndmPosOrNeg.js";
+import rndmBetween from "./rndmBetweenIntegers.js";
 
 export default () /*: void */ => {
   // Basic properties of the cube
@@ -22,7 +22,7 @@ export default () /*: void */ => {
   // ...before we finish with the geometry so that
   // we can use the value to set the scale of the cube
   // in the geometry which is efficient, apparently.
-  const wrkflwItemEffortTotal = randomNumberBetween(
+  const wrkflwItemEffortTotal = rndmBetween(
     gSttngs().wrkflwItem.effort.min,
     gSttngs().wrkflwItem.effort.max,
   );
@@ -55,9 +55,9 @@ export default () /*: void */ => {
   // wrkflwItem.position.setFromMatrixPosition(
   //   gState().sceneData.reticleStuff.reticle.matrix,
   // );
-  wrkflwItem.position.x = gState().objects.startPosition.x;
-  wrkflwItem.position.y = gState().objects.startPosition.y;
-  wrkflwItem.position.z = gState().objects.startPosition.z;
+  wrkflwItem.position.x = gState().startPosition.x;
+  wrkflwItem.position.y = gState().startPosition.y;
+  wrkflwItem.position.z = gState().startPosition.z;
 
   // Set the effort values of the wrkflwItem
   wrkflwItem.effortRemaining = wrkflwItem.effortTotal = wrkflwItemEffortTotal;
@@ -67,12 +67,12 @@ export default () /*: void */ => {
   wrkflwItem.wrkflwStepsIndex = 0;
 
   // Set the team number of the wrkflwItem
-  wrkflwItem.teamNumber = randomNumberBetween(1, gSttngs().teamsNumber);
+  wrkflwItem.teamNumber = rndmBetween(1, gSttngs().teamsNumber);
 
   // Add the new wrkflwItem to the array of all wrkflwItems
-  gState().objects.wrkflwItems.push(wrkflwItem);
+  gState().wrkflwItems.push(wrkflwItem);
 
   // Add the new wrkflwItem to the clickCubeGroup and the scene
   // gState().sceneData.scene.add(wrkflwItem);
-  gState().objects.clickCubeGroup.add(wrkflwItem);
+  gState().clickCubeGroup.add(wrkflwItem);
 };
