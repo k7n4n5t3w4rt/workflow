@@ -2,7 +2,7 @@
 export default (
   teamsNumber /*: number */,
   teamSize /*: number */,
-  numberOfWorkflowItemsInTouch /*: number */,
+  numberOfWrkflwItemsInTouch /*: number */,
 ) /*: number */ => {
-  return (teamsNumber * teamSize) / numberOfWorkflowItemsInTouch;
+  return (teamsNumber * teamSize) / numberOfWrkflwItemsInTouch;
 };

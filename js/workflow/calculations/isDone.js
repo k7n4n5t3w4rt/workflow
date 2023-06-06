@@ -1,7 +1,7 @@
 // @flow
 export default (
-  workflowStepsIndex /*: number */,
-  workflowSteps /*: Array<WorkflowStep> */,
+  wrkflwStepsIndex /*: number */,
+  wrkflwSteps /*: Array<WrkflwStep> */,
 ) /*: boolean */ => {
-  return workflowStepsIndex === workflowSteps.length - 1 ? true : false;
+  return wrkflwStepsIndex === wrkflwSteps.length - 1 ? true : false;
 };

@@ -35,14 +35,14 @@ export default () /*: () => void */ => () /*: void */ => {
     gState().sceneData.reticleStuff.reticle.matrix,
   );
 
-  // Set the start position for all the workflow items
+  // Set the start position for all the wrkflw items
   // based on where we put the cube, but higher up
   gState().objects.startPosition =
     gState().objects.clickCubeGroup.clickCube.position.clone();
   gState().objects.startPosition.y = gSttngs().scale * 10;
   gState().objects.endPosition = gState().objects.startPosition.clone();
   gState().objects.endPosition.z +=
-    gSttngs().step * (gSttngs().workflowSteps.length + 2) * -1;
+    gSttngs().step * (gSttngs().wrkflwSteps.length + 2) * -1;
 
   // Create the valueSphere
   gState().objects.valueSphere = createValueSphere();

@@ -15,19 +15,19 @@ type GlobalSettings = {
   step: number,
   teamsNumber: number,
   teamSize: number,
-  workflowSteps: Array<WorkflowStep>,
-  workflowItem: WorkflowItemSettings,
+  wrkflwSteps: Array<WrkflwStep>,
+  wrkflwItem: WrkflwItemSettings,
   valueUpdateInterval: number,
 };
 
-type WorkflowItemSettings = {
+type WrkflwItemSettings = {
   effort: {
     min: number,
     max: number,
   },
 };
 
-type WorkflowStep = {
+type WrkflwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
 };
@@ -45,8 +45,8 @@ type GlobalState = {
 type Objects = {
   startPosition: CubePosition,
   endPosition: CubePosition,
-  workflowItems: Array<WorkflowItem>,
-  workflowStepTotals: {
+  wrkflwItems: Array<WrkflwItem>,
+  wrkflwStepTotals: {
     [string]: number,
     touchTotal: number,
     doneTotal: number,
@@ -56,7 +56,7 @@ type Objects = {
 };
 
 type SimpleCubeGroup = {
-  add: (ValueSphere | WorkflowItem) => void,
+  add: (ValueSphere | WrkflwItem) => void,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
@@ -92,7 +92,7 @@ type ValueSphere = {
   rollingTotal: number,
 };
 
-type WorkflowItem = {
+type WrkflwItem = {
   // Display properties
   geometry: {
     scale: (x: number, y: number, z: number) => void,
@@ -104,12 +104,12 @@ type WorkflowItem = {
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
   bubble_value: number,
-  // Workflow properties
+  // Wrkflw properties
   name: string,
   age: number,
   effortTotal: number,
   effortRemaining: number,
-  workflowStepsIndex: number,
+  wrkflwStepsIndex: number,
 };
 
 type SimplePosition = {

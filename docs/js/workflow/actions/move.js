@@ -8,29 +8,28 @@ import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import randomNumberBetween from "./randomNumberBetweenWhatever.js";
 
-const move = (workflowItem /*: Object */) /*: void */ => {
-  const gThisStatus =
-    gSttngs().workflowSteps[workflowItem.workflowStepsIndex].status;
+const move = (wrkflwItem /*: Object */) /*: void */ => {
+  const gThisStatus = gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status;
 
   if (gThisStatus === "done") {
     return;
   }
 
-  const nextWorkflowStepsIndex = workflowItem.workflowStepsIndex + 1;
-  const gNextStatus = gSttngs().workflowSteps[nextWorkflowStepsIndex].status;
+  const nextWrkflwStepsIndex = wrkflwItem.wrkflwStepsIndex + 1;
+  const gNextStatus = gSttngs().wrkflwSteps[nextWrkflwStepsIndex].status;
 
-  // const newPosition = { ...workflowItem.position };
+  // const newPosition = { ...wrkflwItem.position };
   const newPosition = refineNewPosition(
-    workflowItem,
-    nextWorkflowStepsIndex,
-    workflowItem.position,
+    wrkflwItem,
+    nextWrkflwStepsIndex,
+    wrkflwItem.position,
     gState().objects.startPosition,
-    gSttngs().workflowSteps.length,
+    gSttngs().wrkflwSteps.length,
     gSttngs().scale *
       10 *
       calculateDistributionFix(
-        gState().objects.workflowStepTotals[nextWorkflowStepsIndex.toString()],
-        gState().objects.workflowItems.length,
+        gState().objects.wrkflwStepTotals[nextWrkflwStepsIndex.toString()],
+        gState().objects.wrkflwItems.length,
       ),
   );
   newPosition.z -= gSttngs().step;
@@ -46,10 +45,10 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     newPosition.z = gState().objects.endPosition.z;
   }
 
-  workflowItem.material.color = { r: newColor, g: newColor, b: newColor };
+  wrkflwItem.material.color = { r: newColor, g: newColor, b: newColor };
 
   anime({
-    targets: [workflowItem.position],
+    targets: [wrkflwItem.position],
     x: newPosition.x,
     y: newPosition.y,
     z: newPosition.z,
@@ -58,12 +57,12 @@ const move = (workflowItem /*: Object */) /*: void */ => {
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
       if (
-        // If the workflowItem has moved into a done status
+        // If the wrkflwItem has moved into a done status
         gNextStatus === "done"
       ) {
-        workflowItem.visible = false;
+        wrkflwItem.visible = false;
       }
-      workflowItem.workflowStepsIndex++;
+      wrkflwItem.wrkflwStepsIndex++;
     },
   });
 };
@@ -72,17 +71,17 @@ const move = (workflowItem /*: Object */) /*: void */ => {
 // refineNewPosition()
 //--------------------------------------------------
 const refineNewPosition = (
-  workflowItem /*: WorkflowItem */,
-  nextWorkflowStepsIndex /*: number */,
-  workflowItemPosition /*: CubePosition */,
+  wrkflwItem /*: WrkflwItem */,
+  nextWrkflwStepsIndex /*: number */,
+  wrkflwItemPosition /*: CubePosition */,
   gStartPosition /*: CubePosition */,
-  gNumberOfWorkflowSteps /*: number */,
+  gNumberOfWrkflwSteps /*: number */,
   range /*: number */,
 ) /*: CubePosition */ => {
-  const position = { ...workflowItemPosition };
+  const position = { ...wrkflwItemPosition };
 
-  // i.e. Don't do anything if the workflowItem is moving into "done"
-  if (nextWorkflowStepsIndex < gNumberOfWorkflowSteps) {
+  // i.e. Don't do anything if the wrkflwItem is moving into "done"
+  if (nextWrkflwStepsIndex < gNumberOfWrkflwSteps) {
     position.x =
       gStartPosition.x +
       (Math.round(
@@ -99,21 +98,20 @@ const refineNewPosition = (
 };
 
 const calculateDistributionFix = (
-  gNumberOfWorkflowItemsNextStatus /*: number */,
-  gNumberOfWorkflowItems /*: number */,
+  gNumberOfWrkflwItemsNextStatus /*: number */,
+  gNumberOfWrkflwItems /*: number */,
 ) /*: number */ => {
-  // It will be 0 if there are no workflowItems in the next step
+  // It will be 0 if there are no wrkflwItems in the next step
   // so we'll just set it to 1 to avoid a divide by zero error
   let distributionFix = 1;
 
-  if (gNumberOfWorkflowItemsNextStatus === 0) {
+  if (gNumberOfWrkflwItemsNextStatus === 0) {
     return distributionFix;
   }
 
   distributionFix =
-    Math.round(
-      (gNumberOfWorkflowItemsNextStatus / gNumberOfWorkflowItems) * 100,
-    ) / 100;
+    Math.round((gNumberOfWrkflwItemsNextStatus / gNumberOfWrkflwItems) * 100) /
+    100;
 
   return distributionFix;
 };

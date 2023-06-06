@@ -22,7 +22,7 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import gSttngs from "./actions/gSttngs.js";
 
-setSeed(seedString("workflowparams"));
+setSeed(seedString("wrkflwparams"));
 
 const [styles] = createStyles({
   paramsContainer: {

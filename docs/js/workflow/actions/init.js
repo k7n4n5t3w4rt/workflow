@@ -24,10 +24,10 @@ export default () /*: void */ => {
   const stats = createStats();
   const ARContainer = document.createElement("div");
   ARContainer.id = "ar-container";
-  const workflow = document.getElementById("workflow");
+  const wrkflw = document.getElementById("wrkflw");
   // document.body.appendChild(container);
   // $FlowFixMe - Flow doesn't know about the DOM
-  workflow.appendChild(ARContainer);
+  wrkflw.appendChild(ARContainer);
 
   // Make the scene, camera, geometry, etc.
   const scene /*: Object */ = new THREE.Scene();
@@ -97,9 +97,9 @@ export default () /*: void */ => {
   gState("clicks", 0);
   // Setting an empty "objects" object so we don't get Flow errors
   gState("objects", {
-    workflowItems: [],
+    wrkflwItems: [],
     clickCube: {},
-    workflowStepTotals: {
+    wrkflwStepTotals: {
       touchTotal: 0,
       doneTotal: 0,
     },
