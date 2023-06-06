@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // HELPERS
 // --------------------------------------------------
 import randomPositiveOrNegative from "./randomPositiveOrNegative.js";
-import randomNumberBetween from "./randomNumberBetween.js";
+import randomNumberBetween from "./randomNumberBetweenIntegers.js";
 
 export default () /*: void */ => {
   // Basic properties of the cube
