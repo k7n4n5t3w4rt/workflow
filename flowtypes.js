@@ -15,19 +15,19 @@ type GlobalSettings = {
   step: number,
   teamsNumber: number,
   teamSize: number,
-  wrkflwSteps: Array<WrkflwStep>,
-  wrkflwItem: WrkflwItemSettings,
+  flwSteps: Array<FlwStep>,
+  flwItem: FlwItemSettings,
   valueUpdateInterval: number,
 };
 
-type WrkflwItemSettings = {
+type FlwItemSettings = {
   effort: {
     min: number,
     max: number,
   },
 };
 
-type WrkflwStep = {
+type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
 };
@@ -41,18 +41,18 @@ type GlobalState = {
   vQueue: VQueue,
   startPosition: CubePosition,
   endPosition: CubePosition,
-  wrkflwItems: Array<WrkflwItem>,
-  wrkflwStepTotals: {
+  flwItems: Array<FlwItem>,
+  flwStepTotals: {
     [string]: number,
     touchTotal: number,
     doneTotal: number,
   },
-  clickCubeGroup: SimpleCubeGroup,
+  clickCubeGroup: ClickCubeGroup,
   vSphere: VSphere,
 };
 
-type SimpleCubeGroup = {
-  add: (VSphere | WrkflwItem) => void,
+type ClickCubeGroup = {
+  add: (VSphere | FlwItem) => void,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
@@ -61,10 +61,10 @@ type SimpleCubeGroup = {
   material: { color: CubeColor },
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
-  clickCube: SimpleCube,
+  clickCube: ClickCube,
 };
 
-type SimpleCube = {
+type ClickCube = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
@@ -88,7 +88,7 @@ type VSphere = {
   rollingTotal: number,
 };
 
-type WrkflwItem = {
+type FlwItem = {
   // Display properties
   geometry: {
     scale: (x: number, y: number, z: number) => void,
@@ -100,12 +100,12 @@ type WrkflwItem = {
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
   bubble_value: number,
-  // Wrkflw properties
+  // Flw properties
   name: string,
   age: number,
   effortTotal: number,
   effortRemaining: number,
-  wrkflwStepsIndex: number,
+  flwStepsIndex: number,
 };
 
 type SimplePosition = {

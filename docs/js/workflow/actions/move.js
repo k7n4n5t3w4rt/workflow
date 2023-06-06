@@ -8,28 +8,28 @@ import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 
-const move = (wrkflwItem /*: Object */) /*: void */ => {
-  const gThisStatus = gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status;
+const move = (flwItem /*: Object */) /*: void */ => {
+  const gThisStatus = gSttngs().flwSteps[flwItem.flwStepsIndex].status;
 
   if (gThisStatus === "done") {
     return;
   }
 
-  const nextWrkflwStepsIndex = wrkflwItem.wrkflwStepsIndex + 1;
-  const gNextStatus = gSttngs().wrkflwSteps[nextWrkflwStepsIndex].status;
+  const nextFlwStepsIndex = flwItem.flwStepsIndex + 1;
+  const gNextStatus = gSttngs().flwSteps[nextFlwStepsIndex].status;
 
-  // const newPosition = { ...wrkflwItem.position };
+  // const newPosition = { ...flwItem.position };
   const newPosition = refineNewPosition(
-    wrkflwItem,
-    nextWrkflwStepsIndex,
-    wrkflwItem.position,
+    flwItem,
+    nextFlwStepsIndex,
+    flwItem.position,
     gState().startPosition,
-    gSttngs().wrkflwSteps.length,
+    gSttngs().flwSteps.length,
     gSttngs().scale *
       10 *
       calculateDistributionFix(
-        gState().wrkflwStepTotals[nextWrkflwStepsIndex.toString()],
-        gState().wrkflwItems.length,
+        gState().flwStepTotals[nextFlwStepsIndex.toString()],
+        gState().flwItems.length,
       ),
   );
   newPosition.z -= gSttngs().step;
@@ -45,10 +45,10 @@ const move = (wrkflwItem /*: Object */) /*: void */ => {
     newPosition.z = gState().endPosition.z;
   }
 
-  wrkflwItem.material.color = { r: newColor, g: newColor, b: newColor };
+  flwItem.material.color = { r: newColor, g: newColor, b: newColor };
 
   anime({
-    targets: [wrkflwItem.position],
+    targets: [flwItem.position],
     x: newPosition.x,
     y: newPosition.y,
     z: newPosition.z,
@@ -57,12 +57,12 @@ const move = (wrkflwItem /*: Object */) /*: void */ => {
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
       if (
-        // If the wrkflwItem has moved into a done status
+        // If the flwItem has moved into a done status
         gNextStatus === "done"
       ) {
-        wrkflwItem.visible = false;
+        flwItem.visible = false;
       }
-      wrkflwItem.wrkflwStepsIndex++;
+      flwItem.flwStepsIndex++;
     },
   });
 };
@@ -71,17 +71,17 @@ const move = (wrkflwItem /*: Object */) /*: void */ => {
 // refineNewPosition()
 //--------------------------------------------------
 const refineNewPosition = (
-  wrkflwItem /*: WrkflwItem */,
-  nextWrkflwStepsIndex /*: number */,
-  wrkflwItemPosition /*: CubePosition */,
+  flwItem /*: FlwItem */,
+  nextFlwStepsIndex /*: number */,
+  flwItemPosition /*: CubePosition */,
   gStartPosition /*: CubePosition */,
-  gNumberOfWrkflwSteps /*: number */,
+  gNumberOfFlwSteps /*: number */,
   range /*: number */,
 ) /*: CubePosition */ => {
-  const position = { ...wrkflwItemPosition };
+  const position = { ...flwItemPosition };
 
-  // i.e. Don't do anything if the wrkflwItem is moving into "done"
-  if (nextWrkflwStepsIndex < gNumberOfWrkflwSteps) {
+  // i.e. Don't do anything if the flwItem is moving into "done"
+  if (nextFlwStepsIndex < gNumberOfFlwSteps) {
     position.x =
       gStartPosition.x +
       (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
@@ -94,20 +94,19 @@ const refineNewPosition = (
 };
 
 const calculateDistributionFix = (
-  gNumberOfWrkflwItemsNextStatus /*: number */,
-  gNumberOfWrkflwItems /*: number */,
+  gNumberOfFlwItemsNextStatus /*: number */,
+  gNumberOfFlwItems /*: number */,
 ) /*: number */ => {
-  // It will be 0 if there are no wrkflwItems in the next step
+  // It will be 0 if there are no flwItems in the next step
   // so we'll just set it to 1 to avoid a divide by zero error
   let distributionFix = 1;
 
-  if (gNumberOfWrkflwItemsNextStatus === 0) {
+  if (gNumberOfFlwItemsNextStatus === 0) {
     return distributionFix;
   }
 
   distributionFix =
-    Math.round((gNumberOfWrkflwItemsNextStatus / gNumberOfWrkflwItems) * 100) /
-    100;
+    Math.round((gNumberOfFlwItemsNextStatus / gNumberOfFlwItems) * 100) / 100;
 
   return distributionFix;
 };

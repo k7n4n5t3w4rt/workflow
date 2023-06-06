@@ -2,7 +2,7 @@
 export default (
   teamsNumber /*: number */,
   teamSize /*: number */,
-  numberOfWrkflwItemsInTouch /*: number */,
+  numberOfFlwItemsInTouch /*: number */,
 ) /*: number */ => {
-  return (teamsNumber * teamSize) / numberOfWrkflwItemsInTouch;
+  return (teamsNumber * teamSize) / numberOfFlwItemsInTouch;
 };

@@ -24,10 +24,10 @@ export default () /*: void */ => {
   const stats = createStats();
   const ARContainer = document.createElement("div");
   ARContainer.id = "ar-container";
-  const wrkflw = document.getElementById("wrkflw");
+  const flw = document.getElementById("flw");
   // document.body.appendChild(container);
   // $FlowFixMe - Flow doesn't know about the DOM
-  wrkflw.appendChild(ARContainer);
+  flw.appendChild(ARContainer);
 
   // Make the scene, camera, geometry, etc.
   const scene /*: Object */ = new THREE.Scene();
@@ -95,9 +95,9 @@ export default () /*: void */ => {
   // Populate the global state
   // --------------------------------------------------
   gState("clicks", 0);
-  gState("wrkflwItems", []);
+  gState("flwItems", []);
   gState("clickCube", {});
-  gState("wrkflwStepTotals", {});
+  gState("flwStepTotals", {});
   gState("touchTotal", 0);
   gState("doneTotal", 0);
   gState("sceneData", {

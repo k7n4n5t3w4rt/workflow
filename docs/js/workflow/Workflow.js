@@ -35,10 +35,10 @@ import {
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
 
-setSeed(seedString("wrkflw"));
+setSeed(seedString("flw"));
 
 const [styles] = createStyles({
-  wrkflw: {
+  flw: {
     width: "100%",
     height: "100%",
     backgroundImage: "url(/img/bg1.png)",
@@ -68,12 +68,12 @@ export default (props /*: Props */) /*: string */ => {
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
   gSttngs("step", cleanInt(props.step) / 100 || gSttngs().scale * 5);
-  // Set the number of teams to 1 so that we have one wrkflw
+  // Set the number of teams to 1 so that we have one flw
   gSttngs("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
   gSttngs("teamSize", cleanInt(props.teamsize) || 400);
-  // Populate the wrkflwStep array
-  gSttngs("wrkflwSteps", [
+  // Populate the flwStep array
+  gSttngs("flwSteps", [
     { name: "Open", status: "backlog" },
     { name: "Doing", status: "touch" },
     { name: "Ready for Test", status: "wait" },
@@ -82,8 +82,8 @@ export default (props /*: Props */) /*: string */ => {
     { name: "In Review", status: "touch" },
     { name: "Done", status: "done" },
   ]);
-  // wrkflwItem properties
-  gSttngs("wrkflwItem", { effort: { min: 14, max: 520 } });
+  // flwItem properties
+  gSttngs("flwItem", { effort: { min: 14, max: 520 } });
   gSttngs("valueUpdateInterval", 10);
   gSttngs("death", 260);
 
@@ -99,7 +99,7 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
 
   return html`
-    <div id="wrkflw" className="${styles.wrkflw}">
+    <div id="flw" className="${styles.flw}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
         <${Params} speed="${state.speed}" dispatch="${dispatch}" />

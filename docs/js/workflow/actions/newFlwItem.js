@@ -18,16 +18,16 @@ export default () /*: void */ => {
   // Basic properties of the cube
   const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
 
-  // Calculate the effortTotal for the wrkflwItem
+  // Calculate the effortTotal for the flwItem
   // ...before we finish with the geometry so that
   // we can use the value to set the scale of the cube
   // in the geometry which is efficient, apparently.
-  const wrkflwItemEffortTotal = rndmBetween(
-    gSttngs().wrkflwItem.effort.min,
-    gSttngs().wrkflwItem.effort.max,
+  const flwItemEffortTotal = rndmBetween(
+    gSttngs().flwItem.effort.min,
+    gSttngs().flwItem.effort.max,
   );
   const scaleAdjustedForEffort =
-    wrkflwItemEffortTotal / gSttngs().wrkflwItem.effort.max;
+    flwItemEffortTotal / gSttngs().flwItem.effort.max;
   geometry.scale(
     scaleAdjustedForEffort,
     scaleAdjustedForEffort,
@@ -40,39 +40,39 @@ export default () /*: void */ => {
   });
 
   // Create the cube
-  const wrkflwItem = new THREE.Mesh(geometry, material);
-  wrkflwItem.castShadow = true;
-  wrkflwItem.receiveShadow = true;
-  wrkflwItem.volume = Math.pow(gSttngs().x * scaleAdjustedForEffort, 3);
+  const flwItem = new THREE.Mesh(geometry, material);
+  flwItem.castShadow = true;
+  flwItem.receiveShadow = true;
+  flwItem.volume = Math.pow(gSttngs().x * scaleAdjustedForEffort, 3);
 
   // Set the name to the uuid so we can delete it later
-  wrkflwItem.name = wrkflwItem.uuid;
+  flwItem.name = flwItem.uuid;
 
   // Set the age to 0
-  wrkflwItem.age = 0;
+  flwItem.age = 0;
 
   // Set the position
-  // wrkflwItem.position.setFromMatrixPosition(
+  // flwItem.position.setFromMatrixPosition(
   //   gState().sceneData.reticleStuff.reticle.matrix,
   // );
-  wrkflwItem.position.x = gState().startPosition.x;
-  wrkflwItem.position.y = gState().startPosition.y;
-  wrkflwItem.position.z = gState().startPosition.z;
+  flwItem.position.x = gState().startPosition.x;
+  flwItem.position.y = gState().startPosition.y;
+  flwItem.position.z = gState().startPosition.z;
 
-  // Set the effort values of the wrkflwItem
-  wrkflwItem.effortRemaining = wrkflwItem.effortTotal = wrkflwItemEffortTotal;
+  // Set the effort values of the flwItem
+  flwItem.effortRemaining = flwItem.effortTotal = flwItemEffortTotal;
 
-  // Set the wrkflwStepsIndex so we can pull the
-  // status info from the gSttngs().wrkflwSteps array
-  wrkflwItem.wrkflwStepsIndex = 0;
+  // Set the flwStepsIndex so we can pull the
+  // status info from the gSttngs().flwSteps array
+  flwItem.flwStepsIndex = 0;
 
-  // Set the team number of the wrkflwItem
-  wrkflwItem.teamNumber = rndmBetween(1, gSttngs().teamsNumber);
+  // Set the team number of the flwItem
+  flwItem.teamNumber = rndmBetween(1, gSttngs().teamsNumber);
 
-  // Add the new wrkflwItem to the array of all wrkflwItems
-  gState().wrkflwItems.push(wrkflwItem);
+  // Add the new flwItem to the array of all flwItems
+  gState().flwItems.push(flwItem);
 
-  // Add the new wrkflwItem to the clickCubeGroup and the scene
-  // gState().sceneData.scene.add(wrkflwItem);
-  gState().clickCubeGroup.add(wrkflwItem);
+  // Add the new flwItem to the clickCubeGroup and the scene
+  // gState().sceneData.scene.add(flwItem);
+  gState().clickCubeGroup.add(flwItem);
 };

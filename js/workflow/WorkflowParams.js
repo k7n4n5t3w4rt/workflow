@@ -22,7 +22,7 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import gSttngs from "./actions/gSttngs.js";
 
-setSeed(seedString("wrkflwparams"));
+setSeed(seedString("flwparams"));
 
 const [styles] = createStyles({
   paramsContainer: {

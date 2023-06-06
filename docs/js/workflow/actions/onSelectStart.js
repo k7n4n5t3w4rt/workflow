@@ -35,13 +35,13 @@ export default () /*: () => void */ => () /*: void */ => {
     gState().sceneData.reticleStuff.reticle.matrix,
   );
 
-  // Set the start position for all the wrkflw items
+  // Set the start position for all the flw items
   // based on where we put the cube, but higher up
   gState().startPosition = gState().clickCubeGroup.clickCube.position.clone();
   gState().startPosition.y = gSttngs().scale * 10;
   gState().endPosition = gState().startPosition.clone();
   gState().endPosition.z +=
-    gSttngs().step * (gSttngs().wrkflwSteps.length + 2) * -1;
+    gSttngs().step * (gSttngs().flwSteps.length + 2) * -1;
 
   // Create the valueSphere
   gState().vSphere = createValueSphere();

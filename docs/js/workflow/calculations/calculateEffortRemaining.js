@@ -1,9 +1,9 @@
 // @flow
 export default (
   previousEffortRemaining /*: number */,
-  effortPerWrkflwItem /*: number */,
+  effortPerFlwItem /*: number */,
 ) /*: number */ => {
-  let calculatedEffortRemaining = previousEffortRemaining - effortPerWrkflwItem;
+  let calculatedEffortRemaining = previousEffortRemaining - effortPerFlwItem;
   if (calculatedEffortRemaining < 0) {
     calculatedEffortRemaining = 0;
   }

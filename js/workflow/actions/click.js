@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // HELPERS
 // --------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
-import createNewWrkflwItem from "./newFlwItem.js";
+import newFlwItem from "./newFlwItem.js";
 import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
@@ -34,32 +34,32 @@ const click = () /*: void */ => {
       ) {
         filterOutDoneItems();
         resizeVSphere();
-        updateTotalsForEachWrkflwStep();
+        updateTotalsForEachFlwStep();
       }
-      createNewWrkflwItem();
-      moveAllWrkflwItems();
+      newFlwItem();
+      moveAllFlwItems();
       click();
     },
   });
 };
 
 //--------------------------------------------------
-// updateTotalsForEachWrkflwStep()
+// updateTotalsForEachFlwStep()
 //--------------------------------------------------
-const updateTotalsForEachWrkflwStep = () /*: void */ => {
-  gState().wrkflwStepTotals = {
+const updateTotalsForEachFlwStep = () /*: void */ => {
+  gState().flwStepTotals = {
     touchTotal: 0,
-    doneTotal: gState().wrkflwStepTotals.doneTotal,
+    doneTotal: gState().flwStepTotals.doneTotal,
   };
-  gSttngs().wrkflwSteps.forEach(
-    (wrkflwStep /*: WrkflwStep */, index /*: number */) /*: void */ => {
-      gState().wrkflwStepTotals[index.toString()] = 0;
+  gSttngs().flwSteps.forEach(
+    (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
+      gState().flwStepTotals[index.toString()] = 0;
     },
   );
-  gState().wrkflwItems.forEach((wrkflwItem /*: WrkflwItem */) /*: void */ => {
-    gState().wrkflwStepTotals[wrkflwItem.wrkflwStepsIndex.toString()]++;
-    if (gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status === "touch") {
-      gState().wrkflwStepTotals.touchTotal++;
+  gState().flwItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
+    gState().flwStepTotals[flwItem.flwStepsIndex.toString()]++;
+    if (gSttngs().flwSteps[flwItem.flwStepsIndex].status === "touch") {
+      gState().flwStepTotals.touchTotal++;
     }
   });
 };
@@ -67,13 +67,13 @@ const updateTotalsForEachWrkflwStep = () /*: void */ => {
 //--------------------------------------------------
 // updateValueQueue()
 //--------------------------------------------------
-const updateValueQueue = (wrkflwItemValue /*: number */) /*: void */ => {
-  // Collect the value of all the Done wrkflwItems
+const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
+  // Collect the value of all the Done flwItems
   if (gState().vQueue.length() > gSttngs().valueUpdateInterval) {
     gState().vQueue.dequeue();
   }
-  // const collectedValue = gState().wrkflwItems.reduce(collectValue, 0);
-  gState().vQueue.enqueue(wrkflwItemValue);
+  // const collectedValue = gState().flwItems.reduce(collectValue, 0);
+  gState().vQueue.enqueue(flwItemValue);
 };
 
 //--------------------------------------------------
@@ -99,53 +99,53 @@ function resizeVSphere() {
 // filterOutDoneItems()
 //--------------------------------------------------
 function filterOutDoneItems() /*: void */ {
-  gState().wrkflwItems = gState().wrkflwItems.filter(removeDoneWrkflwItems);
+  gState().flwItems = gState().flwItems.filter(removeDoneFlwItems);
 }
 
-const removeDoneWrkflwItems = (wrkflwItem /*: WrkflwItem */) /*: boolean */ => {
-  // Note: No need to delete the wrkflwItem object becase
+const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
+  // Note: No need to delete the flwItem object becase
   // it will be filtered out of the array
-  if (isDone(wrkflwItem.wrkflwStepsIndex, gSttngs().wrkflwSteps)) {
-    // Filter out any wrkflwItems that are Done
-    gState().wrkflwStepTotals.doneTotal++;
-    updateValueQueue(wrkflwItem.volume);
+  if (isDone(flwItem.flwStepsIndex, gSttngs().flwSteps)) {
+    // Filter out any flwItems that are Done
+    gState().flwStepTotals.doneTotal++;
+    updateValueQueue(flwItem.volume);
     gState().sceneData.scene.remove(
-      gState().sceneData.scene.getObjectByName(wrkflwItem.name),
+      gState().sceneData.scene.getObjectByName(flwItem.name),
     );
     return false;
-  } else if (wrkflwItem.age >= gSttngs().death) {
-    // Filter out any wrkflwItems that are older than a year
+  } else if (flwItem.age >= gSttngs().death) {
+    // Filter out any flwItems that are older than a year
     return false;
   }
   return true;
 };
 
 //--------------------------------------------------
-// moveWrkflwItemAndUpdateProperties()
+// moveFlwItemAndUpdateProperties()
 //--------------------------------------------------
-const moveWrkflwItemAndUpdateProperties = (wrkflwItem /*: WrkflwItem */) => {
+const moveFlwItemAndUpdateProperties = (flwItem /*: FlwItem */) => {
   // First, make it a day older
-  updateAgeOrRemoveFromScene(wrkflwItem);
+  updateAgeOrRemoveFromScene(flwItem);
 
   // Check if all the effort has been expended...
-  // ...or if the wrkflwItem is in a "wait" or "backlog" state
+  // ...or if the flwItem is in a "wait" or "backlog" state
   if (
-    wrkflwItem.effortRemaining === 0 ||
-    gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status === "wait" ||
-    gSttngs().wrkflwSteps[wrkflwItem.wrkflwStepsIndex].status === "backlog"
+    flwItem.effortRemaining === 0 ||
+    gSttngs().flwSteps[flwItem.flwStepsIndex].status === "wait" ||
+    gSttngs().flwSteps[flwItem.flwStepsIndex].status === "backlog"
   ) {
-    // Move the wrkflwItem
-    move(wrkflwItem);
+    // Move the flwItem
+    move(flwItem);
     // Reset the effort counter
-    wrkflwItem.effortRemaining = wrkflwItem.effortTotal;
+    flwItem.effortRemaining = flwItem.effortTotal;
   } else {
     // ...decrement the effort counter
-    wrkflwItem.effortRemaining = calculateEffortRemaining(
-      wrkflwItem.effortRemaining,
+    flwItem.effortRemaining = calculateEffortRemaining(
+      flwItem.effortRemaining,
       calculatedEffortPerWorkItem(
         gSttngs().teamsNumber,
         gSttngs().teamSize,
-        gState().wrkflwStepTotals.touchTotal,
+        gState().flwStepTotals.touchTotal,
       ),
     );
   }
@@ -155,26 +155,26 @@ const moveWrkflwItemAndUpdateProperties = (wrkflwItem /*: WrkflwItem */) => {
 //--------------------------------------------------
 // updateAgeOrRemoveFromScene()
 //--------------------------------------------------
-function updateAgeOrRemoveFromScene(wrkflwItem) {
-  if (wrkflwItem.age < gSttngs().death) {
-    wrkflwItem.age++;
-    if (wrkflwItem.age <= gSttngs().death && wrkflwItem.age % 10 === 0) {
-      wrkflwItem.material.opacity = 1 - wrkflwItem.age / gSttngs().death;
-      wrkflwItem.material.needsUpdate = true;
+function updateAgeOrRemoveFromScene(flwItem) {
+  if (flwItem.age < gSttngs().death) {
+    flwItem.age++;
+    if (flwItem.age <= gSttngs().death && flwItem.age % 10 === 0) {
+      flwItem.material.opacity = 1 - flwItem.age / gSttngs().death;
+      flwItem.material.needsUpdate = true;
     }
   } else {
-    console.log(`WorkFlowItem ${wrkflwItem.name} is too old.`);
+    console.log(`WorkFlowItem ${flwItem.name} is too old.`);
     gState().sceneData.scene.remove(
-      gState().sceneData.scene.getObjectByName(wrkflwItem.name),
+      gState().sceneData.scene.getObjectByName(flwItem.name),
     );
   }
 }
 
 //--------------------------------------------------
-// moveAllWrkflwItems()
+// moveAllFlwItems()
 //--------------------------------------------------
-function moveAllWrkflwItems() {
-  gState().wrkflwItems.forEach(moveWrkflwItemAndUpdateProperties);
+function moveAllFlwItems() {
+  gState().flwItems.forEach(moveFlwItemAndUpdateProperties);
 }
 
 export default click;
