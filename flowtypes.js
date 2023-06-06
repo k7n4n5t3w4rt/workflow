@@ -44,6 +44,7 @@ type GlobalState = {
 
 type Objects = {
   startPosition: CubePosition,
+  endPosition: CubePosition,
   workflowItems: Array<WorkflowItem>,
   workflowStepTotals: {
     [string]: number,

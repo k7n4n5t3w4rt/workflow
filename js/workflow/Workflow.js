@@ -67,7 +67,7 @@ export default (props /*: Props */) /*: string */ => {
   gSettings("x", gSettings().scale);
   gSettings("y", gSettings().scale);
   gSettings("z", gSettings().scale);
-  gSettings("step", cleanInt(props.step) / 100 || gSettings().z * 4);
+  gSettings("step", cleanInt(props.step) / 100 || gSettings().scale * 5);
   // Set the number of teams to 1 so that we have one workflow
   gSettings("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
@@ -84,7 +84,7 @@ export default (props /*: Props */) /*: string */ => {
   ]);
   // workflowItem properties
   gSettings("workflowItem", { effort: { min: 14, max: 520 } });
-  gSettings("valueUpdateInterval", 60);
+  gSettings("valueUpdateInterval", 10);
   gSettings("death", 260);
 
   // I'm not really using the state, but leaving it here just in case

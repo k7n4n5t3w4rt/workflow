@@ -39,7 +39,10 @@ export default () /*: () => void */ => () /*: void */ => {
   // based on where we put the cube, but higher up
   gState().objects.startPosition =
     gState().objects.clickCubeGroup.clickCube.position.clone();
-  gState().objects.startPosition.y = 0;
+  gState().objects.startPosition.y = gSettings().scale * 10;
+  gState().objects.endPosition = gState().objects.startPosition.clone();
+  gState().objects.endPosition.z +=
+    gSettings().step * (gSettings().workflowSteps.length + 2) * -1;
 
   // Create the valueSphere
   gState().objects.valueSphere = createValueSphere();
@@ -48,9 +51,8 @@ export default () /*: () => void */ => () /*: void */ => {
   // gState().objects.valueSphere.position.setFromMatrixPosition(
   //   gState().sceneData.reticleStuff.reticle.matrix,
   // );
-  gState().objects.valueSphere.position.y = gState().objects.startPosition.y;
-  gState().objects.valueSphere.position.z +=
-    gSettings().step * gSettings().workflowSteps.length;
+  gState().objects.valueSphere.position.y = gState().objects.endPosition.y;
+  gState().objects.valueSphere.position.z = gState().objects.endPosition.z;
 
   // Start the clubes flying
   click();

@@ -30,7 +30,7 @@ const click = () /*: void */ => {
     complete: () /*: void */ => {
       if (
         gState().clicks % gSettings().valueUpdateInterval === 0 ||
-        gState().clicks === 1
+        gState().clicks < gSettings().valueUpdateInterval
       ) {
         filterOutDoneItems();
         resizeValueSphere();
