@@ -15,7 +15,7 @@ export default (
     renderer,
   } /*: {stats: Object, scene: Object, camera: Object, renderer: Object} */,
 ) /*: ReticleStuff */ => {
-  // const { stats, scene, camera, renderer, reticleStuff, cubes } = sceneData;
+  // const { stats, scene, camera, renderer, reticleStuff, cubes } = scnData;
 
   const reticleStuff = {};
 

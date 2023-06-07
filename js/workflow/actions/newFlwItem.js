@@ -43,7 +43,8 @@ export default () /*: void */ => {
   const flwItem = new THREE.Mesh(geometry, material);
   flwItem.castShadow = true;
   flwItem.receiveShadow = true;
-  flwItem.volume = Math.pow(gSttngs().x * scaleAdjustedForEffort, 3);
+  const xCubed = gSttngs().x * scaleAdjustedForEffort * 3;
+  flwItem.dVolume = Math.round(xCubed * 10000000) / 10000000;
 
   // Set the name to the uuid so we can delete it later
   flwItem.name = flwItem.uuid;
@@ -53,7 +54,7 @@ export default () /*: void */ => {
 
   // Set the position
   // flwItem.position.setFromMatrixPosition(
-  //   gState().sceneData.reticleStuff.reticle.matrix,
+  //   gState().scnData.reticleStuff.reticle.matrix,
   // );
   flwItem.position.x = gState().startPosition.x;
   flwItem.position.y = gState().startPosition.y;
@@ -62,10 +63,6 @@ export default () /*: void */ => {
   // Set the effort values of the flwItem
   flwItem.effortRemaining = flwItem.effortTotal = flwItemEffortTotal;
 
-  // Set the flwStepsIndex so we can pull the
-  // status info from the gSttngs().flwSteps array
-  flwItem.flwStepsIndex = 0;
-
   // Set the team number of the flwItem
   flwItem.teamNumber = rndmBetween(1, gSttngs().teamsNumber);
 
@@ -73,6 +70,14 @@ export default () /*: void */ => {
   gState().flwItems.push(flwItem);
 
   // Add the new flwItem to the clickCubeGroup and the scene
-  // gState().sceneData.scene.add(flwItem);
+  // gState().scnData.scene.add(flwItem);
   gState().clickCubeGroup.add(flwItem);
+
+  flwItem.flwStepsIndex = 0;
+  gState().flwStepTotals[flwItem.flwStepsIndex.toString()]++;
+  console.log(
+    `Updated flwStepTotals: ${
+      gSttngs().flwSteps[flwItem.flwStepsIndex.toString()].name
+    }`,
+  );
 };

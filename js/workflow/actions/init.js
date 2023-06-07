@@ -98,9 +98,9 @@ export default () /*: void */ => {
   gState("flwItems", []);
   gState("clickCube", {});
   gState("flwStepTotals", {});
+  setUpFlwStepTotals(gState().flwStepTotals, gSttngs().flwSteps);
   gState("touchTotal", 0);
-  gState("doneTotal", 0);
-  gState("sceneData", {
+  gState("scnData", {
     stats,
     scene,
     camera,
@@ -140,3 +140,21 @@ function vQueue() /*: void */ {
     return this.tailIndex - this.headIndex;
   };
 }
+
+//--------------------------------------------------
+// setUpFlwStepTotals()
+//--------------------------------------------------
+const setUpFlwStepTotals = (
+  gFlwStepTotals /*: FlwStepTotals */,
+  gFlwSteps /*: FlwStep[] */,
+) /*: void */ => {
+  gFlwStepTotals.touchTotal = 0;
+  gFlwStepTotals.doneTotal = 0;
+
+  // Set each flwStepTotal to 0
+  gFlwSteps.forEach(
+    (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
+      gState().flwStepTotals[index.toString()] = 0;
+    },
+  );
+};

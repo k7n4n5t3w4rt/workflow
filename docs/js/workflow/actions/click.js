@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // HELPERS
 // --------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
-import createNewFlwItem from "./newFlwItem.js";
+import newFlwItem from "./newFlwItem.js";
 import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
@@ -34,9 +34,11 @@ const click = () /*: void */ => {
       ) {
         filterOutDoneItems();
         resizeVSphere();
-        updateTotalsForEachFlwStep();
+        // A fix because things get out of whack
+        // It would be good to know why things get out of whack
+        // updateTotalsForEveryFlwStep();
       }
-      createNewFlwItem();
+      newFlwItem();
       moveAllFlwItems();
       click();
     },
@@ -44,9 +46,9 @@ const click = () /*: void */ => {
 };
 
 //--------------------------------------------------
-// updateTotalsForEachFlwStep()
+// updateTotalsForEveryFlwStep()
 //--------------------------------------------------
-const updateTotalsForEachFlwStep = () /*: void */ => {
+const updateTotalsForEveryFlwStep = () /*: void */ => {
   gState().flwStepTotals = {
     touchTotal: 0,
     doneTotal: gState().flwStepTotals.doneTotal,
@@ -64,25 +66,25 @@ const updateTotalsForEachFlwStep = () /*: void */ => {
   });
 };
 
-//--------------------------------------------------
-// updateValueQueue()
-//--------------------------------------------------
-const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
-  // Collect the value of all the Done flwItems
-  if (gState().vQueue.length() > gSttngs().valueUpdateInterval) {
-    gState().vQueue.dequeue();
-  }
-  // const collectedValue = gState().flwItems.reduce(collectValue, 0);
-  gState().vQueue.enqueue(flwItemValue);
-};
+// //--------------------------------------------------
+// // updateValueQueue()
+// //--------------------------------------------------
+// const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
+//   if (gState().vQueue.length() >= gSttngs().valueUpdateInterval) {
+//     gState().vQueue.dequeue();
+//   }
+//   gState().vQueue.enqueue(flwItemValue);
+// };
 
 //--------------------------------------------------
 // resizeVSphere()
 //--------------------------------------------------
 function resizeVSphere() {
-  gState().vSphere.rollingTotal = gState().vQueue.total();
+  if (gState().vSphere.dRllngTtlVolume === 0) {
+    return;
+  }
   const newRadius = Math.cbrt(
-    gState().vSphere.rollingTotal / ((4 / 3) * Math.PI),
+    gState().vSphere.dRllngTtlVolume / ((4 / 3) * Math.PI),
   );
   // Doesn't work :(
   // gState().vSphere.scale.set(newRadius, newRadius, newRadius);
@@ -99,19 +101,22 @@ function resizeVSphere() {
 // filterOutDoneItems()
 //--------------------------------------------------
 function filterOutDoneItems() /*: void */ {
+  gState().vSphere.dRllngTtlVolume = 0;
   gState().flwItems = gState().flwItems.filter(removeDoneFlwItems);
 }
 
 const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
   // Note: No need to delete the flwItem object becase
-  // it will be filtered out of the array
+  // it will be filtered out of the array with the return false
   if (isDone(flwItem.flwStepsIndex, gSttngs().flwSteps)) {
     // Filter out any flwItems that are Done
     gState().flwStepTotals.doneTotal++;
-    updateValueQueue(flwItem.volume);
-    gState().sceneData.scene.remove(
-      gState().sceneData.scene.getObjectByName(flwItem.name),
+    gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
+    gState().scnData.scene.remove(
+      gState().scnData.scene.getObjectByName(flwItem.name),
     );
+    // Assuming the flwStepsIndex is correct...
+    gState().flwStepTotals[flwItem.flwStepsIndex.toString()]--;
     return false;
   } else if (flwItem.age >= gSttngs().death) {
     // Filter out any flwItems that are older than a year
@@ -123,9 +128,12 @@ const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
 //--------------------------------------------------
 // moveFlwItemAndUpdateProperties()
 //--------------------------------------------------
-const moveFlwItemAndUpdateProperties = (flwItem /*: FlwItem */) => {
+const moveFlwItemAndUpdateProperties = (
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) => {
   // First, make it a day older
-  updateAgeOrRemoveFromScene(flwItem);
+  updateAgeOrRemoveFromScene(flwItem, index);
 
   // Check if all the effort has been expended...
   // ...or if the flwItem is in a "wait" or "backlog" state
@@ -155,7 +163,10 @@ const moveFlwItemAndUpdateProperties = (flwItem /*: FlwItem */) => {
 //--------------------------------------------------
 // updateAgeOrRemoveFromScene()
 //--------------------------------------------------
-function updateAgeOrRemoveFromScene(flwItem) {
+function updateAgeOrRemoveFromScene(
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) {
   if (flwItem.age < gSttngs().death) {
     flwItem.age++;
     if (flwItem.age <= gSttngs().death && flwItem.age % 10 === 0) {
@@ -164,9 +175,15 @@ function updateAgeOrRemoveFromScene(flwItem) {
     }
   } else {
     console.log(`WorkFlowItem ${flwItem.name} is too old.`);
-    gState().sceneData.scene.remove(
-      gState().sceneData.scene.getObjectByName(flwItem.name),
+    gState().flwStepTotals[flwItem.flwStepsIndex.toString()]--;
+    gState().scnData.scene.remove(
+      gState().scnData.scene.getObjectByName(flwItem.name),
     );
+    // Decrement the touchTotal if the flwItem is in a touch status
+    if (gSttngs().flwSteps[flwItem.flwStepsIndex].status === "touch") {
+      gState().flwStepTotals.touchTotal--;
+    }
+    gState().flwItems.splice(index, 1);
   }
 }
 

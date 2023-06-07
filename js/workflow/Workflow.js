@@ -74,13 +74,13 @@ export default (props /*: Props */) /*: string */ => {
   gSttngs("teamSize", cleanInt(props.teamsize) || 400);
   // Populate the flwStep array
   gSttngs("flwSteps", [
-    { name: "Open", status: "backlog" },
-    { name: "Doing", status: "touch" },
-    { name: "Ready for Test", status: "wait" },
-    { name: "In Test", status: "touch" },
-    { name: "Ready for Review", status: "wait" },
-    { name: "In Review", status: "touch" },
-    { name: "Done", status: "done" },
+    { name: "Open", status: "backlog", limit: 0 },
+    { name: "Doing", status: "touch", limit: 3 },
+    { name: "Ready for Test", status: "wait", limit: 3 },
+    { name: "In Test", status: "touch", limit: 3 },
+    { name: "Ready for Review", status: "wait", limit: 3 },
+    { name: "In Review", status: "touch", limit: 3 },
+    { name: "Done", status: "done", limit: 0 },
   ]);
   // flwItem properties
   gSttngs("flwItem", { effort: { min: 14, max: 520 } });

@@ -30,28 +30,44 @@ type FlwItemSettings = {
 type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
+  limit: number,
 };
 
 // --------------------------------------------------
 // gState
 // --------------------------------------------------
 type GlobalState = {
+  // -----------------------
+  // Data:
+  // -----------------------
   clicks: number,
-  sceneData: SceneData,
-  vQueue: VQueue,
+  scnData: SceneData,
+  vSphere: VSphere,
   startPosition: CubePosition,
   endPosition: CubePosition,
   flwItems: Array<FlwItem>,
-  flwStepTotals: {
-    [string]: number,
-    touchTotal: number,
-    doneTotal: number,
-  },
+  flwStepTotals: FlwStepTotals,
   clickCubeGroup: ClickCubeGroup,
-  vSphere: VSphere,
+  // vQueue: VQueue,
+};
+
+type FlwStepTotals = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  [string]: number,
+  touchTotal: number,
+  doneTotal: number,
 };
 
 type ClickCubeGroup = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  clickCube: ClickCube,
+  // -----------------------
+  // Three.js:
+  // -----------------------
   add: (VSphere | FlwItem) => void,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
@@ -61,10 +77,12 @@ type ClickCubeGroup = {
   material: { color: CubeColor },
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
-  clickCube: ClickCube,
 };
 
 type ClickCube = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
@@ -76,45 +94,60 @@ type ClickCube = {
 };
 
 type VSphere = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dVolume: number,
+  dRllngTtlVolume: number,
+  // -----------------------
+  // Three.js:
+  // -----------------------
   geometry: {
     scale: (x: number, y: number, z: number) => void,
     dispose: () => void,
   },
   position: CubePosition,
   scale: SimpleScale,
-  volume: number,
   rotateY: (radians: number) => void,
   rotation: CubeRotation,
-  rollingTotal: number,
 };
 
 type FlwItem = {
-  // Display properties
-  geometry: {
-    scale: (x: number, y: number, z: number) => void,
-  },
-  position: CubePosition,
-  scale: SimpleScale,
-  volume: number,
-  material: { color: CubeColor, opacity: number, needsUpdate: boolean },
-  rotateY: (radians: number) => void,
-  rotation: CubeRotation,
-  bubble_value: number,
-  // Flw properties
+  // -----------------------
+  // Data:
+  // -----------------------
   name: string,
   age: number,
   effortTotal: number,
   effortRemaining: number,
   flwStepsIndex: number,
+  // -----------------------
+  // Three.js:
+  // -----------------------
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+  },
+  position: CubePosition,
+  scale: SimpleScale,
+  dVolume: number,
+  material: { color: CubeColor, opacity: number, needsUpdate: boolean },
+  rotateY: (radians: number) => void,
+  rotation: CubeRotation,
 };
 
 type SimplePosition = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   x: number,
   y: number,
   z: number,
 };
 
 type SimpleScale = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   x: number,
   y: number,
   z: number,
@@ -122,6 +155,9 @@ type SimpleScale = {
 };
 
 type CubePosition = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   setFromMatrixPosition: (matrix: Object) => void,
   clone: () => CubePosition,
   x: number,
@@ -130,18 +166,27 @@ type CubePosition = {
 };
 
 type CubeColor = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   r: number,
   g: number,
   b: number,
 };
 
 type CubeRotation = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   x: number,
   y: number,
   z: number,
 };
 
 type ReticleStuff = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   reticle: Object,
   hitTestSource?: Object,
   localSpace?: Object,
@@ -151,6 +196,9 @@ type ReticleStuff = {
 };
 
 type SceneData = {
+  // -----------------------
+  // Three.js:
+  // -----------------------
   stats: Object,
   scene: Object,
   camera: Object,
@@ -158,12 +206,15 @@ type SceneData = {
   reticleStuff: ReticleStuff,
 };
 
-type VQueue = {
-  dequeue: () => void,
-  enqueue: (item: number) => void,
-  total: () => number,
-  length: () => number,
-};
+// type VQueue = {
+//   // -----------------------
+//   // Data:
+//   // -----------------------
+//   dequeue: () => void,
+//   enqueue: (item: number) => void,
+//   total: () => number,
+//   length: () => number,
+// };
 
 // --------------------------------------------------
 // MODULES

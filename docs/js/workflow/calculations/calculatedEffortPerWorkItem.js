@@ -1,8 +1,8 @@
 // @flow
 export default (
-  teamsNumber /*: number */,
-  teamSize /*: number */,
-  numberOfFlwItemsInTouch /*: number */,
+  gTeamsNumber /*: number */,
+  gTeamSize /*: number */,
+  gTouchTotal /*: number */,
 ) /*: number */ => {
-  return (teamsNumber * teamSize) / numberOfFlwItemsInTouch;
+  return (gTeamsNumber * gTeamSize) / gTouchTotal;
 };
