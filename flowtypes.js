@@ -43,8 +43,8 @@ type GlobalState = {
   clicks: number,
   scnData: SceneData,
   vSphere: VSphere,
-  startPosition: CubePosition,
-  endPosition: CubePosition,
+  startPosition: ThrMeshPosition,
+  endPosition: ThrMeshPosition,
   flwItems: Array<FlwItem>,
   flwStepTotals: FlwStepTotals,
   clickCubeGroup: ClickCubeGroup,
@@ -72,11 +72,11 @@ type ClickCubeGroup = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
-  position: CubePosition,
-  scale: SimpleScale,
+  position: ThrMeshPosition,
+  scale: ThrMeshScale,
   material: { color: CubeColor },
   rotateY: (radians: number) => void,
-  rotation: CubeRotation,
+  rotation: ThrMeshRotation,
 };
 
 type ClickCube = {
@@ -86,11 +86,11 @@ type ClickCube = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
-  position: CubePosition,
-  scale: SimpleScale,
+  position: ThrMeshPosition,
+  scale: ThrMeshScale,
   material: { color: CubeColor },
   rotateY: (radians: number) => void,
-  rotation: CubeRotation,
+  rotation: ThrMeshRotation,
 };
 
 type VSphere = {
@@ -98,6 +98,7 @@ type VSphere = {
   // Data:
   // -----------------------
   dVolume: number,
+  dRadius: number,
   dRllngTtlVolume: number,
   // -----------------------
   // Three.js:
@@ -106,10 +107,10 @@ type VSphere = {
     scale: (x: number, y: number, z: number) => void,
     dispose: () => void,
   },
-  position: CubePosition,
-  scale: SimpleScale,
+  position: ThrMeshPosition,
+  scale: ThrMeshScale,
   rotateY: (radians: number) => void,
-  rotation: CubeRotation,
+  rotation: ThrMeshRotation,
 };
 
 type FlwItem = {
@@ -127,12 +128,12 @@ type FlwItem = {
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
-  position: CubePosition,
-  scale: SimpleScale,
+  position: ThrMeshPosition,
+  scale: ThrMeshScale,
   dVolume: number,
   material: { color: CubeColor, opacity: number, needsUpdate: boolean },
   rotateY: (radians: number) => void,
-  rotation: CubeRotation,
+  rotation: ThrMeshRotation,
 };
 
 type SimplePosition = {
@@ -144,7 +145,7 @@ type SimplePosition = {
   z: number,
 };
 
-type SimpleScale = {
+type ThrMeshScale = {
   // -----------------------
   // Three.js:
   // -----------------------
@@ -154,12 +155,12 @@ type SimpleScale = {
   set: (number, number, number) => void,
 };
 
-type CubePosition = {
+type ThrMeshPosition = {
   // -----------------------
   // Three.js:
   // -----------------------
   setFromMatrixPosition: (matrix: Object) => void,
-  clone: () => CubePosition,
+  clone: () => ThrMeshPosition,
   x: number,
   y: number,
   z: number,
@@ -174,7 +175,7 @@ type CubeColor = {
   b: number,
 };
 
-type CubeRotation = {
+type ThrMeshRotation = {
   // -----------------------
   // Three.js:
   // -----------------------

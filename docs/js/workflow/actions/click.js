@@ -17,7 +17,6 @@ import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
-import newSphereRadius from "../calculations/newSphereRadius.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
@@ -102,6 +101,7 @@ function resizeVSphere() {
   }
   const newRadius = findRadius(gState().vSphere.dRllngTtlVolume);
   gState().vSphere.dRllngTtlVolume = 0;
+  gState().vSphere.dRadius = newRadius;
   // Doesn't work :(
   // gState().vSphere.scale.set(newRadius, newRadius, newRadius);
   // Nor does this :(
@@ -111,6 +111,7 @@ function resizeVSphere() {
   // This does though :)
   gState().vSphere.geometry.dispose();
   gState().vSphere.geometry = new THREE.SphereGeometry(newRadius, 32, 32);
+  gState().vSphere.position.z = gState().endPosition.z + newRadius;
 }
 
 const findRadius = (volume /*: number */) /*: number */ => {
@@ -119,6 +120,10 @@ const findRadius = (volume /*: number */) /*: number */ => {
   }
   const pi = Math.PI;
   let radius = Math.cbrt((3 * volume) / (4 * pi));
+  // console.log("// --------------------------------------------------");
+  // console.log("volume", volume);
+  // console.log("radius", radius);
+  // console.log("// --------------------------------------------------");
   return radius;
 };
 
@@ -136,6 +141,7 @@ const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
   if (isDone(flwItem.flwStepsIndex, gSttngs().flwSteps)) {
     // Filter out any flwItems that are Done
     gState().flwStepTotals.doneTotal++;
+    // console.log("flwItem.dVolume", flwItem.dVolume);
     gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
     gState().scnData.scene.remove(
       gState().scnData.scene.getObjectByName(flwItem.name),
@@ -199,7 +205,7 @@ function updateAgeOrRemoveFromScene(
       flwItem.material.needsUpdate = true;
     }
   } else {
-    console.log(`WorkFlowItem ${flwItem.name} is too old.`);
+    // console.log(`WorkFlowItem ${flwItem.name} is too old.`);
     gState().flwStepTotals[flwItem.flwStepsIndex.toString()]--;
     gState().scnData.scene.remove(
       gState().scnData.scene.getObjectByName(flwItem.name),

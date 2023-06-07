@@ -75,9 +75,9 @@ export default () /*: void */ => {
 
   flwItem.flwStepsIndex = 0;
   gState().flwStepTotals[flwItem.flwStepsIndex.toString()]++;
-  console.log(
-    `Updated flwStepTotals: ${
-      gSttngs().flwSteps[flwItem.flwStepsIndex.toString()].name
-    }`,
-  );
+  // console.log(
+  //   `Updated flwStepTotals: ${
+  //     gSttngs().flwSteps[flwItem.flwStepsIndex.toString()].name
+  //   }`,
+  // );
 };

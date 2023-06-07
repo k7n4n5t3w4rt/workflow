@@ -24,10 +24,7 @@ const move = (flwItem /*: Object */) /*: void */ => {
         gState().flwStepTotals[i.toString()] < gSttngs().flwSteps[i].limit &&
         touchStatusFound === false
       ) {
-        if (
-          flwItem.effortRemaining > 0 &&
-          gSttngs().flwSteps[i].status === "touch"
-        ) {
+        if (gSttngs().flwSteps[i].status === "touch") {
           touchStatusFound = true;
         }
         return i;
@@ -62,20 +59,21 @@ const move = (flwItem /*: Object */) /*: void */ => {
   let newColor = 0; // Black for "wait" status
 
   if (gNextLimit > 0 && gNextTotal >= gNextLimit) {
-    console.log(
-      `Leaving it in “${gSttngs().flwSteps[orgnFlwStepsIndex].name}”`,
-    );
+    // console.log(
+    //   `Leaving it in “${gSttngs().flwSteps[orgnFlwStepsIndex].name}”`,
+    // );
     // Winding back the clock
     updateFlwStepTotal(dstFlwStepsIndex, orgnFlwStepsIndex);
     return;
   }
 
   // Else... continue
-  console.log(
-    `Moving from “${gSttngs().flwSteps[orgnFlwStepsIndex].name}” to “${
-      gSttngs().flwSteps[dstFlwStepsIndex].name
-    }”`,
-  );
+
+  // console.log(
+  // `Moving from “${gSttngs().flwSteps[orgnFlwStepsIndex].name}” to “${
+  //   gSttngs().flwSteps[dstFlwStepsIndex].name
+  // }”`,
+  // );
 
   if (gNextStatus === "touch") {
     newColor = 255;
@@ -83,7 +81,7 @@ const move = (flwItem /*: Object */) /*: void */ => {
     newColor = 255;
     newPosition.x = gState().endPosition.x;
     newPosition.y = gState().endPosition.y;
-    newPosition.z = gState().endPosition.z;
+    newPosition.z = gState().endPosition.z + gState().vSphere.dRadius;
   }
 
   flwItem.material.color = { r: newColor, g: newColor, b: newColor };
@@ -106,12 +104,9 @@ const move = (flwItem /*: Object */) /*: void */ => {
         flwItem.visible = false;
       } else {
         flwItem.flwStepsIndex++;
-        // Try to move the flwItem again, but only if all the work is done
-        // or if the flwItem is in a wait status
-        if (
-          flwItem.effortRemaining === 0 ||
-          gSttngs().flwSteps[flwItem.flwStepsIndex].status === "wait"
-        ) {
+        flwItem.effortRemaining = flwItem.effortTotal;
+        // Try to move the flwItem again, but only if the flwItem is in a wait status
+        if (gSttngs().flwSteps[flwItem.flwStepsIndex].status === "wait") {
           move(flwItem);
         }
       }
@@ -144,7 +139,7 @@ const range = (
   let range = 0;
 
   if (gNumberOfFlwItemsNextStatus > 0) {
-    range = (gScale * gNumberOfFlwItemsNextStatus) / 2;
+    range = gScale * gNumberOfFlwItemsNextStatus;
   }
 
   // If there are more than 30 flwItems in the next status, then
@@ -162,11 +157,11 @@ const range = (
 const refineNewPosition = (
   flwItem /*: FlwItem */,
   nextFlwStepsIndex /*: number */,
-  flwItemPosition /*: CubePosition */,
-  gStartPosition /*: CubePosition */,
+  flwItemPosition /*: ThrMeshPosition */,
+  gStartPosition /*: ThrMeshPosition */,
   gNumberOfFlwSteps /*: number */,
   range /*: number */,
-) /*: CubePosition */ => {
+) /*: ThrMeshPosition */ => {
   const position = { ...flwItemPosition };
 
   // i.e. Don't do anything if the flwItem is moving into "done"
