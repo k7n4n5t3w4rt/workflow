@@ -34,9 +34,11 @@ const click = () /*: void */ => {
       ) {
         filterOutDoneItems();
         resizeVSphere();
+        // Update the TouchTotal
+        updateTouchTotal();
         // A fix because things get out of whack
         // It would be good to know why things get out of whack
-        // updateTotalsForEveryFlwStep();
+        updateTotalsForEveryFlwStep();
       }
       newFlwItem();
       moveAllFlwItems();
@@ -46,23 +48,38 @@ const click = () /*: void */ => {
 };
 
 //--------------------------------------------------
+// updateTouchTotal()
+//--------------------------------------------------
+const updateTouchTotal = () /*: void */ => {
+  gState().flwStepTotals.touchTotal = 0;
+  gSttngs().flwSteps.forEach((flwStep /*: FlwStep */) /*: void */ => {
+    if (flwStep.status === "touch") {
+      gState().flwStepTotals.touchTotal += flwStep.limit;
+    }
+  });
+  // If there is no WIP limit, then the touchTotal is the total number of items
+  if (gState().flwStepTotals.touchTotal === 0) {
+    gState().flwStepTotals.touchTotal = gState().flwItems.length;
+  }
+};
+//--------------------------------------------------
 // updateTotalsForEveryFlwStep()
 //--------------------------------------------------
 const updateTotalsForEveryFlwStep = () /*: void */ => {
+  // Start with a clean slate
   gState().flwStepTotals = {
-    touchTotal: 0,
+    touchTotal: gState().flwStepTotals.touchTotal,
     doneTotal: gState().flwStepTotals.doneTotal,
   };
+  // Make a property for each flwStep
   gSttngs().flwSteps.forEach(
     (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
       gState().flwStepTotals[index.toString()] = 0;
     },
   );
+  // For each flwItem, add to the total for its flwStep
   gState().flwItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
     gState().flwStepTotals[flwItem.flwStepsIndex.toString()]++;
-    if (gSttngs().flwSteps[flwItem.flwStepsIndex].status === "touch") {
-      gState().flwStepTotals.touchTotal++;
-    }
   });
 };
 
@@ -83,9 +100,8 @@ function resizeVSphere() {
   if (gState().vSphere.dRllngTtlVolume === 0) {
     return;
   }
-  const newRadius = Math.cbrt(
-    gState().vSphere.dRllngTtlVolume / ((4 / 3) * Math.PI),
-  );
+  const newRadius = findRadius(gState().vSphere.dRllngTtlVolume);
+  gState().vSphere.dRllngTtlVolume = 0;
   // Doesn't work :(
   // gState().vSphere.scale.set(newRadius, newRadius, newRadius);
   // Nor does this :(
@@ -96,6 +112,15 @@ function resizeVSphere() {
   gState().vSphere.geometry.dispose();
   gState().vSphere.geometry = new THREE.SphereGeometry(newRadius, 32, 32);
 }
+
+const findRadius = (volume /*: number */) /*: number */ => {
+  if (volume <= 0) {
+    return 0;
+  }
+  const pi = Math.PI;
+  let radius = Math.cbrt((3 * volume) / (4 * pi));
+  return radius;
+};
 
 //--------------------------------------------------
 // filterOutDoneItems()
@@ -179,10 +204,6 @@ function updateAgeOrRemoveFromScene(
     gState().scnData.scene.remove(
       gState().scnData.scene.getObjectByName(flwItem.name),
     );
-    // Decrement the touchTotal if the flwItem is in a touch status
-    if (gSttngs().flwSteps[flwItem.flwStepsIndex].status === "touch") {
-      gState().flwStepTotals.touchTotal--;
-    }
     gState().flwItems.splice(index, 1);
   }
 }

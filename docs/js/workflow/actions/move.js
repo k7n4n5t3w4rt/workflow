@@ -9,23 +9,49 @@ import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 
 const move = (flwItem /*: Object */) /*: void */ => {
-  const thisFlwStepsIndex = flwItem.flwStepsIndex;
-  const nextFlwStepsIndex = flwItem.flwStepsIndex + 1;
+  const orgnFlwStepsIndex = flwItem.flwStepsIndex;
+  let touchStatusFound = false;
+  const dstFlwStepsIndex = gSttngs().flwSteps.reduce(
+    (
+      acc /*: number */,
+      flwStep /*: FlwStep */,
+      i /*: number */,
+    ) /*: number */ => {
+      if (
+        i >= acc &&
+        i < gSttngs().flwSteps.length - 1 &&
+        gState().flwStepTotals[i.toString()] !== undefined &&
+        gState().flwStepTotals[i.toString()] < gSttngs().flwSteps[i].limit &&
+        touchStatusFound === false
+      ) {
+        if (
+          flwItem.effortRemaining > 0 &&
+          gSttngs().flwSteps[i].status === "touch"
+        ) {
+          touchStatusFound = true;
+        }
+        return i;
+      } else {
+        return acc;
+      }
+    },
+    orgnFlwStepsIndex + 1,
+  );
 
-  const gThisStatus = gSttngs().flwSteps[thisFlwStepsIndex].status;
+  const gThisStatus = gSttngs().flwSteps[orgnFlwStepsIndex].status;
 
   if (gThisStatus === "done") {
     return;
   }
 
-  const gNextStatus = gSttngs().flwSteps[nextFlwStepsIndex].status;
-  const gNextLimit = gSttngs().flwSteps[nextFlwStepsIndex].limit;
-  const gNextTotal = gState().flwStepTotals[nextFlwStepsIndex.toString()];
+  const gNextStatus = gSttngs().flwSteps[dstFlwStepsIndex].status;
+  const gNextLimit = gSttngs().flwSteps[dstFlwStepsIndex].limit;
+  const gNextTotal = gState().flwStepTotals[dstFlwStepsIndex.toString()];
 
   // const newPosition = { ...flwItem.position };
   const newPosition = refineNewPosition(
     flwItem,
-    nextFlwStepsIndex,
+    dstFlwStepsIndex,
     flwItem.position,
     gState().startPosition,
     gSttngs().flwSteps.length,
@@ -37,17 +63,17 @@ const move = (flwItem /*: Object */) /*: void */ => {
 
   if (gNextLimit > 0 && gNextTotal >= gNextLimit) {
     console.log(
-      `Leaving it in “${gSttngs().flwSteps[thisFlwStepsIndex].name}”`,
+      `Leaving it in “${gSttngs().flwSteps[orgnFlwStepsIndex].name}”`,
     );
     // Winding back the clock
-    updateFlwStepTotal(nextFlwStepsIndex, thisFlwStepsIndex);
+    updateFlwStepTotal(dstFlwStepsIndex, orgnFlwStepsIndex);
     return;
   }
 
   // Else... continue
   console.log(
-    `Moving from “${gSttngs().flwSteps[thisFlwStepsIndex].name}” to “${
-      gSttngs().flwSteps[nextFlwStepsIndex].name
+    `Moving from “${gSttngs().flwSteps[orgnFlwStepsIndex].name}” to “${
+      gSttngs().flwSteps[dstFlwStepsIndex].name
     }”`,
   );
 
@@ -62,7 +88,7 @@ const move = (flwItem /*: Object */) /*: void */ => {
 
   flwItem.material.color = { r: newColor, g: newColor, b: newColor };
 
-  updateFlwStepTotal(thisFlwStepsIndex, nextFlwStepsIndex);
+  updateFlwStepTotal(orgnFlwStepsIndex, dstFlwStepsIndex);
 
   anime({
     targets: [flwItem.position],
@@ -104,16 +130,8 @@ const updateFlwStepTotal = (
   if (gState().flwStepTotals[originFlwStepsIndex.toString()] > 0) {
     gState().flwStepTotals[originFlwStepsIndex.toString()]--;
   }
-  // Decrement the touchTotal if the flwItem is in a touch status
-  if (gSttngs().flwSteps[originFlwStepsIndex].status === "touch") {
-    gState().flwStepTotals.touchTotal--;
-  }
   // Increment the current FlwStepTotal
   gState().flwStepTotals[destinationFlwStepsIndex.toString()]++;
-  // Increment the touchTotal if the flwItem is in a touch status
-  if (gSttngs().flwSteps[destinationFlwStepsIndex].status === "touch") {
-    gState().flwStepTotals.touchTotal++;
-  }
 };
 
 //--------------------------------------------------
