@@ -48,7 +48,7 @@ type GlobalState = {
   flwItems: Array<FlwItem>,
   flwStepTotals: FlwStepTotals,
   clickCubeGroup: ClickCubeGroup,
-  // vQueue: VQueue,
+  vQueue: VQueue,
 };
 
 type FlwStepTotals = {
@@ -74,7 +74,7 @@ type ClickCubeGroup = {
   },
   position: ThrMeshPosition,
   scale: ThrMeshScale,
-  material: { color: CubeColor },
+  material: { color: ThrMtrlColor },
   rotateY: (radians: number) => void,
   rotation: ThrMeshRotation,
 };
@@ -88,7 +88,7 @@ type ClickCube = {
   },
   position: ThrMeshPosition,
   scale: ThrMeshScale,
-  material: { color: CubeColor },
+  material: { color: ThrMtrlColor },
   rotateY: (radians: number) => void,
   rotation: ThrMeshRotation,
 };
@@ -100,6 +100,7 @@ type VSphere = {
   dVolume: number,
   dRadius: number,
   dRllngTtlVolume: number,
+  dPosition: ThrMeshPosition,
   // -----------------------
   // Three.js:
   // -----------------------
@@ -117,21 +118,23 @@ type FlwItem = {
   // -----------------------
   // Data:
   // -----------------------
-  name: string,
   age: number,
-  effortTotal: number,
-  effortRemaining: number,
-  flwStepsIndex: number,
+  dEffortTotal: number,
+  dTeamNumber: number,
+  dEffortRemaining: number,
+  dFlwStepsIndex: number,
+  dPosition: ThrMeshPosition,
   // -----------------------
   // Three.js:
   // -----------------------
+  name: string,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
   },
   position: ThrMeshPosition,
   scale: ThrMeshScale,
   dVolume: number,
-  material: { color: CubeColor, opacity: number, needsUpdate: boolean },
+  material: { color: ThrMtrlColor, opacity: number, needsUpdate: boolean },
   rotateY: (radians: number) => void,
   rotation: ThrMeshRotation,
 };
@@ -166,7 +169,7 @@ type ThrMeshPosition = {
   z: number,
 };
 
-type CubeColor = {
+type ThrMtrlColor = {
   // -----------------------
   // Three.js:
   // -----------------------
@@ -207,15 +210,15 @@ type SceneData = {
   reticleStuff: ReticleStuff,
 };
 
-// type VQueue = {
-//   // -----------------------
-//   // Data:
-//   // -----------------------
-//   dequeue: () => void,
-//   enqueue: (item: number) => void,
-//   total: () => number,
-//   length: () => number,
-// };
+type VQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => void,
+  enqueue: (item: number) => void,
+  total: () => number,
+  length: () => number,
+};
 
 // --------------------------------------------------
 // MODULES

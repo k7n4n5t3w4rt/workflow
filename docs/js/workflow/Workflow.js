@@ -53,7 +53,7 @@ const [styles] = createStyles({
 type Props = {
 	speed: string,
 	scalecm: string,
-	step: string,
+	stepcm: string,
   teamsnumber: string,
   teamsize: string
 }
@@ -62,12 +62,12 @@ export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
   gSttngs("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
-  gSttngs("scaleCm", cleanInt(props.scalecm) || 2);
-  gSttngs("scale", cleanInt(props.scalecm) / 100 || 0.02);
+  gSttngs("scaleCm", cleanInt(props.scalecm) || 10);
+  gSttngs("scale", cleanInt(props.scalecm) / 100 || 0.1);
   gSttngs("x", gSttngs().scale);
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
-  gSttngs("step", cleanInt(props.step) / 100 || gSttngs().scale * 5);
+  gSttngs("step", cleanInt(props.stepcm) / 100 || gSttngs().scale * 2);
   // Set the number of teams to 1 so that we have one flw
   gSttngs("teamsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
@@ -84,7 +84,7 @@ export default (props /*: Props */) /*: string */ => {
   ]);
   // flwItem properties
   gSttngs("flwItem", { effort: { min: 14, max: 520 } });
-  gSttngs("valueUpdateInterval", 10);
+  gSttngs("valueUpdateInterval", 60);
   gSttngs("death", 260);
 
   // I'm not really using the state, but leaving it here just in case

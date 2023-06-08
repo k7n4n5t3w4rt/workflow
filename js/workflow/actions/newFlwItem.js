@@ -14,11 +14,11 @@ import gState from "./gState.js";
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenIntegers.js";
 
-export default () /*: void */ => {
+export default () /*: FlwItem */ => {
   // Basic properties of the cube
   const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
 
-  // Calculate the effortTotal for the flwItem
+  // Calculate the dEffortTotal for the flwItem
   // ...before we finish with the geometry so that
   // we can use the value to set the scale of the cube
   // in the geometry which is efficient, apparently.
@@ -27,11 +27,13 @@ export default () /*: void */ => {
     gSttngs().flwItem.effort.max,
   );
   const scaleAdjustedForEffort =
-    flwItemEffortTotal / gSttngs().flwItem.effort.max;
+    Math.round((flwItemEffortTotal / gSttngs().flwItem.effort.max) * 1000) /
+    1000;
+
   geometry.scale(
-    scaleAdjustedForEffort,
-    scaleAdjustedForEffort,
-    scaleAdjustedForEffort,
+    gSttngs().x * scaleAdjustedForEffort,
+    gSttngs().y * scaleAdjustedForEffort,
+    gSttngs().z * scaleAdjustedForEffort,
   );
 
   // Make it white to start with
@@ -43,8 +45,14 @@ export default () /*: void */ => {
   const flwItem = new THREE.Mesh(geometry, material);
   flwItem.castShadow = true;
   flwItem.receiveShadow = true;
-  const xCubed = gSttngs().x * scaleAdjustedForEffort * 3;
-  flwItem.dVolume = Math.round(xCubed * 10000000) / 10000000;
+  flwItem.dScale = {
+    x: Math.round(gSttngs().x * scaleAdjustedForEffort * 1000) / 1000,
+    y: Math.round(gSttngs().y * scaleAdjustedForEffort * 1000) / 1000,
+    z: Math.round(gSttngs().z * scaleAdjustedForEffort * 1000) / 1000,
+  };
+
+  const xCubed = flwItem.dScale.x * flwItem.dScale.y * flwItem.dScale.z;
+  flwItem.dVolume = Math.round(xCubed * 1000) / 1000;
 
   // Set the name to the uuid so we can delete it later
   flwItem.name = flwItem.uuid;
@@ -59,12 +67,13 @@ export default () /*: void */ => {
   flwItem.position.x = gState().startPosition.x;
   flwItem.position.y = gState().startPosition.y;
   flwItem.position.z = gState().startPosition.z;
+  flwItem.dPosition = flwItem.position.clone();
 
   // Set the effort values of the flwItem
-  flwItem.effortRemaining = flwItem.effortTotal = flwItemEffortTotal;
+  flwItem.dEffortRemaining = flwItem.dEffortTotal = flwItemEffortTotal;
 
   // Set the team number of the flwItem
-  flwItem.teamNumber = rndmBetween(1, gSttngs().teamsNumber);
+  flwItem.dTeamNumber = rndmBetween(1, gSttngs().teamsNumber);
 
   // Add the new flwItem to the array of all flwItems
   gState().flwItems.push(flwItem);
@@ -73,11 +82,9 @@ export default () /*: void */ => {
   // gState().scnData.scene.add(flwItem);
   gState().clickCubeGroup.add(flwItem);
 
-  flwItem.flwStepsIndex = 0;
-  gState().flwStepTotals[flwItem.flwStepsIndex.toString()]++;
-  // console.log(
-  //   `Updated flwStepTotals: ${
-  //     gSttngs().flwSteps[flwItem.flwStepsIndex.toString()].name
-  //   }`,
-  // );
+  flwItem.dFlwStepsIndex = 0;
+  gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]++;
+
+  // Not using the return value, but Flow will keep us honest
+  return flwItem;
 };

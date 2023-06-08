@@ -9,7 +9,7 @@ import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 
 const move = (flwItem /*: Object */) /*: void */ => {
-  const orgnFlwStepsIndex = flwItem.flwStepsIndex;
+  const orgnFlwStepsIndex = flwItem.dFlwStepsIndex;
   let touchStatusFound = false;
   const dstFlwStepsIndex = gSttngs().flwSteps.reduce(
     (
@@ -49,7 +49,7 @@ const move = (flwItem /*: Object */) /*: void */ => {
   const newPosition = refineNewPosition(
     flwItem,
     dstFlwStepsIndex,
-    flwItem.position,
+    flwItem.dPosition,
     gState().startPosition,
     gSttngs().flwSteps.length,
     range(gSttngs().scale, gNextTotal),
@@ -88,6 +88,11 @@ const move = (flwItem /*: Object */) /*: void */ => {
 
   updateFlwStepTotal(orgnFlwStepsIndex, dstFlwStepsIndex);
 
+  // Update the data properties first, independently of the animation
+  flwItem.dPosition.x = newPosition.x;
+  flwItem.dPosition.y = newPosition.y;
+  flwItem.dPosition.z = newPosition.z;
+
   anime({
     targets: [flwItem.position],
     x: newPosition.x,
@@ -103,10 +108,10 @@ const move = (flwItem /*: Object */) /*: void */ => {
       ) {
         flwItem.visible = false;
       } else {
-        flwItem.flwStepsIndex++;
-        flwItem.effortRemaining = flwItem.effortTotal;
+        flwItem.dFlwStepsIndex++;
+        flwItem.dEffortRemaining = flwItem.dEffortTotal;
         // Try to move the flwItem again, but only if the flwItem is in a wait status
-        if (gSttngs().flwSteps[flwItem.flwStepsIndex].status === "wait") {
+        if (gSttngs().flwSteps[flwItem.dFlwStepsIndex].status === "wait") {
           move(flwItem);
         }
       }

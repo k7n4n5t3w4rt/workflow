@@ -78,7 +78,7 @@ const updateTotalsForEveryFlwStep = () /*: void */ => {
   );
   // For each flwItem, add to the total for its flwStep
   gState().flwItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
-    gState().flwStepTotals[flwItem.flwStepsIndex.toString()]++;
+    gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]++;
   });
 };
 
@@ -111,6 +111,7 @@ function resizeVSphere() {
   // This does though :)
   gState().vSphere.geometry.dispose();
   gState().vSphere.geometry = new THREE.SphereGeometry(newRadius, 32, 32);
+  gState().vSphere.dPosition.z = gState().endPosition.z + newRadius;
   gState().vSphere.position.z = gState().endPosition.z + newRadius;
 }
 
@@ -138,7 +139,7 @@ function filterOutDoneItems() /*: void */ {
 const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
   // Note: No need to delete the flwItem object becase
   // it will be filtered out of the array with the return false
-  if (isDone(flwItem.flwStepsIndex, gSttngs().flwSteps)) {
+  if (isDone(flwItem.dFlwStepsIndex, gSttngs().flwSteps)) {
     // Filter out any flwItems that are Done
     gState().flwStepTotals.doneTotal++;
     // console.log("flwItem.dVolume", flwItem.dVolume);
@@ -146,8 +147,8 @@ const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
     gState().scnData.scene.remove(
       gState().scnData.scene.getObjectByName(flwItem.name),
     );
-    // Assuming the flwStepsIndex is correct...
-    gState().flwStepTotals[flwItem.flwStepsIndex.toString()]--;
+    // Assuming the dFlwStepsIndex is correct...
+    gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]--;
     return false;
   } else if (flwItem.age >= gSttngs().death) {
     // Filter out any flwItems that are older than a year
@@ -169,18 +170,18 @@ const moveFlwItemAndUpdateProperties = (
   // Check if all the effort has been expended...
   // ...or if the flwItem is in a "wait" or "backlog" state
   if (
-    flwItem.effortRemaining === 0 ||
-    gSttngs().flwSteps[flwItem.flwStepsIndex].status === "wait" ||
-    gSttngs().flwSteps[flwItem.flwStepsIndex].status === "backlog"
+    flwItem.dEffortRemaining === 0 ||
+    gSttngs().flwSteps[flwItem.dFlwStepsIndex].status === "wait" ||
+    gSttngs().flwSteps[flwItem.dFlwStepsIndex].status === "backlog"
   ) {
     // Move the flwItem
     move(flwItem);
     // Reset the effort counter
-    flwItem.effortRemaining = flwItem.effortTotal;
+    flwItem.dEffortRemaining = flwItem.dEffortTotal;
   } else {
     // ...decrement the effort counter
-    flwItem.effortRemaining = calculateEffortRemaining(
-      flwItem.effortRemaining,
+    flwItem.dEffortRemaining = calculateEffortRemaining(
+      flwItem.dEffortRemaining,
       calculatedEffortPerWorkItem(
         gSttngs().teamsNumber,
         gSttngs().teamSize,
@@ -206,7 +207,7 @@ function updateAgeOrRemoveFromScene(
     }
   } else {
     // console.log(`WorkFlowItem ${flwItem.name} is too old.`);
-    gState().flwStepTotals[flwItem.flwStepsIndex.toString()]--;
+    gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]--;
     gState().scnData.scene.remove(
       gState().scnData.scene.getObjectByName(flwItem.name),
     );
