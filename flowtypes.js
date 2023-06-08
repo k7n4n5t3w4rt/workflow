@@ -13,7 +13,7 @@ type GlobalSettings = {
   scale: number,
   scaleCm: number,
   step: number,
-  teamsNumber: number,
+  tmsNumber: number,
   teamSize: number,
   flwSteps: Array<FlwStep>,
   flwItem: FlwItemSettings,
@@ -43,12 +43,26 @@ type GlobalState = {
   clicks: number,
   scnData: SceneData,
   vSphere: VSphere,
-  startPosition: ThrMeshPosition,
+  strtPosition: ThrMeshPosition,
   endPosition: ThrMeshPosition,
-  flwItems: Array<FlwItem>,
-  flwStepTotals: FlwStepTotals,
-  clickCubeGroup: ClickCubeGroup,
+  flwMap: FlwMap,
+  clckCbGroup: ClickCubeGroup,
   vQueue: VQueue,
+  tchTotal: number,
+  doneTotal: number,
+};
+
+type FlwMap = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  [string]: FlwMpItems,
+  tchTotal: number,
+  doneTotal: number,
+};
+
+type FlwMpItems = {
+  [string]: FlwItem,
 };
 
 type FlwStepTotals = {
@@ -56,7 +70,7 @@ type FlwStepTotals = {
   // Data:
   // -----------------------
   [string]: number,
-  touchTotal: number,
+  tchTotal: number,
   doneTotal: number,
 };
 
@@ -64,7 +78,7 @@ type ClickCubeGroup = {
   // -----------------------
   // Data:
   // -----------------------
-  clickCube: ClickCube,
+  clckCube: ClickCube,
   // -----------------------
   // Three.js:
   // -----------------------
@@ -118,11 +132,12 @@ type FlwItem = {
   // -----------------------
   // Data:
   // -----------------------
-  age: number,
-  dEffortTotal: number,
-  dTeamNumber: number,
-  dEffortRemaining: number,
-  dFlwStepsIndex: number,
+  dAge: number,
+  dMoving: boolean,
+  dEffrtTotal: number,
+  dTmNumber: number,
+  dEffrtRemaining: number,
+  dFlwStpsIndex: number,
   dPosition: ThrMeshPosition,
   // -----------------------
   // Three.js:

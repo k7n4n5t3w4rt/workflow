@@ -8,72 +8,32 @@ import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 
-const move = (flwItem /*: Object */) /*: void */ => {
-  const orgnFlwStepsIndex = flwItem.dFlwStepsIndex;
-  let touchStatusFound = false;
-  const dstFlwStepsIndex = gSttngs().flwSteps.reduce(
-    (
-      acc /*: number */,
-      flwStep /*: FlwStep */,
-      i /*: number */,
-    ) /*: number */ => {
-      if (
-        i >= acc &&
-        i < gSttngs().flwSteps.length - 1 &&
-        gState().flwStepTotals[i.toString()] !== undefined &&
-        gState().flwStepTotals[i.toString()] < gSttngs().flwSteps[i].limit &&
-        touchStatusFound === false
-      ) {
-        if (gSttngs().flwSteps[i].status === "touch") {
-          touchStatusFound = true;
-        }
-        return i;
-      } else {
-        return acc;
-      }
-    },
-    orgnFlwStepsIndex + 1,
-  );
-
+const move = (
+  flwItem /*: Object */,
+  orgnFlwStepsIndex /*: number */,
+  dstFlwStepsIndex /*: number */,
+) /*: void */ => {
   const gThisStatus = gSttngs().flwSteps[orgnFlwStepsIndex].status;
 
+  // Do we need this logic with the flwMap?
   if (gThisStatus === "done") {
     return;
   }
 
   const gNextStatus = gSttngs().flwSteps[dstFlwStepsIndex].status;
-  const gNextLimit = gSttngs().flwSteps[dstFlwStepsIndex].limit;
-  const gNextTotal = gState().flwStepTotals[dstFlwStepsIndex.toString()];
 
   // const newPosition = { ...flwItem.position };
   const newPosition = refineNewPosition(
     flwItem,
     dstFlwStepsIndex,
     flwItem.dPosition,
-    gState().startPosition,
+    gState().strtPosition,
     gSttngs().flwSteps.length,
-    range(gSttngs().scale, gNextTotal),
+    range(gSttngs().scale, gSttngs().flwSteps[dstFlwStepsIndex].limit),
   );
   newPosition.z -= gSttngs().step;
 
   let newColor = 0; // Black for "wait" status
-
-  if (gNextLimit > 0 && gNextTotal >= gNextLimit) {
-    // console.log(
-    //   `Leaving it in “${gSttngs().flwSteps[orgnFlwStepsIndex].name}”`,
-    // );
-    // Winding back the clock
-    updateFlwStepTotal(dstFlwStepsIndex, orgnFlwStepsIndex);
-    return;
-  }
-
-  // Else... continue
-
-  // console.log(
-  // `Moving from “${gSttngs().flwSteps[orgnFlwStepsIndex].name}” to “${
-  //   gSttngs().flwSteps[dstFlwStepsIndex].name
-  // }”`,
-  // );
 
   if (gNextStatus === "touch") {
     newColor = 255;
@@ -86,12 +46,12 @@ const move = (flwItem /*: Object */) /*: void */ => {
 
   flwItem.material.color = { r: newColor, g: newColor, b: newColor };
 
-  updateFlwStepTotal(orgnFlwStepsIndex, dstFlwStepsIndex);
-
   // Update the data properties first, independently of the animation
   flwItem.dPosition.x = newPosition.x;
   flwItem.dPosition.y = newPosition.y;
   flwItem.dPosition.z = newPosition.z;
+
+  flwItem.dMoving = true;
 
   anime({
     targets: [flwItem.position],
@@ -102,36 +62,18 @@ const move = (flwItem /*: Object */) /*: void */ => {
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
+      flwItem.dMoving = false;
       if (
         // If the flwItem has moved into a done status
         gNextStatus === "done"
       ) {
         flwItem.visible = false;
       } else {
-        flwItem.dFlwStepsIndex++;
-        flwItem.dEffortRemaining = flwItem.dEffortTotal;
-        // Try to move the flwItem again, but only if the flwItem is in a wait status
-        if (gSttngs().flwSteps[flwItem.dFlwStepsIndex].status === "wait") {
-          move(flwItem);
-        }
+        flwItem.dFlwStpsIndex++;
+        flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
       }
     },
   });
-};
-
-//--------------------------------------------------
-// updateFlwStepTotal()
-//--------------------------------------------------
-const updateFlwStepTotal = (
-  originFlwStepsIndex /*: number */,
-  destinationFlwStepsIndex /*: number */,
-) /*: void */ => {
-  // Decrement the previous FlwStepTotal
-  if (gState().flwStepTotals[originFlwStepsIndex.toString()] > 0) {
-    gState().flwStepTotals[originFlwStepsIndex.toString()]--;
-  }
-  // Increment the current FlwStepTotal
-  gState().flwStepTotals[destinationFlwStepsIndex.toString()]++;
 };
 
 //--------------------------------------------------
@@ -147,7 +89,7 @@ const range = (
     const increaseRate = 1;
     const decreaseRate = 0.95; // Modify this value to change the rate of decrease
 
-    // Calculate the increased number with a decreasing increase rate
+    // Does this even make sense? GPT-4 told me to do it.
     let calculatedIncreaseRate =
       gNumberOfFlwItemsNextStatus +
       gNumberOfFlwItemsNextStatus * increaseRate -

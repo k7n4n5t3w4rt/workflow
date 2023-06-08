@@ -18,7 +18,7 @@ export default () /*: FlwItem */ => {
   // Basic properties of the cube
   const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
 
-  // Calculate the dEffortTotal for the flwItem
+  // Calculate the dEffrtTotal for the flwItem
   // ...before we finish with the geometry so that
   // we can use the value to set the scale of the cube
   // in the geometry which is efficient, apparently.
@@ -58,32 +58,32 @@ export default () /*: FlwItem */ => {
   flwItem.name = flwItem.uuid;
 
   // Set the age to 0
-  flwItem.age = 0;
+  flwItem.dAge = 0;
 
   // Set the position
   // flwItem.position.setFromMatrixPosition(
   //   gState().scnData.reticleStuff.reticle.matrix,
   // );
-  flwItem.position.x = gState().startPosition.x;
-  flwItem.position.y = gState().startPosition.y;
-  flwItem.position.z = gState().startPosition.z;
+  flwItem.position.x = gState().strtPosition.x;
+  flwItem.position.y = gState().strtPosition.y;
+  flwItem.position.z = gState().strtPosition.z;
   flwItem.dPosition = flwItem.position.clone();
+  flwItem.dMoving = false;
 
   // Set the effort values of the flwItem
-  flwItem.dEffortRemaining = flwItem.dEffortTotal = flwItemEffortTotal;
+  flwItem.dEffrtRemaining = flwItem.dEffrtTotal = flwItemEffortTotal;
 
   // Set the team number of the flwItem
-  flwItem.dTeamNumber = rndmBetween(1, gSttngs().teamsNumber);
+  flwItem.dTmNumber = rndmBetween(1, gSttngs().tmsNumber);
 
-  // Add the new flwItem to the array of all flwItems
-  gState().flwItems.push(flwItem);
+  // Add the new flwItem to the flwMap in the first flwStep
+  // (whatever that is but it will be the backlog)
+  flwItem.dFlwStpsIndex = 0;
+  gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name] = flwItem;
 
-  // Add the new flwItem to the clickCubeGroup and the scene
+  // Add the new flwItem to the clckCbGroup and the scene
   // gState().scnData.scene.add(flwItem);
-  gState().clickCubeGroup.add(flwItem);
-
-  flwItem.dFlwStepsIndex = 0;
-  gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]++;
+  gState().clckCbGroup.add(flwItem);
 
   // Not using the return value, but Flow will keep us honest
   return flwItem;

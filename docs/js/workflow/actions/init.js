@@ -15,7 +15,7 @@ import ARButton from "./ARButton.js";
 import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
 import createStats from "../../create_stats.js";
 import onWindowResize from "../calculations/onWindowResize.js";
-import placeClickCubeAndStart from "./onSelectStart.js";
+import start from "./start.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
 import render from "./render.js";
 
@@ -66,7 +66,7 @@ export default () /*: void */ => {
 
   // This start the whole process when the user places
   // the click cube on the ground
-  controller.addEventListener("select", placeClickCubeAndStart());
+  controller.addEventListener("select", start());
   scene.add(controller);
 
   //   // https://threejs.org/docs/#examples/en/controls/OrbitControls
@@ -96,10 +96,11 @@ export default () /*: void */ => {
   // --------------------------------------------------
   gState("clicks", 0);
   gState("flwItems", []);
-  gState("clickCube", {});
-  gState("flwStepTotals", {});
-  setUpFlwStepTotals(gState().flwStepTotals, gSttngs().flwSteps);
-  gState("touchTotal", 0);
+  gState("clckCube", {});
+  gState("flwMap", {});
+  setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
+  gState("tchTotal", 0);
+  gState("doneTotal", 0);
   gState("scnData", {
     stats,
     scene,
@@ -142,19 +143,16 @@ function vQueue() /*: void */ {
 }
 
 //--------------------------------------------------
-// setUpFlwStepTotals()
+// setUpFlwMap()
 //--------------------------------------------------
-const setUpFlwStepTotals = (
-  gFlwStepTotals /*: FlwStepTotals */,
+const setUpFlwMap = (
+  gFlwMap /*: FlwMap */,
   gFlwSteps /*: FlwStep[] */,
 ) /*: void */ => {
-  gFlwStepTotals.touchTotal = 0;
-  gFlwStepTotals.doneTotal = 0;
-
   // Set each flwStepTotal to 0
   gFlwSteps.forEach(
     (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
-      gState().flwStepTotals[index.toString()] = 0;
+      gState().flwMap[index.toString()] = {};
     },
   );
 };

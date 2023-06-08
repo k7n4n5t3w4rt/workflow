@@ -20,67 +20,65 @@ import isDone from "../calculations/isDone.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
-  // Rotate the clickCube
+  // Rotate the clckCube
   anime({
-    targets: [gState().clickCubeGroup.clickCube.rotation],
-    y: gState().clickCubeGroup.clickCube.rotation.y + Math.PI / 2,
+    targets: [gState().clckCbGroup.clckCube.rotation],
+    y: gState().clckCbGroup.clckCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
     complete: () /*: void */ => {
-      if (
-        gState().clicks % gSttngs().valueUpdateInterval === 0 ||
-        gState().clicks < gSttngs().valueUpdateInterval
-      ) {
+      // || gState().clicks < gSttngs().valueUpdateInterval
+      if (gState().clicks % gSttngs().valueUpdateInterval === 0) {
         filterOutDoneItems();
         resizeVSphere();
-        // Update the TouchTotal
-        updateTouchTotal();
-        // A fix because things get out of whack
-        // It would be good to know why things get out of whack
-        updateTotalsForEveryFlwStep();
       }
       newFlwItem();
-      moveAllFlwItems();
+      pullFlwItems();
       click();
     },
   });
 };
 
 //--------------------------------------------------
-// updateTouchTotal()
+// pullFlwItems()
 //--------------------------------------------------
-const updateTouchTotal = () /*: void */ => {
-  gState().flwStepTotals.touchTotal = 0;
-  gSttngs().flwSteps.forEach((flwStep /*: FlwStep */) /*: void */ => {
-    if (flwStep.status === "touch") {
-      gState().flwStepTotals.touchTotal += flwStep.limit;
-    }
-  });
-  // If there is no WIP limit, then the touchTotal is the total number of items
-  if (gState().flwStepTotals.touchTotal === 0) {
-    gState().flwStepTotals.touchTotal = gState().flwItems.length;
-  }
-};
-//--------------------------------------------------
-// updateTotalsForEveryFlwStep()
-//--------------------------------------------------
-const updateTotalsForEveryFlwStep = () /*: void */ => {
-  // Start with a clean slate
-  gState().flwStepTotals = {
-    touchTotal: gState().flwStepTotals.touchTotal,
-    doneTotal: gState().flwStepTotals.doneTotal,
-  };
-  // Make a property for each flwStep
-  gSttngs().flwSteps.forEach(
-    (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
-      gState().flwStepTotals[index.toString()] = 0;
+function pullFlwItems() {
+  const flwMpSteps = getFlwMpSteps();
+  flwMpSteps.forEach(
+    (flwMpStep /*: FlwMpItems */, flwStpIndex /*: number */) /*: void */ => {
+      const flwMpStpItmKeys = Object.keys(flwMpStep);
+      const flwMpStpItems = flwMpStpItmKeys.map(
+        (flwMpStpItmKey /*: string */) /*: void | FlwItem */ => {
+          return flwMpStep[flwMpStpItmKey];
+        },
+      );
+      const flwStpLimit = gSttngs().flwSteps[flwStpIndex].limit;
+      if (flwMpStpItems.length < flwStpLimit || flwStpLimit === 0) {
+        console.log(
+          `There is room for one more in gSttngs().flwSteps[${
+            6 - flwStpIndex
+          }]`,
+        );
+        console.log(gState().flwMap[(6 - flwStpIndex).toString()]);
+      }
     },
   );
-  // For each flwItem, add to the total for its flwStep
-  gState().flwItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
-    gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]++;
-  });
-};
+
+  // flwMpSteps.map((flwMpItmKey /*: string */) /*: FlwMpItems */ => {
+  //   return gState().flwMap[flwMpStpKey];
+  // })
+}
+
+function getFlwMpSteps() /*: FlwMpItems[] */ {
+  // gState().flwMap...
+  const flwMpStpKeys = Object.keys(gState().flwMap);
+  const flwMpSteps = flwMpStpKeys
+    .map((flwMpStpKey /*: string */) /*: FlwMpItems */ => {
+      return gState().flwMap[flwMpStpKey];
+    })
+    .reverse();
+  return flwMpSteps;
+}
 
 // //--------------------------------------------------
 // // updateValueQueue()
@@ -133,93 +131,43 @@ const findRadius = (volume /*: number */) /*: number */ => {
 //--------------------------------------------------
 function filterOutDoneItems() /*: void */ {
   gState().vSphere.dRllngTtlVolume = 0;
-  gState().flwItems = gState().flwItems.filter(removeDoneFlwItems);
+  const doneFlwItems = Object.keys(
+    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()],
+  );
+  doneFlwItems.forEach(processDoneFlwItems);
 }
 
-const removeDoneFlwItems = (flwItem /*: FlwItem */) /*: boolean */ => {
-  // Note: No need to delete the flwItem object becase
-  // it will be filtered out of the array with the return false
-  if (isDone(flwItem.dFlwStepsIndex, gSttngs().flwSteps)) {
-    // Filter out any flwItems that are Done
-    gState().flwStepTotals.doneTotal++;
-    // console.log("flwItem.dVolume", flwItem.dVolume);
-    gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
-    gState().scnData.scene.remove(
-      gState().scnData.scene.getObjectByName(flwItem.name),
-    );
-    // Assuming the dFlwStepsIndex is correct...
-    gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]--;
-    return false;
-  } else if (flwItem.age >= gSttngs().death) {
-    // Filter out any flwItems that are older than a year
-    return false;
-  }
-  return true;
-};
-
-//--------------------------------------------------
-// moveFlwItemAndUpdateProperties()
-//--------------------------------------------------
-const moveFlwItemAndUpdateProperties = (
-  flwItem /*: FlwItem */,
-  index /*: number */,
-) => {
-  // First, make it a day older
-  updateAgeOrRemoveFromScene(flwItem, index);
-
-  // Check if all the effort has been expended...
-  // ...or if the flwItem is in a "wait" or "backlog" state
-  if (
-    flwItem.dEffortRemaining === 0 ||
-    gSttngs().flwSteps[flwItem.dFlwStepsIndex].status === "wait" ||
-    gSttngs().flwSteps[flwItem.dFlwStepsIndex].status === "backlog"
-  ) {
-    // Move the flwItem
-    move(flwItem);
-    // Reset the effort counter
-    flwItem.dEffortRemaining = flwItem.dEffortTotal;
-  } else {
-    // ...decrement the effort counter
-    flwItem.dEffortRemaining = calculateEffortRemaining(
-      flwItem.dEffortRemaining,
-      calculatedEffortPerWorkItem(
-        gSttngs().teamsNumber,
-        gSttngs().teamSize,
-        gState().flwStepTotals.touchTotal,
-      ),
-    );
-  }
-  return true;
+const processDoneFlwItems = (flwItemName /*: string */) /*: void */ => {
+  const flwItem =
+    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()][flwItemName];
+  gState().doneTotal++;
+  gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
+  gState().scnData.scene.remove(
+    gState().scnData.scene.getObjectByName(flwItem.name),
+  );
+  // Assuming the dFlwStpsIndex is correct, remove it from the flwMap
+  delete gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name];
 };
 
 //--------------------------------------------------
 // updateAgeOrRemoveFromScene()
 //--------------------------------------------------
-function updateAgeOrRemoveFromScene(
-  flwItem /*: FlwItem */,
-  index /*: number */,
-) {
-  if (flwItem.age < gSttngs().death) {
-    flwItem.age++;
-    if (flwItem.age <= gSttngs().death && flwItem.age % 10 === 0) {
-      flwItem.material.opacity = 1 - flwItem.age / gSttngs().death;
+function updateAgeOrRemoveFromScene(flwItem /*: FlwItem */) {
+  if (flwItem.dAge < gSttngs().death) {
+    flwItem.dAge++;
+    if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 10 === 0) {
+      flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
       flwItem.material.needsUpdate = true;
     }
   } else {
     // console.log(`WorkFlowItem ${flwItem.name} is too old.`);
-    gState().flwStepTotals[flwItem.dFlwStepsIndex.toString()]--;
+    delete gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name];
     gState().scnData.scene.remove(
       gState().scnData.scene.getObjectByName(flwItem.name),
     );
-    gState().flwItems.splice(index, 1);
+    // Remove it from the flwMap
+    delete gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name];
   }
-}
-
-//--------------------------------------------------
-// moveAllFlwItems()
-//--------------------------------------------------
-function moveAllFlwItems() {
-  gState().flwItems.forEach(moveFlwItemAndUpdateProperties);
 }
 
 export default click;

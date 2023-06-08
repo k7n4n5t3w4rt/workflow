@@ -69,7 +69,7 @@ export default (props /*: Props */) /*: string */ => {
   gSttngs("z", gSttngs().scale);
   gSttngs("step", cleanInt(props.stepcm) / 100 || gSttngs().scale * 2);
   // Set the number of teams to 1 so that we have one flw
-  gSttngs("teamsNumber", cleanInt(props.teamsnumber) || 1);
+  gSttngs("tmsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
   gSttngs("teamSize", cleanInt(props.teamsize) || 400);
   // Populate the flwStep array
@@ -84,7 +84,7 @@ export default (props /*: Props */) /*: string */ => {
   ]);
   // flwItem properties
   gSttngs("flwItem", { effort: { min: 14, max: 520 } });
-  gSttngs("valueUpdateInterval", 60);
+  gSttngs("valueUpdateInterval", 10);
   gSttngs("death", 260);
 
   // I'm not really using the state, but leaving it here just in case

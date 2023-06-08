@@ -11,7 +11,7 @@ import gState from "./gState.js";
 // --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
-import clickCubeGroup from "./newClickCube.js";
+import clckCbGroup from "./newClickCube.js";
 import click from "./click.js";
 import newVSphere from "./newVSphere.js";
 
@@ -21,25 +21,25 @@ export default () /*: () => void */ => () /*: void */ => {
     gState().scnData.reticleStuff.active = false;
   }
 
-  // Create the clickCube
-  gState().clickCubeGroup = clickCubeGroup();
-  gState().scnData.scene.add(gState().clickCubeGroup);
+  // Create the clckCube
+  gState().clckCbGroup = clckCbGroup();
+  gState().scnData.scene.add(gState().clckCbGroup);
   // Get the direction in which the camera is looking
   const vector = new THREE.Vector3();
   gState().scnData.camera.getWorldDirection(vector);
   const radians = Math.atan2(vector.x, vector.z);
   // Rotate the group on the Y axis (around it's centre, always the 0,0,0 point)
-  gState().clickCubeGroup.rotateY(radians);
+  gState().clckCbGroup.rotateY(radians);
   // Last thing: set the position of the cube based on the location of  the reticle
-  gState().clickCubeGroup.position.setFromMatrixPosition(
+  gState().clckCbGroup.position.setFromMatrixPosition(
     gState().scnData.reticleStuff.reticle.matrix,
   );
 
   // Set the start position for all the flw items
   // based on where we put the cube, but higher up
-  gState().startPosition = gState().clickCubeGroup.clickCube.position.clone();
-  gState().startPosition.y = gSttngs().scale * 10;
-  gState().endPosition = gState().startPosition.clone();
+  gState().strtPosition = gState().clckCbGroup.clckCube.position.clone();
+  gState().strtPosition.y = gSttngs().scale * 10;
+  gState().endPosition = gState().strtPosition.clone();
   gState().endPosition.z +=
     gSttngs().step * (gSttngs().flwSteps.length + 2) * -1;
 
@@ -52,7 +52,7 @@ export default () /*: () => void */ => () /*: void */ => {
   gState().vSphere.dPosition.x = 0;
   gState().vSphere.dPosition.y = gState().endPosition.y;
   gState().vSphere.dPosition.z = gState().endPosition.z;
-  gState().clickCubeGroup.add(gState().vSphere);
+  gState().clckCbGroup.add(gState().vSphere);
 
   // Start the clubes flying
   click();

@@ -11,7 +11,7 @@ import gState from "./gState.js";
 
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group
-  const clickCubeGroup = new THREE.Group();
+  const clckCbGroup = new THREE.Group();
 
   const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
 
@@ -24,9 +24,9 @@ export default () /*: Object */ => {
   cube.castShadow = true;
   cube.receiveShadow = true;
   // Add the cube to the group (and the THREE.js scene)
-  clickCubeGroup.add(cube);
+  clckCbGroup.add(cube);
   // ..also add the cube to the group object so we can access it later
-  clickCubeGroup.clickCube = cube;
+  clckCbGroup.clckCube = cube;
 
-  return clickCubeGroup;
+  return clckCbGroup;
 };
