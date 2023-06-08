@@ -63,10 +63,6 @@ function pullFlwItems() {
       }
     },
   );
-
-  // flwMpSteps.map((flwMpItmKey /*: string */) /*: FlwMpItems */ => {
-  //   return gState().flwMap[flwMpStpKey];
-  // })
 }
 
 function getFlwMpSteps() /*: FlwMpItems[] */ {
