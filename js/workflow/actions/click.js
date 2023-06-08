@@ -52,14 +52,24 @@ function pullFlwItems() {
           return flwMpStep[flwMpStpItmKey];
         },
       );
-      const flwStpLimit = gSttngs().flwSteps[flwStpIndex].limit;
-      if (flwMpStpItems.length < flwStpLimit || flwStpLimit === 0) {
+      const thisFlwMpIndex = 6 - flwStpIndex;
+      if (
+        gState().flwMap[(thisFlwMpIndex - 1).toString()] !== undefined &&
+        Object.keys(gState().flwMap[(thisFlwMpIndex - 1).toString()]).length > 0
+      ) {
+        const flwStpLimit = gSttngs().flwSteps[flwStpIndex].limit;
+        if (flwMpStpItems.length < flwStpLimit || flwStpLimit === 0) {
+          console.log(
+            `There is room for one more in gSttngs().flwSteps[${
+              6 - flwStpIndex
+            }]`,
+          );
+          console.log(gState().flwMap[(6 - flwStpIndex).toString()]);
+        }
+      } else {
         console.log(
-          `There is room for one more in gSttngs().flwSteps[${
-            6 - flwStpIndex
-          }]`,
+          `gState().flwMap[${thisFlwMpIndex - 1}] is empty.  No need to pull.`,
         );
-        console.log(gState().flwMap[(6 - flwStpIndex).toString()]);
       }
     },
   );
