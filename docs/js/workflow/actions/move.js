@@ -144,13 +144,27 @@ const range = (
   let range = 0;
 
   if (gNumberOfFlwItemsNextStatus > 0) {
-    range = gScale * gNumberOfFlwItemsNextStatus;
-  }
+    const increaseRate = 1;
+    const decreaseRate = 0.95; // Modify this value to change the rate of decrease
 
-  // If there are more than 30 flwItems in the next status, then
-  // limit the range to 30
-  if (gNumberOfFlwItemsNextStatus >= 30) {
-    range = (gScale * 30) / 2;
+    // Calculate the increased number with a decreasing increase rate
+    let calculatedIncreaseRate =
+      gNumberOfFlwItemsNextStatus +
+      gNumberOfFlwItemsNextStatus * increaseRate -
+      gNumberOfFlwItemsNextStatus * decreaseRate;
+
+    if (calculatedIncreaseRate > 7) {
+      calculatedIncreaseRate = 7;
+    }
+
+    console.log("calculatedIncreaseRate", calculatedIncreaseRate);
+
+    range = gScale * calculatedIncreaseRate;
+
+    // range =
+    //   gScale *
+    //   (gNumberOfFlwItemsNextStatus +
+    //     gNumberOfFlwItemsNextStatus * increaseRate);
   }
 
   return range;
