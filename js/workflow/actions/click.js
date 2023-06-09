@@ -111,7 +111,6 @@ const pullFromPreviousStep = (
     );
     flwMpStpItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
       if (flwItem.dAge >= gSttngs().death) {
-        delete gState().flwMap[flwMpStpKeyNumber.toString()][flwItem.name];
         return;
       }
 
@@ -121,8 +120,14 @@ const pullFromPreviousStep = (
         availableLimit--;
       }
 
-      if (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving) {
+      if (
+        flwMpStpKeyNumber === 0 ||
+        (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
+      ) {
         move(flwItem, flwMpStpKeyNumber);
+        delete gState().flwMap[flwMpStpKeyNumber.toString()][flwItem.name];
+        gState().flwMap[(flwMpStpKeyNumber + 1).toString()][flwItem.name] =
+          flwItem;
       }
     });
   } else {
