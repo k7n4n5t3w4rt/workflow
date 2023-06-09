@@ -10,34 +10,25 @@ import rndmBetween from "./rndmBetweenWhatever.js";
 
 const move = (
   flwItem /*: Object */,
-  orgnFlwStepsIndex /*: number */,
-  dstFlwStepsIndex /*: number */,
+  flwStpsIndex /*: number */,
 ) /*: void */ => {
-  const gThisStatus = gSttngs().flwSteps[orgnFlwStepsIndex].status;
-
-  // Do we need this logic with the flwMap?
-  if (gThisStatus === "done") {
-    return;
-  }
-
-  const gNextStatus = gSttngs().flwSteps[dstFlwStepsIndex].status;
-
-  // const newPosition = { ...flwItem.position };
   const newPosition = refineNewPosition(
     flwItem,
-    dstFlwStepsIndex,
+    flwStpsIndex + 1,
     flwItem.dPosition,
     gState().strtPosition,
     gSttngs().flwSteps.length,
-    range(gSttngs().scale, gSttngs().flwSteps[dstFlwStepsIndex].limit),
+    range(gSttngs().scale, gSttngs().flwSteps[flwStpsIndex + 1].limit),
   );
   newPosition.z -= gSttngs().step;
 
   let newColor = 0; // Black for "wait" status
 
-  if (gNextStatus === "touch") {
+  const nextStatus = gSttngs().flwSteps[flwStpsIndex + 1].status;
+
+  if (nextStatus === "touch") {
     newColor = 255;
-  } else if (gNextStatus === "done") {
+  } else if (nextStatus === "done") {
     newColor = 255;
     newPosition.x = gState().endPosition.x;
     newPosition.y = gState().endPosition.y;
@@ -65,7 +56,7 @@ const move = (
       flwItem.dMoving = false;
       if (
         // If the flwItem has moved into a done status
-        gNextStatus === "done"
+        nextStatus === "done"
       ) {
         flwItem.visible = false;
       } else {

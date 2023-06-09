@@ -44,47 +44,93 @@ const click = () /*: void */ => {
 //--------------------------------------------------
 function pullFlwItems() {
   const flwMpSteps = getFlwMpSteps();
-  flwMpSteps.forEach(
-    (flwMpStep /*: FlwMpItems */, flwStpIndex /*: number */) /*: void */ => {
-      const flwMpStpItmKeys = Object.keys(flwMpStep);
-      const flwMpStpItems = flwMpStpItmKeys.map(
-        (flwMpStpItmKey /*: string */) /*: void | FlwItem */ => {
-          return flwMpStep[flwMpStpItmKey];
-        },
-      );
-      const thisFlwMpIndex = 6 - flwStpIndex;
-      if (
-        gState().flwMap[(thisFlwMpIndex - 1).toString()] !== undefined &&
-        Object.keys(gState().flwMap[(thisFlwMpIndex - 1).toString()]).length > 0
-      ) {
-        const flwStpLimit = gSttngs().flwSteps[flwStpIndex].limit;
-        if (flwMpStpItems.length < flwStpLimit || flwStpLimit === 0) {
-          console.log(
-            `There is room for one more in gSttngs().flwSteps[${
-              6 - flwStpIndex
-            }]`,
-          );
-          console.log(gState().flwMap[(6 - flwStpIndex).toString()]);
-        }
-      } else {
-        console.log(
-          `gState().flwMap[${thisFlwMpIndex - 1}] is empty.  No need to pull.`,
-        );
-      }
-    },
-  );
+  // reduceRight() starts at the end of the array and works backwards
+  flwMpSteps.reduceRight(checkFlowStepLimitAndPullFromPreviousStep);
 }
 
-function getFlwMpSteps() /*: FlwMpItems[] */ {
+const getFlwMpSteps = () /*: FlwMpItems[] */ => {
   // gState().flwMap...
   const flwMpStpKeys = Object.keys(gState().flwMap);
-  const flwMpSteps = flwMpStpKeys
-    .map((flwMpStpKey /*: string */) /*: FlwMpItems */ => {
+  const flwMpSteps = flwMpStpKeys.map(
+    (flwMpStpKey /*: string */) /*: FlwMpItems */ => {
       return gState().flwMap[flwMpStpKey];
-    })
-    .reverse();
+    },
+  );
   return flwMpSteps;
-}
+};
+
+const checkFlowStepLimitAndPullFromPreviousStep = (
+  _ /*: void */, // The accumulator is not used but reduceRight() requires it
+  flwMpStep /*: FlwMpItems */,
+  flwMpStpKeyNumber /*: number */,
+) /*: void */ => {
+  // Turn the array of keys into an array of flwItem objects
+  const flwMpStpItmKeys = Object.keys(flwMpStep);
+  const flwMpStpItems = flwMpStpItmKeys.map(
+    (flwMpStpItmKey /*: string */) /*: FlwItem */ => {
+      return flwMpStep[flwMpStpItmKey];
+    },
+  );
+  // Get the limit of the current step
+  const flwStpLimit = gSttngs().flwSteps[flwMpStpKeyNumber].limit;
+  // A limit of 0 means no limit
+  if (flwMpStpItems.length < flwStpLimit || flwStpLimit === 0) {
+    let availableLimit /*: "no limit" | 0 | number */ = 0;
+    // Confusingly, if the limit is 0, then there is no limit
+    // to the availableLimit
+    if (flwStpLimit === 0) {
+      availableLimit = "no limit";
+    } else {
+      // This will be between 1 and the flow step limit
+      availableLimit = flwStpLimit - flwMpStpItems.length;
+    }
+    console.log(
+      `There is room for one more in gSttngs().flwSteps[${flwMpStpKeyNumber}]`,
+      gState().flwMap[flwMpStpKeyNumber.toString()],
+    );
+    pullFromPreviousStep(flwMpStpKeyNumber - 1, availableLimit);
+  }
+};
+
+const pullFromPreviousStep = (
+  flwMpStpKeyNumber /*: number */,
+  availableLimit /*: "no limit" | number */,
+) /*: void */ => {
+  if (flwMpStpKeyNumber < 0) {
+    return;
+  }
+  const flwMpStep = gState().flwMap[flwMpStpKeyNumber.toString()];
+
+  if (flwMpStep !== undefined && Object.keys(flwMpStep).length > 0) {
+    // Turn the array of keys into an array of flwItem objects
+    const flwMpStpItmKeys = Object.keys(flwMpStep);
+    const flwMpStpItems = flwMpStpItmKeys.map(
+      (flwMpStpItmKey /*: string */) /*: FlwItem */ => {
+        return flwMpStep[flwMpStpItmKey];
+      },
+    );
+    flwMpStpItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
+      if (flwItem.dAge >= gSttngs().death) {
+        delete gState().flwMap[flwMpStpKeyNumber.toString()][flwItem.name];
+        return;
+      }
+
+      if (availableLimit === 0) {
+        return;
+      } else if (availableLimit !== "no limit") {
+        availableLimit--;
+      }
+
+      if (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving) {
+        move(flwItem, flwMpStpKeyNumber);
+      }
+    });
+  } else {
+    console.log(
+      `gState().flwMap[${flwMpStpKeyNumber}] is empty (or undefined).  Nothing to pull.`,
+    );
+  }
+};
 
 // //--------------------------------------------------
 // // updateValueQueue()
@@ -99,7 +145,7 @@ function getFlwMpSteps() /*: FlwMpItems[] */ {
 //--------------------------------------------------
 // resizeVSphere()
 //--------------------------------------------------
-function resizeVSphere() {
+const resizeVSphere = () /*: void */ => {
   if (gState().vSphere.dRllngTtlVolume === 0) {
     return;
   }
@@ -117,7 +163,7 @@ function resizeVSphere() {
   gState().vSphere.geometry = new THREE.SphereGeometry(newRadius, 32, 32);
   gState().vSphere.dPosition.z = gState().endPosition.z + newRadius;
   gState().vSphere.position.z = gState().endPosition.z + newRadius;
-}
+};
 
 const findRadius = (volume /*: number */) /*: number */ => {
   if (volume <= 0) {
@@ -135,13 +181,13 @@ const findRadius = (volume /*: number */) /*: number */ => {
 //--------------------------------------------------
 // filterOutDoneItems()
 //--------------------------------------------------
-function filterOutDoneItems() /*: void */ {
+const filterOutDoneItems = () /*: void */ => {
   gState().vSphere.dRllngTtlVolume = 0;
   const doneFlwItems = Object.keys(
     gState().flwMap[(gSttngs().flwSteps.length - 1).toString()],
   );
   doneFlwItems.forEach(processDoneFlwItems);
-}
+};
 
 const processDoneFlwItems = (flwItemName /*: string */) /*: void */ => {
   const flwItem =
@@ -158,7 +204,7 @@ const processDoneFlwItems = (flwItemName /*: string */) /*: void */ => {
 //--------------------------------------------------
 // updateAgeOrRemoveFromScene()
 //--------------------------------------------------
-function updateAgeOrRemoveFromScene(flwItem /*: FlwItem */) {
+const updateAgeOrRemoveFromScene = (flwItem /*: FlwItem */) /*: void */ => {
   if (flwItem.dAge < gSttngs().death) {
     flwItem.dAge++;
     if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 10 === 0) {
@@ -174,6 +220,6 @@ function updateAgeOrRemoveFromScene(flwItem /*: FlwItem */) {
     // Remove it from the flwMap
     delete gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name];
   }
-}
+};
 
 export default click;
