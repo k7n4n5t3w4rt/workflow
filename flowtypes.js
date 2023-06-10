@@ -14,7 +14,7 @@ type GlobalSettings = {
   scaleCm: number,
   step: number,
   tmsNumber: number,
-  teamSize: number,
+  tmSize: number,
   flwSteps: Array<FlwStep>,
   flwItem: FlwItemSettings,
   valueUpdateInterval: number,
@@ -137,6 +137,7 @@ type FlwItem = {
   // Data:
   // -----------------------
   dAge: number,
+  dColor: string,
   dMoving: boolean,
   dEffrtTotal: number,
   dTmNumber: number,

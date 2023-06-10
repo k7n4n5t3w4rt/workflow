@@ -46,6 +46,7 @@ export default () /*: () => void */ => () /*: void */ => {
   // Create the valueSphere
   gState().vSphere = newVSphere();
   gState().vSphere.dRllngTtlVolume = 0;
+  gState().vSphere.dRadius = 0;
   gState().vSphere.position.x = 0;
   gState().vSphere.position.y = gState().endPosition.y;
   gState().vSphere.position.z = gState().endPosition.z;

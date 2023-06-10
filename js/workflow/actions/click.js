@@ -27,12 +27,8 @@ const click = () /*: void */ => {
     duration: 1000,
     easing: "easeInOutSine",
     complete: () /*: void */ => {
-      // || gState().clicks < gSttngs().valueUpdateInterval
-      if (gState().clicks % gSttngs().valueUpdateInterval === 0) {
-        console.log("flwMap:", gState().flwMap);
-        filterOutDoneItems();
-        resizeVSphere();
-      }
+      filterOutDoneItems();
+      resizeVSphere();
       updateAgeAndEffortForAllItems();
       newFlwItem();
       pullFlwItems();
@@ -78,8 +74,8 @@ const updateFlwItemProperties = (flwItem /*: FlwItem */) /*: void */ => {
     return;
   } else {
     if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
-      flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
-      flwItem.material.needsUpdate = true;
+      // flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
+      // flwItem.material.needsUpdate = true;
     }
   }
   // Update the effort remaining
@@ -224,25 +220,24 @@ const pullFromPreviousStep = (
   }
 };
 
-// //--------------------------------------------------
-// // updateValueQueue()
-// //--------------------------------------------------
-// const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
-//   if (gState().vQueue.length() >= gSttngs().valueUpdateInterval) {
-//     gState().vQueue.dequeue();
-//   }
-//   gState().vQueue.enqueue(flwItemValue);
-// };
+//--------------------------------------------------
+// updateValueQueue()
+//--------------------------------------------------
+const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
+  if (gState().vQueue.length() >= gSttngs().valueUpdateInterval) {
+    gState().vQueue.dequeue();
+  }
+  gState().vQueue.enqueue(flwItemValue);
+};
 
 //--------------------------------------------------
 // resizeVSphere()
 //--------------------------------------------------
 const resizeVSphere = () /*: void */ => {
-  if (gState().vSphere.dRllngTtlVolume === 0) {
+  if (gState().vQueue.total === 0) {
     return;
   }
-  const newRadius = findRadius(gState().vSphere.dRllngTtlVolume);
-  gState().vSphere.dRllngTtlVolume = 0;
+  const newRadius = findRadius(gState().vQueue.total());
   gState().vSphere.dRadius = newRadius;
   // Doesn't work :(
   // gState().vSphere.scale.set(newRadius, newRadius, newRadius);
@@ -274,14 +269,19 @@ const filterOutDoneItems = () /*: void */ => {
   const doneFlwItems = Object.keys(
     gState().flwMap[(gSttngs().flwSteps.length - 1).toString()],
   );
-  doneFlwItems.forEach(processDoneFlwItems);
+  if (doneFlwItems.length > 0) {
+    doneFlwItems.forEach(processDoneFlwItems);
+  } else {
+    updateValueQueue(0);
+  }
 };
 
 const processDoneFlwItems = (flwItemName /*: string */) /*: void */ => {
   const flwItem =
     gState().flwMap[(gSttngs().flwSteps.length - 1).toString()][flwItemName];
   gState().doneTotal++;
-  gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
+  updateValueQueue(flwItem.dVolume);
+  // gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
   // theActualMeshObject may be undefined if it has already been removed
   let theActualMeshObject = gState().scnData.scene.getObjectByName(
     flwItem.name,

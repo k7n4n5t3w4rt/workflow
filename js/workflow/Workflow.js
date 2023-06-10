@@ -71,7 +71,7 @@ export default (props /*: Props */) /*: string */ => {
   // Set the number of teams to 1 so that we have one flw
   gSttngs("tmsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
-  gSttngs("teamSize", cleanInt(props.teamsize) || 10);
+  gSttngs("tmSize", cleanInt(props.teamsize) || 10);
   // Populate the flwStep array
   gSttngs("flwSteps", [
     { name: "Open", status: "backlog", limit: 0 },
@@ -83,9 +83,9 @@ export default (props /*: Props */) /*: string */ => {
     { name: "Done", status: "done", limit: 0 },
   ]);
   // flwItem properties
-  gSttngs("flwItem", { effort: { min: 2, max: 20 } });
+  gSttngs("flwItem", { effort: { min: 1, max: 3 } });
   gSttngs("valueUpdateInterval", 10);
-  gSttngs("death", 120);
+  gSttngs("death", 60);
   gSttngs("rangeMax", 4);
   gSttngs("rangeIncreaseRate", 1.75);
   gSttngs("rangeDecreaseRate", 0.5);

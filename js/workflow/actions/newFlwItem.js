@@ -41,7 +41,7 @@ export default () /*: FlwItem */ => {
 
   // Make it white to start with
   const material = new THREE.MeshBasicMaterial({
-    color: `rgb(255,255,255)`,
+    color: "#ffd700", // gold
   });
 
   // Create the cube
@@ -55,21 +55,16 @@ export default () /*: FlwItem */ => {
     z: gSttngs().z,
   };
   flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
-
   flwItem.dVolume =
-    Math.round(
-      flwItem.dDimensions.x *
-        flwItem.dScaleAdjustment *
-        (flwItem.dDimensions.y * flwItem.dScaleAdjustment) *
-        (flwItem.dDimensions.z * flwItem.dScaleAdjustment) *
-        1000,
-    ) / 1000;
-
+    flwItem.dDimensions.x *
+    flwItem.dScaleAdjustment *
+    (flwItem.dDimensions.y * flwItem.dScaleAdjustment) *
+    (flwItem.dDimensions.z * flwItem.dScaleAdjustment);
   // Set the name to the uuid so we can delete it later
   flwItem.name = flwItem.uuid;
-
   // Set the age to 0
   flwItem.dAge = 0;
+  flwItem.dColor = "#ffd700";
 
   // Set the position
   // flwItem.position.setFromMatrixPosition(

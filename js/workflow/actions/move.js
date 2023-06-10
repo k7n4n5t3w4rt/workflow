@@ -1,5 +1,9 @@
 // @flow
 // --------------------------------------------------
+// THREE.js
+// --------------------------------------------------
+import * as THREE from "../../../web_modules/three.js";
+// --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
@@ -22,20 +26,36 @@ const move = (
   );
   newPosition.z -= gSttngs().step;
 
-  let newColor = 0; // Black for "wait" status
+  let newColor = "#808080"; // Grey for "waiting" status
 
   const nextStatus = gSttngs().flwSteps[flwStpsIndex + 1].status;
 
   if (nextStatus === "touch") {
-    newColor = 255;
+    newColor = "#ffd700"; // Gold for "touch" status
   } else if (nextStatus === "done") {
-    newColor = 255;
+    newColor = "#ffd700"; // Gold for "done" status
     newPosition.x = gState().endPosition.x;
     newPosition.y = gState().endPosition.y;
     newPosition.z = gState().endPosition.z + gState().vSphere.dRadius;
   }
 
-  flwItem.material.color = { r: newColor, g: newColor, b: newColor };
+  // Create an object with a color property that can be animated.
+  let colorObject = { color: flwItem.dColor };
+  flwItem.dColor = newColor;
+
+  // Create an animation that transitions the color from green to red over 2 seconds.
+  anime({
+    targets: colorObject,
+    color: newColor,
+    duration: 1000,
+    easing: "linear",
+    // Update the cube's material color on each frame.
+    update: function () {
+      let color = new THREE.Color(colorObject.color);
+      flwItem.material.color.copy(color);
+      flwItem.material.needsUpdate = true;
+    },
+  });
 
   // Update the data properties first, independently of the animation
   flwItem.dPosition.x = newPosition.x;
@@ -120,7 +140,8 @@ const refineNewPosition = (
       (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
         rndmPosOrNeg();
     position.y =
-      gStartPosition.y + Math.round(rndmBetween(0, range) * 100) / 100;
+      gStartPosition.y +
+      (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
   }
   return position;
 };

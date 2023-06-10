@@ -1,5 +1,9 @@
 // @flow
 // --------------------------------------------------
+// THREE.js
+// --------------------------------------------------
+import * as THREE from "../../../web_modules/three.js";
+// --------------------------------------------------
 // HELPERS
 // --------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
@@ -10,41 +14,48 @@ import rndmBetween from "./rndmBetweenWhatever.js";
 
 const move = (
   flwItem /*: Object */,
-  orgnFlwStepsIndex /*: number */,
-  dstFlwStepsIndex /*: number */,
+  flwStpsIndex /*: number */,
 ) /*: void */ => {
-  const gThisStatus = gSttngs().flwSteps[orgnFlwStepsIndex].status;
-
-  // Do we need this logic with the flwMap?
-  if (gThisStatus === "done") {
-    return;
-  }
-
-  const gNextStatus = gSttngs().flwSteps[dstFlwStepsIndex].status;
-
-  // const newPosition = { ...flwItem.position };
   const newPosition = refineNewPosition(
     flwItem,
-    dstFlwStepsIndex,
+    flwStpsIndex + 1,
     flwItem.dPosition,
     gState().strtPosition,
     gSttngs().flwSteps.length,
-    range(gSttngs().scale, gSttngs().flwSteps[dstFlwStepsIndex].limit),
+    range(gSttngs().scale, gSttngs().flwSteps[flwStpsIndex + 1].limit),
   );
   newPosition.z -= gSttngs().step;
 
-  let newColor = 0; // Black for "wait" status
+  let newColor = "#808080"; // Grey for "waiting" status
 
-  if (gNextStatus === "touch") {
-    newColor = 255;
-  } else if (gNextStatus === "done") {
-    newColor = 255;
+  const nextStatus = gSttngs().flwSteps[flwStpsIndex + 1].status;
+
+  if (nextStatus === "touch") {
+    newColor = "#ffd700"; // Gold for "touch" status
+  } else if (nextStatus === "done") {
+    newColor = "#ffd700"; // Gold for "done" status
     newPosition.x = gState().endPosition.x;
     newPosition.y = gState().endPosition.y;
     newPosition.z = gState().endPosition.z + gState().vSphere.dRadius;
   }
 
-  flwItem.material.color = { r: newColor, g: newColor, b: newColor };
+  // Create an object with a color property that can be animated.
+  let colorObject = { color: flwItem.dColor };
+  flwItem.dColor = newColor;
+
+  // Create an animation that transitions the color from green to red over 2 seconds.
+  anime({
+    targets: colorObject,
+    color: newColor,
+    duration: 1000,
+    easing: "linear",
+    // Update the cube's material color on each frame.
+    update: function () {
+      let color = new THREE.Color(colorObject.color);
+      flwItem.material.color.copy(color);
+      flwItem.material.needsUpdate = true;
+    },
+  });
 
   // Update the data properties first, independently of the animation
   flwItem.dPosition.x = newPosition.x;
@@ -65,7 +76,7 @@ const move = (
       flwItem.dMoving = false;
       if (
         // If the flwItem has moved into a done status
-        gNextStatus === "done"
+        nextStatus === "done"
       ) {
         flwItem.visible = false;
       } else {
@@ -86,22 +97,19 @@ const range = (
   let range = 0;
 
   if (gNumberOfFlwItemsNextStatus > 0) {
-    const increaseRate = 1;
-    const decreaseRate = 0.95; // Modify this value to change the rate of decrease
+    const increaseDecreaseRate = 0.95; // Modify this value to change the rate of decrease
 
     // Does this even make sense? GPT-4 told me to do it.
     let calculatedIncreaseRate =
-      gNumberOfFlwItemsNextStatus +
-      gNumberOfFlwItemsNextStatus * increaseRate -
-      gNumberOfFlwItemsNextStatus * decreaseRate;
-
-    if (calculatedIncreaseRate > 7) {
-      calculatedIncreaseRate = 7;
-    }
-
-    console.log("calculatedIncreaseRate", calculatedIncreaseRate);
+      gNumberOfFlwItemsNextStatus *
+      gSttngs().rangeIncreaseRate *
+      gSttngs().rangeDecreaseRate;
 
     range = gScale * calculatedIncreaseRate;
+
+    if (range > gSttngs().rangeMax) {
+      range = gSttngs().rangeMax;
+    }
 
     // range =
     //   gScale *
@@ -132,7 +140,8 @@ const refineNewPosition = (
       (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
         rndmPosOrNeg();
     position.y =
-      gStartPosition.y + Math.round(rndmBetween(0, range) * 100) / 100;
+      gStartPosition.y +
+      (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
   }
   return position;
 };
