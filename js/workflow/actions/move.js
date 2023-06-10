@@ -77,22 +77,19 @@ const range = (
   let range = 0;
 
   if (gNumberOfFlwItemsNextStatus > 0) {
-    const increaseRate = 1;
-    const decreaseRate = 0.95; // Modify this value to change the rate of decrease
+    const increaseDecreaseRate = 0.95; // Modify this value to change the rate of decrease
 
     // Does this even make sense? GPT-4 told me to do it.
     let calculatedIncreaseRate =
-      gNumberOfFlwItemsNextStatus +
-      gNumberOfFlwItemsNextStatus * increaseRate -
-      gNumberOfFlwItemsNextStatus * decreaseRate;
-
-    if (calculatedIncreaseRate > 7) {
-      calculatedIncreaseRate = 7;
-    }
-
-    console.log("calculatedIncreaseRate", calculatedIncreaseRate);
+      gNumberOfFlwItemsNextStatus *
+      gSttngs().rangeIncreaseRate *
+      gSttngs().rangeDecreaseRate;
 
     range = gScale * calculatedIncreaseRate;
+
+    if (range > gSttngs().rangeMax) {
+      range = gSttngs().rangeMax;
+    }
 
     // range =
     //   gScale *

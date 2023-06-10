@@ -63,7 +63,7 @@ export default (props /*: Props */) /*: string */ => {
   gSttngs("speed", Math.abs(parseFloat(props.speed) || 1));
   // The default will be 0.1 == 10cm
   gSttngs("scaleCm", cleanInt(props.scalecm) || 10);
-  gSttngs("scale", cleanInt(props.scalecm) / 100 || 0.1);
+  gSttngs("scale", gSttngs().scaleCm / 100);
   gSttngs("x", gSttngs().scale);
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
@@ -71,7 +71,7 @@ export default (props /*: Props */) /*: string */ => {
   // Set the number of teams to 1 so that we have one flw
   gSttngs("tmsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
-  gSttngs("teamSize", cleanInt(props.teamsize) || 400);
+  gSttngs("teamSize", cleanInt(props.teamsize) || 10);
   // Populate the flwStep array
   gSttngs("flwSteps", [
     { name: "Open", status: "backlog", limit: 0 },
@@ -83,9 +83,12 @@ export default (props /*: Props */) /*: string */ => {
     { name: "Done", status: "done", limit: 0 },
   ]);
   // flwItem properties
-  gSttngs("flwItem", { effort: { min: 14, max: 520 } });
+  gSttngs("flwItem", { effort: { min: 2, max: 20 } });
   gSttngs("valueUpdateInterval", 10);
-  gSttngs("death", 260);
+  gSttngs("death", 120);
+  gSttngs("rangeMax", 4);
+  gSttngs("rangeIncreaseRate", 1.75);
+  gSttngs("rangeDecreaseRate", 0.5);
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {

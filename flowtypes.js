@@ -18,6 +18,9 @@ type GlobalSettings = {
   flwSteps: Array<FlwStep>,
   flwItem: FlwItemSettings,
   valueUpdateInterval: number,
+  rangeMax: number,
+  rangeIncreaseRate: number,
+  rangeDecreaseRate: number,
 };
 
 type FlwItemSettings = {
@@ -46,6 +49,7 @@ type GlobalState = {
   strtPosition: ThrMeshPosition,
   endPosition: ThrMeshPosition,
   flwMap: FlwMap,
+  flwItems: FlwItem[],
   clckCbGroup: ClickCubeGroup,
   vQueue: VQueue,
   tchTotal: number,
@@ -145,13 +149,20 @@ type FlwItem = {
   name: string,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
+    dispose: () => void,
   },
   position: ThrMeshPosition,
   scale: ThrMeshScale,
   dVolume: number,
-  material: { color: ThrMtrlColor, opacity: number, needsUpdate: boolean },
+  material: {
+    color: ThrMtrlColor,
+    opacity: number,
+    needsUpdate: boolean,
+    dispose: () => void,
+  },
   rotateY: (radians: number) => void,
   rotation: ThrMeshRotation,
+  removeFromParent: () => void,
 };
 
 type SimplePosition = {

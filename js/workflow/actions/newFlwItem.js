@@ -26,14 +26,17 @@ export default () /*: FlwItem */ => {
     gSttngs().flwItem.effort.min,
     gSttngs().flwItem.effort.max,
   );
-  const scaleAdjustedForEffort =
+  const scaleAdjustment =
     Math.round((flwItemEffortTotal / gSttngs().flwItem.effort.max) * 1000) /
     1000;
 
-  geometry.scale(
-    gSttngs().x * scaleAdjustedForEffort,
-    gSttngs().y * scaleAdjustedForEffort,
-    gSttngs().z * scaleAdjustedForEffort,
+  console.log("scaleAdjustment", scaleAdjustment);
+  console.log("Dimensions:", gSttngs().x, gSttngs().y, gSttngs().z);
+  console.log(
+    "Dimensions adjusted for effort:",
+    gSttngs().x * scaleAdjustment,
+    gSttngs().y * scaleAdjustment,
+    gSttngs().z * scaleAdjustment,
   );
 
   // Make it white to start with
@@ -45,14 +48,22 @@ export default () /*: FlwItem */ => {
   const flwItem = new THREE.Mesh(geometry, material);
   flwItem.castShadow = true;
   flwItem.receiveShadow = true;
-  flwItem.dScale = {
-    x: Math.round(gSttngs().x * scaleAdjustedForEffort * 1000) / 1000,
-    y: Math.round(gSttngs().y * scaleAdjustedForEffort * 1000) / 1000,
-    z: Math.round(gSttngs().z * scaleAdjustedForEffort * 1000) / 1000,
+  flwItem.dScaleAdjustment = scaleAdjustment;
+  flwItem.dDimensions = {
+    x: gSttngs().x,
+    y: gSttngs().y,
+    z: gSttngs().z,
   };
+  flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
 
-  const xCubed = flwItem.dScale.x * flwItem.dScale.y * flwItem.dScale.z;
-  flwItem.dVolume = Math.round(xCubed * 1000) / 1000;
+  flwItem.dVolume =
+    Math.round(
+      flwItem.dDimensions.x *
+        flwItem.dScaleAdjustment *
+        (flwItem.dDimensions.y * flwItem.dScaleAdjustment) *
+        (flwItem.dDimensions.z * flwItem.dScaleAdjustment) *
+        1000,
+    ) / 1000;
 
   // Set the name to the uuid so we can delete it later
   flwItem.name = flwItem.uuid;
