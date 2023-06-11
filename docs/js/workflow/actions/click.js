@@ -17,6 +17,7 @@ import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
+import flwItmTracker from "./flwItmTracker.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
@@ -60,6 +61,13 @@ const updateFlwItemProperties = (
   }
   // Otherwise, increment the age and check if the fwItem has died of old age
   if (++flwItem.dAge >= gSttngs().death) {
+    if (flwItem.dMoving) {
+      flwItmTracker(
+        flwItem.name,
+        `Decided not to delete it because it is moving.`,
+      );
+      return;
+    }
     // console.log(flwItem.name);
     // console.log("dAge is > gSttngs().death");
     let theActualMeshObject = gState().scnData.scene.getObjectByName(
@@ -73,28 +81,26 @@ const updateFlwItemProperties = (
         flwItem.dFlwStpsIndex.toString()
       ].splice(index, 1);
       if (deletedFlwItem.length === 1) {
-        gState().flwItmTracker[flwItem.name].push(
-          `Deleted from the scene and flwMap`,
-        );
+        flwItmTracker(flwItem.name, `Deleted from the scene and flwMap`);
       } else {
-        gState().flwItmTracker[flwItem.name].push(
+        flwItmTracker(
+          flwItem.name,
           `PROBLEM: Deleted from the scene but NOT deleted from the flwMap.`,
         );
       }
     } else {
       console.log("PROBLEM! The mesh object is undefined.", flwItem.name);
-      gState().flwItmTracker[flwItem.name].push(
+      flwItmTracker(
+        flwItem.name,
         `PROBLEM: The object could not be found in the scene. Setting it to red.`,
       );
       const deletedFlwItem = gState().flwMap[
         flwItem.dFlwStpsIndex.toString()
       ].splice(index, 1);
       if (deletedFlwItem.length === 1) {
-        gState().flwItmTracker[flwItem.name].push(`Deleted from the flwMap`);
+        flwItmTracker(flwItem.name, `Deleted from the flwMap`);
       } else {
-        gState().flwItmTracker[flwItem.name].push(
-          `PROBLEM: NOT deleted from the flwMap.`,
-        );
+        flwItmTracker(flwItem.name, `PROBLEM: NOT deleted from the flwMap.`);
       }
       let colorObject = { color: "#FF0000" };
       let color = new THREE.Color(colorObject.color);
@@ -108,15 +114,14 @@ const updateFlwItemProperties = (
       flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
       flwItem.material.needsUpdate = true;
     }
-    gState().flwItmTracker[flwItem.name].push(
-      `Opacity set to ${flwItem.material.opacity}`,
-    );
+    flwItmTracker(flwItem.name, `Opacity set to ${flwItem.material.opacity}`);
   }
   // Update the effort remaining, making sure it doesn't go below 0
   if (--flwItem.dEffrtRemaining < 0) {
     flwItem.dEffrtRemaining = 0;
   }
-  gState().flwItmTracker[flwItem.name].push(
+  flwItmTracker(
+    flwItem.name,
     `EffortRemaining set to ${flwItem.dEffrtRemaining}`,
   );
 };
@@ -236,7 +241,7 @@ const pullFromPreviousStep = (
             flwMpStpKeyNumber.toString()
           ].splice(index, 1);
           // Add the flwItem to the next step in the flwMap
-          gState().flwMap[(flwMpStpKeyNumber + 1).toString()].push(flwItem);
+          gState().flwMap[(flwMpStpKeyNumber + 1).toString()].unshift(flwItem);
           // Reset the dEffrtRemaining to the dEffrtTotal, ready for the next step
           flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
         }

@@ -11,6 +11,7 @@ import anime from "../../../web_modules/animejs.js";
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
+import flwItmTracker from "./flwItmTracker.js";
 
 const move = (
   flwItem /*: Object */,
@@ -60,11 +61,16 @@ const move = (
   flwItem.dPosition.x = newPosition.x;
   flwItem.dPosition.y = newPosition.y;
   flwItem.dPosition.z = newPosition.z;
-  gState().flwItmTracker[flwItem.name].push(
+  flwItmTracker(
+    flwItem.name,
     `Effectively moved to step ${flwItem.dFlwStpsIndex + 1}. Still animating`,
   );
 
   flwItem.dMoving = true;
+  // Set the properties of the flwItem to the state they'll be in,
+  // visually, when the animation is complete.
+  flwItem.dFlwStpsIndex++;
+  flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
 
   anime({
     targets: [flwItem.position],
@@ -81,10 +87,13 @@ const move = (
         nextStatus === "done"
       ) {
         flwItem.visible = false;
+        flwItmTracker(
+          flwItem.name,
+          `Move to step ${flwItem.dFlwStpsIndex} complete. This flwItem is Done.`,
+        );
       } else {
-        flwItem.dFlwStpsIndex++;
-        flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
-        gState().flwItmTracker[flwItem.name].push(
+        flwItmTracker(
+          flwItem.name,
           `Move to step ${flwItem.dFlwStpsIndex} complete. Effort set back to ${flwItem.dEffrtTotal}`,
         );
       }

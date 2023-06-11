@@ -13,6 +13,7 @@ import gState from "./gState.js";
 // --------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenIntegers.js";
+import flwItmTracker from "./flwItmTracker.js";
 
 export default () /*: FlwItem */ => {
   // Basic properties of the cube
@@ -83,7 +84,8 @@ export default () /*: FlwItem */ => {
   gState().clckCbGroup.add(flwItem);
 
   gState().flwItmTracker[flwItem.name] = [];
-  gState().flwItmTracker[flwItem.name].push(
+  flwItmTracker(
+    flwItem.name,
     `Created, and added to step ${flwItem.dFlwStpsIndex}`,
   );
   // Not using the return value, but Flow will keep us honest

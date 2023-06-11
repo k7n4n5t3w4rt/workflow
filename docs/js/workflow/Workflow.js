@@ -70,6 +70,9 @@ export default (props /*: Props */) /*: string */ => {
   gSttngs("step", cleanInt(props.stepcm) / 100 || gSttngs().scale * 2);
   gSttngs("yOffset", gSttngs().scale * 10);
 
+  // Turns on some expensive debug features
+  gSttngs("debug", true);
+
   // Set the number of teams to 1 so that we have one flw
   gSttngs("tmsNumber", cleanInt(props.teamsnumber) || 1);
   // Set the number of people per team to 1 so that nothing changes for now
@@ -85,9 +88,9 @@ export default (props /*: Props */) /*: string */ => {
     { name: "Done", status: "done", limit: 0 },
   ]);
   // flwItem properties
-  gSttngs("flwItem", { effort: { min: 1, max: 3 } });
+  gSttngs("flwItem", { effort: { min: 1, max: 8 } });
   gSttngs("valueUpdateInterval", 10);
-  gSttngs("death", 10);
+  gSttngs("death", 60);
   gSttngs("rangeMax", gSttngs().yOffset * 0.75);
   gSttngs("rangeIncreaseRate", 1.75);
   gSttngs("rangeDecreaseRate", 0.75);
