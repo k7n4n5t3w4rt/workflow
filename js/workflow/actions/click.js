@@ -69,33 +69,18 @@ const updateFlwItemProperties = (
 ) /*: void */ => {
   // If this flwItem is in the backlog, don't update it
   if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "backlog") {
-    // console.log(flwItem.name, "is in the backlog.");
     return;
   }
-  // Otherwise, increment the age and check if the fwItem has died of old age
+  // Otherwise, check if it has died of old age...
   if (++flwItem.dAge >= gSttngs().death) {
+    // ...and if so, remove it
     removeFlowItem(flwItem, index);
     return;
   } else {
+    // Otherwise, update its age and effort
     makeItOneClickOlder(flwItem);
   }
 };
-
-//--------------------------------------------------
-// makeItOneClickOlder()
-//--------------------------------------------------
-const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
-  // If the flwItem is not dead, make it more transparent
-  if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
-    flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
-    flwItem.material.needsUpdate = true;
-  }
-  // Update the effort remaining, making sure it doesn't go below 0
-  if (--flwItem.dEffrtRemaining < 0) {
-    flwItem.dEffrtRemaining = 0;
-  }
-};
-
 //--------------------------------------------------
 // removeFlowItem()
 //--------------------------------------------------
@@ -127,22 +112,36 @@ const removeFlowItem = (
 };
 
 //--------------------------------------------------
+// makeItOneClickOlder()
+//--------------------------------------------------
+const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
+  // If the flwItem is not dead, make it more transparent
+  if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
+    flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
+    flwItem.material.needsUpdate = true;
+  }
+  // Update the effort remaining, making sure it doesn't go below 0
+  if (--flwItem.dEffrtRemaining < 0) {
+    flwItem.dEffrtRemaining = 0;
+  }
+};
+
+//--------------------------------------------------
 // removeThreeObject()
 //--------------------------------------------------
 const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
-  // for better memory management and performance
+  // For better memory management and performance...
   if (flwItem.geometry) flwItem.geometry.dispose();
-
   if (flwItem.material) {
     if (flwItem.material instanceof Array) {
-      // for better memory management and performance
       flwItem.material.forEach((material) => material.dispose());
     } else {
-      // for better memory management and performance
       flwItem.material.dispose();
     }
   }
-  flwItem.removeFromParent(); // the parent might be the scene or another Object3D, but it is sure to be removed this way
+  // The parent might be the scene or another Object3D, but it
+  // is sure to be removed this way
+  flwItem.removeFromParent();
 };
 
 //--------------------------------------------------
@@ -157,6 +156,9 @@ function pullFlwItems() {
   flwMpSteps.reduceRight(checkStepLimitAndPull, null);
 }
 
+//--------------------------------------------------
+// getFlwMpSteps()
+//--------------------------------------------------
 const getFlwMpSteps = () /*: FlwMpItems[] */ => {
   // Get the keys for all the steps in the flwMap hash map
   const flwMpStpKeys = Object.keys(gState().flwMap);
@@ -171,6 +173,9 @@ const getFlwMpSteps = () /*: FlwMpItems[] */ => {
   return flwMpSteps;
 };
 
+//--------------------------------------------------
+// checkStepLimitAndPull()
+//--------------------------------------------------
 const checkStepLimitAndPull = (
   // Note: We need the accumulator or the Done step is skipped.
   _ /*: null | void */, // The accumulator is not used but reduceRight() requires it
@@ -196,6 +201,9 @@ const checkStepLimitAndPull = (
   }
 };
 
+//--------------------------------------------------
+// pullFromPreviousStep()
+//--------------------------------------------------
 const pullFromPreviousStep = (
   flwMpStpKeyNumber /*: number */,
   availableLimit /*: "no limit" | number */,
@@ -209,44 +217,61 @@ const pullFromPreviousStep = (
   // If there are no flwItems in this step, then there is nothing to pull
   if (flwMpStpItems.length > 0) {
     // For each flwItem in this step...
-    flwMpStpItems.forEach(
-      (flwItem /*: FlwItem */, index /*: number */) /*: void */ => {
-        // Check if the fwItem has died of old age
-        if (flwItem.dAge >= gSttngs().death) {
-          return;
-        }
-        // This will happen when we have used up the availableLimit
-        // and we've pulled the last flwItem we can pull
-        if (availableLimit === 0) {
-          return;
-        } else if (availableLimit !== "no limit") {
-          // If we have a limit, then decrement it
-          availableLimit--;
-        }
-
-        if (
-          // If the flwMpStpKeyNumber is 0, then we are at the backlog, in
-          // which case the dEffrtRemaining is not relevant
-          flwMpStpKeyNumber === 0 ||
-          // In all other cases, we only want to move the flwItem if it is
-          // not moving and it has no effort remaining
-          (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
-        ) {
-          move(flwItem);
-          // Remove the flwItem from the current step in the flwMap
-          const deletedFlwItem = gState().flwMap[
-            flwMpStpKeyNumber.toString()
-          ].splice(index, 1);
-          // Add the flwItem to the next step in the flwMap
-          gState().flwMap[(flwMpStpKeyNumber + 1).toString()].unshift(flwItem);
-          // Reset the dEffrtRemaining to the dEffrtTotal, ready for the next step
-          flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
-        }
-      },
-    );
+    flwMpStpItems.reduce(pullFlowItem, availableLimit);
   }
 };
 
+//--------------------------------------------------
+// pullFlowItem()
+//--------------------------------------------------
+const pullFlowItem = (
+  availableLimit /*: "no limit" | number */,
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) /*: "no limit" | number */ => {
+  // Check if the fwItem has died of old age
+  if (flwItem.dAge >= gSttngs().death) {
+    return availableLimit;
+  }
+  // This will happen when we have used up the availableLimit
+  // and we've pulled the last flwItem we can pull
+  if (availableLimit === 0) {
+    return availableLimit;
+  } else if (availableLimit !== "no limit") {
+    // If we have a limit, then decrement it
+    availableLimit--;
+  }
+
+  if (
+    // If the flwItem.dFlwStpsIndex is 0, then we are at the backlog, in
+    // which case the dEffrtRemaining is not relevant
+    flwItem.dFlwStpsIndex === 0 ||
+    // In all other cases, we only want to move the flwItem if it is
+    // not moving and it has no effort remaining
+    (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
+  ) {
+    move(flwItem);
+    updateFlowMap(flwItem, index);
+  }
+  return availableLimit;
+};
+
+//--------------------------------------------------
+// updateFlowMap()
+//--------------------------------------------------
+const updateFlowMap = (
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) /*: void */ => {
+  // Remove the flwItem from the current step in the flwMap
+  // NOTE: The flwItem.dFlwStpsIndex was updated in the move() function
+  // so we need to use -1 to get the flwMap step we want
+  const deletedFlwItem = gState().flwMap[
+    (flwItem.dFlwStpsIndex - 1).toString()
+  ].splice(index, 1);
+  // Add the flwItem to the correct step in the flwMap
+  gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
+};
 //--------------------------------------------------
 // updateValueQueue()
 //--------------------------------------------------
