@@ -1,4 +1,4 @@
-import gSttngs from "./actions/gSttngs.js";
+import gSttngs from "./gSttngs.js";
 
 // --------------------------------------------------
 // globalSettings()
@@ -10,6 +10,8 @@ export default (props /*: Props */) => {
   // Q: How many people are on a team?
   gSttngs("tmSize", cleanInt(props.teamsize) || 10);
   // Q: What steps do we have in our workflow?
+  // NOTE: We need to start with a "backlog" step, and end with a "done" step,
+  // both of which have a limit of 0, which means "no limit".
   gSttngs("flwSteps", [
     { name: "Open", status: "backlog", limit: 0 },
     { name: "Doing", status: "touch", limit: 0 },

@@ -34,7 +34,7 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
-import globalSettings from "./globalSettings.js";
+import globalSettings from "./actions/globalSettings.js";
 
 /*::
 type Props = {
