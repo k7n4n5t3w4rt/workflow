@@ -21,35 +21,48 @@ import flwItmTracker from "./flwItmTracker.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
+  animateClickCube();
+};
+
+//--------------------------------------------------
+// onClickComplete()
+//--------------------------------------------------
+const onClickComplete = () /*: void */ => {
+  filterOutDoneItems();
+  resizeVSphere();
+  updateAgeAndEffortForAllItems();
+  newFlwItem();
+  pullFlwItems();
+  click();
+};
+
+//--------------------------------------------------
+// animateClickCube()
+//--------------------------------------------------
+const animateClickCube = () /*: void */ => {
   // Rotate the clckCube
   anime({
     targets: [gState().clckCbGroup.clckCube.rotation],
     y: gState().clckCbGroup.clckCube.rotation.y + Math.PI / 2,
     duration: 1000,
     easing: "easeInOutSine",
-    complete: () /*: void */ => {
-      filterOutDoneItems();
-      resizeVSphere();
-      updateAgeAndEffortForAllItems();
-      newFlwItem();
-      pullFlwItems();
-      click();
-    },
+    complete: onClickComplete,
   });
 };
-
 //--------------------------------------------------
 // updateAgeAndEffortForAllItems()
 //--------------------------------------------------
 const updateAgeAndEffortForAllItems = () /*: void */ => {
-  getFlwMpSteps().forEach(getFlwMpStpItems);
+  // For each flwStep in the flwMap...
+  getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
+    // For each flwItem in this step...
+    flwMpStpItems.forEach(updateFlwItemProperties);
+  });
 };
 
-const getFlwMpStpItems = (flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
-  // For each flwItem in this step...
-  flwMpStpItems.forEach(updateFlwItemProperties);
-};
-
+//--------------------------------------------------
+// updateFlwItemProperties()
+//--------------------------------------------------
 const updateFlwItemProperties = (
   flwItem /*: FlwItem */,
   index /*:number */,
@@ -61,37 +74,21 @@ const updateFlwItemProperties = (
   }
   // Otherwise, increment the age and check if the fwItem has died of old age
   if (++flwItem.dAge >= gSttngs().death) {
-    if (flwItem.dMoving) {
-      return;
-    }
-    // console.log(flwItem.name);
-    // console.log("dAge is > gSttngs().death");
-    let theActualMeshObject = gState().scnData.scene.getObjectByName(
-      flwItem.name,
-    );
-    if (theActualMeshObject !== undefined) {
-      // console.log("The mesh object is defined.");
-      removeThreeObject(theActualMeshObject);
-      // Remove it from the flwMap
-      const deletedFlwItem = gState().flwMap[
-        flwItem.dFlwStpsIndex.toString()
-      ].splice(index, 1);
-    } else {
-      const deletedFlwItem = gState().flwMap[
-        flwItem.dFlwStpsIndex.toString()
-      ].splice(index, 1);
-      let colorObject = { color: "#FF0000" };
-      let color = new THREE.Color(colorObject.color);
-      flwItem.material.color.copy(color);
-      flwItem.material.needsUpdate = true;
-    }
+    removeFlowItem(flwItem, index);
     return;
   } else {
-    // If the flwItem is not dead, make it more transparent
-    if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
-      flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
-      flwItem.material.needsUpdate = true;
-    }
+    makeItOneClickOlder(flwItem);
+  }
+};
+
+//--------------------------------------------------
+// makeItOneClickOlder()
+//--------------------------------------------------
+const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
+  // If the flwItem is not dead, make it more transparent
+  if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
+    flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
+    flwItem.material.needsUpdate = true;
   }
   // Update the effort remaining, making sure it doesn't go below 0
   if (--flwItem.dEffrtRemaining < 0) {
@@ -99,6 +96,39 @@ const updateFlwItemProperties = (
   }
 };
 
+//--------------------------------------------------
+// removeFlowItem()
+//--------------------------------------------------
+const removeFlowItem = (
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) /*: void */ => {
+  if (flwItem.dMoving) {
+    return;
+  }
+  let theActualMeshObject = gState().scnData.scene.getObjectByName(
+    flwItem.name,
+  );
+  if (theActualMeshObject !== undefined) {
+    // console.log("The mesh object is defined.");
+    removeThreeObject(theActualMeshObject);
+  } else {
+    // Just in case this is still happening and we really couldn't find
+    // the actual mesh object, make it red so we can see it
+    let colorObject = { color: "#FF0000" };
+    let color = new THREE.Color(colorObject.color);
+    flwItem.material.color.copy(color);
+    flwItem.material.needsUpdate = true;
+  }
+  // Remove it from the flwMap
+  const deletedFlwItem = gState().flwMap[
+    flwItem.dFlwStpsIndex.toString()
+  ].splice(index, 1);
+};
+
+//--------------------------------------------------
+// removeThreeObject()
+//--------------------------------------------------
 const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
   // for better memory management and performance
   if (flwItem.geometry) flwItem.geometry.dispose();
