@@ -35,6 +35,7 @@ import {
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
 import globalSettings from "./actions/globalSettings.js";
+import globalState from "./actions/globalState.js";
 
 /*::
 type Props = {
@@ -48,6 +49,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   globalSettings(props);
+  globalState();
   // I'm not really using the state, but leaving it here
   // for when we're setting properties on the fly.
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {

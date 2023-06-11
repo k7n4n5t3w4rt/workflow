@@ -21,6 +21,8 @@ export default (props /*: Props */) => {
     { name: "In Review", status: "touch", limit: 0 },
     { name: "Done", status: "done", limit: 0 },
   ]);
+  // To save us calculating the number of touch steps, for now
+  gSttngs("touchSteps", 3);
   // Q: In "ideal developer days", how much effort does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person could do everything, how long would things take? We want a "min" and

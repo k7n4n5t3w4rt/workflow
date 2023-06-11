@@ -27,7 +27,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // should be in when the animation is complete.
   flwItem.dMoving = true;
   flwItem.dFlwStpsIndex++;
-  flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
+  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtTotal;
 
   anime({
     targets: [flwItem.position],

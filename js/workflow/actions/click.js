@@ -49,6 +49,7 @@ const animateClickCube = () /*: void */ => {
     complete: onClickComplete,
   });
 };
+
 //--------------------------------------------------
 // updateAgeAndEffortForAllItems()
 //--------------------------------------------------
@@ -121,10 +122,17 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.material.needsUpdate = true;
   }
   // Update the effort remaining, making sure it doesn't go below 0
-  if (--flwItem.dEffrtRemaining < 0) {
-    flwItem.dEffrtRemaining = 0;
+  if (--flwItem.dEffrtRmnngCurrentStep < 0) {
+    flwItem.dEffrtRmnngCurrentStep = 0;
   }
 };
+
+//--------------------------------------------------
+// updateEffortRemainingCurrentStep()
+//--------------------------------------------------
+const updateEffortRemainingCurrentStep = (
+  flwItem /*: FlwItem */,
+) /*: void */ => {};
 
 //--------------------------------------------------
 // removeThreeObject()
@@ -244,11 +252,11 @@ const pullFlowItem = (
 
   if (
     // If the flwItem.dFlwStpsIndex is 0, then we are at the backlog, in
-    // which case the dEffrtRemaining is not relevant
+    // which case the dEffrtRmnngCurrentStep is not relevant
     flwItem.dFlwStpsIndex === 0 ||
     // In all other cases, we only want to move the flwItem if it is
     // not moving and it has no effort remaining
-    (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
+    (flwItem.dEffrtRmnngCurrentStep <= 0 && !flwItem.dMoving)
   ) {
     move(flwItem);
     updateFlowMap(flwItem, index);

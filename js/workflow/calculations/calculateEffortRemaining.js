@@ -3,9 +3,10 @@ export default (
   previousEffortRemaining /*: number */,
   effortPerFlwItem /*: number */,
 ) /*: number */ => {
-  let calculatedEffrtRemaining = previousEffortRemaining - effortPerFlwItem;
-  if (calculatedEffrtRemaining < 0) {
-    calculatedEffrtRemaining = 0;
+  let calculatedEffrtRmnngCurrentStep =
+    previousEffortRemaining - effortPerFlwItem;
+  if (calculatedEffrtRmnngCurrentStep < 0) {
+    calculatedEffrtRmnngCurrentStep = 0;
   }
-  return calculatedEffrtRemaining;
+  return calculatedEffrtRmnngCurrentStep;
 };

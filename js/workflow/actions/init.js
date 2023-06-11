@@ -20,62 +20,42 @@ import addReticleToScene from "../calculations/addReticleToScene.js";
 import render from "./render.js";
 
 export default () /*: void */ => {
-  // The stats display for AR
-  const stats = createStats();
-  const ARContainer = document.createElement("div");
-  ARContainer.id = "ar-container";
-  const flw = document.getElementById("flw");
-  // document.body.appendChild(container);
-  // $FlowFixMe - Flow doesn't know about the DOM
-  flw.appendChild(ARContainer);
+  // The AR container is where the AR scene will be rendered
+  const ARContainer = addArContainerToDom();
 
   // Make the scene, camera, geometry, etc.
+  const light = lightSetup();
+  const camera = cameraSetup();
   const scene /*: Object */ = new THREE.Scene();
-  const camera /*: Object */ = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.01,
-    50,
-  );
-  // Does this really get used? Probably not in AR mode
-  camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(4 / 2)) * gSttngs().y;
-  camera.position.x = Math.abs(parseInt(5 / 2)) * gSttngs().x;
-
-  // https://threejs.org/docs/#api/en/lights/HemisphereLight
-  const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-  light.position.set(0.5, 1, 0.25);
-
   scene.add(light);
-  //   const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-  //   scene.add(ambientLight);
-
-  // https://threejs.org/docs/#api/en/renderers/WebGLRenderer
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true,
-  });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.xr.enabled = true;
-  ARContainer.appendChild(renderer.domElement);
-
+  const renderer = rendererSetup();
+  // Not appearing for some reason. I think it is hidden
+  const stats = createStats();
+  ARContainer.appendChild(stats.dom);
+  // The reticle is the donut that appears on the ground
   const reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
-
+  // This start the whole process when the user clicks the
+  // reticle to put the click cube on the ground
   const controller = renderer.xr.getController(0);
-
-  // This start the whole process when the user places
-  // the click cube on the ground
   controller.addEventListener("select", start());
   scene.add(controller);
+  // The Three.js supplied start button checks for AR support
+  startButtonSetup(renderer);
+  // Start the render loop
+  renderer.setAnimationLoop(render());
+  // A fix for when the phone is rotated, etc
+  window.addEventListener("resize", onWindowResize(camera, renderer, window));
+  // Populate the global state, for posterity
+  gState().scnData = { stats, scene, camera, reticleStuff, renderer };
+};
 
-  //   // https://threejs.org/docs/#examples/en/controls/OrbitControls
-  //   const controls = new OrbitControls(camera, renderer.domElement);
-  //   controls.enableZoom = false;
-
-  ARContainer.appendChild(stats.dom);
-
+// --------------------------------------------------
+// startButtonSetip()
+// --------------------------------------------------
+const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
+  // The overlay for sliders, etc
   const domOverlayDiv = document.getElementById("dom-overlay");
+
   const button = ARButton.createButton(renderer, {
     requiredFeatures: ["hit-test"],
     optionalFeatures: ["dom-overlay"],
@@ -86,74 +66,64 @@ export default () /*: void */ => {
 
   // $FlowFixMe
   domOverlayDiv.appendChild(button);
-
-  renderer.setAnimationLoop(render());
-
-  window.addEventListener("resize", onWindowResize(camera, renderer, window));
-
-  // --------------------------------------------------
-  // Populate the global state
-  // --------------------------------------------------
-  gState("clicks", 0);
-  gState("flwItems", []);
-  gState("clckCube", {});
-  gState("flwItmTracker", {});
-  gState("flwMap", {});
-  setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
-  gState("tchTotal", 0);
-  gState("doneTotal", 0);
-  gState("scnData", {
-    stats,
-    scene,
-    camera,
-    reticleStuff,
-    renderer,
-  });
-
-  gState("vQueue", new vQueue());
 };
 
-function vQueue() /*: void */ {
-  this.items = {};
-  this.headIndex = 0;
-  this.tailIndex = 0;
+// --------------------------------------------------
+// rendererSetup()
+// --------------------------------------------------
+const rendererSetup = () /*: Object */ => {
+  // https://threejs.org/docs/#api/en/renderers/WebGLRenderer
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+  });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.xr.enabled = true;
 
-  this.enqueue = (item /*: number */) /*: void */ => {
-    this.items[this.tailIndex] = item;
-    this.tailIndex++;
-  };
+  return renderer;
+};
 
-  this.dequeue = () /*: number */ => {
-    const item = this.items[this.headIndex];
-    delete this.items[this.headIndex];
-    this.headIndex++;
-    return item;
-  };
+// --------------------------------------------------
+// lightSetup()
+// --------------------------------------------------
+const lightSetup = () /*: Object */ => {
+  // https://threejs.org/docs/#api/en/lights/HemisphereLight
+  const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+  light.position.set(0.5, 1, 0.25);
 
-  this.total = () /*: number */ => {
-    let total = 0;
-    for (const index in this.items) {
-      total += this.items[index];
-    }
-    return total;
-  };
+  //   const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  //   scene.add(ambientLight);
 
-  this.length = () /*: number */ => {
-    return this.tailIndex - this.headIndex;
-  };
-}
+  return light;
+};
 
-//--------------------------------------------------
-// setUpFlwMap()
-//--------------------------------------------------
-const setUpFlwMap = (
-  gFlwMap /*: FlwMap */,
-  gFlwSteps /*: FlwStep[] */,
-) /*: void */ => {
-  // Set each flwStepTotal to 0
-  gFlwSteps.forEach(
-    (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
-      gState().flwMap[index.toString()] = [];
-    },
+// --------------------------------------------------
+// addArContainerToDom()
+// --------------------------------------------------
+const addArContainerToDom = () /*: HTMLDivElement */ => {
+  const ARContainer = document.createElement("div");
+  ARContainer.id = "ar-container";
+  const flw = document.getElementById("flw");
+  // $FlowFixMe - Flow doesn't know about the DOM
+  flw.appendChild(ARContainer);
+
+  return ARContainer;
+};
+
+// --------------------------------------------------
+// cameraSetup()
+// --------------------------------------------------
+const cameraSetup = () /*: Object */ => {
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.01,
+    50,
   );
+  // Does this really get used? Probably not in AR mode
+  camera.position.z = 1;
+  camera.position.y = Math.abs(parseInt(4 / 2)) * gSttngs().y;
+  camera.position.x = Math.abs(parseInt(5 / 2)) * gSttngs().x;
+  return camera;
 };

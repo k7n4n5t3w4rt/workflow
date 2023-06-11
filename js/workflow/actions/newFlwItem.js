@@ -69,7 +69,7 @@ export default () /*: FlwItem */ => {
   flwItem.dMoving = false;
 
   // Set the effort values of the flwItem
-  flwItem.dEffrtRemaining = flwItem.dEffrtTotal = flwItemEffortTotal;
+  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtTotal = flwItemEffortTotal;
 
   // Set the team number of the flwItem
   flwItem.dTmNumber = rndmBetween(1, gSttngs().tmsNumber);
