@@ -17,6 +17,7 @@ import move from "./move.js";
 import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
 import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
+import flwItmTracker from "./flwItmTracker.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
@@ -44,44 +45,85 @@ const updateAgeAndEffortForAllItems = () /*: void */ => {
   getFlwMpSteps().forEach(getFlwMpStpItems);
 };
 
-const getFlwMpStpItems = (
-  flwMpStep /*: FlwMpItems */,
-  flwMpStpKeyNumber /*: number */,
-) /*: Object */ => {
-  // Turn the array of keys into an array of flwItem objects
-  const flwMpStpItmKeys = Object.keys(flwMpStep);
-  const flwMpStpItems = flwMpStpItmKeys.map(
-    (flwMpStpItmKey /*: string */) /*: FlwItem */ => {
-      return flwMpStep[flwMpStpItmKey];
-    },
-  );
+const getFlwMpStpItems = (flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
   // For each flwItem in this step...
   flwMpStpItems.forEach(updateFlwItemProperties);
 };
 
-const updateFlwItemProperties = (flwItem /*: FlwItem */) /*: void */ => {
-  // Check if the fwItem has died of old age
+const updateFlwItemProperties = (
+  flwItem /*: FlwItem */,
+  index /*:number */,
+) /*: void */ => {
+  // If this flwItem is in the backlog, don't update it
+  if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "backlog") {
+    // console.log(flwItem.name, "is in the backlog.");
+    return;
+  }
+  // Otherwise, increment the age and check if the fwItem has died of old age
   if (++flwItem.dAge >= gSttngs().death) {
+    if (flwItem.dMoving) {
+      flwItmTracker(
+        flwItem.name,
+        `Decided not to delete it because it is moving.`,
+      );
+      return;
+    }
+    // console.log(flwItem.name);
+    // console.log("dAge is > gSttngs().death");
     let theActualMeshObject = gState().scnData.scene.getObjectByName(
       flwItem.name,
     );
     if (theActualMeshObject !== undefined) {
-      console.log(flwItem.name, "has died of old age.");
+      // console.log("The mesh object is defined.");
       removeThreeObject(theActualMeshObject);
       // Remove it from the flwMap
-      delete gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name];
+      const deletedFlwItem = gState().flwMap[
+        flwItem.dFlwStpsIndex.toString()
+      ].splice(index, 1);
+      if (deletedFlwItem.length === 1) {
+        flwItmTracker(flwItem.name, `Deleted from the scene and flwMap`);
+      } else {
+        flwItmTracker(
+          flwItem.name,
+          `PROBLEM: Deleted from the scene but NOT deleted from the flwMap.`,
+        );
+      }
+    } else {
+      console.log("PROBLEM! The mesh object is undefined.", flwItem.name);
+      flwItmTracker(
+        flwItem.name,
+        `PROBLEM: The object could not be found in the scene. Setting it to red.`,
+      );
+      const deletedFlwItem = gState().flwMap[
+        flwItem.dFlwStpsIndex.toString()
+      ].splice(index, 1);
+      if (deletedFlwItem.length === 1) {
+        flwItmTracker(flwItem.name, `Deleted from the flwMap`);
+      } else {
+        flwItmTracker(flwItem.name, `PROBLEM: NOT deleted from the flwMap.`);
+      }
+      let colorObject = { color: "#FF0000" };
+      let color = new THREE.Color(colorObject.color);
+      flwItem.material.color.copy(color);
+      flwItem.material.needsUpdate = true;
     }
     return;
   } else {
+    // If the flwItem is not dead, make it more transparent
     if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
-      // flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
-      // flwItem.material.needsUpdate = true;
+      flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
+      flwItem.material.needsUpdate = true;
     }
+    flwItmTracker(flwItem.name, `Opacity set to ${flwItem.material.opacity}`);
   }
-  // Update the effort remaining
+  // Update the effort remaining, making sure it doesn't go below 0
   if (--flwItem.dEffrtRemaining < 0) {
     flwItem.dEffrtRemaining = 0;
   }
+  flwItmTracker(
+    flwItem.name,
+    `EffortRemaining set to ${flwItem.dEffrtRemaining}`,
+  );
 };
 
 const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
@@ -112,6 +154,20 @@ function pullFlwItems() {
   flwMpSteps.reduceRight(checkStepLimitAndPull, null);
 }
 
+const getFlwMpSteps = () /*: FlwMpItems[] */ => {
+  // Get the keys for all the steps in the flwMap hash map
+  const flwMpStpKeys = Object.keys(gState().flwMap);
+  // Turn the array of keys into an array of step objects, each of which
+  // will be a hash map of flwItems. The key for each flwItem is the
+  // flwItem's name property, a dupicate of the uuid property.
+  const flwMpSteps = flwMpStpKeys.map(
+    (flwMpStpKey /*: string */) /*: FlwMpItems */ => {
+      return gState().flwMap[flwMpStpKey];
+    },
+  );
+  return flwMpSteps;
+};
+
 const checkStepLimitAndPull = (
   // Note: We need the accumulator or the Done step is skipped. MDN:
   //"The first time the function is called, the accumulator and currentValue
@@ -121,17 +177,9 @@ const checkStepLimitAndPull = (
   // then accumulator will be equal to the last value in the array and currentValue
   // will be equal to the second-to-last value."
   _ /*: null | void */, // The accumulator is not used but reduceRight() requires it
-  flwMpStep /*: FlwMpItems */,
+  flwMpStpItems /*: FlwMpItems */,
   flwMpStpKeyNumber /*: number */,
 ) /*: void */ => {
-  // flwMpStep is a hash map of flwItems, so we need to get the array of
-  // keys into an array of flwItem objects
-  const flwMpStpItmKeys = Object.keys(flwMpStep);
-  const flwMpStpItems = flwMpStpItmKeys.map(
-    (flwMpStpItmKey /*: string */) /*: FlwItem */ => {
-      return flwMpStep[flwMpStpItmKey];
-    },
-  );
   // Get the limit of the current step
   const flwStpLimit = gSttngs().flwSteps[flwMpStpKeyNumber].limit;
   // Check that the number of flwItems in this step is less than
@@ -151,20 +199,6 @@ const checkStepLimitAndPull = (
   }
 };
 
-const getFlwMpSteps = () /*: FlwMpItems[] */ => {
-  // Get the keys for all the steps in the flwMap hash map
-  const flwMpStpKeys = Object.keys(gState().flwMap);
-  // Turn the array of keys into an array of step objects, each of which
-  // will be a hash map of flwItems. The key for each flwItem is the
-  // flwItem's name property, a dupicate of the uuid property.
-  const flwMpSteps = flwMpStpKeys.map(
-    (flwMpStpKey /*: string */) /*: FlwMpItems */ => {
-      return gState().flwMap[flwMpStpKey];
-    },
-  );
-  return flwMpSteps;
-};
-
 const pullFromPreviousStep = (
   flwMpStpKeyNumber /*: number */,
   availableLimit /*: "no limit" | number */,
@@ -174,49 +208,45 @@ const pullFromPreviousStep = (
     return;
   }
   // Get the flwMpStep as a hash map of flwItem keys
-  const flwMpStep = gState().flwMap[flwMpStpKeyNumber.toString()];
+  const flwMpStpItems = gState().flwMap[flwMpStpKeyNumber.toString()];
   // If there are no flwItems in this step, then there is nothing to pull
-  if (Object.keys(flwMpStep).length > 0) {
-    // Turn the array of keys into an array of flwItem objects
-    const flwMpStpItmKeys = Object.keys(flwMpStep);
-    const flwMpStpItems = flwMpStpItmKeys.map(
-      (flwMpStpItmKey /*: string */) /*: FlwItem */ => {
-        return flwMpStep[flwMpStpItmKey];
+  if (flwMpStpItems.length > 0) {
+    // For each flwItem in this step...
+    flwMpStpItems.forEach(
+      (flwItem /*: FlwItem */, index /*: number */) /*: void */ => {
+        // Check if the fwItem has died of old age
+        if (flwItem.dAge >= gSttngs().death) {
+          return;
+        }
+        // This will happen when we have used up the availableLimit
+        // and we've pulled the last flwItem we can pull
+        if (availableLimit === 0) {
+          return;
+        } else if (availableLimit !== "no limit") {
+          // If we have a limit, then decrement it
+          availableLimit--;
+        }
+
+        if (
+          // If the flwMpStpKeyNumber is 0, then we are at the backlog, in
+          // which case the dEffrtRemaining is not relevant
+          flwMpStpKeyNumber === 0 ||
+          // In all other cases, we only want to move the flwItem if it is
+          // not moving and it has no effort remaining
+          (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
+        ) {
+          move(flwItem, flwMpStpKeyNumber);
+          // Remove the flwItem from the current step in the flwMap
+          const deletedFlwItem = gState().flwMap[
+            flwMpStpKeyNumber.toString()
+          ].splice(index, 1);
+          // Add the flwItem to the next step in the flwMap
+          gState().flwMap[(flwMpStpKeyNumber + 1).toString()].unshift(flwItem);
+          // Reset the dEffrtRemaining to the dEffrtTotal, ready for the next step
+          flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
+        }
       },
     );
-    // For each flwItem in this step...
-    flwMpStpItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
-      // Check if the fwItem has died of old age
-      if (flwItem.dAge >= gSttngs().death) {
-        return;
-      }
-      // This will happen when we have used up the availableLimit
-      // and we've pulled the last flwItem we can pull
-      if (availableLimit === 0) {
-        return;
-      } else if (availableLimit !== "no limit") {
-        // If we have a limit, then decrement it
-        availableLimit--;
-      }
-
-      if (
-        // If the flwMpStpKeyNumber is 0, then we are at the backlog, in
-        // which case the dEffrtRemaining is not relevant
-        flwMpStpKeyNumber === 0 ||
-        // In all other cases, we only want to move the flwItem if it is
-        // not moving and it has no effort remaining
-        (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
-      ) {
-        move(flwItem, flwMpStpKeyNumber);
-        // Remove the flwItem from the current step in the flwMap
-        delete gState().flwMap[flwMpStpKeyNumber.toString()][flwItem.name];
-        // Add the flwItem to the next step in the flwMap
-        gState().flwMap[(flwMpStpKeyNumber + 1).toString()][flwItem.name] =
-          flwItem;
-        // Reset the dEffrtRemaining to the dEffrtTotal, ready for the next step
-        flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
-      }
-    });
   }
 };
 
@@ -237,19 +267,44 @@ const resizeVSphere = () /*: void */ => {
   if (gState().vQueue.total === 0) {
     return;
   }
+  // Create an object with a scale property that can be animated.
+  let scaleObject = { scale: gState().vSphere.dRadius };
   const newRadius = findRadius(gState().vQueue.total());
   gState().vSphere.dRadius = newRadius;
-  // Doesn't work :(
-  // gState().vSphere.scale.set(newRadius, newRadius, newRadius);
-  // Nor does this :(
-  // gState().vSphere.scale.x = newRadius;
-  // gState().vSphere.scale.y = newRadius;
-  // gState().vSphere.scale.z = newRadius;
-  // This does though :)
-  gState().vSphere.geometry.dispose();
-  gState().vSphere.geometry = new THREE.SphereGeometry(newRadius, 32, 32);
-  gState().vSphere.dPosition.z = gState().endPosition.z + newRadius;
-  gState().vSphere.position.z = gState().endPosition.z + newRadius;
+
+  if (!gState().vSphere.dMoving) {
+    gState().vSphere.dMoving = true;
+
+    // Create an animation that transitions the scale from 1.0 to 2.0 over 2 seconds.
+    anime({
+      targets: [scaleObject],
+      scale: newRadius,
+      duration: 300,
+      easing: "linear",
+      // Update the sphere's scale on each frame.
+      update: function () {
+        gState().vSphere.scale.set(
+          scaleObject.scale,
+          scaleObject.scale,
+          scaleObject.scale,
+        );
+      },
+    });
+
+    gState().vSphere.dPosition.z = gState().endPosition.z + newRadius;
+
+    anime({
+      targets: [gState().vSphere.position],
+      z: gState().vSphere.dPosition.z,
+      duration: 300,
+      delay: 0,
+      easing: "linear",
+      complete: (anim) /*: void */ => {
+        gState().vSphere.dMoving = false;
+        gState().vSphere.visible = true;
+      },
+    });
+  }
 };
 
 const findRadius = (volume /*: number */) /*: number */ => {
@@ -266,21 +321,21 @@ const findRadius = (volume /*: number */) /*: number */ => {
 //--------------------------------------------------
 const filterOutDoneItems = () /*: void */ => {
   gState().vSphere.dRllngTtlVolume = 0;
-  const doneFlwItems = Object.keys(
-    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()],
-  );
+  const doneFlwItems =
+    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()];
   if (doneFlwItems.length > 0) {
-    doneFlwItems.forEach(processDoneFlwItems);
+    updateValueQueue(doneFlwItems.reduce(processDoneFlwItems, 0));
   } else {
     updateValueQueue(0);
   }
 };
 
-const processDoneFlwItems = (flwItemName /*: string */) /*: void */ => {
-  const flwItem =
-    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()][flwItemName];
+const processDoneFlwItems = (
+  accumulator /*: number */,
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) /*: number */ => {
   gState().doneTotal++;
-  updateValueQueue(flwItem.dVolume);
   // gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
   // theActualMeshObject may be undefined if it has already been removed
   let theActualMeshObject = gState().scnData.scene.getObjectByName(
@@ -290,8 +345,11 @@ const processDoneFlwItems = (flwItemName /*: string */) /*: void */ => {
     // Remove the mesh object from the scene
     removeThreeObject(theActualMeshObject);
     // Remove it from the flwMap
-    delete gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name];
+    const deletedFlwItem = gState().flwMap[
+      flwItem.dFlwStpsIndex.toString()
+    ].splice(index, 1);
   }
+  return accumulator + flwItem.dVolume;
 };
 
 export default click;

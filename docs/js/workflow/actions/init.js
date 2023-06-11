@@ -97,6 +97,7 @@ export default () /*: void */ => {
   gState("clicks", 0);
   gState("flwItems", []);
   gState("clckCube", {});
+  gState("flwItmTracker", {});
   gState("flwMap", {});
   setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
   gState("tchTotal", 0);
@@ -152,7 +153,7 @@ const setUpFlwMap = (
   // Set each flwStepTotal to 0
   gFlwSteps.forEach(
     (flwStep /*: FlwStep */, index /*: number */) /*: void */ => {
-      gState().flwMap[index.toString()] = {};
+      gState().flwMap[index.toString()] = [];
     },
   );
 };

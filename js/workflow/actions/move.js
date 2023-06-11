@@ -11,6 +11,7 @@ import anime from "../../../web_modules/animejs.js";
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
+import flwItmTracker from "./flwItmTracker.js";
 
 const move = (
   flwItem /*: Object */,
@@ -22,7 +23,7 @@ const move = (
     flwItem.dPosition,
     gState().strtPosition,
     gSttngs().flwSteps.length,
-    range(gSttngs().scale, gSttngs().flwSteps[flwStpsIndex + 1].limit),
+    range(gSttngs().scale, flwStpsIndex + 1),
   );
   newPosition.z -= gSttngs().step;
 
@@ -43,7 +44,6 @@ const move = (
   let colorObject = { color: flwItem.dColor };
   flwItem.dColor = newColor;
 
-  // Create an animation that transitions the color from green to red over 2 seconds.
   anime({
     targets: colorObject,
     color: newColor,
@@ -61,8 +61,16 @@ const move = (
   flwItem.dPosition.x = newPosition.x;
   flwItem.dPosition.y = newPosition.y;
   flwItem.dPosition.z = newPosition.z;
+  flwItmTracker(
+    flwItem.name,
+    `Effectively moved to step ${flwItem.dFlwStpsIndex + 1}. Still animating`,
+  );
 
   flwItem.dMoving = true;
+  // Set the properties of the flwItem to the state they'll be in,
+  // visually, when the animation is complete.
+  flwItem.dFlwStpsIndex++;
+  flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
 
   anime({
     targets: [flwItem.position],
@@ -79,9 +87,15 @@ const move = (
         nextStatus === "done"
       ) {
         flwItem.visible = false;
+        flwItmTracker(
+          flwItem.name,
+          `Move to step ${flwItem.dFlwStpsIndex} complete. This flwItem is Done.`,
+        );
       } else {
-        flwItem.dFlwStpsIndex++;
-        flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
+        flwItmTracker(
+          flwItem.name,
+          `Move to step ${flwItem.dFlwStpsIndex} complete. Effort set back to ${flwItem.dEffrtTotal}`,
+        );
       }
     },
   });
@@ -92,29 +106,24 @@ const move = (
 //--------------------------------------------------
 const range = (
   gScale /*: number */,
-  gNumberOfFlwItemsNextStatus /*: number */,
+  flwStpsIndex /*: number */,
 ) /*: number */ => {
   let range = 0;
+  let requiredSpace /* number */ = gSttngs().flwSteps[flwStpsIndex].limit;
 
-  if (gNumberOfFlwItemsNextStatus > 0) {
-    const increaseDecreaseRate = 0.95; // Modify this value to change the rate of decrease
+  if (requiredSpace === 0) {
+    requiredSpace = gState().flwMap[flwStpsIndex.toString()].length;
+  }
+  const increaseDecreaseRate = 0.95; // Modify this value to change the rate of decrease
 
-    // Does this even make sense? GPT-4 told me to do it.
-    let calculatedIncreaseRate =
-      gNumberOfFlwItemsNextStatus *
-      gSttngs().rangeIncreaseRate *
-      gSttngs().rangeDecreaseRate;
+  // Does this even make sense? GPT-4 told me to do it.
+  let calculatedIncreaseRate =
+    requiredSpace * gSttngs().rangeIncreaseRate * gSttngs().rangeDecreaseRate;
 
-    range = gScale * calculatedIncreaseRate;
+  range = gScale * calculatedIncreaseRate;
 
-    if (range > gSttngs().rangeMax) {
-      range = gSttngs().rangeMax;
-    }
-
-    // range =
-    //   gScale *
-    //   (gNumberOfFlwItemsNextStatus +
-    //     gNumberOfFlwItemsNextStatus * increaseRate);
+  if (range > gSttngs().rangeMax) {
+    range = gSttngs().rangeMax;
   }
 
   return range;

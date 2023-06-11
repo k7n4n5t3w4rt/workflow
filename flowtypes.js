@@ -2,6 +2,7 @@
 // gSttngs
 // --------------------------------------------------
 type GlobalSettings = {
+  debug: boolean,
   speed: number,
   death: number,
   x: number,
@@ -11,6 +12,7 @@ type GlobalSettings = {
   yCm: number,
   zCm: number,
   scale: number,
+  yOffset: number,
   scaleCm: number,
   step: number,
   tmsNumber: number,
@@ -54,7 +56,44 @@ type GlobalState = {
   vQueue: VQueue,
   tchTotal: number,
   doneTotal: number,
+  flwItmTracker: FlwItmTracker,
 };
+
+type FlwItem = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dAge: number,
+  dColor: string,
+  dMoving: boolean,
+  dEffrtTotal: number,
+  dTmNumber: number,
+  dEffrtRemaining: number,
+  dFlwStpsIndex: number,
+  dPosition: ThrMeshPosition,
+  // -----------------------
+  // Three.js:
+  // -----------------------
+  name: string,
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+    dispose: () => void,
+  },
+  position: ThrMeshPosition,
+  scale: ThrMeshScale,
+  dVolume: number,
+  material: {
+    color: ThrMtrlColor,
+    opacity: number,
+    needsUpdate: boolean,
+    dispose: () => void,
+  },
+  rotateY: (radians: number) => void,
+  rotation: ThrMeshRotation,
+  removeFromParent: () => void,
+};
+
+type FlwItmTracker = Object;
 
 type FlwMap = {
   // -----------------------
@@ -65,9 +104,7 @@ type FlwMap = {
   doneTotal: number,
 };
 
-type FlwMpItems = {
-  [string]: FlwItem,
-};
+type FlwMpItems = Array<FlwItem>;
 
 type FlwStepTotals = {
   // -----------------------
@@ -117,6 +154,7 @@ type VSphere = {
   // -----------------------
   dVolume: number,
   dRadius: number,
+  dMoving: boolean,
   dRllngTtlVolume: number,
   dPosition: ThrMeshPosition,
   // -----------------------
@@ -126,44 +164,11 @@ type VSphere = {
     scale: (x: number, y: number, z: number) => void,
     dispose: () => void,
   },
+  visible: boolean,
   position: ThrMeshPosition,
   scale: ThrMeshScale,
   rotateY: (radians: number) => void,
   rotation: ThrMeshRotation,
-};
-
-type FlwItem = {
-  // -----------------------
-  // Data:
-  // -----------------------
-  dAge: number,
-  dColor: string,
-  dMoving: boolean,
-  dEffrtTotal: number,
-  dTmNumber: number,
-  dEffrtRemaining: number,
-  dFlwStpsIndex: number,
-  dPosition: ThrMeshPosition,
-  // -----------------------
-  // Three.js:
-  // -----------------------
-  name: string,
-  geometry: {
-    scale: (x: number, y: number, z: number) => void,
-    dispose: () => void,
-  },
-  position: ThrMeshPosition,
-  scale: ThrMeshScale,
-  dVolume: number,
-  material: {
-    color: ThrMtrlColor,
-    opacity: number,
-    needsUpdate: boolean,
-    dispose: () => void,
-  },
-  rotateY: (radians: number) => void,
-  rotation: ThrMeshRotation,
-  removeFromParent: () => void,
 };
 
 type SimplePosition = {
@@ -200,6 +205,7 @@ type ThrMtrlColor = {
   // -----------------------
   // Three.js:
   // -----------------------
+  copy: (color: ThrMtrlColor) => void,
   r: number,
   g: number,
   b: number,

@@ -38,7 +38,7 @@ export default () /*: () => void */ => () /*: void */ => {
   // Set the start position for all the flw items
   // based on where we put the cube, but higher up
   gState().strtPosition = gState().clckCbGroup.clckCube.position.clone();
-  gState().strtPosition.y = gSttngs().scale * 10;
+  gState().strtPosition.y = gSttngs().yOffset;
   gState().endPosition = gState().strtPosition.clone();
   gState().endPosition.z +=
     gSttngs().step * (gSttngs().flwSteps.length + 2) * -1;

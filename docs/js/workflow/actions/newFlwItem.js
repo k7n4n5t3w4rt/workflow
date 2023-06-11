@@ -30,15 +30,6 @@ export default () /*: FlwItem */ => {
     Math.round((flwItemEffortTotal / gSttngs().flwItem.effort.max) * 1000) /
     1000;
 
-  console.log("scaleAdjustment", scaleAdjustment);
-  console.log("Dimensions:", gSttngs().x, gSttngs().y, gSttngs().z);
-  console.log(
-    "Dimensions adjusted for effort:",
-    gSttngs().x * scaleAdjustment,
-    gSttngs().y * scaleAdjustment,
-    gSttngs().z * scaleAdjustment,
-  );
-
   // Make it white to start with
   const material = new THREE.MeshBasicMaterial({
     color: "#ffd700", // gold
@@ -85,12 +76,16 @@ export default () /*: FlwItem */ => {
   // Add the new flwItem to the flwMap in the first flwStep
   // (whatever that is but it will be the backlog)
   flwItem.dFlwStpsIndex = 0;
-  gState().flwMap[flwItem.dFlwStpsIndex.toString()][flwItem.name] = flwItem;
+  gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
 
   // Add the new flwItem to the clckCbGroup and the scene
   // gState().scnData.scene.add(flwItem);
   gState().clckCbGroup.add(flwItem);
 
+  gState().flwItmTracker[flwItem.name] = [];
+  gState().flwItmTracker[flwItem.name].push(
+    `Created, and added to step ${flwItem.dFlwStpsIndex}`,
+  );
   // Not using the return value, but Flow will keep us honest
   return flwItem;
 };
