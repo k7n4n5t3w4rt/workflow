@@ -13,7 +13,7 @@ import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
 
-const move = (flwItem /*: Object */) /*: void */ => {
+export default (flwItem /*: Object */) /*: void */ => {
   animateColorChange(flwItem, newColor(flwItem));
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   animatePositionChange(flwItem);
@@ -137,5 +137,3 @@ const calculateRange = (flwStpsIndex /*: number */) /*: number */ => {
 
   return range;
 };
-
-export default move;

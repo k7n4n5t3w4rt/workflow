@@ -25,18 +25,6 @@ const click = () /*: void */ => {
 };
 
 //--------------------------------------------------
-// onClickComplete()
-//--------------------------------------------------
-const onClickComplete = () /*: void */ => {
-  filterOutDoneItems();
-  resizeVSphere();
-  updateAgeAndEffortForAllItems();
-  newFlwItem();
-  pullFlwItems();
-  click();
-};
-
-//--------------------------------------------------
 // animateClickCube()
 //--------------------------------------------------
 const animateClickCube = () /*: void */ => {
@@ -48,6 +36,19 @@ const animateClickCube = () /*: void */ => {
     easing: "easeInOutSine",
     complete: onClickComplete,
   });
+};
+
+//--------------------------------------------------
+// onClickComplete()
+//--------------------------------------------------
+const onClickComplete = () /*: void */ => {
+  filterOutDoneItems();
+  resizeVSphere();
+  updateAgeAndEffortForAllItems();
+  newFlwItem();
+  pullFlwItems();
+  // Start the click cycle over again
+  click();
 };
 
 //--------------------------------------------------
