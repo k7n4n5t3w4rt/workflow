@@ -87,7 +87,7 @@ rawStyles({
 type Props = {
 	cols: number,
 	rows: number,
-	speed: number,
+	fps: number,
 	xCm: number,
 	yCm: number,
 	zCm: number,
@@ -96,7 +96,7 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
-  const speed /*: number */ = props.speed;
+  const fps /*: number */ = props.fps;
   const dispatch /*: function */ = props.dispatch;
   const [paramToggle, setParamToggle] = useState(false);
 
@@ -147,19 +147,19 @@ export default (props /*: Props */) /*: string */ => {
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
         <div>
-          <label for="speed">Speed:</label>
-          <output id="speedOutput" name="speedOutput" for="speed"
-            >${speed.toString()}</output
+          <label for="fps">FPS:</label>
+          <output id="fpsOutput" name="fpsOutput" for="fps"
+            >${fps.toString()}</output
           >
           <input
             type="range"
-            id="speed"
-            name="speed"
+            id="fps"
+            name="fps"
             min="1"
             max="10"
             step="1"
-            onChange=${changeParam(dispatch, "speed")}
-            value="${speed.toString()}"
+            onChange=${changeParam(dispatch, "fps")}
+            value="${fps.toString()}"
           />
         </div>
       </fieldset>

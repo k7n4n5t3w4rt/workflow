@@ -13,101 +13,110 @@ import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
 
-const move = (
-  flwItem /*: Object */,
-  flwStpsIndex /*: number */,
-) /*: void */ => {
-  const newPosition = refineNewPosition(
-    flwItem,
-    flwStpsIndex + 1,
-    flwItem.dPosition,
-    gState().strtPosition,
-    gSttngs().flwSteps.length,
-    range(gSttngs().scale, flwStpsIndex + 1),
-  );
-  newPosition.z -= gSttngs().step;
+const move = (flwItem /*: Object */) /*: void */ => {
+  animateColorChange(flwItem, newColor(flwItem));
+  flwItem.dPosition = { ...refineNewPosition(flwItem) };
+  animatePositionChange(flwItem);
+};
 
-  let newColor = "#808080"; // Grey for "waiting" status
-
-  const nextStatus = gSttngs().flwSteps[flwStpsIndex + 1].status;
-
-  if (nextStatus === "touch") {
-    newColor = "#ffd700"; // Gold for "touch" status
-  } else if (nextStatus === "done") {
-    newColor = "#ffd700"; // Gold for "done" status
-    newPosition.x = gState().endPosition.x;
-    newPosition.y = gState().endPosition.y;
-    newPosition.z = gState().endPosition.z + gState().vSphere.dRadius;
-  }
-
-  // Create an object with a color property that can be animated.
-  let colorObject = { color: flwItem.dColor };
-  flwItem.dColor = newColor;
-
-  anime({
-    targets: colorObject,
-    color: newColor,
-    duration: 1000,
-    easing: "linear",
-    // Update the cube's material color on each frame.
-    update: function () {
-      let color = new THREE.Color(colorObject.color);
-      flwItem.material.color.copy(color);
-      flwItem.material.needsUpdate = true;
-    },
-  });
-
-  // Update the data properties first, independently of the animation
-  flwItem.dPosition.x = newPosition.x;
-  flwItem.dPosition.y = newPosition.y;
-  flwItem.dPosition.z = newPosition.z;
-  flwItmTracker(
-    flwItem.name,
-    `Effectively moved to step ${flwItem.dFlwStpsIndex + 1}. Still animating`,
-  );
-
+//--------------------------------------------------
+// animatePositionChange()
+//--------------------------------------------------
+const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
+  // Set the properties of the flwItem to the state they'll
+  // should be in when the animation is complete.
   flwItem.dMoving = true;
-  // Set the properties of the flwItem to the state they'll be in,
-  // visually, when the animation is complete.
   flwItem.dFlwStpsIndex++;
   flwItem.dEffrtRemaining = flwItem.dEffrtTotal;
 
   anime({
     targets: [flwItem.position],
-    x: newPosition.x,
-    y: newPosition.y,
-    z: newPosition.z,
-    duration: 1000 / gSttngs().speed,
+    x: flwItem.dPosition.x,
+    y: flwItem.dPosition.y,
+    z: flwItem.dPosition.z,
+    duration: 1000 / gSttngs().fps,
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
       flwItem.dMoving = false;
-      if (
-        // If the flwItem has moved into a done status
-        nextStatus === "done"
-      ) {
+      if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "done") {
         flwItem.visible = false;
-        flwItmTracker(
-          flwItem.name,
-          `Move to step ${flwItem.dFlwStpsIndex} complete. This flwItem is Done.`,
-        );
       } else {
-        flwItmTracker(
-          flwItem.name,
-          `Move to step ${flwItem.dFlwStpsIndex} complete. Effort set back to ${flwItem.dEffrtTotal}`,
-        );
       }
     },
   });
 };
 
 //--------------------------------------------------
-// range()
+// animateColorChange()
 //--------------------------------------------------
-const range = (
-  gScale /*: number */,
-  flwStpsIndex /*: number */,
-) /*: number */ => {
+const animateColorChange = (
+  flwItem /*: FlwItem */,
+  newColor /*: string */,
+) /*: void */ => {
+  // Create an object with a color property that can be animated.
+  let oldColor = { color: flwItem.dColor };
+  flwItem.dColor = newColor;
+
+  anime({
+    targets: oldColor,
+    color: newColor,
+    duration: 1000,
+    easing: "linear",
+    // Update the cube's material color on each frame.
+    update: function () {
+      let color = new THREE.Color(oldColor.color);
+      flwItem.material.color.copy(color);
+      flwItem.material.needsUpdate = true;
+    },
+  });
+};
+
+//--------------------------------------------------
+// newColor()
+//--------------------------------------------------
+const newColor = (flwItem /*: FlwItem */) /*: string */ => {
+  const nextStatus = gSttngs().flwSteps[flwItem.dFlwStpsIndex + 1].status;
+  let newColor = "#808080"; // Grey for "waiting" status
+
+  if (nextStatus === "touch") {
+    newColor = "#ffd700"; // Gold for "touch" status
+  } else if (nextStatus === "done") {
+    newColor = "#ffd700"; // Gold for "done" status
+  }
+  return newColor;
+};
+
+//--------------------------------------------------
+// refineNewPosition()
+//--------------------------------------------------
+const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
+  const range = calculateRange(flwItem.dFlwStpsIndex + 1);
+  const newPosition = { ...flwItem.dPosition };
+  const nextStatus = gSttngs().flwSteps[flwItem.dFlwStpsIndex + 1].status;
+
+  // i.e. Don't do anything if the flwItem is moving into "done"
+  if (nextStatus === "done") {
+    newPosition.x = gState().endPosition.x;
+    newPosition.y = gState().endPosition.y;
+    newPosition.z = gState().endPosition.z + gState().vSphere.dRadius;
+  } else {
+    newPosition.x =
+      gState().strtPosition.x +
+      (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
+        rndmPosOrNeg();
+    newPosition.y =
+      gState().strtPosition.y +
+      (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
+  }
+  newPosition.z -= gSttngs().step;
+  return newPosition;
+};
+
+//--------------------------------------------------
+// calculateRange()
+//--------------------------------------------------
+const calculateRange = (flwStpsIndex /*: number */) /*: number */ => {
   let range = 0;
   let requiredSpace /* number */ = gSttngs().flwSteps[flwStpsIndex].limit;
 
@@ -120,39 +129,13 @@ const range = (
   let calculatedIncreaseRate =
     requiredSpace * gSttngs().rangeIncreaseRate * gSttngs().rangeDecreaseRate;
 
-  range = gScale * calculatedIncreaseRate;
+  range = gSttngs().scale * calculatedIncreaseRate;
 
   if (range > gSttngs().rangeMax) {
     range = gSttngs().rangeMax;
   }
 
   return range;
-};
-
-//--------------------------------------------------
-// refineNewPosition()
-//--------------------------------------------------
-const refineNewPosition = (
-  flwItem /*: FlwItem */,
-  nextFlwStepsIndex /*: number */,
-  flwItemPosition /*: ThrMeshPosition */,
-  gStartPosition /*: ThrMeshPosition */,
-  gNumberOfFlwSteps /*: number */,
-  range /*: number */,
-) /*: ThrMeshPosition */ => {
-  const position = { ...flwItemPosition };
-
-  // i.e. Don't do anything if the flwItem is moving into "done"
-  if (nextFlwStepsIndex < gNumberOfFlwSteps) {
-    position.x =
-      gStartPosition.x +
-      (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
-        rndmPosOrNeg();
-    position.y =
-      gStartPosition.y +
-      (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
-  }
-  return position;
 };
 
 export default move;

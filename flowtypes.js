@@ -3,7 +3,7 @@
 // --------------------------------------------------
 type GlobalSettings = {
   debug: boolean,
-  speed: number,
+  fps: number,
   death: number,
   x: number,
   y: number,
@@ -71,6 +71,7 @@ type FlwItem = {
   dEffrtRemaining: number,
   dFlwStpsIndex: number,
   dPosition: ThrMeshPosition,
+  dVolume: number,
   // -----------------------
   // Three.js:
   // -----------------------
@@ -80,8 +81,8 @@ type FlwItem = {
     dispose: () => void,
   },
   position: ThrMeshPosition,
+  visible: boolean,
   scale: ThrMeshScale,
-  dVolume: number,
   material: {
     color: ThrMtrlColor,
     opacity: number,

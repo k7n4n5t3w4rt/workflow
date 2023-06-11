@@ -62,10 +62,6 @@ const updateFlwItemProperties = (
   // Otherwise, increment the age and check if the fwItem has died of old age
   if (++flwItem.dAge >= gSttngs().death) {
     if (flwItem.dMoving) {
-      flwItmTracker(
-        flwItem.name,
-        `Decided not to delete it because it is moving.`,
-      );
       return;
     }
     // console.log(flwItem.name);
@@ -80,28 +76,10 @@ const updateFlwItemProperties = (
       const deletedFlwItem = gState().flwMap[
         flwItem.dFlwStpsIndex.toString()
       ].splice(index, 1);
-      if (deletedFlwItem.length === 1) {
-        flwItmTracker(flwItem.name, `Deleted from the scene and flwMap`);
-      } else {
-        flwItmTracker(
-          flwItem.name,
-          `PROBLEM: Deleted from the scene but NOT deleted from the flwMap.`,
-        );
-      }
     } else {
-      console.log("PROBLEM! The mesh object is undefined.", flwItem.name);
-      flwItmTracker(
-        flwItem.name,
-        `PROBLEM: The object could not be found in the scene. Setting it to red.`,
-      );
       const deletedFlwItem = gState().flwMap[
         flwItem.dFlwStpsIndex.toString()
       ].splice(index, 1);
-      if (deletedFlwItem.length === 1) {
-        flwItmTracker(flwItem.name, `Deleted from the flwMap`);
-      } else {
-        flwItmTracker(flwItem.name, `PROBLEM: NOT deleted from the flwMap.`);
-      }
       let colorObject = { color: "#FF0000" };
       let color = new THREE.Color(colorObject.color);
       flwItem.material.color.copy(color);
@@ -114,16 +92,11 @@ const updateFlwItemProperties = (
       flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
       flwItem.material.needsUpdate = true;
     }
-    flwItmTracker(flwItem.name, `Opacity set to ${flwItem.material.opacity}`);
   }
   // Update the effort remaining, making sure it doesn't go below 0
   if (--flwItem.dEffrtRemaining < 0) {
     flwItem.dEffrtRemaining = 0;
   }
-  flwItmTracker(
-    flwItem.name,
-    `EffortRemaining set to ${flwItem.dEffrtRemaining}`,
-  );
 };
 
 const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
@@ -169,13 +142,7 @@ const getFlwMpSteps = () /*: FlwMpItems[] */ => {
 };
 
 const checkStepLimitAndPull = (
-  // Note: We need the accumulator or the Done step is skipped. MDN:
-  //"The first time the function is called, the accumulator and currentValue
-  // can be one of two values. If an initialValue was provided in the call to
-  // reduceRight, then accumulator will be equal to initialValue and currentValue
-  // will be equal to the last value in the array. If no initialValue was provided,
-  // then accumulator will be equal to the last value in the array and currentValue
-  // will be equal to the second-to-last value."
+  // Note: We need the accumulator or the Done step is skipped.
   _ /*: null | void */, // The accumulator is not used but reduceRight() requires it
   flwMpStpItems /*: FlwMpItems */,
   flwMpStpKeyNumber /*: number */,
@@ -235,7 +202,7 @@ const pullFromPreviousStep = (
           // not moving and it has no effort remaining
           (flwItem.dEffrtRemaining <= 0 && !flwItem.dMoving)
         ) {
-          move(flwItem, flwMpStpKeyNumber);
+          move(flwItem);
           // Remove the flwItem from the current step in the flwMap
           const deletedFlwItem = gState().flwMap[
             flwMpStpKeyNumber.toString()
@@ -267,6 +234,28 @@ const resizeVSphere = () /*: void */ => {
   if (gState().vQueue.total === 0) {
     return;
   }
+  animateScale();
+  animatePosition();
+};
+
+const animatePosition = () /*: void */ => {
+  gState().vSphere.dPosition.z =
+    gState().endPosition.z + gState().vSphere.dRadius;
+
+  anime({
+    targets: [gState().vSphere.position],
+    z: gState().vSphere.dPosition.z,
+    duration: 300,
+    delay: 0,
+    easing: "linear",
+    complete: (anim) /*: void */ => {
+      gState().vSphere.dMoving = false;
+      gState().vSphere.visible = true;
+    },
+  });
+};
+
+const animateScale = () /*: void */ => {
   // Create an object with a scale property that can be animated.
   let scaleObject = { scale: gState().vSphere.dRadius };
   const newRadius = findRadius(gState().vQueue.total());
@@ -288,20 +277,6 @@ const resizeVSphere = () /*: void */ => {
           scaleObject.scale,
           scaleObject.scale,
         );
-      },
-    });
-
-    gState().vSphere.dPosition.z = gState().endPosition.z + newRadius;
-
-    anime({
-      targets: [gState().vSphere.position],
-      z: gState().vSphere.dPosition.z,
-      duration: 300,
-      delay: 0,
-      easing: "linear",
-      complete: (anim) /*: void */ => {
-        gState().vSphere.dMoving = false;
-        gState().vSphere.visible = true;
       },
     });
   }

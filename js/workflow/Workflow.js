@@ -34,24 +34,11 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
-
-setSeed(seedString("flw"));
-
-const [styles] = createStyles({
-  flw: {
-    width: "100%",
-    height: "100%",
-    backgroundImage: "url(/img/bg1.png)",
-    backgroundClip: "border-box",
-    backgroundSize: "cover",
-    backgroundRepeat: "none",
-    position: "absolute",
-  },
-});
+import globalSettings from "./globalSettings.js";
 
 /*::
 type Props = {
-	speed: string,
+	fps: string,
 	scalecm: string,
 	stepcm: string,
   teamsnumber: string,
@@ -59,45 +46,12 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
-  // Set some defaults for missing props
-  gSttngs("speed", Math.abs(parseFloat(props.speed) || 1));
-  // The default will be 0.1 == 10cm
-  gSttngs("scaleCm", cleanInt(props.scalecm) || 7);
-  gSttngs("scale", gSttngs().scaleCm / 100);
-  gSttngs("x", gSttngs().scale);
-  gSttngs("y", gSttngs().scale);
-  gSttngs("z", gSttngs().scale);
-  gSttngs("step", cleanInt(props.stepcm) / 100 || gSttngs().scale * 2);
-  gSttngs("yOffset", gSttngs().scale * 10);
-
-  // Turns on some expensive debug features
-  gSttngs("debug", true);
-
-  // Set the number of teams to 1 so that we have one flw
-  gSttngs("tmsNumber", cleanInt(props.teamsnumber) || 1);
-  // Set the number of people per team to 1 so that nothing changes for now
-  gSttngs("tmSize", cleanInt(props.teamsize) || 10);
-  // Populate the flwStep array
-  gSttngs("flwSteps", [
-    { name: "Open", status: "backlog", limit: 0 },
-    { name: "Doing", status: "touch", limit: 0 },
-    { name: "Ready for Test", status: "wait", limit: 0 },
-    { name: "In Test", status: "touch", limit: 0 },
-    { name: "Ready for Review", status: "wait", limit: 0 },
-    { name: "In Review", status: "touch", limit: 0 },
-    { name: "Done", status: "done", limit: 0 },
-  ]);
-  // flwItem properties
-  gSttngs("flwItem", { effort: { min: 1, max: 8 } });
-  gSttngs("valueUpdateInterval", 10);
-  gSttngs("death", 60);
-  gSttngs("rangeMax", gSttngs().yOffset * 0.75);
-  gSttngs("rangeIncreaseRate", 1.75);
-  gSttngs("rangeDecreaseRate", 0.75);
-
-  // I'm not really using the state, but leaving it here just in case
+  const styles = cssStyles();
+  globalSettings(props);
+  // I'm not really using the state, but leaving it here
+  // for when we're setting properties on the fly.
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
-    speed: gSttngs().speed,
+    fps: gSttngs().fps,
   });
 
   useEffect(() => {
@@ -110,15 +64,29 @@ export default (props /*: Props */) /*: string */ => {
     <div id="flw" className="${styles.flw}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
-        <${Params} speed="${state.speed}" dispatch="${dispatch}" />
+        <${Params} fps="${state.fps}" dispatch="${dispatch}" />
       </div>
     </div>
   `;
 };
 
 // --------------------------------------------------
-// HELPER FUNCTIONS
+// cssStyles()
 // --------------------------------------------------
-function cleanInt(getVar /*: string */) /*: number */ {
-  return Math.abs(Math.floor(parseFloat(getVar)) || 0);
-}
+const cssStyles = () /*: Object */ => {
+  // A seed for getting unique class names
+  setSeed(seedString("flw"));
+
+  const [styles] = createStyles({
+    flw: {
+      width: "100%",
+      height: "100%",
+      backgroundImage: "url(/img/bg1.png)",
+      backgroundClip: "border-box",
+      backgroundSize: "cover",
+      backgroundRepeat: "none",
+      position: "absolute",
+    },
+  });
+  return styles;
+};

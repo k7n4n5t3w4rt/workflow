@@ -51,7 +51,7 @@ const [styles] = createStyles({
 
 /*::
 type Props = {
-	speed: string,
+	fps: string,
 	scalecm: string,
 	stepcm: string,
   teamsnumber: string,
@@ -60,7 +60,7 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Set some defaults for missing props
-  gSttngs("speed", Math.abs(parseFloat(props.speed) || 1));
+  gSttngs("fps", Math.abs(parseFloat(props.fps) || 1));
   // The default will be 0.1 == 10cm
   gSttngs("scaleCm", cleanInt(props.scalecm) || 7);
   gSttngs("scale", gSttngs().scaleCm / 100);
@@ -97,7 +97,7 @@ export default (props /*: Props */) /*: string */ => {
 
   // I'm not really using the state, but leaving it here just in case
   const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
-    speed: gSttngs().speed,
+    fps: gSttngs().fps,
   });
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default (props /*: Props */) /*: string */ => {
     <div id="flw" className="${styles.flw}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
-        <${Params} speed="${state.speed}" dispatch="${dispatch}" />
+        <${Params} fps="${state.fps}" dispatch="${dispatch}" />
       </div>
     </div>
   `;
