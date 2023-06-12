@@ -1,16 +1,16 @@
 // @flow
-// --------------------------------------------------
+//------------------------------------------------------------------
 // THREE.js
-// --------------------------------------------------
+//------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
-// --------------------------------------------------
+//------------------------------------------------------------------
 // GLOBALS
-// --------------------------------------------------
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-// --------------------------------------------------
+//------------------------------------------------------------------
 // HELPERS
-// --------------------------------------------------
+//------------------------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenIntegers.js";
 import flwItmTracker from "./flwItmTracker.js";
@@ -32,9 +32,9 @@ export default () /*: FlwItem */ => {
   return flwItem;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // threeJsCube()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const threeJsCube = () /*: FlwItem */ => {
   // Basic Three.js geometry and material
   const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
@@ -55,9 +55,9 @@ const threeJsCube = () /*: FlwItem */ => {
   return flwItem;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // setScaleAndVolume()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
   const scaleAdjustment =
     Math.round((flwItem.dEffrtTotal / gSttngs().flwItem.effort.max) * 1000) /
@@ -71,9 +71,9 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
     (gSttngs().z * scaleAdjustment);
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // setEffort()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const setEffort = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dEffrtTotal = rndmBetween(
     gSttngs().flwItem.effort.min,
@@ -83,9 +83,9 @@ const setEffort = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dEffrtEachTouchStep = flwItem.dEffrtRmnngCurrentStep;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // setPosition()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const setPosition = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.position.x = gState().strtPosition.x;
   flwItem.position.y = gState().strtPosition.y;

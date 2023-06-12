@@ -1,16 +1,16 @@
 // @flow
-// --------------------------------------------------
+//------------------------------------------------------------------
 // THREE.js
-// --------------------------------------------------
+//------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
-// --------------------------------------------------
+//------------------------------------------------------------------
 // GLOBALS
-// --------------------------------------------------
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-// --------------------------------------------------
+//------------------------------------------------------------------
 // HELPERS
-// --------------------------------------------------
+//------------------------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
 import newFlwItem from "./newFlwItem.js";
 import move from "./move.js";
@@ -24,9 +24,9 @@ const click = () /*: void */ => {
   animateClickCube();
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // animateClickCube()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const animateClickCube = () /*: void */ => {
   // Rotate the clckCube
   anime({
@@ -38,9 +38,9 @@ const animateClickCube = () /*: void */ => {
   });
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // onClickComplete()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const onClickComplete = () /*: void */ => {
   filterOutDoneItems();
   resizeVSphere();
@@ -51,9 +51,9 @@ const onClickComplete = () /*: void */ => {
   click();
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // updateAgeAndEffortForAllItems()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const updateAgeAndEffortForAllItems = () /*: void */ => {
   // For each flwStep in the flwMap...
   getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
@@ -62,9 +62,9 @@ const updateAgeAndEffortForAllItems = () /*: void */ => {
   });
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // updateFlwItemProperties()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const updateFlwItemProperties = (
   flwItem /*: FlwItem */,
   index /*:number */,
@@ -83,9 +83,9 @@ const updateFlwItemProperties = (
     makeItOneClickOlder(flwItem);
   }
 };
-//--------------------------------------------------
+//------------------------------------------------------------------
 // removeFlowItem()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const removeFlowItem = (
   flwItem /*: FlwItem */,
   index /*: number */,
@@ -113,9 +113,9 @@ const removeFlowItem = (
   ].splice(index, 1);
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // makeItOneClickOlder()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
   // If the flwItem is not dead, make it more transparent
   if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
@@ -123,21 +123,33 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.material.needsUpdate = true;
   }
   // Update the effort remaining, making sure it doesn't go below 0
-  if (--flwItem.dEffrtRmnngCurrentStep < 0) {
+  updateEffortRemainingCurrentStep(flwItem);
+  if (flwItem.dEffrtRmnngCurrentStep < 0) {
     flwItem.dEffrtRmnngCurrentStep = 0;
   }
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // updateEffortRemainingCurrentStep()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const updateEffortRemainingCurrentStep = (
   flwItem /*: FlwItem */,
-) /*: void */ => {};
+) /*: void */ => {
+  const stepProcessTime = gSttngs().processTime / gSttngs().touchSteps;
+  const adjustedStepCycleTime =
+    stepProcessTime * Math.exp(gState().drag * gState().WIP);
+  const numberOfDevs = gSttngs().tmSize * gSttngs().tmsNumber;
+  const numberOfDevsPerStep = numberOfDevs / gSttngs().touchSteps;
+  const numberOfFlowItemsThisStep =
+    gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
+  const devPowerThisStep = numberOfDevsPerStep / numberOfFlowItemsThisStep;
+  const effortExpended = adjustedStepCycleTime / devPowerThisStep;
+  flwItem.dEffrtRmnngCurrentStep -= effortExpended;
+};
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // removeThreeObject()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
   // For better memory management and performance...
   if (flwItem.geometry) flwItem.geometry.dispose();
@@ -153,9 +165,9 @@ const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.removeFromParent();
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // pullFlwItems()
-//--------------------------------------------------
+//------------------------------------------------------------------
 function pullFlwItems() {
   // Get the flwMpSteps  as an array (the flwMap is an "hash map" object)
   const flwMpSteps = getFlwMpSteps();
@@ -165,9 +177,9 @@ function pullFlwItems() {
   flwMpSteps.reduceRight(checkStepLimitAndPull, null);
 }
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // getFlwMpSteps()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const getFlwMpSteps = () /*: FlwMpItems[] */ => {
   // Get the keys for all the steps in the flwMap hash map
   const flwMpStpKeys = Object.keys(gState().flwMap);
@@ -182,9 +194,9 @@ const getFlwMpSteps = () /*: FlwMpItems[] */ => {
   return flwMpSteps;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // checkStepLimitAndPull()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const checkStepLimitAndPull = (
   // Note: We need the accumulator or the Done step is skipped.
   _ /*: null | void */, // The accumulator is not used but reduceRight() requires it
@@ -210,9 +222,9 @@ const checkStepLimitAndPull = (
   }
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // pullFromPreviousStep()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const pullFromPreviousStep = (
   flwMpStpKeyNumber /*: number */,
   availableLimit /*: "no limit" | number */,
@@ -230,9 +242,9 @@ const pullFromPreviousStep = (
   }
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // pullFlowItem()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const pullFlowItem = (
   availableLimit /*: "no limit" | number */,
   flwItem /*: FlwItem */,
@@ -265,9 +277,9 @@ const pullFlowItem = (
   return availableLimit;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // updateFlowMap()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const updateFlowMap = (
   flwItem /*: FlwItem */,
   index /*: number */,
@@ -281,9 +293,9 @@ const updateFlowMap = (
   // Add the flwItem to the correct step in the flwMap
   gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
 };
-//--------------------------------------------------
+//------------------------------------------------------------------
 // updateValueQueue()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
   if (gState().vQueue.length() >= gSttngs().valueUpdateInterval) {
     gState().vQueue.dequeue();
@@ -291,9 +303,9 @@ const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
   gState().vQueue.enqueue(flwItemValue);
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // resizeVSphere()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const resizeVSphere = () /*: void */ => {
   if (gState().vQueue.total === 0) {
     return;
@@ -304,7 +316,7 @@ const resizeVSphere = () /*: void */ => {
 
 const animatePosition = () /*: void */ => {
   gState().vSphere.dPosition.z =
-    gState().endPosition.z + gState().vSphere.dRadius;
+    gState().endPosition.z + gState().vSphere.dRadius * 2;
 
   anime({
     targets: [gState().vSphere.position],
@@ -355,9 +367,9 @@ const findRadius = (volume /*: number */) /*: number */ => {
   return radius;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // filterOutDoneItems()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const filterOutDoneItems = () /*: void */ => {
   gState().vSphere.dRllngTtlVolume = 0;
   const doneFlwItems =

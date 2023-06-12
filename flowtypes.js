@@ -1,6 +1,6 @@
-// --------------------------------------------------
+//------------------------------------------------------------------
 // gSttngs
-// --------------------------------------------------
+//------------------------------------------------------------------
 type GlobalSettings = {
   debug: boolean,
   fps: number,
@@ -20,10 +20,12 @@ type GlobalSettings = {
   flwSteps: Array<FlwStep>,
   touchSteps: number,
   flwItem: FlwItemSettings,
+  processTime: number,
   valueUpdateInterval: number,
   rangeMax: number,
   rangeIncreaseRate: number,
   rangeDecreaseRate: number,
+  leadTime: number,
 };
 
 type FlwItemSettings = {
@@ -39,25 +41,32 @@ type FlwStep = {
   limit: number,
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // gState
-// --------------------------------------------------
+//------------------------------------------------------------------
 type GlobalState = {
   // -----------------------
   // Data:
   // -----------------------
   clicks: number,
-  scnData: SceneData,
   vSphere: VSphere,
+  scnData: SceneData,
   strtPosition: ThrMeshPosition,
   endPosition: ThrMeshPosition,
   flwMap: FlwMap,
   flwItems: FlwItem[],
   clckCbGroup: ClickCubeGroup,
-  vQueue: VQueue,
-  tchTotal: number,
   doneTotal: number,
+  drag: number,
   flwItmTracker: FlwItmTracker,
+  WIP: number,
+  // -----------------------
+  // Metrics:
+  // -----------------------
+  vQueue: VQueue,
+  thrptQueue: ThrptQueue,
+  wipQueue: WIPQueue,
+  flwTmQueue: FlwTmQueue,
 };
 
 type FlwItem = {
@@ -105,20 +114,9 @@ type FlwMap = {
   // Data:
   // -----------------------
   [string]: FlwMpItems,
-  tchTotal: number,
-  doneTotal: number,
 };
 
 type FlwMpItems = Array<FlwItem>;
-
-type FlwStepTotals = {
-  // -----------------------
-  // Data:
-  // -----------------------
-  [string]: number,
-  tchTotal: number,
-  doneTotal: number,
-};
 
 type ClickCubeGroup = {
   // -----------------------
@@ -248,6 +246,39 @@ type SceneData = {
   reticleStuff: ReticleStuff,
 };
 
+type ThrptQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => void,
+  enqueue: (item: number) => void,
+  total: () => number,
+  length: () => number,
+  _85th: () => number,
+};
+
+type FlwtmQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => void,
+  enqueue: (item: number) => void,
+  total: () => number,
+  length: () => number,
+  _85th: () => number,
+};
+
+type WIPQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => void,
+  enqueue: (item: number) => void,
+  total: () => number,
+  length: () => number,
+  _85th: () => number,
+};
+
 type VQueue = {
   // -----------------------
   // Data:
@@ -256,11 +287,12 @@ type VQueue = {
   enqueue: (item: number) => void,
   total: () => number,
   length: () => number,
+  _85th: () => number,
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // MODULES
-// --------------------------------------------------
+//------------------------------------------------------------------
 declare module "finalhandler" {
   declare module.exports: any;
 }
