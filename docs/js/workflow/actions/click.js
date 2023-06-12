@@ -295,7 +295,6 @@ const animatePosition = () /*: void */ => {
     Math.floor((gState().vSphere.dRadius / gSttngs().step) * 100) / 100;
 
   gState().vSphere.dPosition.z = gState().endPosition.z - offset;
-  console.log("gState().vSphere.dPosition", gState().vSphere.dPosition);
 
   anime({
     targets: [gState().vSphere.position],

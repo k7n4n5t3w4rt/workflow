@@ -23,7 +23,7 @@ export default (flwItem /*: FlwItem */, index /*: number */) => {
     flwItem.name,
   );
   if (theActualMeshObject !== undefined) {
-    // console.log("The mesh object is defined.");
+    //
     animateScaleToZero(flwItem, 300, removeThreeObject(theActualMeshObject));
   } else {
     // Just in case this is still happening and we really couldn't find

@@ -101,8 +101,7 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
     newPosition.y = gState().vSphere.dPosition.y;
     newPosition.z =
       gState().vSphere.dPosition.z + gSttngs().step * flwItem.scale.z;
-    console.log("flwItem.scale:", flwItem.scale);
-    console.log("Done flowItem newPosition", newPosition);
+
     animateScaleToZero(flwItem);
   } else {
     newPosition.x =

@@ -37,7 +37,7 @@ const createButton = (
         currentSession.removeEventListener("end", onSessionEnded);
         // button.textContent = "START AR";
         // currentSession = null;
-        window.location.assign(`/?speed=${gSttngs().fps}`);
+        window.location.assign(`/`);
       }
     }
 
