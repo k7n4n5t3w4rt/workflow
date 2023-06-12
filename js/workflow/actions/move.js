@@ -12,6 +12,7 @@ import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
+import animateScaleToZero from "./animateScaleToZero.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
   animateColorChange(flwItem, newColor(flwItem));
@@ -95,11 +96,13 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   const newPosition = { ...flwItem.dPosition };
   const nextStatus = gSttngs().flwSteps[flwItem.dFlwStpsIndex + 1].status;
 
-  // i.e. Don't do anything if the flwItem is moving into "done"
   if (nextStatus === "done") {
-    newPosition.x = gState().endPosition.x;
-    newPosition.y = gState().endPosition.y;
-    newPosition.z = gState().endPosition.z + gState().vSphere.dRadius;
+    newPosition.x = gState().vSphere.dPosition.x;
+    newPosition.y = gState().vSphere.dPosition.y;
+    newPosition.z =
+      gState().vSphere.dPosition.z + gSttngs().step * flwItem.scale.z;
+
+    animateScaleToZero(flwItem);
   } else {
     newPosition.x =
       gState().strtPosition.x +

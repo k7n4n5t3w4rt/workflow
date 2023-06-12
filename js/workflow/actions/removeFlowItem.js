@@ -7,6 +7,10 @@ import gState from "./gState.js";
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import animateScaleToZero from "./animateScaleToZero.js";
 
 //------------------------------------------------------------------
 // removeFlowItem()
@@ -19,8 +23,8 @@ export default (flwItem /*: FlwItem */, index /*: number */) => {
     flwItem.name,
   );
   if (theActualMeshObject !== undefined) {
-    // console.log("The mesh object is defined.");
-    removeThreeObject(theActualMeshObject);
+    //
+    animateScaleToZero(flwItem, 300, removeThreeObject(theActualMeshObject));
   } else {
     // Just in case this is still happening and we really couldn't find
     // the actual mesh object, make it red so we can see it
@@ -38,17 +42,18 @@ export default (flwItem /*: FlwItem */, index /*: number */) => {
 //------------------------------------------------------------------
 // removeThreeObject()
 //------------------------------------------------------------------
-const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
-  // For better memory management and performance...
-  if (flwItem.geometry) flwItem.geometry.dispose();
-  if (flwItem.material) {
-    if (flwItem.material instanceof Array) {
-      flwItem.material.forEach((material) => material.dispose());
-    } else {
-      flwItem.material.dispose();
+const removeThreeObject =
+  (flwItem /*: FlwItem */) /*: () => void */ => () /*: void */ => {
+    // For better memory management and performance...
+    if (flwItem.geometry) flwItem.geometry.dispose();
+    if (flwItem.material) {
+      if (flwItem.material instanceof Array) {
+        flwItem.material.forEach((material) => material.dispose());
+      } else {
+        flwItem.material.dispose();
+      }
     }
-  }
-  // The parent might be the scene or another Object3D, but it
-  // is sure to be removed this way
-  flwItem.removeFromParent();
-};
+    // The parent might be the scene or another Object3D, but it
+    // is sure to be removed this way
+    flwItem.removeFromParent();
+  };

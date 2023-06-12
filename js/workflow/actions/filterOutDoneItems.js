@@ -21,24 +21,21 @@ export default () => {
     updateThroughPutQueue(doneFlwItems.length);
     // Value is based on the volume of the doneFlwItems
     const valueFlwItems = [...doneFlwItems];
-    updateValueQueue(valueFlwItems.reduce(processValueFlwItems, 0));
+    updateValueQueue(valueFlwItems.reduce(processValue, 0));
     // Flow Time is based on age of the doneFlwItems
     const flowTimeQueueFlwItems = [...doneFlwItems];
-    updateFlowTimeQueue(
-      flowTimeQueueFlwItems.reduce(processFlowTimeFlwItems, []),
-    );
+    updateFlowTimeQueue(flowTimeQueueFlwItems.reduce(processFlowTime, []));
 
     doneFlwItems.forEach(removeFlowItem);
-    console.log("doneFlwItems", doneFlwItems);
   } else {
     updateValueQueue(0);
     updateThroughPutQueue(0);
   }
 };
 //------------------------------------------------------------------
-// processFlowTimeFlwItems()
+// processFlowTime()
 //------------------------------------------------------------------
-const processFlowTimeFlwItems = (
+const processFlowTime = (
   accumulator /*: Array<number> */,
   flwItem /*: FlwItem */,
 ) => {
@@ -46,32 +43,11 @@ const processFlowTimeFlwItems = (
   return accumulator;
 };
 //------------------------------------------------------------------
-// processValueFlwItems()
+// processValue()
 //------------------------------------------------------------------
-const processValueFlwItems = (
-  accumulator /*: number */,
-  flwItem /*: FlwItem */,
-) => {
+const processValue = (accumulator /*: number */, flwItem /*: FlwItem */) => {
   return accumulator + flwItem.dVolume;
 };
-
-// //------------------------------------------------------------------
-// // processDoneFlwItems()
-// //------------------------------------------------------------------
-// const processDoneFlwItems = (flwItem /*: FlwItem */, index /*: number */) => {
-//   // theActualMeshObject may be undefined if it has already been removed
-//   let theActualMeshObject = gState().scnData.scene.getObjectByName(
-//     flwItem.name,
-//   );
-//   if (theActualMeshObject !== undefined) {
-//     // Remove the mesh object from the scene
-//     removeThreeObject(theActualMeshObject);
-//     // Remove it from the flwMap
-//     const deletedFlwItem = gState().flwMap[
-//       flwItem.dFlwStpsIndex.toString()
-//     ].splice(index, 1);
-//   }
-// };
 
 //------------------------------------------------------------------
 // updateValueQueue()

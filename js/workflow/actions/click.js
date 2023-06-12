@@ -285,9 +285,16 @@ const resizeVSphere = () /*: void */ => {
   animatePosition();
 };
 
+//------------------------------------------------------------------
+// aniatePosition()
+//------------------------------------------------------------------
 const animatePosition = () /*: void */ => {
-  gState().vSphere.dPosition.z =
-    gState().endPosition.z + gState().vSphere.dRadius * 2;
+  // If the dRadius of the vSphere is bigger than one unit of scale,
+  // move the endppoint back one unit of scale
+  const offset =
+    Math.floor((gState().vSphere.dRadius / gSttngs().step) * 100) / 100;
+
+  gState().vSphere.dPosition.z = gState().endPosition.z - offset;
 
   anime({
     targets: [gState().vSphere.position],
@@ -302,6 +309,9 @@ const animatePosition = () /*: void */ => {
   });
 };
 
+//------------------------------------------------------------------
+// aniateScale()
+//------------------------------------------------------------------
 const animateScale = () /*: void */ => {
   // Create an object with a scale property that can be animated.
   let scaleObject = { scale: gState().vSphere.dRadius };
@@ -329,6 +339,9 @@ const animateScale = () /*: void */ => {
   }
 };
 
+//------------------------------------------------------------------
+// findRadius()
+//------------------------------------------------------------------
 const findRadius = (volume /*: number */) /*: number */ => {
   if (volume <= 0) {
     return 0;
