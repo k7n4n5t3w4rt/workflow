@@ -1,6 +1,6 @@
 // @flow
 //------------------------------------------------------------------
-// GLOBALS
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";

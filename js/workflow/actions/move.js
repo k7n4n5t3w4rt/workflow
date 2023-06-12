@@ -1,10 +1,10 @@
 // @flow
 //------------------------------------------------------------------
-// THREE.js
+// IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
 //------------------------------------------------------------------
-// HELPERS
+// IMPORT: HELPERS
 //------------------------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import anime from "../../../web_modules/animejs.js";

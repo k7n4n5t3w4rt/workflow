@@ -1,11 +1,11 @@
 // @flow
 //------------------------------------------------------------------
-// GLOBALS
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 //------------------------------------------------------------------
-// HELPERS
+// IMPORT: HELPERS
 //------------------------------------------------------------------
 
 // This function gets called just once to initialize a hitTestSource

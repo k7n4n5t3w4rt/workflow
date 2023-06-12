@@ -1,3 +1,6 @@
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 
@@ -10,14 +13,13 @@ export default () => {
   gState("flwItmTracker", {});
   gState("flwMap", {});
   gState("WIP", 10);
-  gState("doneTotal", 0);
   gState("scnData", {});
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------
   gState("vQueue", new xQueue());
-  gState("flwtmQueue", new xQueue());
-  gState("thrptQueue", new xQueue());
+  gState("flwTmQueue", new xQueue());
+  gState("thrPtQueue", new xQueue());
   gState("wipQueue", new xQueue());
   setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
   gState("drag", calculateDrag());
@@ -71,11 +73,21 @@ function xQueue() {
   };
 
   this._85th = () => {
+    const numbers = [];
+    for (const index in this.items) {
+      numbers.push(this.items[index]);
+    }
+    numbers.sort((a, b) => a - b);
+    let index = Math.ceil((85 / 100) * numbers.length);
+    return numbers[index - 1];
+  };
+
+  this.mean = () => {
     let total = 0;
     for (const index in this.items) {
       total += this.items[index];
     }
-    return total;
+    return total / this.length();
   };
 
   this.length = () => {

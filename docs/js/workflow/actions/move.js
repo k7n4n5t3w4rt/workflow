@@ -1,11 +1,11 @@
 // @flow
-// --------------------------------------------------
-// THREE.js
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORTS: THREE.js
+//------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
-// --------------------------------------------------
-// HELPERS
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import anime from "../../../web_modules/animejs.js";
 import gSttngs from "./gSttngs.js";
@@ -19,9 +19,9 @@ export default (flwItem /*: Object */) /*: void */ => {
   animatePositionChange(flwItem);
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // animatePositionChange()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // Set the properties of the flwItem to the state they'll
   // should be in when the animation is complete.
@@ -47,9 +47,9 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   });
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // animateColorChange()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const animateColorChange = (
   flwItem /*: FlwItem */,
   newColor /*: string */,
@@ -72,9 +72,9 @@ const animateColorChange = (
   });
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // newColor()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
   const nextStatus = gSttngs().flwSteps[flwItem.dFlwStpsIndex + 1].status;
   let newColor = "#808080"; // Grey for "waiting" status
@@ -87,9 +87,9 @@ const newColor = (flwItem /*: FlwItem */) /*: string */ => {
   return newColor;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // refineNewPosition()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   const range = calculateRange(flwItem.dFlwStpsIndex + 1);
   const newPosition = { ...flwItem.dPosition };
@@ -113,9 +113,9 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   return newPosition;
 };
 
-//--------------------------------------------------
+//------------------------------------------------------------------
 // calculateRange()
-//--------------------------------------------------
+//------------------------------------------------------------------
 const calculateRange = (flwStpsIndex /*: number */) /*: number */ => {
   let range = 0;
   // Set the required space to the limit of the current step.

@@ -1,16 +1,16 @@
 // @flow
-// --------------------------------------------------
-// THREE.js
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORTS: THREE.js
+//------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
-// --------------------------------------------------
-// GLOBALS
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-// --------------------------------------------------
-// HELPERS
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import clckCbGroup from "./newClickCube.js";
 import click from "./click.js";
 import newVSphere from "./newVSphere.js";
@@ -26,26 +26,26 @@ export default () /*: () => void */ => () /*: void */ => {
   click();
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // hideReticule()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const hideReticule = () /*: void */ => {
   // Hide the reticle
   if (gState().scnData.reticleStuff.reticle.visible) {
     gState().scnData.reticleStuff.active = false;
   }
 };
-// --------------------------------------------------
+//------------------------------------------------------------------
 // createClickCube()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const createClickCube = () /*: void */ => {
   // Create the clckCube
   gState().clckCbGroup = clckCbGroup();
   gState().scnData.scene.add(gState().clckCbGroup);
 };
-// --------------------------------------------------
+//------------------------------------------------------------------
 // orientEverythingToTheClickCube()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const orientEverythingToTheClickCube = () /*: void */ => {
   // Get the direction in which the camera is looking
   const vector = new THREE.Vector3();
@@ -58,26 +58,26 @@ const orientEverythingToTheClickCube = () /*: void */ => {
     gState().scnData.reticleStuff.reticle.matrix,
   );
 };
-// --------------------------------------------------
+//------------------------------------------------------------------
 // setStartPosition()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const setStartPosition = () /*: void */ => {
   // Set the start position for all the flw items
   // based on where we put the cube, but higher up
   gState().strtPosition = gState().clckCbGroup.clckCube.position.clone();
   gState().strtPosition.y = gSttngs().yOffset;
 };
-// --------------------------------------------------
+//------------------------------------------------------------------
 // setEndPosition()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const setEndPosition = () /*: void */ => {
   gState().endPosition = gState().strtPosition.clone();
   gState().endPosition.z +=
     gSttngs().step * (gSttngs().flwSteps.length + 2) * -1;
 };
-// --------------------------------------------------
+//------------------------------------------------------------------
 // createValueSphere()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const createValueSphere = () /*: void */ => {
   // Create the valueSphere
   gState().vSphere = newVSphere();

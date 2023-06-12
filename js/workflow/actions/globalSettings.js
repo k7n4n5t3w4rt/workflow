@@ -30,7 +30,7 @@ export default (props /*: Props */) => {
   // a "max" range to cover the different types of work that might be done.
   gSttngs("flwItem", { effort: { min: 1, max: 8 } });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("valueUpdateInterval", 10);
+  gSttngs("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?

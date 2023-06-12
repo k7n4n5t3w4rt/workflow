@@ -1,23 +1,19 @@
 // @flow
 //------------------------------------------------------------------
-// THREE.js
-//------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
-//------------------------------------------------------------------
-// GLOBALS
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 //------------------------------------------------------------------
-// HELPERS
+// IMPORT: HELPERS
 //------------------------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
 import newFlwItem from "./newFlwItem.js";
 import move from "./move.js";
-// import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
-// import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
 import flwItmTracker from "./flwItmTracker.js";
+import filterOutDoneItems from "./filterOutDoneItems.js";
+import removeFlowItem from "./removeFlowItem.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
@@ -42,13 +38,34 @@ const animateClickCube = () /*: void */ => {
 // onClickComplete()
 //------------------------------------------------------------------
 const onClickComplete = () /*: void */ => {
+  calculateWip();
   filterOutDoneItems();
+  updateWIPQueue();
   resizeVSphere();
   updateAgeAndEffortForAllItems();
   newFlwItem();
   pullFlwItems();
   // Start the click cycle over again
   click();
+};
+
+//------------------------------------------------------------------
+// calculateWip()
+//------------------------------------------------------------------
+const calculateWip = () /*: void */ => {
+  let wip = 0;
+  // For each flwStep in the flwMap...
+  getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
+    // For each flwItem in this step...
+    wip += flwMpStpItems.filter((flwItem /*: FlwItem */) /*: boolean */ => {
+      if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "touch") {
+        return true;
+      } else {
+        return false;
+      }
+    }).length;
+  });
+  gState().WIP = wip;
 };
 
 //------------------------------------------------------------------
@@ -84,36 +101,6 @@ const updateFlwItemProperties = (
   }
 };
 //------------------------------------------------------------------
-// removeFlowItem()
-//------------------------------------------------------------------
-const removeFlowItem = (
-  flwItem /*: FlwItem */,
-  index /*: number */,
-) /*: void */ => {
-  if (flwItem.dMoving) {
-    return;
-  }
-  let theActualMeshObject = gState().scnData.scene.getObjectByName(
-    flwItem.name,
-  );
-  if (theActualMeshObject !== undefined) {
-    // console.log("The mesh object is defined.");
-    removeThreeObject(theActualMeshObject);
-  } else {
-    // Just in case this is still happening and we really couldn't find
-    // the actual mesh object, make it red so we can see it
-    let colorObject = { color: "#FF0000" };
-    let color = new THREE.Color(colorObject.color);
-    flwItem.material.color.copy(color);
-    flwItem.material.needsUpdate = true;
-  }
-  // Remove it from the flwMap
-  const deletedFlwItem = gState().flwMap[
-    flwItem.dFlwStpsIndex.toString()
-  ].splice(index, 1);
-};
-
-//------------------------------------------------------------------
 // makeItOneClickOlder()
 //------------------------------------------------------------------
 const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
@@ -145,24 +132,6 @@ const updateEffortRemainingCurrentStep = (
   const devPowerThisStep = numberOfDevsPerStep / numberOfFlowItemsThisStep;
   const effortExpended = adjustedStepCycleTime / devPowerThisStep;
   flwItem.dEffrtRmnngCurrentStep -= effortExpended;
-};
-
-//------------------------------------------------------------------
-// removeThreeObject()
-//------------------------------------------------------------------
-const removeThreeObject = (flwItem /*: FlwItem */) /*: void */ => {
-  // For better memory management and performance...
-  if (flwItem.geometry) flwItem.geometry.dispose();
-  if (flwItem.material) {
-    if (flwItem.material instanceof Array) {
-      flwItem.material.forEach((material) => material.dispose());
-    } else {
-      flwItem.material.dispose();
-    }
-  }
-  // The parent might be the scene or another Object3D, but it
-  // is sure to be removed this way
-  flwItem.removeFromParent();
 };
 
 //------------------------------------------------------------------
@@ -293,14 +262,16 @@ const updateFlowMap = (
   // Add the flwItem to the correct step in the flwMap
   gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
 };
+
 //------------------------------------------------------------------
-// updateValueQueue()
+// updateWIPQueue()
 //------------------------------------------------------------------
-const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
-  if (gState().vQueue.length() >= gSttngs().valueUpdateInterval) {
-    gState().vQueue.dequeue();
+const updateWIPQueue = () /*: void */ => {
+  if (gState().wipQueue.length() >= gSttngs().timeBox) {
+    gState().wipQueue.dequeue();
   }
-  gState().vQueue.enqueue(flwItemValue);
+  // PLACEHOLER: This is where we would calculate the WIP
+  gState().wipQueue.enqueue(gState().WIP);
 };
 
 //------------------------------------------------------------------
@@ -365,42 +336,6 @@ const findRadius = (volume /*: number */) /*: number */ => {
   const pi = Math.PI;
   let radius = Math.cbrt((3 * volume) / (4 * pi));
   return radius;
-};
-
-//------------------------------------------------------------------
-// filterOutDoneItems()
-//------------------------------------------------------------------
-const filterOutDoneItems = () /*: void */ => {
-  gState().vSphere.dRllngTtlVolume = 0;
-  const doneFlwItems =
-    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()];
-  if (doneFlwItems.length > 0) {
-    updateValueQueue(doneFlwItems.reduce(processDoneFlwItems, 0));
-  } else {
-    updateValueQueue(0);
-  }
-};
-
-const processDoneFlwItems = (
-  accumulator /*: number */,
-  flwItem /*: FlwItem */,
-  index /*: number */,
-) /*: number */ => {
-  gState().doneTotal++;
-  // gState().vSphere.dRllngTtlVolume += flwItem.dVolume;
-  // theActualMeshObject may be undefined if it has already been removed
-  let theActualMeshObject = gState().scnData.scene.getObjectByName(
-    flwItem.name,
-  );
-  if (theActualMeshObject !== undefined) {
-    // Remove the mesh object from the scene
-    removeThreeObject(theActualMeshObject);
-    // Remove it from the flwMap
-    const deletedFlwItem = gState().flwMap[
-      flwItem.dFlwStpsIndex.toString()
-    ].splice(index, 1);
-  }
-  return accumulator + flwItem.dVolume;
 };
 
 export default click;

@@ -1,15 +1,15 @@
 // @flow
 //------------------------------------------------------------------
-// THREE.js
+// IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
 //------------------------------------------------------------------
-// GLOBALS
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 //------------------------------------------------------------------
-// HELPERS
+// IMPORT: HELPERS
 //------------------------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenIntegers.js";

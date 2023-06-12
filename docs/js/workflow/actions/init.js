@@ -1,16 +1,16 @@
 // @flow
-// --------------------------------------------------
-// THREE.js
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORTS: THREE.js
+//------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
-// --------------------------------------------------
-// GLOBALS
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-// --------------------------------------------------
-// HELPERS
-// --------------------------------------------------
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import ARButton from "./ARButton.js";
 import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
 import createStats from "../../create_stats.js";
@@ -49,9 +49,9 @@ export default () /*: void */ => {
   gState().scnData = { stats, scene, camera, reticleStuff, renderer };
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // startButtonSetip()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
   // The overlay for sliders, etc
   const domOverlayDiv = document.getElementById("dom-overlay");
@@ -68,9 +68,9 @@ const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
   domOverlayDiv.appendChild(button);
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // rendererSetup()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const rendererSetup = () /*: Object */ => {
   // https://threejs.org/docs/#api/en/renderers/WebGLRenderer
   const renderer = new THREE.WebGLRenderer({
@@ -84,9 +84,9 @@ const rendererSetup = () /*: Object */ => {
   return renderer;
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // lightSetup()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const lightSetup = () /*: Object */ => {
   // https://threejs.org/docs/#api/en/lights/HemisphereLight
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
@@ -98,9 +98,9 @@ const lightSetup = () /*: Object */ => {
   return light;
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // addArContainerToDom()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const addArContainerToDom = () /*: HTMLDivElement */ => {
   const ARContainer = document.createElement("div");
   ARContainer.id = "ar-container";
@@ -111,9 +111,9 @@ const addArContainerToDom = () /*: HTMLDivElement */ => {
   return ARContainer;
 };
 
-// --------------------------------------------------
+//------------------------------------------------------------------
 // cameraSetup()
-// --------------------------------------------------
+//------------------------------------------------------------------
 const cameraSetup = () /*: Object */ => {
   const camera = new THREE.PerspectiveCamera(
     75,

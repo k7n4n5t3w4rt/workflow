@@ -1,6 +1,6 @@
 // @flow
 //------------------------------------------------------------------
-// THREE.js
+// IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../web_modules/three.js";
 import Stats from "../../web_modules/three/examples/jsm/libs/stats.module.js";
@@ -20,7 +20,7 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 import Params from "./WorkflowParams.js";
 //------------------------------------------------------------------
-// HELPERS
+// IMPORT: HELPERS
 //------------------------------------------------------------------
 // import setupMobileDebug from "../setup_mobile_debug.js";
 import AppReducer from "../appReducer.js";

@@ -21,7 +21,7 @@ type GlobalSettings = {
   touchSteps: number,
   flwItem: FlwItemSettings,
   processTime: number,
-  valueUpdateInterval: number,
+  timeBox: number,
   rangeMax: number,
   rangeIncreaseRate: number,
   rangeDecreaseRate: number,
@@ -56,7 +56,6 @@ type GlobalState = {
   flwMap: FlwMap,
   flwItems: FlwItem[],
   clckCbGroup: ClickCubeGroup,
-  doneTotal: number,
   drag: number,
   flwItmTracker: FlwItmTracker,
   WIP: number,
@@ -64,7 +63,7 @@ type GlobalState = {
   // Metrics:
   // -----------------------
   vQueue: VQueue,
-  thrptQueue: ThrptQueue,
+  thrPtQueue: ThrPtQueue,
   wipQueue: WIPQueue,
   flwTmQueue: FlwTmQueue,
 };
@@ -246,7 +245,7 @@ type SceneData = {
   reticleStuff: ReticleStuff,
 };
 
-type ThrptQueue = {
+type ThrPtQueue = {
   // -----------------------
   // Data:
   // -----------------------
@@ -255,9 +254,10 @@ type ThrptQueue = {
   total: () => number,
   length: () => number,
   _85th: () => number,
+  mean: () => number,
 };
 
-type FlwtmQueue = {
+type FlwTmQueue = {
   // -----------------------
   // Data:
   // -----------------------
@@ -266,6 +266,7 @@ type FlwtmQueue = {
   total: () => number,
   length: () => number,
   _85th: () => number,
+  mean: () => number,
 };
 
 type WIPQueue = {
@@ -277,6 +278,7 @@ type WIPQueue = {
   total: () => number,
   length: () => number,
   _85th: () => number,
+  mean: () => number,
 };
 
 type VQueue = {
@@ -288,6 +290,7 @@ type VQueue = {
   total: () => number,
   length: () => number,
   _85th: () => number,
+  mean: () => number,
 };
 
 //------------------------------------------------------------------
