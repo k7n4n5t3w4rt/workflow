@@ -18,6 +18,7 @@ type GlobalSettings = {
   tmsNumber: number,
   tmSize: number,
   flwSteps: Array<FlwStep>,
+  touchSteps: number,
   flwItem: FlwItemSettings,
   valueUpdateInterval: number,
   rangeMax: number,
@@ -66,10 +67,11 @@ type FlwItem = {
   dAge: number,
   dColor: string,
   dMoving: boolean,
-  dEffrtTotal: number,
   dTmNumber: number,
-  dEffrtRmnngCurrentStep: number,
+  dEffrtTotal: number,
   dEffrtRmnngInTotal: number,
+  dEffrtEachTouchStep: number,
+  dEffrtRmnngCurrentStep: number,
   dFlwStpsIndex: number,
   dPosition: ThrMeshPosition,
   dVolume: number,
@@ -77,6 +79,7 @@ type FlwItem = {
   // Three.js:
   // -----------------------
   name: string,
+  uuid: string,
   geometry: {
     scale: (x: number, y: number, z: number) => void,
     dispose: () => void,

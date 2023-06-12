@@ -14,8 +14,8 @@ import gState from "./gState.js";
 import anime from "../../../web_modules/animejs.js";
 import newFlwItem from "./newFlwItem.js";
 import move from "./move.js";
-import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
-import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
+// import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
+// import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
 import flwItmTracker from "./flwItmTracker.js";
 

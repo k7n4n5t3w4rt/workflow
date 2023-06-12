@@ -14,26 +14,14 @@ import gState from "./gState.js";
 import anime from "../../../web_modules/animejs.js";
 import newFlwItem from "./newFlwItem.js";
 import move from "./move.js";
-import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
-import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
+// import calculateEffortRemaining from "../calculations/calculateEffortRemaining.js";
+// import calculatedEffortPerWorkItem from "../calculations/calculatedEffortPerWorkItem.js";
 import isDone from "../calculations/isDone.js";
 import flwItmTracker from "./flwItmTracker.js";
 
 const click = () /*: void */ => {
   gState().clicks++;
   animateClickCube();
-};
-
-//--------------------------------------------------
-// onClickComplete()
-//--------------------------------------------------
-const onClickComplete = () /*: void */ => {
-  filterOutDoneItems();
-  resizeVSphere();
-  updateAgeAndEffortForAllItems();
-  newFlwItem();
-  pullFlwItems();
-  click();
 };
 
 //--------------------------------------------------
@@ -48,6 +36,19 @@ const animateClickCube = () /*: void */ => {
     easing: "easeInOutSine",
     complete: onClickComplete,
   });
+};
+
+//--------------------------------------------------
+// onClickComplete()
+//--------------------------------------------------
+const onClickComplete = () /*: void */ => {
+  filterOutDoneItems();
+  resizeVSphere();
+  updateAgeAndEffortForAllItems();
+  newFlwItem();
+  pullFlwItems();
+  // Start the click cycle over again
+  click();
 };
 
 //--------------------------------------------------
@@ -126,6 +127,13 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.dEffrtRmnngCurrentStep = 0;
   }
 };
+
+//--------------------------------------------------
+// updateEffortRemainingCurrentStep()
+//--------------------------------------------------
+const updateEffortRemainingCurrentStep = (
+  flwItem /*: FlwItem */,
+) /*: void */ => {};
 
 //--------------------------------------------------
 // removeThreeObject()

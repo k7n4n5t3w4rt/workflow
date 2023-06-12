@@ -13,7 +13,7 @@ import gState from "./gState.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
 
-const move = (flwItem /*: Object */) /*: void */ => {
+export default (flwItem /*: Object */) /*: void */ => {
   animateColorChange(flwItem, newColor(flwItem));
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   animatePositionChange(flwItem);
@@ -27,7 +27,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // should be in when the animation is complete.
   flwItem.dMoving = true;
   flwItem.dFlwStpsIndex++;
-  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtTotal;
+  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtEachTouchStep;
 
   anime({
     targets: [flwItem.position],
@@ -118,24 +118,24 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
 //--------------------------------------------------
 const calculateRange = (flwStpsIndex /*: number */) /*: number */ => {
   let range = 0;
-  let requiredSpace /* number */ = gSttngs().flwSteps[flwStpsIndex].limit;
-
-  if (requiredSpace === 0) {
-    requiredSpace = gState().flwMap[flwStpsIndex.toString()].length;
+  // Set the required space to the limit of the current step.
+  // If the limit is 0, set the required space to thenumber of
+  // wrkFlwItems in the current step.
+  let rqrdSpace /* number */ = gSttngs().flwSteps[flwStpsIndex].limit;
+  if (rqrdSpace === 0) {
+    rqrdSpace = gState().flwMap[flwStpsIndex.toString()].length;
   }
-  const increaseDecreaseRate = 0.95; // Modify this value to change the rate of decrease
-
   // Does this even make sense? GPT-4 told me to do it.
-  let calculatedIncreaseRate =
-    requiredSpace * gSttngs().rangeIncreaseRate * gSttngs().rangeDecreaseRate;
+  // The idea is that the rate of increase decrteases as the
+  // numbers get bigger
+  let incrsFactor =
+    rqrdSpace * gSttngs().rangeIncreaseRate * gSttngs().rangeDecreaseRate;
 
-  range = gSttngs().scale * calculatedIncreaseRate;
-
+  range = gSttngs().scale * incrsFactor;
+  // Don't let it go over the max range
   if (range > gSttngs().rangeMax) {
     range = gSttngs().rangeMax;
   }
 
   return range;
 };
-
-export default move;
