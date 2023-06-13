@@ -26,6 +26,7 @@ type GlobalSettings = {
   rangeIncreaseRate: number,
   rangeDecreaseRate: number,
   leadTime: number,
+  drag: number,
 };
 
 type FlwItemSettings = {
@@ -56,7 +57,7 @@ type GlobalState = {
   flwMap: FlwMap,
   flwItems: FlwItem[],
   clckCbGroup: ClickCubeGroup,
-  drag: number,
+  // drag: number,
   flwItmTracker: FlwItmTracker,
   WIP: number,
   // -----------------------
@@ -75,6 +76,7 @@ type FlwItem = {
   dAge: number,
   dColor: string,
   dMoving: boolean,
+  dScale: number,
   dTmNumber: number,
   dEffrtTotal: number,
   dEffrtRmnngInTotal: number,

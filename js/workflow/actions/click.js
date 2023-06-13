@@ -28,7 +28,7 @@ const animateClickCube = () /*: void */ => {
   anime({
     targets: [gState().clckCbGroup.clckCube.rotation],
     y: gState().clckCbGroup.clckCube.rotation.y + Math.PI / 2,
-    duration: 1000,
+    duration: 1000 / gSttngs().fps,
     easing: "easeInOutSine",
     complete: onClickComplete,
   });
@@ -111,9 +111,6 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
   }
   // Update the effort remaining, making sure it doesn't go below 0
   updateEffortRemainingCurrentStep(flwItem);
-  if (flwItem.dEffrtRmnngCurrentStep < 0) {
-    flwItem.dEffrtRmnngCurrentStep = 0;
-  }
 };
 
 //------------------------------------------------------------------
@@ -122,16 +119,19 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
 const updateEffortRemainingCurrentStep = (
   flwItem /*: FlwItem */,
 ) /*: void */ => {
-  const stepProcessTime = gSttngs().processTime / gSttngs().touchSteps;
-  const adjustedStepCycleTime =
-    stepProcessTime * Math.exp(gState().drag * gState().WIP);
   const numberOfDevs = gSttngs().tmSize * gSttngs().tmsNumber;
   const numberOfDevsPerStep = numberOfDevs / gSttngs().touchSteps;
   const numberOfFlowItemsThisStep =
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
-  const devPowerThisStep = numberOfDevsPerStep / numberOfFlowItemsThisStep;
-  const effortExpended = adjustedStepCycleTime / devPowerThisStep;
-  flwItem.dEffrtRmnngCurrentStep -= effortExpended;
+  const devPowerThisStep =
+    (numberOfDevsPerStep / numberOfFlowItemsThisStep) *
+    Math.exp(gSttngs().drag * gState().WIP);
+  flwItem.dEffrtRmnngCurrentStep -= devPowerThisStep;
+  // Make it zero.
+  if (flwItem.dEffrtRmnngCurrentStep < 0) {
+    flwItem.dEffrtRmnngCurrentStep = 0;
+  }
+  console.log(flwItem.dEffrtRmnngCurrentStep);
 };
 
 //------------------------------------------------------------------

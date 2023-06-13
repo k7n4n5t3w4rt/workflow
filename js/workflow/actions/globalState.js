@@ -22,17 +22,17 @@ export default () => {
   gState("thrPtQueue", new xQueue());
   gState("wipQueue", new xQueue());
   setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
-  gState("drag", calculateDrag());
+  // gState("drag", calculateDrag());
 };
 
-//------------------------------------------------------------------
-// function calculateDrag()
-//------------------------------------------------------------------
-const calculateDrag = () /*: number */ => {
-  return (
-    Math.log(gSttngs().leadTime / gSttngs().processTime) / (gState().WIP - 1)
-  );
-};
+// //------------------------------------------------------------------
+// // function calculateDrag()
+// //------------------------------------------------------------------
+// const calculateDrag = () /*: number */ => {
+//   return (
+//     Math.log(gSttngs().leadTime / gSttngs().processTime) / (gState().WIP - 1)
+//   );
+// };
 
 //------------------------------------------------------------------
 // setUpFlwMap(gFlwMap, gFlwSteps)

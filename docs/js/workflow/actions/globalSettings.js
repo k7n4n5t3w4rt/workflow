@@ -8,8 +8,6 @@ export default (props /*: Props */) => {
   // Workflow
   //------------------------------------------------------------------
 
-  // Q: How many people are on a team?
-  gSttngs("tmSize", cleanInt(props.teamsize) || 10);
   // Q: What steps do we have in our workflow?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
@@ -28,18 +26,20 @@ export default (props /*: Props */) => {
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person could do everything, how long would things take? We want a "min" and
   // a "max" range to cover the different types of work that might be done.
-  gSttngs("flwItem", { effort: { min: 1, max: 8 } });
+  gSttngs("flwItem", { effort: { min: 14, max: 240 } });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("timeBox", 10);
+  gSttngs("timeBox", 60);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  gSttngs("death", 60);
+  gSttngs("death", 520);
+  // Q: How many people are on a team?
+  gSttngs("tmSize", cleanInt(props.teamsize) || 360);
   // This shouldn't really be a setting becaues the display logic can only
   // handle one team right now. So we need to set the number of teams to 1
   gSttngs("tmsNumber", cleanInt(props.teamsnumber) || 1);
   // Q: What is your actual average lead time?
-  gSttngs("leadTime", 10);
+  gSttngs("leadTime", 160);
   //------------------------------------------------------------------
   // Calculated values:
   //------------------------------------------------------------------
@@ -70,6 +70,8 @@ export default (props /*: Props */) => {
 
   // Turns on some expensive debug features
   gSttngs("debug", true);
+  // Manually set the drag for now
+  gSttngs("drag", 0.001);
 };
 
 //------------------------------------------------------------------

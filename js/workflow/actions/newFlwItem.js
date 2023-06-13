@@ -64,6 +64,7 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
     1000;
 
   flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
+  flwItem.dScale = scaleAdjustment;
   flwItem.dVolume =
     gSttngs().x *
     scaleAdjustment *

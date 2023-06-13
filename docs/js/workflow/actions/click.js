@@ -28,7 +28,7 @@ const animateClickCube = () /*: void */ => {
   anime({
     targets: [gState().clckCbGroup.clckCube.rotation],
     y: gState().clckCbGroup.clckCube.rotation.y + Math.PI / 2,
-    duration: 1000,
+    duration: 1000 / gSttngs().fps,
     easing: "easeInOutSine",
     complete: onClickComplete,
   });
@@ -111,9 +111,6 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
   }
   // Update the effort remaining, making sure it doesn't go below 0
   updateEffortRemainingCurrentStep(flwItem);
-  if (flwItem.dEffrtRmnngCurrentStep < 0) {
-    flwItem.dEffrtRmnngCurrentStep = 0;
-  }
 };
 
 //------------------------------------------------------------------
@@ -122,16 +119,22 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
 const updateEffortRemainingCurrentStep = (
   flwItem /*: FlwItem */,
 ) /*: void */ => {
+  // Divide the overal idea flow time - processTime - by the number of touch steps
   const stepProcessTime = gSttngs().processTime / gSttngs().touchSteps;
-  const adjustedStepCycleTime =
-    stepProcessTime * Math.exp(gState().drag * gState().WIP);
+  // Math.exp(1) = 2.71828 approximately. So a drag of 0.0001 x WIP of 1 is a bit more than 1
+  const cycleTime = stepProcessTime * Math.exp(gSttngs().drag * gState().WIP);
   const numberOfDevs = gSttngs().tmSize * gSttngs().tmsNumber;
   const numberOfDevsPerStep = numberOfDevs / gSttngs().touchSteps;
   const numberOfFlowItemsThisStep =
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
   const devPowerThisStep = numberOfDevsPerStep / numberOfFlowItemsThisStep;
-  const effortExpended = adjustedStepCycleTime / devPowerThisStep;
+  const effortExpended = cycleTime / devPowerThisStep;
   flwItem.dEffrtRmnngCurrentStep -= effortExpended;
+  // Make it zero.
+  if (flwItem.dEffrtRmnngCurrentStep < 0) {
+    flwItem.dEffrtRmnngCurrentStep = 0;
+  }
+  console.log(flwItem.dEffrtRmnngCurrentStep);
 };
 
 //------------------------------------------------------------------
