@@ -293,8 +293,10 @@ const animatePosition = () /*: void */ => {
   // move the endppoint back one unit of scale
   const offset =
     Math.floor((gState().vSphere.dRadius / gSttngs().step) * 100) / 100;
-
-  gState().vSphere.dPosition.z = gState().endPosition.z - offset;
+  // ...but only if the offset is not a multiple of 3
+  if (Math.floor(offset / gSttngs().step) % 3) {
+    gState().vSphere.dPosition.z = gState().endPosition.z - offset;
+  }
 
   anime({
     targets: [gState().vSphere.position],
