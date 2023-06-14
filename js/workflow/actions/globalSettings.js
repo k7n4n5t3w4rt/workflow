@@ -9,15 +9,14 @@ export default (props /*: Props */) => {
   //------------------------------------------------------------------
 
   // Q: What steps do we have in our workflow?
+  // Q: What WIP limits, if any, do we have for each step?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
+  // Q: How many items are currently, or typically, or often in each step?
   gSttngs("flwSteps", [
-    { name: "Open", status: "backlog", limit: 0 },
-    { name: "Doing", status: "touch", limit: 0 },
-    { name: "Ready for Test", status: "wait", limit: 0 },
-    { name: "In Test", status: "touch", limit: 0 },
-    { name: "Ready for Review", status: "wait", limit: 0 },
-    { name: "In Review", status: "touch", limit: 0 },
+    { name: "Open", status: "backlog", limit: 0, preload: 100 },
+    { name: "Ready", status: "wait", limit: 10, preload: 10 },
+    { name: "Doing", status: "touch", limit: 0, preload: 140 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // To save us calculating the number of touch steps, for now
@@ -28,11 +27,11 @@ export default (props /*: Props */) => {
   // a "max" range to cover the different types of work that might be done.
   gSttngs("flwItem", { effort: { min: 14, max: 240 } });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("timeBox", 60);
+  gSttngs("timeBox", 20);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  gSttngs("death", 520);
+  gSttngs("death", 260);
   // Q: How many people are on a team?
   gSttngs("tmSize", cleanInt(props.teamsize) || 360);
   // This shouldn't really be a setting becaues the display logic can only
@@ -69,9 +68,11 @@ export default (props /*: Props */) => {
   //------------------------------------------------------------------
 
   // Turns on some expensive debug features
-  gSttngs("debug", true);
+  gSttngs("debug", false);
+  // Starts the simulation automatically
+  gSttngs("autoMode", false);
   // Manually set the drag for now
-  gSttngs("drag", -0.001);
+  gSttngs("drag", -0.02);
 };
 
 //------------------------------------------------------------------

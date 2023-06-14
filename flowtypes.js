@@ -2,6 +2,7 @@
 // gSttngs
 //------------------------------------------------------------------
 type GlobalSettings = {
+  autoMode: boolean,
   debug: boolean,
   fps: number,
   death: number,
@@ -40,6 +41,7 @@ type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
   limit: number,
+  preload: number,
 };
 
 //------------------------------------------------------------------

@@ -32,13 +32,25 @@ export default () /*: void */ => {
   // Not appearing for some reason. I think it is hidden
   const stats = createStats();
   ARContainer.appendChild(stats.dom);
-  // The reticle is the donut that appears on the ground
-  const reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
-  // This start the whole process when the user clicks the
-  // reticle to put the click cube on the ground
-  const controller = renderer.xr.getController(0);
-  controller.addEventListener("select", start());
-  scene.add(controller);
+
+  // Declare it for later
+  let reticleStuff = {};
+
+  if (gSttngs().autoMode) {
+    reticleStuff = {
+      reticle: {},
+      active: false,
+    };
+    // startAuto();
+  } else {
+    // The reticle is the donut that appears on the ground
+    reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
+    // This start the whole process when the user clicks the
+    // reticle to put the click cube on the ground
+    const controller = renderer.xr.getController(0);
+    controller.addEventListener("select", start());
+    scene.add(controller);
+  }
   // The Three.js supplied start button checks for AR support
   startButtonSetup(renderer);
   // Start the render loop

@@ -14,8 +14,18 @@ import isDone from "../calculations/isDone.js";
 import flwItmTracker from "./flwItmTracker.js";
 import filterOutDoneItems from "./filterOutDoneItems.js";
 import removeFlowItem from "./removeFlowItem.js";
+import getFlwMpSteps from "./getFlwMpSteps.js";
 
 const click = () /*: void */ => {
+  if (gState().clicks % gSttngs().timeBox === 0) {
+    console.log("=====================================");
+    console.log({
+      WIP: gState().wipQueue.mean(),
+      "Flow Time": gState().flwTmQueue._85th(),
+      Throughput: gState().thrPtQueue.total(),
+    });
+    console.log("=====================================");
+  }
   gState().clicks++;
   animateClickCube();
 };
@@ -131,7 +141,6 @@ const updateEffortRemainingCurrentStep = (
   if (flwItem.dEffrtRmnngCurrentStep < 0) {
     flwItem.dEffrtRmnngCurrentStep = 0;
   }
-  console.log(flwItem.dEffrtRmnngCurrentStep);
 };
 
 //------------------------------------------------------------------
@@ -145,23 +154,6 @@ function pullFlwItems() {
   // the previous step
   flwMpSteps.reduceRight(checkStepLimitAndPull, null);
 }
-
-//------------------------------------------------------------------
-// getFlwMpSteps()
-//------------------------------------------------------------------
-const getFlwMpSteps = () /*: FlwMpItems[] */ => {
-  // Get the keys for all the steps in the flwMap hash map
-  const flwMpStpKeys = Object.keys(gState().flwMap);
-  // Turn the array of keys into an array of step objects, each of which
-  // will be a hash map of flwItems. The key for each flwItem is the
-  // flwItem's name property, a dupicate of the uuid property.
-  const flwMpSteps = flwMpStpKeys.map(
-    (flwMpStpKey /*: string */) /*: FlwMpItems */ => {
-      return gState().flwMap[flwMpStpKey];
-    },
-  );
-  return flwMpSteps;
-};
 
 //------------------------------------------------------------------
 // checkStepLimitAndPull()
