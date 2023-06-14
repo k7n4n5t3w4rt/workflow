@@ -33,7 +33,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // should be in when the animation is complete.
   flwItem.dMoving = true;
   flwItem.dFlwStpsIndex++;
-  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtEachTouchStep;
+  flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
 
   anime({
     targets: [flwItem.position],

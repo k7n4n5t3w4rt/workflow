@@ -1,20 +1,25 @@
 // @flow
 //------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
+//------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import anime from "../../../web_modules/animejs.js";
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
-import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
+import calculateRange from "./calculateRange.js";
+import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import animateScaleToZero from "./animateScaleToZero.js";
+import rndmBetween from "./rndmBetweenWhatever.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
+  gState().flwItmTracker[flwItem.name].unshift(`Moving`);
   animateColorChange(flwItem, newColor(flwItem));
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   animatePositionChange(flwItem);
@@ -28,7 +33,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // should be in when the animation is complete.
   flwItem.dMoving = true;
   flwItem.dFlwStpsIndex++;
-  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtEachTouchStep;
+  flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
 
   anime({
     targets: [flwItem.position],
@@ -114,31 +119,4 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   }
   newPosition.z -= gSttngs().step;
   return newPosition;
-};
-
-//------------------------------------------------------------------
-// calculateRange()
-//------------------------------------------------------------------
-const calculateRange = (flwStpsIndex /*: number */) /*: number */ => {
-  let range = 0;
-  // Set the required space to the limit of the current step.
-  // If the limit is 0, set the required space to thenumber of
-  // wrkFlwItems in the current step.
-  let rqrdSpace /* number */ = gSttngs().flwSteps[flwStpsIndex].limit;
-  if (rqrdSpace === 0) {
-    rqrdSpace = gState().flwMap[flwStpsIndex.toString()].length;
-  }
-  // Does this even make sense? GPT-4 told me to do it.
-  // The idea is that the rate of increase decrteases as the
-  // numbers get bigger
-  let incrsFactor =
-    rqrdSpace * gSttngs().rangeIncreaseRate * gSttngs().rangeDecreaseRate;
-
-  range = gSttngs().scale * incrsFactor;
-  // Don't let it go over the max range
-  if (range > gSttngs().rangeMax) {
-    range = gSttngs().rangeMax;
-  }
-
-  return range;
 };

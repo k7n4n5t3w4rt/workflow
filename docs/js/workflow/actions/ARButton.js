@@ -1,8 +1,12 @@
 // @flow
 //------------------------------------------------------------------
-// IMPORT: HELPERS
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import startAuto from "./startAuto.js";
 
 const createButton = (
   renderer /*: function */,
@@ -24,6 +28,10 @@ const createButton = (
         renderer.xr.setReferenceSpaceType("local");
 
         await renderer.xr.setSession(session);
+
+        if (gSttngs().autoMode) {
+          startAuto();
+        }
 
         button.textContent = "RESET";
         button.style.display = "";

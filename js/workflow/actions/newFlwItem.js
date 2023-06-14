@@ -22,7 +22,7 @@ export default (flwStepIndex /*: number */ = 0) /*: FlwItem */ => {
   setDProps(flwItem);
   gState().flwItmTracker[flwItem.name] = [];
   mapIt(flwItem, flwStepIndex);
-  setEffort(flwItem);
+  setDays(flwItem);
   setScaleAndVolume(flwItem);
   setPosition(flwItem, flwStepIndex);
   gState().clckCbGroup.add(flwItem);
@@ -52,7 +52,7 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the age to 0
   flwItem.dAge = 0;
   // Set the team number (there is only one for now)
-  flwItem.dTmNumber = rndmBetween(1, gSttngs().tmsNumber);
+  flwItem.dTmNumber = rndmBetween(1, gSttngs().teamsNum);
   return flwItem;
 };
 
@@ -83,7 +83,7 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
   const scaleAdjustment =
-    Math.round((flwItem.dEffrtTotal / gSttngs().flwItem.effort.max) * 1000) /
+    Math.round((flwItem.dDysTotal / gSttngs().flwItem.effort.max) * 1000) /
     1000;
 
   flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
@@ -96,15 +96,15 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
 };
 
 //------------------------------------------------------------------
-// setEffort()
+// setDays()
 //------------------------------------------------------------------
-const setEffort = (flwItem /*: FlwItem */) /*: void */ => {
-  flwItem.dEffrtTotal = rndmBetween(
+const setDays = (flwItem /*: FlwItem */) /*: void */ => {
+  flwItem.dDysTotal = rndmBetween(
     gSttngs().flwItem.effort.min,
     gSttngs().flwItem.effort.max,
   );
-  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtTotal / gSttngs().touchSteps;
-  flwItem.dEffrtEachTouchStep = flwItem.dEffrtRmnngCurrentStep;
+  flwItem.dDysRmnngThisStep = flwItem.dDysTotal / gSttngs().touchSteps;
+  flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;
 };
 
 //------------------------------------------------------------------

@@ -14,21 +14,18 @@ import gState from "./gState.js";
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenIntegers.js";
 import flwItmTracker from "./flwItmTracker.js";
+import refineNewPosition from "./calculateRange.js";
 
-export default () /*: FlwItem */ => {
+export default (flwStepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
   const flwItem = threeJsCube();
-  // Set the effort values of the flwItem
-  setEffort(flwItem);
-  // Set the scale and volume of the flwItem
-  setScaleAndVolume(flwItem);
-  // Set the position
-  setPosition(flwItem);
-  // Add the new flwItem to the clckCbGroup (and the scene)
-  gState().clckCbGroup.add(flwItem);
-  // e.g.: flwItmTracker( flwItem.name, `Message...`, );
+  setDProps(flwItem);
   gState().flwItmTracker[flwItem.name] = [];
-  // Not using the return value, but Flow will keep us honest
+  mapIt(flwItem, flwStepIndex);
+  setDays(flwItem);
+  setScaleAndVolume(flwItem);
+  setPosition(flwItem, flwStepIndex);
+  gState().clckCbGroup.add(flwItem);
   return flwItem;
 };
 
@@ -43,14 +40,40 @@ const threeJsCube = () /*: FlwItem */ => {
   const flwItem = new THREE.Mesh(geometry, material);
   // Set the color for changing it later
   flwItem.dColor = color;
+  return flwItem;
+};
+
+//------------------------------------------------------------------
+// setDProps(flwItem)
+//------------------------------------------------------------------
+const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the name to the uuid so we can find it later - Three.js "needs" a name property
   flwItem.name = flwItem.uuid;
   // Set the age to 0
   flwItem.dAge = 0;
   // Set the team number (there is only one for now)
-  flwItem.dTmNumber = rndmBetween(1, gSttngs().tmsNumber);
+  flwItem.dTmNumber = rndmBetween(1, gSttngs().teamsNum);
+  return flwItem;
+};
+
+//------------------------------------------------------------------
+// mapIt(flwItem)
+//------------------------------------------------------------------
+const mapIt = (
+  flwItem /*: FlwItem */,
+  flwMapIndex /*: number */,
+) /*: FlwItem */ => {
+  gState().flwItmTracker[flwItem.name].unshift(
+    `Being added to step ${flwMapIndex}.`,
+  );
   // Add the new flwItem to the flwMap in the backlog
-  flwItem.dFlwStpsIndex = 0;
+  flwItem.dFlwStpsIndex = flwMapIndex;
+  gState().flwItmTracker[flwItem.name].unshift(
+    `dFlwStpsIndex set to ${flwMapIndex}.`,
+  );
+  gState().flwItmTracker[flwItem.name].unshift(
+    `Being added to the flwMap at step ${flwItem.dFlwStpsIndex.toString()}.`,
+  );
   gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
   return flwItem;
 };
@@ -60,10 +83,11 @@ const threeJsCube = () /*: FlwItem */ => {
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
   const scaleAdjustment =
-    Math.round((flwItem.dEffrtTotal / gSttngs().flwItem.effort.max) * 1000) /
+    Math.round((flwItem.dDysTotal / gSttngs().flwItem.effort.max) * 1000) /
     1000;
 
   flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
+  flwItem.dScale = scaleAdjustment;
   flwItem.dVolume =
     gSttngs().x *
     scaleAdjustment *
@@ -72,24 +96,32 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
 };
 
 //------------------------------------------------------------------
-// setEffort()
+// setDays()
 //------------------------------------------------------------------
-const setEffort = (flwItem /*: FlwItem */) /*: void */ => {
-  flwItem.dEffrtTotal = rndmBetween(
+const setDays = (flwItem /*: FlwItem */) /*: void */ => {
+  flwItem.dDysTotal = rndmBetween(
     gSttngs().flwItem.effort.min,
     gSttngs().flwItem.effort.max,
   );
-  flwItem.dEffrtRmnngCurrentStep = flwItem.dEffrtTotal / gSttngs().touchSteps;
-  flwItem.dEffrtEachTouchStep = flwItem.dEffrtRmnngCurrentStep;
+  flwItem.dDysRmnngThisStep = flwItem.dDysTotal / gSttngs().touchSteps;
+  flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;
 };
 
 //------------------------------------------------------------------
 // setPosition()
 //------------------------------------------------------------------
-const setPosition = (flwItem /*: FlwItem */) /*: void */ => {
-  flwItem.position.x = gState().strtPosition.x;
-  flwItem.position.y = gState().strtPosition.y;
-  flwItem.position.z = gState().strtPosition.z;
-  flwItem.dPosition = flwItem.position.clone();
+const setPosition = (
+  flwItem /*: FlwItem */,
+  flwMapIndex /*: number */,
+) /*: void */ => {
+  // Set the position because refineNewPosition() needs it
+  flwItem.position.x = gState().strtPosition.x + gSttngs().step * flwMapIndex;
+  flwItem.position.y = gState().strtPosition.y + gSttngs().step * flwMapIndex;
+  flwItem.position.z = gState().strtPosition.z + gSttngs().step * flwMapIndex;
+  // flwItem.dPosition = { ...refineNewPosition(flwItem) };
+  // // Set the position to the refined position
+  // flwItem.position.x = flwItem.dPosition.x;
+  // flwItem.position.y = flwItem.dPosition.y;
+  // flwItem.position.z = flwItem.dPosition.z;
   flwItem.dMoving = false;
 };

@@ -52,7 +52,7 @@ const onClickComplete = () /*: void */ => {
   filterOutDoneItems();
   updateWIPQueue();
   resizeVSphere();
-  updateAgeAndEffortForAllItems();
+  updateAgeAndDaysForAllItems();
   newFlwItem();
   pullFlwItems();
   // Start the click cycle over again
@@ -79,9 +79,9 @@ const calculateWip = () /*: void */ => {
 };
 
 //------------------------------------------------------------------
-// updateAgeAndEffortForAllItems()
+// updateAgeAndDaysForAllItems()
 //------------------------------------------------------------------
-const updateAgeAndEffortForAllItems = () /*: void */ => {
+const updateAgeAndDaysForAllItems = () /*: void */ => {
   // For each flwStep in the flwMap...
   getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
     // For each flwItem in this step...
@@ -120,26 +120,48 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.material.needsUpdate = true;
   }
   // Update the effort remaining, making sure it doesn't go below 0
-  updateEffortRemainingCurrentStep(flwItem);
+  updateDaysRemainingCurrentStep(flwItem);
 };
 
 //------------------------------------------------------------------
-// updateEffortRemainingCurrentStep()
+// updateDaysRemainingCurrentStep()
 //------------------------------------------------------------------
-const updateEffortRemainingCurrentStep = (
-  flwItem /*: FlwItem */,
-) /*: void */ => {
-  const numberOfDevs = gSttngs().tmSize * gSttngs().tmsNumber;
+const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
+  const numberOfDevs = gSttngs().teamSize * gSttngs().teamsNum;
   const numberOfDevsPerStep = numberOfDevs / gSttngs().touchSteps;
   const numberOfFlowItemsThisStep =
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
+  // Can be anything from 0 to 2. This should probably be Math.exp()ed.
+  const developerEffectiveness = devEffectiveness(
+    gSttngs().teamSize * gSttngs().teamsNum,
+    gState().wipQueue.mean(),
+    gSttngs().dragFactor,
+  );
   const devPowerThisStep =
-    (numberOfDevsPerStep / numberOfFlowItemsThisStep) *
-    Math.exp(gSttngs().drag * gState().WIP);
-  flwItem.dEffrtRmnngCurrentStep -= devPowerThisStep;
+    (numberOfDevsPerStep / numberOfFlowItemsThisStep) * developerEffectiveness;
+  flwItem.dDysRmnngThisStep -= devPowerThisStep;
   // Make it zero.
-  if (flwItem.dEffrtRmnngCurrentStep < 0) {
-    flwItem.dEffrtRmnngCurrentStep = 0;
+  if (flwItem.dDysRmnngThisStep < 0) {
+    flwItem.dDysRmnngThisStep = 0;
+  }
+};
+
+//------------------------------------------------------------------
+// devEffectiveness()
+//------------------------------------------------------------------
+/* @flow */
+
+const devEffectiveness = (
+  WIP /*: number */,
+  numberOfDevs /*: number */,
+  dragFactor /*: number */,
+) /*: number */ => {
+  const x = dragFactor * (WIP - numberOfDevs);
+
+  if (x <= 0) {
+    return Math.exp(-x) + 1;
+  } else {
+    return Math.exp(-x);
   }
 };
 
@@ -226,11 +248,11 @@ const pullFlowItem = (
 
   if (
     // If the flwItem.dFlwStpsIndex is 0, then we are at the backlog, in
-    // which case the dEffrtRmnngCurrentStep is not relevant
+    // which case the dDysRmnngThisStep is not relevant
     flwItem.dFlwStpsIndex === 0 ||
     // In all other cases, we only want to move the flwItem if it is
     // not moving and it has no effort remaining
-    (flwItem.dEffrtRmnngCurrentStep <= 0 && !flwItem.dMoving)
+    (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)
   ) {
     move(flwItem);
     updateFlowMap(flwItem, index);
