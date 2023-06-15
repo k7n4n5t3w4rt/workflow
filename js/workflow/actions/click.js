@@ -21,7 +21,7 @@ const click = () /*: void */ => {
     console.log("=====================================");
     console.log({
       WIP: gState().wipQueue.mean(),
-      "Flow Time": gState().flwTmQueue._85th(),
+      "Flow Time": gState().flwTmQueue.mean(),
       Throughput: gState().thrPtQueue.total(),
     });
     console.log("=====================================");
@@ -106,7 +106,7 @@ const updateFlwItemProperties = (
     removeFlowItem(flwItem, index);
     return;
   } else {
-    // Otherwise, update its age and effort
+    // Otherwise, update its age and days
     makeItOneClickOlder(flwItem);
   }
 };
@@ -119,7 +119,7 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
     flwItem.material.needsUpdate = true;
   }
-  // Update the effort remaining, making sure it doesn't go below 0
+  // Update the days remaining, making sure it doesn't go below 0
   updateDaysRemainingCurrentStep(flwItem);
 };
 
@@ -127,18 +127,21 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
 // updateDaysRemainingCurrentStep()
 //------------------------------------------------------------------
 const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
-  const numberOfDevs = gSttngs().teamSize * gSttngs().teamsNum;
-  const numberOfDevsPerStep = numberOfDevs / gSttngs().touchSteps;
   const numberOfFlowItemsThisStep =
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
   // Can be anything from 0 to 2. This should probably be Math.exp()ed.
-  const developerEffectiveness = devEffectiveness(
-    gSttngs().teamSize * gSttngs().teamsNum,
+  const wipFactor = mysteriousWipFactor(
     gState().wipQueue.mean(),
+    gSttngs().devUnits,
     gSttngs().dragFactor,
   );
-  const devPowerThisStep =
-    (numberOfDevsPerStep / numberOfFlowItemsThisStep) * developerEffectiveness;
+  let devPowerThisStep =
+    gSttngs().devUnits /
+    gSttngs().touchSteps /
+    numberOfFlowItemsThisStep /
+    wipFactor;
+  const test = flwItem.dDysRmnngThisStep - devPowerThisStep;
+  console.log(flwItem.dDysRmnngThisStep, devPowerThisStep, test);
   flwItem.dDysRmnngThisStep -= devPowerThisStep;
   // Make it zero.
   if (flwItem.dDysRmnngThisStep < 0) {
@@ -147,22 +150,48 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
 };
 
 //------------------------------------------------------------------
-// devEffectiveness()
+// mysterioudWipFactor()
 //------------------------------------------------------------------
-/* @flow */
-
-const devEffectiveness = (
+const mysteriousWipFactor = (
   WIP /*: number */,
-  numberOfDevs /*: number */,
-  dragFactor /*: number */,
+  devUnits /*: number */,
+  drag /*: number */, // Between 0 and 1, like a percentage
 ) /*: number */ => {
-  const x = dragFactor * (WIP - numberOfDevs);
-
-  if (x <= 0) {
-    return Math.exp(-x) + 1;
-  } else {
-    return Math.exp(-x);
+  // If there is no WIP or no devs, return 0
+  if (WIP === 0 || devUnits === 0) {
+    return 0;
   }
+  // So that we can do x * dragFactor to get an increase
+  let dragFactor = drag;
+  const output1 = Math.exp(1 - 1 / ((WIP * dragFactor) / devUnits));
+  console.log("output1", output1);
+  const output2 = Math.exp(output1);
+  console.log("output2", output2);
+  const wipFactor = output2;
+  console.log("----------------------------");
+  console.log("Flow Time", gState().flwTmQueue.mean());
+  console.log("ThoughPut: ", gState().thrPtQueue.total());
+  console.log("WIP: ", gState().wipQueue.mean());
+  console.log("dragFactor: ", dragFactor);
+  console.log("wipFactor: ", wipFactor);
+  console.log("----------------------------");
+  return wipFactor;
+};
+
+//------------------------------------------------------------------
+// randomProbability()
+//------------------------------------------------------------------
+const randomProbability = (a /*: number */, b /*: number */) /*: boolean */ => {
+  // Check if input is valid
+  if (a < 0 || b <= 0 || a > b) {
+    throw new Error("Invalid input. Please ensure 0 <= a <= b and b > 0.");
+  }
+
+  // Get a random number between 0 (inclusive) and 1 (exclusive)
+  const random = Math.random();
+
+  // If the random number is less than the probability (a/b), return true
+  return random < a / b;
 };
 
 //------------------------------------------------------------------
@@ -251,7 +280,7 @@ const pullFlowItem = (
     // which case the dDysRmnngThisStep is not relevant
     flwItem.dFlwStpsIndex === 0 ||
     // In all other cases, we only want to move the flwItem if it is
-    // not moving and it has no effort remaining
+    // not moving and it has no days remaining
     (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)
   ) {
     move(flwItem);

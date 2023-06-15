@@ -24,6 +24,21 @@ const click = () /*: void */ => {
       "Flow Time": gState().flwTmQueue._85th(),
       Throughput: gState().thrPtQueue.total(),
     });
+    // getFlwMpSteps().forEach(
+    //   (
+    //     flwMpStpItems /*: FlwItem[] */,
+    //     flwMpStpIndex /*: number */,
+    //   ) /*: void */ => {
+    //     console.log("Step ", flwMpStpIndex);
+    //     flwMpStpItems.forEach((flwItem /*: FlwItem */) /*: void */ => {
+    //       console.log(
+    //         flwItem.name,
+    //         flwItem.dFlwStpsIndex,
+    //         flwItem.dDysRmnngThisStep,
+    //       );
+    //     });
+    //   },
+    // );
     console.log("=====================================");
   }
   gState().clicks++;
@@ -106,7 +121,7 @@ const updateFlwItemProperties = (
     removeFlowItem(flwItem, index);
     return;
   } else {
-    // Otherwise, update its age and effort
+    // Otherwise, update its age and days
     makeItOneClickOlder(flwItem);
   }
 };
@@ -119,7 +134,7 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
     flwItem.material.needsUpdate = true;
   }
-  // Update the effort remaining, making sure it doesn't go below 0
+  // Update the days remaining, making sure it doesn't go below 0
   updateDaysRemainingCurrentStep(flwItem);
 };
 
@@ -127,18 +142,21 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
 // updateDaysRemainingCurrentStep()
 //------------------------------------------------------------------
 const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
-  const numberOfDevs = gSttngs().teamSize * gSttngs().teamsNum;
-  const numberOfDevsPerStep = numberOfDevs / gSttngs().touchSteps;
   const numberOfFlowItemsThisStep =
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
   // Can be anything from 0 to 2. This should probably be Math.exp()ed.
-  const developerEffectiveness = devEffectiveness(
-    gSttngs().teamSize * gSttngs().teamsNum,
+  const wipFactor = getWipFactor(
     gState().wipQueue.mean(),
+    gSttngs().devUnits,
     gSttngs().dragFactor,
   );
-  const devPowerThisStep =
-    (numberOfDevsPerStep / numberOfFlowItemsThisStep) * developerEffectiveness;
+  let devPowerThisStep =
+    gSttngs().devUnits /
+    gSttngs().touchSteps /
+    numberOfFlowItemsThisStep /
+    wipFactor;
+  const test = flwItem.dDysRmnngThisStep - devPowerThisStep;
+  console.log(flwItem.dDysRmnngThisStep, devPowerThisStep, test);
   flwItem.dDysRmnngThisStep -= devPowerThisStep;
   // Make it zero.
   if (flwItem.dDysRmnngThisStep < 0) {
@@ -147,22 +165,34 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
 };
 
 //------------------------------------------------------------------
-// devEffectiveness()
+// getWipFactor()
 //------------------------------------------------------------------
-/* @flow */
-
-const devEffectiveness = (
+const getWipFactor = (
   WIP /*: number */,
-  numberOfDevs /*: number */,
-  dragFactor /*: number */,
+  devUnits /*: number */,
+  drag /*: number */, // Between 0 and 1, like a percentage
 ) /*: number */ => {
-  const x = dragFactor * (WIP - numberOfDevs);
-
-  if (x <= 0) {
-    return Math.exp(-x) + 1;
-  } else {
-    return Math.exp(-x);
+  // If there is no WIP or no devs, return 0
+  if (WIP === 0 || devUnits === 0) {
+    return 0;
   }
+  // So that we can do x * dragFactor to get an increase
+  let dragFactor = drag;
+  const output1 = Math.exp(1 - 1 / ((WIP * dragFactor) / devUnits));
+  console.log("output1", output1);
+  const output2 = Math.exp(output1);
+  console.log("output2", output2);
+  const output3 = Math.exp(output2);
+  console.log("output3", output3);
+  const wipFactor = output3;
+  console.log("----------------------------");
+  console.log("Flow Time", gState().flwTmQueue.mean());
+  console.log("ThoughPut: ", gState().thrPtQueue.total());
+  console.log("WIP: ", gState().wipQueue.mean());
+  console.log("dragFactor: ", dragFactor);
+  console.log("wipFactor: ", wipFactor);
+  console.log("----------------------------");
+  return wipFactor;
 };
 
 //------------------------------------------------------------------
@@ -251,7 +281,7 @@ const pullFlowItem = (
     // which case the dDysRmnngThisStep is not relevant
     flwItem.dFlwStpsIndex === 0 ||
     // In all other cases, we only want to move the flwItem if it is
-    // not moving and it has no effort remaining
+    // not moving and it has no days remaining
     (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)
   ) {
     move(flwItem);

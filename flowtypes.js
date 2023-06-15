@@ -16,7 +16,7 @@ type GlobalSettings = {
   yOffset: number,
   scaleCm: number,
   step: number,
-  teamsNum: number,
+  devUnits: number,
   teamSize: number,
   flwSteps: Array<FlwStep>,
   touchSteps: number,
@@ -31,7 +31,7 @@ type GlobalSettings = {
 };
 
 type FlwItemSettings = {
-  effort: {
+  days: {
     min: number,
     max: number,
   },

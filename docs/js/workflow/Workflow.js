@@ -42,8 +42,7 @@ type Props = {
 	fps: string,
 	scalecm: string,
 	stepcm: string,
-  teamsnumber: string,
-  teamsize: string
+  devunits: string,
 }
 */
 export default (props /*: Props */) /*: string */ => {

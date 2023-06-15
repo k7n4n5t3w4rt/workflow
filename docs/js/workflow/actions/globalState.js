@@ -77,6 +77,7 @@ function xQueue() {
     for (const index in this.items) {
       numbers.push(this.items[index]);
     }
+    if (numbers.length === 0) return 0;
     numbers.sort((a, b) => a - b);
     let index = Math.ceil((85 / 100) * numbers.length);
     return numbers[index - 1];
@@ -87,7 +88,9 @@ function xQueue() {
     for (const index in this.items) {
       total += this.items[index];
     }
-    return total / this.length();
+    if (this.length() === 0) return 0;
+    const mean = total / this.length();
+    return mean;
   };
 
   this.length = () => {

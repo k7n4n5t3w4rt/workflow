@@ -1,9 +1,9 @@
 // @flow
 export default (
   previousDaysRemaining /*: number */,
-  effortPerFlwItem /*: number */,
+  daysPerFlwItem /*: number */,
 ) /*: number */ => {
-  let calculatedDysRmnngThisStep = previousDaysRemaining - effortPerFlwItem;
+  let calculatedDysRmnngThisStep = previousDaysRemaining - daysPerFlwItem;
   if (calculatedDysRmnngThisStep < 0) {
     calculatedDysRmnngThisStep = 0;
   }

@@ -52,7 +52,7 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the age to 0
   flwItem.dAge = 0;
   // Set the team number (there is only one for now)
-  flwItem.dTmNumber = rndmBetween(1, gSttngs().teamsNum);
+  flwItem.dTmNumber = rndmBetween(1, gSttngs().devUnits);
   return flwItem;
 };
 
@@ -83,8 +83,7 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
   const scaleAdjustment =
-    Math.round((flwItem.dDysTotal / gSttngs().flwItem.effort.max) * 1000) /
-    1000;
+    Math.round((flwItem.dDysTotal / gSttngs().flwItem.days.max) * 1000) / 1000;
 
   flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
   flwItem.dScale = scaleAdjustment;
@@ -100,8 +99,8 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dDysTotal = rndmBetween(
-    gSttngs().flwItem.effort.min,
-    gSttngs().flwItem.effort.max,
+    gSttngs().flwItem.days.min,
+    gSttngs().flwItem.days.max,
   );
   flwItem.dDysRmnngThisStep = flwItem.dDysTotal / gSttngs().touchSteps;
   flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;
