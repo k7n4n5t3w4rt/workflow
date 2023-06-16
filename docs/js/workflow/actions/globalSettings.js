@@ -14,8 +14,8 @@ export default (props /*: Props */) => {
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs("flwSteps", [
     { name: "Open", status: "backlog", limit: 0, preload: 100 },
-    { name: "Ready", status: "wait", limit: 10, preload: 10 },
-    { name: "Doing", status: "touch", limit: 0, preload: 100 },
+    { name: "Ready", status: "wait", limit: 50, preload: 10 },
+    { name: "Doing", status: "touch", limit: 50, preload: 10 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // To save us calculating the number of touch steps, for now
@@ -24,13 +24,13 @@ export default (props /*: Props */) => {
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person could do everything, how long would things take? We want a "min" and
   // a "max" range to cover the different types of work that might be done.
-  gSttngs("flwItem", { days: { min: 5, max: 20 } });
+  gSttngs("flwItem", { days: { min: 10, max: 200 } });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("timeBox", 20);
+  gSttngs("timeBox", 60);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  gSttngs("death", 60);
+  gSttngs("death", 0);
   // Q: How many people are in your whole team - or how many teams do you have?
   // This shouldn't really be a setting becaues the display logic can only
   // handle one team right now. So we need to set the number of teams to 1
@@ -87,9 +87,9 @@ export default (props /*: Props */) => {
   // Development
   //------------------------------------------------------------------
   // Turns on some expensive debug features
-  gSttngs("debug", true);
+  gSttngs("debug", false);
   // Starts the simulation automatically
-  gSttngs("autoMode", true);
+  gSttngs("autoMode", false);
   // Manually set the drag for now.
   //
   //        dragFactor = 1 / (WIP / numberOfDevs)
@@ -98,7 +98,7 @@ export default (props /*: Props */) => {
   //
   //        dragFactor = 1 / (100 / 400) = 4
 
-  gSttngs("dragFactor", 1.25);
+  gSttngs("drag", 1);
 };
 
 //------------------------------------------------------------------

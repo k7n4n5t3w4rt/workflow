@@ -43,8 +43,9 @@ const hideReticule = () /*: void */ => {
 const createClickCube = () /*: void */ => {
   // Create the clckCube
   gState().clckCbGroup = clckCbGroup();
-  gState().clckCbGroup.clckCube.position.z += 12;
-  gState().clckCbGroup.clckCube.position.y -= 3;
+  gState().clckCbGroup.clckCube.position.z +=
+    gSttngs().step * gSttngs().flwSteps.length + 15;
+  gState().clckCbGroup.clckCube.position.y -= 5;
   gState().scnData.scene.add(gState().clckCbGroup);
 };
 //------------------------------------------------------------------
@@ -72,7 +73,7 @@ const setStartPosition = () /*: void */ => {
 //------------------------------------------------------------------
 const setEndPosition = () /*: void */ => {
   gState().endPosition = gState().strtPosition.clone();
-  gState().endPosition.z -= gSttngs().step * (gSttngs().flwSteps.length + 2);
+  gState().endPosition.z -= gSttngs().step * gSttngs().flwSteps.length + 2;
 };
 //------------------------------------------------------------------
 // createValueSphere()

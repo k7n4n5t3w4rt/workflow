@@ -27,7 +27,7 @@ type GlobalSettings = {
   rangeIncreaseRate: number,
   rangeDecreaseRate: number,
   leadTimeAverage: number,
-  dragFactor: number,
+  drag: number,
 };
 
 type FlwItemSettings = {

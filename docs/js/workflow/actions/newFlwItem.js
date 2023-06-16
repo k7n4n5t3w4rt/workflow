@@ -20,6 +20,7 @@ export default (flwStepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
   const flwItem = threeJsCube();
   setDProps(flwItem);
+  setAge(flwItem);
   gState().flwItmTracker[flwItem.name] = [];
   mapIt(flwItem, flwStepIndex);
   setDays(flwItem);
@@ -49,8 +50,6 @@ const threeJsCube = () /*: FlwItem */ => {
 const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the name to the uuid so we can find it later - Three.js "needs" a name property
   flwItem.name = flwItem.uuid;
-  // Set the age to 0
-  flwItem.dAge = 0;
   // Set the team number (there is only one for now)
   flwItem.dTmNumber = rndmBetween(1, gSttngs().devUnits);
   return flwItem;
@@ -95,6 +94,15 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
 };
 
 //------------------------------------------------------------------
+// setAge()
+//------------------------------------------------------------------
+const setAge = (flwItem /*: FlwItem */) /*: void */ => {
+  flwItem.dAge = 0;
+  if (gSttngs().autoMode && gSttngs().death > 0) {
+    flwItem.dAge = rndmBetween(0, gSttngs().death);
+  }
+};
+//------------------------------------------------------------------
 // setDays()
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
@@ -114,9 +122,15 @@ const setPosition = (
   flwMapIndex /*: number */,
 ) /*: void */ => {
   // Set the position because refineNewPosition() needs it
-  flwItem.position.x = gState().strtPosition.x + gSttngs().step * flwMapIndex;
-  flwItem.position.y = gState().strtPosition.y + gSttngs().step * flwMapIndex;
+  flwItem.position.x = gState().strtPosition.x;
+  flwItem.position.y = gState().strtPosition.y;
   flwItem.position.z = gState().strtPosition.z + gSttngs().step * flwMapIndex;
+  if (gSttngs().autoMode) {
+    flwItem.position.x =
+      rndmBetween(gState().strtPosition.x, 30 * rndmPosOrNeg()) / 10;
+    flwItem.position.y =
+      rndmBetween(gState().strtPosition.y, 30 * rndmPosOrNeg()) / 10;
+  }
   // flwItem.dPosition = { ...refineNewPosition(flwItem) };
   // // Set the position to the refined position
   // flwItem.position.x = flwItem.dPosition.x;

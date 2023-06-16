@@ -101,7 +101,7 @@ const updateFlwItemProperties = (
     return;
   }
   // Otherwise, check if it has died of old age...
-  if (++flwItem.dAge >= gSttngs().death) {
+  if (gSttngs().death > 0 && ++flwItem.dAge >= gSttngs().death) {
     // ...and if so, remove it
     removeFlowItem(flwItem, index);
     return;
@@ -114,8 +114,9 @@ const updateFlwItemProperties = (
 // makeItOneClickOlder()
 //------------------------------------------------------------------
 const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
+  flwItem.dAge++;
   // If the flwItem is not dead, make it more transparent
-  if (flwItem.dAge <= gSttngs().death && flwItem.dAge % 1 === 0) {
+  if (gSttngs().death > 0 && flwItem.dAge <= gSttngs().death) {
     flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
     flwItem.material.needsUpdate = true;
   }
@@ -131,17 +132,19 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
   // Can be anything from 0 to 2. This should probably be Math.exp()ed.
   const wipFactor = mysteriousWipFactor(
-    gState().wipQueue.mean(),
     gSttngs().devUnits,
-    gSttngs().dragFactor,
+    gState().wipQueue.mean(),
+    gSttngs().drag,
   );
   let devPowerThisStep =
-    gSttngs().devUnits /
-    gSttngs().touchSteps /
-    numberOfFlowItemsThisStep /
-    wipFactor;
+    gSttngs().devUnits / gSttngs().touchSteps / numberOfFlowItemsThisStep;
+  // Unless the WIP factor is false, in which case it's 0
+  if (wipFactor === false) {
+    devPowerThisStep = 0;
+  }
   const test = flwItem.dDysRmnngThisStep - devPowerThisStep;
-  console.log(flwItem.dDysRmnngThisStep, devPowerThisStep, test);
+  console.log(`${flwItem.dDysRmnngThisStep} - ${devPowerThisStep} === ${test}`);
+  console.log("----------------------------");
   flwItem.dDysRmnngThisStep -= devPowerThisStep;
   // Make it zero.
   if (flwItem.dDysRmnngThisStep < 0) {
@@ -153,45 +156,42 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
 // mysterioudWipFactor()
 //------------------------------------------------------------------
 const mysteriousWipFactor = (
-  WIP /*: number */,
   devUnits /*: number */,
+  WIP /*: number */,
   drag /*: number */, // Between 0 and 1, like a percentage
-) /*: number */ => {
+) /*: boolean */ => {
   // If there is no WIP or no devs, return 0
   if (WIP === 0 || devUnits === 0) {
-    return 0;
+    return false;
   }
-  // So that we can do x * dragFactor to get an increase
-  let dragFactor = drag;
-  const output1 = Math.exp(1 - 1 / ((WIP * dragFactor) / devUnits));
-  console.log("output1", output1);
-  const output2 = Math.exp(output1);
-  console.log("output2", output2);
-  const wipFactor = output2;
+  const wipFactor = randomProbability(devUnits, WIP, drag);
   console.log("----------------------------");
-  console.log("Flow Time", gState().flwTmQueue.mean());
-  console.log("ThoughPut: ", gState().thrPtQueue.total());
-  console.log("WIP: ", gState().wipQueue.mean());
-  console.log("dragFactor: ", dragFactor);
   console.log("wipFactor: ", wipFactor);
-  console.log("----------------------------");
   return wipFactor;
 };
 
 //------------------------------------------------------------------
 // randomProbability()
 //------------------------------------------------------------------
-const randomProbability = (a /*: number */, b /*: number */) /*: boolean */ => {
+const randomProbability = (
+  devUnits /*: number */,
+  WIP /*: number */,
+  drag /*: number */,
+) /*: boolean */ => {
   // Check if input is valid
-  if (a < 0 || b <= 0 || a > b) {
-    throw new Error("Invalid input. Please ensure 0 <= a <= b and b > 0.");
+  if (devUnits < 0 || WIP <= 0) {
+    console.error("Invalid input. Please ensure 0 <= devUnits and WIP > 0.");
+    return false;
   }
-
+  // There are plenty of devs for the WIP
+  if (devUnits >= WIP) {
+    return true;
+  }
   // Get a random number between 0 (inclusive) and 1 (exclusive)
   const random = Math.random();
 
   // If the random number is less than the probability (a/b), return true
-  return random < a / b;
+  return random < devUnits / (WIP * drag);
 };
 
 //------------------------------------------------------------------
@@ -263,7 +263,7 @@ const pullFlowItem = (
   index /*: number */,
 ) /*: "no limit" | number */ => {
   // Check if the fwItem has died of old age
-  if (flwItem.dAge >= gSttngs().death) {
+  if (gSttngs().death > 0 && flwItem.dAge >= gSttngs().death) {
     return availableLimit;
   }
   // This will happen when we have used up the availableLimit
@@ -279,6 +279,8 @@ const pullFlowItem = (
     // If the flwItem.dFlwStpsIndex is 0, then we are at the backlog, in
     // which case the dDysRmnngThisStep is not relevant
     flwItem.dFlwStpsIndex === 0 ||
+    // This is a wait step so no work is being done
+    gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "wait" ||
     // In all other cases, we only want to move the flwItem if it is
     // not moving and it has no days remaining
     (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)

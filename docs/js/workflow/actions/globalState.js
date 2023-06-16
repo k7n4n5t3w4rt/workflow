@@ -90,7 +90,7 @@ function xQueue() {
     }
     if (this.length() === 0) return 0;
     const mean = total / this.length();
-    return mean;
+    return Math.round(mean * 100) / 100;
   };
 
   this.length = () => {
