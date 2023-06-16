@@ -15,6 +15,9 @@ import flwItmTracker from "./flwItmTracker.js";
 import filterOutDoneItems from "./filterOutDoneItems.js";
 import removeFlowItem from "./removeFlowItem.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
+import { decayFunction } from "./decayFunction.js";
+import { mysteriousWipFactor } from "./mysteriousWipFactor.js";
+import { findRadius } from "./findRadius.js";
 
 const click = () /*: void */ => {
   if (gState().clicks % gSttngs().timeBox === 0) {
@@ -131,15 +134,22 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
   const numberOfFlowItemsThisStep =
     gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
   // Can be anything from 0 to 2. This should probably be Math.exp()ed.
-  const wipFactor = mysteriousWipFactor(
-    gSttngs().devUnits,
-    gState().wipQueue.mean(),
+  const processThisStep = mysteriousWipFactor(
+    gSttngs().devUnits / gSttngs().touchSteps,
+    numberOfFlowItemsThisStep,
     gSttngs().drag,
   );
-  let devPowerThisStep =
-    gSttngs().devUnits / gSttngs().touchSteps / numberOfFlowItemsThisStep;
+  const naturalDevPower = gSttngs().devUnits / gSttngs().touchSteps;
+  console.log("naturalDevPower: ", naturalDevPower);
+  console.log("numberOfFlowItemsThisStep: ", numberOfFlowItemsThisStep);
+  let devPowerThisStep = decayFunction(
+    naturalDevPower,
+    numberOfFlowItemsThisStep,
+    gSttngs().drag,
+  );
+  console.log("devPowerThisStep: ", devPowerThisStep);
   // Unless the WIP factor is false, in which case it's 0
-  if (wipFactor === false) {
+  if (processThisStep === false) {
     devPowerThisStep = 0;
   }
   const test = flwItem.dDysRmnngThisStep - devPowerThisStep;
@@ -153,58 +163,16 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
 };
 
 //------------------------------------------------------------------
-// mysterioudWipFactor()
-//------------------------------------------------------------------
-const mysteriousWipFactor = (
-  devUnits /*: number */,
-  WIP /*: number */,
-  drag /*: number */, // Between 0 and 1, like a percentage
-) /*: boolean */ => {
-  // If there is no WIP or no devs, return 0
-  if (WIP === 0 || devUnits === 0) {
-    return false;
-  }
-  const wipFactor = randomProbability(devUnits, WIP, drag);
-  console.log("----------------------------");
-  console.log("wipFactor: ", wipFactor);
-  return wipFactor;
-};
-
-//------------------------------------------------------------------
-// randomProbability()
-//------------------------------------------------------------------
-const randomProbability = (
-  devUnits /*: number */,
-  WIP /*: number */,
-  drag /*: number */,
-) /*: boolean */ => {
-  // Check if input is valid
-  if (devUnits < 0 || WIP <= 0) {
-    console.error("Invalid input. Please ensure 0 <= devUnits and WIP > 0.");
-    return false;
-  }
-  // There are plenty of devs for the WIP
-  if (devUnits >= WIP) {
-    return true;
-  }
-  // Get a random number between 0 (inclusive) and 1 (exclusive)
-  const random = Math.random();
-
-  // If the random number is less than the probability (a/b), return true
-  return random < devUnits / (WIP * drag);
-};
-
-//------------------------------------------------------------------
 // pullFlwItems()
 //------------------------------------------------------------------
-function pullFlwItems() {
+const pullFlwItems = () /*: void */ => {
   // Get the flwMpSteps  as an array (the flwMap is an "hash map" object)
   const flwMpSteps = getFlwMpSteps();
   // reduceRight() starts at the end of the array and works backwards.
   // For each step, check the limit and, if there is space, pull from
   // the previous step
   flwMpSteps.reduceRight(checkStepLimitAndPull, null);
-}
+};
 
 //------------------------------------------------------------------
 // checkStepLimitAndPull()
@@ -315,7 +283,6 @@ const updateWIPQueue = () /*: void */ => {
   if (gState().wipQueue.length() >= gSttngs().timeBox) {
     gState().wipQueue.dequeue();
   }
-  // PLACEHOLER: This is where we would calculate the WIP
   gState().wipQueue.enqueue(gState().WIP);
 };
 
@@ -384,18 +351,6 @@ const animateScale = () /*: void */ => {
       },
     });
   }
-};
-
-//------------------------------------------------------------------
-// findRadius()
-//------------------------------------------------------------------
-const findRadius = (volume /*: number */) /*: number */ => {
-  if (volume <= 0) {
-    return 0;
-  }
-  const pi = Math.PI;
-  let radius = Math.cbrt((3 * volume) / (4 * pi));
-  return radius;
 };
 
 export default click;

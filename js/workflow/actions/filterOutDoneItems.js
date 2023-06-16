@@ -12,7 +12,7 @@ import removeFlowItem from "./removeFlowItem.js";
 //------------------------------------------------------------------
 // filterDoneItems()
 //------------------------------------------------------------------
-export default () => {
+export default () /*: void */ => {
   gState().vSphere.dRllngTtlVolume = 0;
   const doneFlwItems =
     gState().flwMap[(gSttngs().flwSteps.length - 1).toString()];
@@ -38,14 +38,17 @@ export default () => {
 const processFlowTime = (
   accumulator /*: Array<number> */,
   flwItem /*: FlwItem */,
-) => {
+) /*: Array<number> */ => {
   accumulator.push(flwItem.dAge);
   return accumulator;
 };
 //------------------------------------------------------------------
 // processValue()
 //------------------------------------------------------------------
-const processValue = (accumulator /*: number */, flwItem /*: FlwItem */) => {
+const processValue = (
+  accumulator /*: number */,
+  flwItem /*: FlwItem */,
+) /*: number */ => {
   return accumulator + flwItem.dVolume;
 };
 

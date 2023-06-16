@@ -5,13 +5,13 @@
 import anime from "../../../web_modules/animejs.js";
 
 //------------------------------------------------------------------
-// aniateScale()
+// animateScaleToZero()
 //------------------------------------------------------------------
 export default (
   flwItem /*: FlwItem */,
   duration /*: number */ = 1200,
   completeFunction /*: function */ = () => {},
-) => {
+) /*: void */ => {
   // Create an object with a scale property that can be animated.
   let scaleObject = {
     x: flwItem.scale.x,
