@@ -62,13 +62,13 @@ type GlobalState = {
   clckCbGroup: ClickCubeGroup,
   // drag: number,
   flwItmTracker: FlwItmTracker,
-  WIP: number,
+  wip: number,
   // -----------------------
   // Metrics:
   // -----------------------
   vQueue: VQueue,
   thrPtQueue: ThrPtQueue,
-  wipQueue: WIPQueue,
+  wipQueue: WipQueue,
   flwTmQueue: FlwTmQueue,
 };
 
@@ -274,7 +274,7 @@ type FlwTmQueue = {
   mean: () => number,
 };
 
-type WIPQueue = {
+type WipQueue = {
   // -----------------------
   // Data:
   // -----------------------

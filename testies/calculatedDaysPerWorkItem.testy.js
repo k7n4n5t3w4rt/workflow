@@ -5,7 +5,10 @@ import calculatedDaysPerWorkItem from "../js/workflow/calculations/calculatedDay
 
 const skip = false;
 
-test("calculateDaysRemaining | returns the total days power for all the people / number of work items", () /*: void */ => {
+test("-------------- calculateDaysPerWorkItem.js ---------------------", () /*: void */ => {
+  should(1).be.exactly(1);
+});
+test("Returns the total days power for all the people / number of work items", () /*: void */ => {
   should(calculatedDaysPerWorkItem(1, 400, 10)).be.exactly(40);
   should(calculatedDaysPerWorkItem(1, 400, 1000)).be.exactly(0.4);
   should(calculatedDaysPerWorkItem(1, 400, 100000)).be.exactly(0.004);

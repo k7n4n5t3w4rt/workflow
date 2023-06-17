@@ -15,14 +15,36 @@ const execFactory = async (e /*: Error */, testies /*: Array<string> */) => {
     execReducerFunction,
     Promise.resolve([]),
   );
-  // console.log("HERE");
+  // Log this out for the faucet reporter
   console.log(`1..${faucetMessages.length}`);
-  faucetMessages.sort().forEach((message /*: string */) => {
-    console.log(message);
-  });
+  faucetMessages
+    .sort((a /*: string */, b /*: string */) /*: number */ => {
+      // faucet needs the messages to be sorted by test number
+      const aNum = cleanInt(a.split(" ")[1]);
+      const bNum = cleanInt(b.split(" ")[1]);
+      if (aNum < bNum) {
+        return -1;
+      }
+      if (aNum > bNum) {
+        return 1;
+      }
+      // a must be equal to b
+      return 0;
+    })
+    .forEach((message /*: string */) => {
+      // Log this out for the faucet reporter
+      console.log(message);
+    });
 };
 
 glob("**/*.testy.js", execFactory);
+
+//------------------------------------------------------------------
+// cleanInt()
+//------------------------------------------------------------------
+const cleanInt = (getVar /*: string */) /*: number */ => {
+  return Math.abs(Math.floor(parseFloat(getVar)) || 0);
+};
 
 const experimentalWarningFilter = (currentElement /*: string */) => {
   return (
@@ -32,33 +54,35 @@ const experimentalWarningFilter = (currentElement /*: string */) => {
   );
 };
 
-const processExecMessages = (resolve /*: function */) => (
-  e /*: Error */,
-  stdout /*: function */,
-  stderr /*: function */,
-) /*: void */ => {
-  if (e) {
-    ++counter;
-    resolve([`${e.message}...${stderr}`]);
-  }
-  let messageString = stdout.trim();
-  if (stderr) {
-    const notOks /*: Array<string> */ = stderr.split(/\r?\n/) || [];
-    const trimmedNotOks = notOks.map((currentElement /*: string */) =>
-      currentElement.trim(),
-    );
-    // Get rid of the stupid NodeJS es module warning
-    const filtered = trimmedNotOks.filter(experimentalWarningFilter);
-    if (filtered.length) {
-      messageString += " - " + filtered.join(" ~ ");
+const processExecMessages =
+  (resolve /*: function */) =>
+  (
+    e /*: Error */,
+    stdout /*: function */,
+    stderr /*: function */,
+  ) /*: void */ => {
+    if (e) {
+      ++counter;
+      resolve([`${e.message}...${stderr}`]);
     }
-  }
-  const messages /*: Array<string> */ = messageString.split(/\r?\n/) || [];
-  const filteredMessages = messages.filter(
-    (currentElement /*: string */) => currentElement !== "",
-  );
-  resolve(messages);
-};
+    let messageString = stdout.trim();
+    if (stderr) {
+      const notOks /*: Array<string> */ = stderr.split(/\r?\n/) || [];
+      const trimmedNotOks = notOks.map((currentElement /*: string */) =>
+        currentElement.trim(),
+      );
+      // Get rid of the stupid NodeJS es module warning
+      const filtered = trimmedNotOks.filter(experimentalWarningFilter);
+      if (filtered.length) {
+        messageString += " - " + filtered.join(" ~ ");
+      }
+    }
+    const messages /*: Array<string> */ = messageString.split(/\r?\n/) || [];
+    const filteredMessages = messages
+      .filter((currentElement /*: string */) => currentElement !== "")
+      .sort();
+    resolve(messages);
+  };
 
 const execFactoryReducerFunction = async (
   carry /*: Promise<Array<() => Promise<Array<string>>>> */,

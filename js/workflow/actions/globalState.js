@@ -31,7 +31,7 @@ export default () => {
 // //------------------------------------------------------------------
 // const calculateDrag = () /*: number */ => {
 //   return (
-//     Math.log(gSttngs().leadTimeAverageAverage / gSttngs().processTimeAverage) / (gState().WIP - 1)
+//     Math.log(gSttngs().leadTimeAverageAverage / gSttngs().processTimeAverage) / (gState().wip - 1)
 //   );
 // };
 

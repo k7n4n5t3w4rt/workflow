@@ -5,7 +5,10 @@ import calculateDaysRemaining from "../js/workflow/calculations/calculateDaysRem
 
 const skip = false;
 
-test("calculateDaysRemaining | returns the new days remaining", () /*: void */ => {
+test("-------------- calculateDaysRemaining.js ---------------------", () /*: void */ => {
+  should(1).be.exactly(1);
+});
+test("Returns the new days remaining", () /*: void */ => {
   should(calculateDaysRemaining(110, 100)).be.exactly(10);
   should(calculateDaysRemaining(100, 0.004)).be.exactly(99.996);
   should(calculateDaysRemaining(200.006, 0.004)).be.exactly(200.002);

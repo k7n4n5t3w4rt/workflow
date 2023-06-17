@@ -15,9 +15,9 @@ import flwItmTracker from "./flwItmTracker.js";
 import filterOutDoneItems from "./filterOutDoneItems.js";
 import removeFlowItem from "./removeFlowItem.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
-import { decayFunction } from "./decayFunction.js";
-import { mysteriousWipFactor } from "./mysteriousWipFactor.js";
-import { findRadius } from "./findRadius.js";
+import dragFunction from "./dragFunction.js";
+import skipForWip from "./skipForWip.js";
+import findRadius from "../calculations/findRadius.js";
 
 const click = () /*: void */ => {
   if (gState().clicks % gSttngs().timeBox === 0) {
@@ -51,7 +51,7 @@ const animateClickCube = () /*: void */ => {
 // onClickComplete()
 //------------------------------------------------------------------
 const onClickComplete = () /*: void */ => {
-  calculateWip();
+  gState().wip = calculateWip();
   filterOutDoneItems();
   updateWIPQueue();
   resizeVSphere();
@@ -65,7 +65,7 @@ const onClickComplete = () /*: void */ => {
 //------------------------------------------------------------------
 // calculateWip()
 //------------------------------------------------------------------
-const calculateWip = () /*: void */ => {
+const calculateWip = () /*: number */ => {
   let wip = 0;
   // For each flwStep in the flwMap...
   getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
@@ -78,7 +78,7 @@ const calculateWip = () /*: void */ => {
       }
     }).length;
   });
-  gState().WIP = wip;
+  return wip;
 };
 
 //------------------------------------------------------------------
@@ -131,35 +131,41 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
 // updateDaysRemainingCurrentStep()
 //------------------------------------------------------------------
 const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
-  const numberOfFlowItemsThisStep =
-    gState().flwMap[flwItem.dFlwStpsIndex.toString()].length;
-  // Can be anything from 0 to 2. This should probably be Math.exp()ed.
-  const processThisStep = mysteriousWipFactor(
-    gSttngs().devUnits / gSttngs().touchSteps,
-    numberOfFlowItemsThisStep,
-    gSttngs().drag,
-  );
-  const naturalDevPower = gSttngs().devUnits / gSttngs().touchSteps;
-  console.log("naturalDevPower: ", naturalDevPower);
-  console.log("numberOfFlowItemsThisStep: ", numberOfFlowItemsThisStep);
-  let devPowerThisStep = decayFunction(
-    naturalDevPower,
-    numberOfFlowItemsThisStep,
-    gSttngs().drag,
-  );
-  console.log("devPowerThisStep: ", devPowerThisStep);
-  // Unless the WIP factor is false, in which case it's 0
-  if (processThisStep === false) {
-    devPowerThisStep = 0;
-  }
-  const test = flwItem.dDysRmnngThisStep - devPowerThisStep;
-  console.log(`${flwItem.dDysRmnngThisStep} - ${devPowerThisStep} === ${test}`);
+  // Shorten some variable names
+  const touchSteps = gSttngs().touchSteps;
+  const devUnits = gSttngs().devUnits / touchSteps;
+  let drag = gSttngs().drag;
+  const stepKey = flwItem.dFlwStpsIndex.toString();
+  const flwMap = gState().flwMap;
+  const flwMpStep = flwMap[stepKey];
+  const flwStpWip = flwMpStep.length;
+  // Work out, on probability, whether to skip this item
+  const skip = skipForWip(devUnits, flwStpWip);
+  // Work out the devPower without any decay or drag
+  let devPower = devUnits / flwStpWip;
+  // This is the bit that needs thought
+  drag = dragFunction(devPower, flwStpWip, drag);
+
   console.log("----------------------------");
-  flwItem.dDysRmnngThisStep -= devPowerThisStep;
-  // Make it zero.
+  console.log("flwItem.dDysRmnngThisStep: ", flwItem.dDysRmnngThisStep);
+  console.log("devPower: ", devPower);
+  console.log("drag: ", drag);
+
+  // If we're skipping this item, set the devPower to 0
+  if (skip === true) {
+    devPower = 0;
+  } else {
+    devPower = devPower * drag;
+  }
+
+  console.log("devPower: ", devPower);
+
+  flwItem.dDysRmnngThisStep -= devPower;
   if (flwItem.dDysRmnngThisStep < 0) {
     flwItem.dDysRmnngThisStep = 0;
   }
+  console.log("flwItem.dDysRmnngThisStep: ", flwItem.dDysRmnngThisStep);
+  console.log("----------------------------");
 };
 
 //------------------------------------------------------------------
@@ -283,7 +289,7 @@ const updateWIPQueue = () /*: void */ => {
   if (gState().wipQueue.length() >= gSttngs().timeBox) {
     gState().wipQueue.dequeue();
   }
-  gState().wipQueue.enqueue(gState().WIP);
+  gState().wipQueue.enqueue(gState().wip);
 };
 
 //------------------------------------------------------------------

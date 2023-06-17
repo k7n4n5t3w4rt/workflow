@@ -3,10 +3,10 @@ import gSttngs from "./gSttngs.js";
 
 /*::
 type Props = {
-	fps: string,
-	scalecm: string,
-	stepcm: string,
-  devunits: string,
+	fps?: string,
+	scalecm?: string,
+	stepcm?: string,
+  devunits?: string,
 }
 */
 //------------------------------------------------------------------
@@ -23,8 +23,8 @@ export default (props /*: Props */) => {
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs("flwSteps", [
     { name: "Open", status: "backlog", limit: 0, preload: 100 },
-    { name: "Ready", status: "wait", limit: 20, preload: 10 },
-    { name: "Doing", status: "touch", limit: 0, preload: 10 },
+    { name: "Ready", status: "wait", limit: 10, preload: 10 },
+    { name: "Doing", status: "touch", limit: 10, preload: 10 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // To save us calculating the number of touch steps, for now
@@ -43,7 +43,7 @@ export default (props /*: Props */) => {
   // Q: How many people are in your whole team - or how many teams do you have?
   // This shouldn't really be a setting becaues the display logic can only
   // handle one team right now. So we need to set the number of teams to 1
-  gSttngs("devUnits", cleanInt(props.devunits) || 20);
+  gSttngs("devUnits", cleanInt(props.devunits || "20"));
   //------------------------------------------------------------------
   // Important but not yet used...
   //------------------------------------------------------------------
@@ -82,12 +82,16 @@ export default (props /*: Props */) => {
   // Display
   //------------------------------------------------------------------
   gSttngs("fps", Math.abs(parseFloat(props.fps) || 1));
-  gSttngs("scaleCm", cleanInt(props.scalecm) || 7);
+  gSttngs("scaleCm", cleanInt(props.scalecm || "7"));
   gSttngs("scale", gSttngs().scaleCm / 100);
   gSttngs("x", gSttngs().scale);
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
-  gSttngs("step", cleanInt(props.stepcm) / 100 || gSttngs().scale * 2);
+  gSttngs(
+    "step",
+    cleanInt(props.stepcm || (gSttngs().scale * 2).toString()) / 100 ||
+      gSttngs().scale * 2,
+  );
   gSttngs("yOffset", gSttngs().scale * 10);
   gSttngs("rangeMax", gSttngs().yOffset * 0.75);
   gSttngs("rangeIncreaseRate", 1.75);
@@ -98,7 +102,7 @@ export default (props /*: Props */) => {
   // Turns on some expensive debug features
   gSttngs("debug", false);
   // Starts the simulation automatically
-  gSttngs("autoMode", false);
+  gSttngs("autoMode", true);
   // A drag of 1 is no drag
   gSttngs("drag", 0.25);
 };

@@ -39,10 +39,10 @@ import globalState from "./actions/globalState.js";
 
 /*::
 type Props = {
-	fps: string,
-	scalecm: string,
-	stepcm: string,
-  devunits: string,
+	fps?: string,
+	scalecm?: string,
+	stepcm?: string,
+  devunits?: string,
 }
 */
 export default (props /*: Props */) /*: string */ => {
