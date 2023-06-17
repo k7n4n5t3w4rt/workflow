@@ -62,17 +62,8 @@ const mapIt = (
   flwItem /*: FlwItem */,
   flwMapIndex /*: number */,
 ) /*: FlwItem */ => {
-  gState().flwItmTracker[flwItem.name].unshift(
-    `Being added to step ${flwMapIndex}.`,
-  );
   // Add the new flwItem to the flwMap in the backlog
   flwItem.dFlwStpsIndex = flwMapIndex;
-  gState().flwItmTracker[flwItem.name].unshift(
-    `dFlwStpsIndex set to ${flwMapIndex}.`,
-  );
-  gState().flwItmTracker[flwItem.name].unshift(
-    `Being added to the flwMap at step ${flwItem.dFlwStpsIndex.toString()}.`,
-  );
   gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
   return flwItem;
 };
@@ -80,26 +71,30 @@ const mapIt = (
 //------------------------------------------------------------------
 // setScaleAndVolume()
 //------------------------------------------------------------------
-const setScaleAndVolume = (flwItem /*: FlwItem */) /*: void */ => {
-  const scaleAdjustment =
-    Math.round((flwItem.dDysTotal / gSttngs().flwItem.days.max) * 1000) / 1000;
+const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+  // Some shorthand
+  const daysMax = gSttngs().flwItem.days.max;
+  const daysTotal = flwItem.dDysTotal;
 
-  flwItem.scale.set(scaleAdjustment, scaleAdjustment, scaleAdjustment);
-  flwItem.dScale = scaleAdjustment;
+  const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
+
+  flwItem.scale.set(scale, scale, scale);
+  flwItem.dScale = scale;
   flwItem.dVolume =
-    gSttngs().x *
-    scaleAdjustment *
-    (gSttngs().y * scaleAdjustment) *
-    (gSttngs().z * scaleAdjustment);
+    gSttngs().x * scale * (gSttngs().y * scale) * (gSttngs().z * scale);
+  return flwItem;
 };
 
 //------------------------------------------------------------------
 // setAge()
 //------------------------------------------------------------------
 const setAge = (flwItem /*: FlwItem */) /*: void */ => {
+  // Some shorthand
+  const death = gSttngs().death;
+  // Set the age
   flwItem.dAge = 0;
-  if (gSttngs().autoMode && gSttngs().death > 0) {
-    flwItem.dAge = rndmBetween(0, gSttngs().death);
+  if (death > 0) {
+    flwItem.dAge = rndmBetween(0, death);
   }
 };
 //------------------------------------------------------------------

@@ -34,21 +34,30 @@ export default () /*: void */ => {
   ARContainer.appendChild(stats.dom);
 
   // Declare it for later
-  let reticleStuff = {};
+  let reticleStuff = {
+    reticle: {},
+    active: false,
+  };
 
+  // --------------------------------------------------------------
+  // AUTOMODE
+  // --------------------------------------------------------------
   if (gSttngs().autoMode) {
     reticleStuff = {
       reticle: {},
       active: false,
     };
-    // startAuto();
-  } else {
+  }
+  // --------------------------------------------------------------
+  // ! AUTOMODE
+  // --------------------------------------------------------------
+  if (!gSttngs().autoMode) {
     // The reticle is the donut that appears on the ground
     reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
     // This start the whole process when the user clicks the
     // reticle to put the click cube on the ground
     const controller = renderer.xr.getController(0);
-    controller.addEventListener("select", start());
+    controller.addEventListener("select", start);
     scene.add(controller);
   }
   // The Three.js supplied start button checks for AR support

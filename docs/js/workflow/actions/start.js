@@ -17,8 +17,13 @@ import newVSphere from "./newVSphere.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import newFlwItem from "./newFlwItem.js";
 
-export default () /*: () => void */ => () /*: void */ => {
-  hideReticule();
+export default () /*: void */ => {
+  // --------------------------------------------------------------
+  // ! AUTOMODE
+  // --------------------------------------------------------------
+  if (!gSttngs().autoMode) {
+    hideReticule();
+  }
   createClickCube();
   orientEverythingToTheClickCube();
   setStartPosition();
@@ -42,8 +47,15 @@ const hideReticule = () /*: void */ => {
 // createClickCube()
 //------------------------------------------------------------------
 const createClickCube = () /*: void */ => {
-  // Create the clckCube
   gState().clckCbGroup = clckCbGroup();
+  // --------------------------------------------------------------
+  // AUTOMODE
+  // --------------------------------------------------------------
+  if (gSttngs().autoMode) {
+    gState().clckCbGroup.clckCube.position.z +=
+      gSttngs().step * gSttngs().flwSteps.length + 15;
+    gState().clckCbGroup.clckCube.position.y -= 5;
+  }
   gState().scnData.scene.add(gState().clckCbGroup);
 };
 //------------------------------------------------------------------
@@ -56,10 +68,15 @@ const orientEverythingToTheClickCube = () /*: void */ => {
   const radians = Math.atan2(vector.x, vector.z);
   // Rotate the group on the Y axis (around it's centre, always the 0,0,0 point)
   gState().clckCbGroup.rotateY(radians);
-  // Last thing: set the position of the cube based on the location of  the reticle
-  gState().clckCbGroup.position.setFromMatrixPosition(
-    gState().scnData.reticleStuff.reticle.matrix,
-  );
+  // --------------------------------------------------------------
+  // ! AUTOMODE
+  // --------------------------------------------------------------
+  if (!gSttngs().autoMode) {
+    // Last thing: set the position of the cube based on the location of  the reticle
+    gState().clckCbGroup.position.setFromMatrixPosition(
+      gState().scnData.reticleStuff.reticle.matrix,
+    );
+  }
 };
 //------------------------------------------------------------------
 // setStartPosition()
@@ -77,6 +94,12 @@ const setEndPosition = () /*: void */ => {
   gState().endPosition = gState().strtPosition.clone();
   gState().endPosition.z +=
     gSttngs().step * (gSttngs().flwSteps.length + 2) * -1;
+  // --------------------------------------------------------------
+  // AUTOMODE
+  // --------------------------------------------------------------
+  if (gSttngs().autoMode) {
+    gState().endPosition.z -= gSttngs().step * gSttngs().flwSteps.length + 2;
+  }
 };
 //------------------------------------------------------------------
 // createValueSphere()

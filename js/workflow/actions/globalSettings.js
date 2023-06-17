@@ -14,6 +14,15 @@ type Props = {
 //------------------------------------------------------------------
 export default (props /*: Props */) => {
   //------------------------------------------------------------------
+  // Development
+  //------------------------------------------------------------------
+  // Turns on some expensive debug features
+  gSttngs("debug", false);
+  // Starts the simulation automatically
+  gSttngs("autoMode", false);
+  // A drag of 1 is no drag
+  gSttngs("drag", 0.25);
+  //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
@@ -96,15 +105,6 @@ export default (props /*: Props */) => {
   gSttngs("rangeMax", gSttngs().yOffset * 0.75);
   gSttngs("rangeIncreaseRate", 1.75);
   gSttngs("rangeDecreaseRate", 0.75);
-  //------------------------------------------------------------------
-  // Development
-  //------------------------------------------------------------------
-  // Turns on some expensive debug features
-  gSttngs("debug", false);
-  // Starts the simulation automatically
-  gSttngs("autoMode", true);
-  // A drag of 1 is no drag
-  gSttngs("drag", 0.25);
 };
 
 //------------------------------------------------------------------

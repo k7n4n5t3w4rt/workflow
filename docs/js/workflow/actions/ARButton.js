@@ -6,7 +6,7 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import startAuto from "./startAuto.js";
+import start from "./start.js";
 
 const createButton = (
   renderer /*: function */,
@@ -29,8 +29,11 @@ const createButton = (
 
         await renderer.xr.setSession(session);
 
+        // --------------------------------------------------------------
+        // AUTOMODE
+        // --------------------------------------------------------------
         if (gSttngs().autoMode) {
-          startAuto();
+          start();
         }
 
         button.textContent = "RESET";
