@@ -1,4 +1,5 @@
 // @flow
+import cleanInt from "../calculations/cleanInt.js";
 import gSttngs from "./gSttngs.js";
 
 /*::
@@ -19,8 +20,8 @@ export default (props /*: Props */) => {
   // Turns on some expensive debug features
   gSttngs("debug", false);
   // Starts the simulation automatically
-  gSttngs("autoMode", false);
-  // A drag of 1 is no drag
+  gSttngs("autoMode", true);
+  // A drag of 0 is no drag. A drag of 1 is 100% drag.
   gSttngs("drag", 0.25);
   //------------------------------------------------------------------
   // Workflow
@@ -31,20 +32,23 @@ export default (props /*: Props */) => {
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs("flwSteps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 100 },
-    { name: "Ready", status: "wait", limit: 10, preload: 10 },
-    { name: "Doing", status: "touch", limit: 10, preload: 10 },
+    { name: "Open", status: "backlog", limit: 0, preload: 3 },
+    { name: "Ready", status: "wait", limit: 3, preload: 3 },
+    { name: "Doing", status: "touch", limit: 3, preload: 3 },
+    { name: "Ready for Test", status: "wait", limit: 3, preload: 3 },
+    { name: "In Test", status: "touch", limit: 3, preload: 3 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // To save us calculating the number of touch steps, for now
-  gSttngs("touchSteps", 3);
+  gSttngs("touchSteps", 2);
   // Q: In "ideal developer days", how much days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
-  // person could do everything, how long would things take? We want a "min" and
-  // a "max" range to cover the different types of work that might be done.
-  gSttngs("flwItem", { days: { min: 10, max: 200 } });
+  // person or team could do everything, how long would things take? We want a
+  // "min" and a "max" range to cover the different types of work that might be
+  // done.
+  gSttngs("flwItem", { days: { min: 1, max: 8 } });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("timeBox", 60);
+  gSttngs("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
@@ -52,7 +56,7 @@ export default (props /*: Props */) => {
   // Q: How many people are in your whole team - or how many teams do you have?
   // This shouldn't really be a setting becaues the display logic can only
   // handle one team right now. So we need to set the number of teams to 1
-  gSttngs("devUnits", cleanInt(props.devunits || "20"));
+  gSttngs("devUnits", cleanInt(props.devunits || "9"));
   //------------------------------------------------------------------
   // Important but not yet used...
   //------------------------------------------------------------------
@@ -96,20 +100,9 @@ export default (props /*: Props */) => {
   gSttngs("x", gSttngs().scale);
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
-  gSttngs(
-    "step",
-    cleanInt(props.stepcm || (gSttngs().scale * 2).toString()) / 100 ||
-      gSttngs().scale * 2,
-  );
+  gSttngs("step", cleanInt(props.stepcm || (gSttngs().scale * 4).toString()));
   gSttngs("yOffset", gSttngs().scale * 10);
   gSttngs("rangeMax", gSttngs().yOffset * 0.75);
   gSttngs("rangeIncreaseRate", 1.75);
   gSttngs("rangeDecreaseRate", 0.75);
-};
-
-//------------------------------------------------------------------
-// cleanInt()
-//------------------------------------------------------------------
-const cleanInt = (getVar /*: string */) /*: number */ => {
-  return Math.abs(Math.floor(parseFloat(getVar)) || 0);
 };

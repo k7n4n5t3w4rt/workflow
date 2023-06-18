@@ -18,6 +18,7 @@ import getFlwMpSteps from "./getFlwMpSteps.js";
 import dragFunction from "./dragFunction.js";
 import skipForWip from "./skipForWip.js";
 import findRadius from "../calculations/findRadius.js";
+import touchStepsCount from "./touchStepsCount.js";
 
 const click = () /*: void */ => {
   if (gState().clicks % gSttngs().timeBox === 0) {
@@ -132,7 +133,7 @@ const makeItOneClickOlder = (flwItem /*: FlwItem */) /*: void */ => {
 //------------------------------------------------------------------
 const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
   // Shorten some variable names
-  const touchSteps = gSttngs().touchSteps;
+  const touchSteps = touchStepsCount();
   const devUnits = gSttngs().devUnits / touchSteps;
   let drag = gSttngs().drag;
   const stepKey = flwItem.dFlwStpsIndex.toString();
@@ -184,8 +185,8 @@ const pullFlwItems = () /*: void */ => {
 // checkStepLimitAndPull()
 //------------------------------------------------------------------
 const checkStepLimitAndPull = (
-  // Note: We need the accumulator or the Done step is skipped.
-  _ /*: null | void */, // The accumulator is not used but reduceRight() requires it
+  // Note: We need the _ or the Done step is skipped.
+  _ /*: null | void */, // The _ is not used but reduceRight() requires it
   flwMpStpItems /*: FlwMpItems */,
   flwMpStpKeyNumber /*: number */,
 ) /*: void */ => {

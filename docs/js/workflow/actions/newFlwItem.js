@@ -12,9 +12,9 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
-import rndmBetween from "./rndmBetweenIntegers.js";
+import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
-import refineNewPosition from "./calculateRange.js";
+import calculateRange from "./calculateRange.js";
 
 export default (flwStepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
@@ -116,20 +116,33 @@ const setPosition = (
   flwItem /*: FlwItem */,
   flwMapIndex /*: number */,
 ) /*: void */ => {
-  // Set the position because refineNewPosition() needs it
   flwItem.position.x = gState().strtPosition.x;
   flwItem.position.y = gState().strtPosition.y;
   flwItem.position.z = gState().strtPosition.z + gSttngs().step * flwMapIndex;
-  if (gSttngs().autoMode) {
-    flwItem.position.x =
-      rndmBetween(gState().strtPosition.x, 30 * rndmPosOrNeg()) / 10;
-    flwItem.position.y =
-      rndmBetween(gState().strtPosition.y, 30 * rndmPosOrNeg()) / 10;
-  }
-  // flwItem.dPosition = { ...refineNewPosition(flwItem) };
-  // // Set the position to the refined position
-  // flwItem.position.x = flwItem.dPosition.x;
-  // flwItem.position.y = flwItem.dPosition.y;
-  // flwItem.position.z = flwItem.dPosition.z;
+  // Set the dPosition because refineNewPosition() needs it
+  flwItem.dPosition = { ...flwItem.position };
+  flwItem.dPosition = { ...refineNewPosition(flwItem) };
+  // Set the position to the refined position
+  flwItem.position.x = flwItem.dPosition.x;
+  flwItem.position.y = flwItem.dPosition.y;
+  flwItem.position.z = flwItem.dPosition.z;
   flwItem.dMoving = false;
+};
+
+//------------------------------------------------------------------
+// refineNewPosition()
+//------------------------------------------------------------------
+const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
+  const range = calculateRange(flwItem.dFlwStpsIndex);
+  const newPosition = { ...flwItem.dPosition };
+
+  newPosition.x =
+    gState().strtPosition.x +
+    (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
+      rndmPosOrNeg();
+  newPosition.y =
+    gState().strtPosition.y +
+    (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
+  newPosition.z -= gSttngs().step;
+  return newPosition;
 };

@@ -56,7 +56,7 @@ const createButton = (
     button.style.cursor = "pointer";
     button.style.left = "calc(50% - 50px)";
     button.style.width = "100px";
-    button.textContent = "START";
+    button.textContent = "LEVEL 1";
 
     button.onmouseenter = function () {
       button.style.opacity = "1.0";

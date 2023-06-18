@@ -36,20 +36,20 @@ export default () /*: void */ => {
 // processFlowTime()
 //------------------------------------------------------------------
 const processFlowTime = (
-  accumulator /*: Array<number> */,
+  _ /*: Array<number> */,
   flwItem /*: FlwItem */,
 ) /*: Array<number> */ => {
-  accumulator.push(flwItem.dAge);
-  return accumulator;
+  _.push(flwItem.dAge);
+  return _;
 };
 //------------------------------------------------------------------
 // processValue()
 //------------------------------------------------------------------
 const processValue = (
-  accumulator /*: number */,
+  _ /*: number */,
   flwItem /*: FlwItem */,
 ) /*: number */ => {
-  return accumulator + flwItem.dVolume;
+  return _ + flwItem.dVolume;
 };
 
 //------------------------------------------------------------------

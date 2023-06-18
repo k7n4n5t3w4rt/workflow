@@ -54,7 +54,7 @@ const createClickCube = () /*: void */ => {
   if (gSttngs().autoMode) {
     gState().clckCbGroup.clckCube.position.z +=
       gSttngs().step * gSttngs().flwSteps.length + 15;
-    gState().clckCbGroup.clckCube.position.y -= 5;
+    gState().clckCbGroup.position.y -= gSttngs().yOffset;
   }
   gState().scnData.scene.add(gState().clckCbGroup);
 };
