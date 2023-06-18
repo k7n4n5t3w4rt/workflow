@@ -10,11 +10,18 @@ export default () => {
   // Empty objects and sensible defaults
   //------------------------------------------------------------------
   gState("clicks", 0);
+  gState("drag", 0);
+  gState("wip", 0);
   gState("clckCube", {});
   gState("flwItmTracker", {});
   gState("flwMap", {});
-  gState("WIP", 10);
   gState("scnData", {});
+  gState("vSphere", {});
+  gState("strtPosition", {});
+  gState("endPosition", {});
+  gState("flwItems", []);
+  gState("clckCbGroup", {});
+  gState("flwItmTracker", {});
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------
@@ -23,7 +30,6 @@ export default () => {
   gState("thrPtQueue", new xQueue());
   gState("wipQueue", new xQueue());
   setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
-  // gState("drag", calculateDrag());
 };
 
 //------------------------------------------------------------------

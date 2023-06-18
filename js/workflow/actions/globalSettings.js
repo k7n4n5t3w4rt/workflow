@@ -8,6 +8,7 @@ type Props = {
 	scalecm?: string,
 	stepcm?: string,
   devunits?: string,
+  devstreams?: string,
 }
 */
 //------------------------------------------------------------------
@@ -26,6 +27,7 @@ export default (props /*: Props */) => {
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
+  // PARAM: flowSteps[n].limit
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
@@ -44,29 +46,33 @@ export default (props /*: Props */) => {
   // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
-  gSttngs("flwTmIdlDays", { min: 1, max: 8 });
+  gSttngs("flwItmSize", { min: 1, max: 8 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs("death", 0);
-  // Q: How many people are in your whole team - or how many teams do you have?
-  // This shouldn't really be a setting becaues the display logic can only
-  // handle one team right now. So we need to set the number of teams to 1
-  gSttngs("devUnits", cleanInt(props.devunits || "9"));
+  // Q: How many people are in your whole team - or how many sub-teams do you have?
+  gSttngs("devUnits", cleanInt(props.devunits) || 9);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
-  // Q: What is your actual average lead time?
-  gSttngs("leadTimeAverage", 160);
   // Q: How many days can elapse between arrivals of new work items? i.e. how many
   // new items arrive in your backlog each day?
   gSttngs("arrivalFrequency", { min: 0.5, max: 10 });
   // Q: When work does arrive, how many items arrive at once?
   gSttngs("arrivalVolume", { min: 1, max: 10 });
-  // Q: How many things to we expedite each timebox?
+  // PARAM: Relative to flwItmSize
+  // Format: A number between 0 and 1
+  gSttngs("flwItmSizeFactor", 1);
+  // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
+  // effective flwItmSize is reduced by this factor
+  // Format: A number between 0 and 1
+  gSttngs("dfntnOfReady", 0);
+  // PARAM: How many things do we expedite each timebox?
   gSttngs("expediteQueue", 18);
+
   //------------------------------------------------------------------
   // Not yet used - things that contribute to "dragFactor"
   //------------------------------------------------------------------
@@ -90,12 +96,12 @@ export default (props /*: Props */) => {
   // Display
   //------------------------------------------------------------------
   gSttngs("fps", Math.abs(parseFloat(props.fps) || 1));
-  gSttngs("scaleCm", cleanInt(props.scalecm || "7"));
-  gSttngs("scale", gSttngs().scaleCm / 100);
+  gSttngs("scaleCm", 7);
+  gSttngs("scale", cleanInt(gSttngs().scaleCm) / 100);
   gSttngs("x", gSttngs().scale);
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
-  gSttngs("step", cleanInt(props.stepcm || (gSttngs().scale * 4).toString()));
+  gSttngs("step", cleanInt(props.stepcm) || gSttngs().scale * 4);
   gSttngs("yOffset", gSttngs().scale * 10);
   gSttngs("rangeMax", gSttngs().yOffset * 0.75);
   gSttngs("rangeIncreaseRate", 1.75);

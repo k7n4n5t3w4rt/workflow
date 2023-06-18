@@ -15,6 +15,7 @@ import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
 import calculateRange from "./calculateRange.js";
+import touchStepsCount from "./touchStepsCount.js";
 
 export default (flwStepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
@@ -73,7 +74,7 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
-  const daysMax = gSttngs().flwTmIdlDays.max;
+  const daysMax = gSttngs().flwItmSize.max;
   const daysTotal = flwItem.dDysTotal;
 
   const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
@@ -102,10 +103,10 @@ const setAge = (flwItem /*: FlwItem */) /*: void */ => {
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dDysTotal = rndmBetween(
-    gSttngs().flwTmIdlDays.min,
-    gSttngs().flwTmIdlDays.max,
+    gSttngs().flwItmSize.min,
+    gSttngs().flwItmSize.max,
   );
-  flwItem.dDysRmnngThisStep = flwItem.dDysTotal / gSttngs().touchSteps;
+  flwItem.dDysRmnngThisStep = flwItem.dDysTotal / touchStepsCount();
   flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;
 };
 

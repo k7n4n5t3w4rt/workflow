@@ -43,6 +43,7 @@ type Props = {
 	scalecm?: string,
 	stepcm?: string,
   devunits?: string,
+  devstreams?: string,
 }
 */
 export default (props /*: Props */) /*: string */ => {

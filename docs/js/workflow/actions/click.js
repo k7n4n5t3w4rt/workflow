@@ -313,7 +313,7 @@ const animatePosition = () /*: void */ => {
   const offset =
     Math.floor((gState().vSphere.dRadius / gSttngs().step) * 100) / 100;
   // ...but only if the offset is not a multiple of 3
-  if (Math.floor(offset / gSttngs().step) % 3) {
+  if (Math.floor(offset / gSttngs().step) % 10) {
     gState().vSphere.dPosition.z = gState().endPosition.z - offset;
   }
 

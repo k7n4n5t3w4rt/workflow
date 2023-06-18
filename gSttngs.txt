@@ -1,0 +1,26 @@
+  gSttngs("arrivalFrequency", { min: 0.5, max: 10 });
+  gSttngs("arrivalVolume", { min: 1, max: 10 });
+  gSttngs("autoMode", true);
+  gSttngs("death", 0);
+  gSttngs("debug", false);
+  gSttngs("devUnits", cleanInt(props.devunits || "9"));
+  gSttngs("dfntnOfReady", 0);
+  gSttngs("drag", 0.25);
+  gSttngs("expediteQueue", 18);
+  gSttngs("flwItmSize", { min: 1, max: 8 });
+  gSttngs("flwItmSizeFactor", 1);
+  gSttngs("flwSteps", [
+  gSttngs("fps", Math.abs(parseFloat(props.fps) || 1));
+  gSttngs("rangeDecreaseRate", 0.75);
+  gSttngs("rangeIncreaseRate", 1.75);
+  gSttngs("rangeMax", gSttngs().yOffset * 0.75);
+  gSttngs("scale", gSttngs().scaleCm / 100);
+  gSttngs("scaleCm", cleanInt(props.scalecm || "7"));
+  gSttngs("specialisation", 0);
+  gSttngs("step", cleanInt(props.stepcm || (gSttngs().scale * 4).toString()));
+  gSttngs("teamInstability", 0);
+  gSttngs("timeBox", 10);
+  gSttngs("x", gSttngs().scale);
+  gSttngs("y", gSttngs().scale);
+  gSttngs("yOffset", gSttngs().scale * 10);
+  gSttngs("z", gSttngs().scale);
