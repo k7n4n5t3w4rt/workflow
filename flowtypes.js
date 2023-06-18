@@ -21,7 +21,10 @@ type GlobalSettings = {
   teamSize: number,
   flwSteps: Array<FlwStep>,
   touchSteps: number,
-  flwItem: FlwItemSettings,
+  flwTmIdlDays: {
+    min: number,
+    max: number,
+  },
   processTimeAverage: number,
   timeBox: number,
   rangeMax: number,
@@ -29,13 +32,6 @@ type GlobalSettings = {
   rangeDecreaseRate: number,
   leadTimeAverage: number,
   drag: number,
-};
-
-type FlwItemSettings = {
-  days: {
-    min: number,
-    max: number,
-  },
 };
 
 type FlwStep = {

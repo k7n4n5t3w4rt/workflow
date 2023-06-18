@@ -26,15 +26,6 @@ export default () => {
   // gState("drag", calculateDrag());
 };
 
-// //------------------------------------------------------------------
-// // function calculateDrag()
-// //------------------------------------------------------------------
-// const calculateDrag = () /*: number */ => {
-//   return (
-//     Math.log(gSttngs().leadTimeAverageAverage / gSttngs().processTimeAverage) / (gState().wip - 1)
-//   );
-// };
-
 //------------------------------------------------------------------
 // setUpFlwMap(gFlwMap, gFlwSteps)
 //------------------------------------------------------------------

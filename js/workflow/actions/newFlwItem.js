@@ -73,7 +73,7 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
-  const daysMax = gSttngs().flwItem.days.max;
+  const daysMax = gSttngs().flwTmIdlDays.max;
   const daysTotal = flwItem.dDysTotal;
 
   const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
@@ -102,8 +102,8 @@ const setAge = (flwItem /*: FlwItem */) /*: void */ => {
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dDysTotal = rndmBetween(
-    gSttngs().flwItem.days.min,
-    gSttngs().flwItem.days.max,
+    gSttngs().flwTmIdlDays.min,
+    gSttngs().flwTmIdlDays.max,
   );
   flwItem.dDysRmnngThisStep = flwItem.dDysTotal / gSttngs().touchSteps;
   flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;

@@ -39,14 +39,12 @@ export default (props /*: Props */) => {
     { name: "In Test", status: "touch", limit: 3, preload: 3 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  // To save us calculating the number of touch steps, for now
-  gSttngs("touchSteps", 2);
-  // Q: In "ideal developer days", how much days does each flow item use up?
+  // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
-  // person or team could do everything, how long would things take? We want a
+  // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
-  gSttngs("flwItem", { days: { min: 1, max: 8 } });
+  gSttngs("flwTmIdlDays", { min: 1, max: 8 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -58,7 +56,7 @@ export default (props /*: Props */) => {
   // handle one team right now. So we need to set the number of teams to 1
   gSttngs("devUnits", cleanInt(props.devunits || "9"));
   //------------------------------------------------------------------
-  // Important but not yet used...
+  // Not yet used...
   //------------------------------------------------------------------
   // Q: What is your actual average lead time?
   gSttngs("leadTimeAverage", 160);
@@ -69,28 +67,25 @@ export default (props /*: Props */) => {
   gSttngs("arrivalVolume", { min: 1, max: 10 });
   // Q: How many things to we expedite each timebox?
   gSttngs("expediteQueue", 18);
-  // Q: How big are the things we expedite?
-  gSttngs("expediteQueue", { min: 1, max: 10 });
   //------------------------------------------------------------------
   // Not yet used - things that contribute to "dragFactor"
   //------------------------------------------------------------------
-  // Q: What percentage of the total number of teams (including this one) are
+  // Q: How much drag is caused by silos, dependencies and handoffs?
+  // Consider:
+  // To what extent are people, as individuals, specialists (i.e. they only do
+  // one thing)? What percentage of the total number of teams (including this one)
   // are "component teams" (i.e. teams that work on a single component of the
   // whole product)?
-  gSttngs("componentTeamsNum", 0);
-  // Q: To what extent are people, as individuals, specialists (i.e. they only do one thing)?
+  // Format: A number between 0 and 1
   gSttngs("specialisation", 0);
-  // Q: How long do teams (including this one) stay together with no linup changes?
-  gSttngs("teamStabilityPeriod", 0);
-  // Q:
-  gSttngs("PLACEHOLDER", 0);
+  // Q: How much drag is caused by changes in the team structure?
+  // Consider:
+  // How often are people moved between teams? Do people or sub-teams come and go?
+  // Format: A number between 0 and 1
+  gSttngs("teamInstability", 0);
   //------------------------------------------------------------------
   // Calculated values:
   //------------------------------------------------------------------
-  gSttngs(
-    "processTimeAverage",
-    (gSttngs().flwItem.days.max + gSttngs().flwItem.days.min) / 2,
-  );
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
