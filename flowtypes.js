@@ -53,9 +53,8 @@ type GlobalState = {
   flwMap: FlwMap,
   flwItems: FlwItem[],
   clckCbGroup: ClickCubeGroup,
-  // drag: number,
   flwItmTracker: FlwItmTracker,
-  wip: number,
+  // wip: number,
   // -----------------------
   // Metrics:
   // -----------------------

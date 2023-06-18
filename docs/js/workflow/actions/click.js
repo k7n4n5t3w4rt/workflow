@@ -19,6 +19,7 @@ import dragFunction from "./dragFunction.js";
 import skipForWip from "./skipForWip.js";
 import findRadius from "../calculations/findRadius.js";
 import touchStepsCount from "./touchStepsCount.js";
+import updateWip from "./updateWip.js";
 
 const click = () /*: void */ => {
   if (gState().clicks % gSttngs().timeBox === 0) {
@@ -52,34 +53,14 @@ const animateClickCube = () /*: void */ => {
 // onClickComplete()
 //------------------------------------------------------------------
 const onClickComplete = () /*: void */ => {
-  gState().wip = calculateWip();
+  updateWip();
   filterOutDoneItems();
-  updateWIPQueue();
   resizeVSphere();
   updateAgeAndDaysForAllItems();
   newFlwItem();
   pullFlwItems();
   // Start the click cycle over again
   click();
-};
-
-//------------------------------------------------------------------
-// calculateWip()
-//------------------------------------------------------------------
-const calculateWip = () /*: number */ => {
-  let wip = 0;
-  // For each flwStep in the flwMap...
-  getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
-    // For each flwItem in this step...
-    wip += flwMpStpItems.filter((flwItem /*: FlwItem */) /*: boolean */ => {
-      if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "touch") {
-        return true;
-      } else {
-        return false;
-      }
-    }).length;
-  });
-  return wip;
 };
 
 //------------------------------------------------------------------
@@ -146,27 +127,16 @@ const updateDaysRemainingCurrentStep = (flwItem /*: FlwItem */) /*: void */ => {
   let devPower = devUnits / flwStpWip;
   // This is the bit that needs thought
   drag = dragFunction(devPower, flwStpWip, drag);
-
-  console.log("----------------------------");
-  console.log("flwItem.dDysRmnngThisStep: ", flwItem.dDysRmnngThisStep);
-  console.log("devPower: ", devPower);
-  console.log("drag: ", drag);
-
   // If we're skipping this item, set the devPower to 0
   if (skip === true) {
     devPower = 0;
   } else {
     devPower = devPower * drag;
   }
-
-  console.log("devPower: ", devPower);
-
   flwItem.dDysRmnngThisStep -= devPower;
   if (flwItem.dDysRmnngThisStep < 0) {
     flwItem.dDysRmnngThisStep = 0;
   }
-  console.log("flwItem.dDysRmnngThisStep: ", flwItem.dDysRmnngThisStep);
-  console.log("----------------------------");
 };
 
 //------------------------------------------------------------------
@@ -281,16 +251,6 @@ const updateFlowMap = (
   ].splice(index, 1);
   // Add the flwItem to the correct step in the flwMap
   gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
-};
-
-//------------------------------------------------------------------
-// updateWIPQueue()
-//------------------------------------------------------------------
-const updateWIPQueue = () /*: void */ => {
-  if (gState().wipQueue.length() >= gSttngs().timeBox) {
-    gState().wipQueue.dequeue();
-  }
-  gState().wipQueue.enqueue(gState().wip);
 };
 
 //------------------------------------------------------------------

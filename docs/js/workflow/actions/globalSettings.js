@@ -1,6 +1,12 @@
 // @flow
-import cleanInt from "../calculations/cleanInt.js";
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import cleanInt from "../calculations/cleanInt.js";
 
 /*::
 type Props = {
@@ -22,8 +28,18 @@ export default (props /*: Props */) => {
   gSttngs("debug", false);
   // Starts the simulation automatically
   gSttngs("autoMode", true);
-  // A drag of 0 is no drag. A drag of 1 is 100% drag.
-  gSttngs("drag", 0.25);
+  // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
+  // We shoud think about 3 kinds of drag, each one contributing to the total.
+  // [1] The first kind of drag is are all the human reasons why things take
+  // longer when there is more WIP: context switching, communication,
+  // loss of motivation, etc.
+  // [2] The second kind of drag is structural and procedural - specialisations,
+  // handoffs, dependencies across teams, component/platform/service teams,
+  // signoffs, governance overhead, compliance
+  // [3] The third kind of drag is technical - technical debt, legacy code, lack
+  // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
+  // defensive programming, lack of documentation, lack of knowledge sharing
+  gSttngs("drag", 0.03);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
@@ -34,11 +50,11 @@ export default (props /*: Props */) => {
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs("flwSteps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 3 },
-    { name: "Ready", status: "wait", limit: 3, preload: 3 },
-    { name: "Doing", status: "touch", limit: 3, preload: 3 },
-    { name: "Ready for Test", status: "wait", limit: 3, preload: 3 },
-    { name: "In Test", status: "touch", limit: 3, preload: 3 },
+    { name: "Open", status: "backlog", limit: 0, preload: 30 },
+    { name: "Ready", status: "wait", limit: 30, preload: 30 },
+    { name: "Doing", status: "touch", limit: 30, preload: 30 },
+    { name: "Ready for Test", status: "wait", limit: 30, preload: 30 },
+    { name: "In Test", status: "touch", limit: 30, preload: 30 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // Q: In "ideal developer days", how many days does each flow item use up?

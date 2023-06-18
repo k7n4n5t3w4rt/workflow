@@ -11,7 +11,6 @@ export default () => {
   //------------------------------------------------------------------
   gState("clicks", 0);
   gState("drag", 0);
-  gState("wip", 0);
   gState("clckCube", {});
   gState("flwItmTracker", {});
   gState("flwMap", {});
@@ -67,7 +66,7 @@ function xQueue() {
     for (const index in this.items) {
       total += this.items[index];
     }
-    return total;
+    return Math.round(total * 10000) / 10000;
   };
 
   this._85th = () => {

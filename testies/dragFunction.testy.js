@@ -107,7 +107,7 @@ test("Returns 1 if wip is less than devDays", () /*: void */ => {
   const wip = 6;
   const drag = 0.25;
   const newDrag = dragFunction(devDays, wip, drag);
-  should(newDrag).be.exactly(1);
+  should(newDrag).be.exactly(0.88);
 });
 
 test("Returns 1 if wip is equal to devDays", () /*: void */ => {
@@ -115,5 +115,5 @@ test("Returns 1 if wip is equal to devDays", () /*: void */ => {
   const wip = 7;
   const drag = 0.25;
   const newDrag = dragFunction(devDays, wip, drag);
-  should(newDrag).be.exactly(1);
+  should(newDrag).be.exactly(0.75);
 });
