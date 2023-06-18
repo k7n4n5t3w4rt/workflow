@@ -1,6 +1,12 @@
 // @flow
-import cleanInt from "../calculations/cleanInt.js";
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import cleanInt from "../calculations/cleanInt.js";
 
 /*::
 type Props = {

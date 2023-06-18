@@ -67,7 +67,7 @@ function xQueue() {
     for (const index in this.items) {
       total += this.items[index];
     }
-    return total;
+    return Math.round(total * 10000) / 10000;
   };
 
   this._85th = () => {

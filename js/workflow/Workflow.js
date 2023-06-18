@@ -18,6 +18,7 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // COMPONENTS
 //------------------------------------------------------------------
+import Metrics from "./WorkflowMetrics.js";
 import Params from "./WorkflowParams.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -47,26 +48,34 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
+  // Initialize global settings and state
   const styles = cssStyles();
-  globalSettings(props);
-  globalState();
-  // I'm not really using the state, but leaving it here
-  // for when we're setting properties on the fly.
-  const [state /*: AppState */, dispatch] = useReducer(AppReducer, {
-    fps: gSttngs().fps,
-  });
+  const [fps, setFps] = useState(1);
+  const [flowTime /*: number */, setFlowTime /*: function */] = useState(0);
+  const [throughPut /*: number */, setThroughPut /*: function */] = useState(0);
+  const [wip /*: number */, setWip /*: function */] = useState(0);
+  const [value /*: number */, setValue /*: function */] = useState(0);
 
   useEffect(() => {
+    globalSettings(props);
+    globalState();
     // setupMobileDebug();
     let stats = createStats();
     init();
+    updateMetricsOnClickInterval(setFlowTime, setThroughPut, setWip, setValue);
   }, []);
 
   return html`
     <div id="flw" className="${styles.flw}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
-        <${Params} fps="${state.fps}" dispatch="${dispatch}" />
+        <${Metrics}
+          flowTime=${flowTime}
+          throughPut=${throughPut}
+          wip=${wip}
+          value=${value}
+        />
+        <${Params} fps="${fps || 0}" />
       </div>
     </div>
   `;
@@ -91,4 +100,28 @@ const cssStyles = () /*: Object */ => {
     },
   });
   return styles;
+};
+
+//------------------------------------------------------------------
+// updateMetricsOnClickInterval()
+//------------------------------------------------------------------
+const updateMetricsOnClickInterval = (
+  setFlowTime /*: function */,
+  setThroughPut /*: function */,
+  setWip /*: function */,
+  setValue /*: function */,
+) /*: void */ => {
+  setInterval(() => {
+    if (
+      gState().vQueue !== undefined &&
+      gState().flwTmQueue !== undefined &&
+      gState().thrPtQueue !== undefined &&
+      gState().wipQueue !== undefined
+    ) {
+      setFlowTime(gState().flwTmQueue.mean());
+      setThroughPut(gState().thrPtQueue.total());
+      setWip(gState().wipQueue.mean());
+      setValue(gState().vQueue.total());
+    }
+  }, 1000);
 };
