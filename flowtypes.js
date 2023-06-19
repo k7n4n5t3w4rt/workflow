@@ -46,6 +46,7 @@ type GlobalState = {
   // Data:
   // -----------------------
   clicks: number,
+  expdtCount: number,
   vSphere: VSphere,
   scnData: SceneData,
   strtPosition: ThrMeshPosition,
@@ -54,7 +55,6 @@ type GlobalState = {
   flwItems: FlwItem[],
   clckCbGroup: ClickCubeGroup,
   flwItmTracker: FlwItmTracker,
-  // wip: number,
   // -----------------------
   // Metrics:
   // -----------------------
@@ -70,15 +70,16 @@ type FlwItem = {
   // -----------------------
   dAge: number,
   dColor: string,
+  dDysEachTouchStep: number,
+  dDysRmnngInTotal: number,
+  dDysRmnngThisStep: number,
+  dDysTotal: number,
+  dExpedite: boolean,
+  dFlwStpsIndex: number,
   dMoving: boolean,
+  dPosition: ThrMeshPosition,
   dScale: number,
   dTmNumber: number,
-  dDysTotal: number,
-  dDysRmnngInTotal: number,
-  dDysEachTouchStep: number,
-  dDysRmnngThisStep: number,
-  dFlwStpsIndex: number,
-  dPosition: ThrMeshPosition,
   dVolume: number,
   // -----------------------
   // Three.js:

@@ -20,16 +20,10 @@ import skipForWip from "./skipForWip.js";
 import findRadius from "../calculations/findRadius.js";
 import touchStepsCount from "./touchStepsCount.js";
 import updateWip from "./updateWip.js";
+import setExpedite from "./setExpedite.js";
 
 const click = () /*: void */ => {
   if (gState().clicks % gSttngs().timeBox === 0) {
-    console.log("=====================================");
-    console.log({
-      WIP: gState().wipQueue.mean(),
-      "Flow Time": gState().flwTmQueue.mean(),
-      Throughput: gState().thrPtQueue.total(),
-    });
-    console.log("=====================================");
   }
   gState().clicks++;
   animateClickCube();
@@ -54,6 +48,7 @@ const animateClickCube = () /*: void */ => {
 //------------------------------------------------------------------
 const onClickComplete = () /*: void */ => {
   updateWip();
+  setExpedite();
   filterOutDoneItems();
   resizeVSphere();
   updateAgeAndDaysForAllItems();

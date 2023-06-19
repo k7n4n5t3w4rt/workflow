@@ -9,18 +9,19 @@ export default () => {
   //------------------------------------------------------------------
   // Empty objects and sensible defaults
   //------------------------------------------------------------------
+  gState("clckCbGroup", {});
+  gState("clckCube", {});
   gState("clicks", 0);
   gState("drag", 0);
-  gState("clckCube", {});
+  gState("endPosition", {});
+  gState("expdtCount", gSttngs().expediteQueue);
+  gState("flwItems", []);
+  gState("flwItmTracker", {});
   gState("flwItmTracker", {});
   gState("flwMap", {});
   gState("scnData", {});
-  gState("vSphere", {});
   gState("strtPosition", {});
-  gState("endPosition", {});
-  gState("flwItems", []);
-  gState("clckCbGroup", {});
-  gState("flwItmTracker", {});
+  gState("vSphere", {});
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------

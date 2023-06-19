@@ -53,6 +53,8 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   flwItem.name = flwItem.uuid;
   // Set the team number (there is only one for now)
   flwItem.dTmNumber = rndmBetween(1, gSttngs().devUnits);
+  // Expedite is false by default
+  flwItem.dExpedite = false;
   return flwItem;
 };
 

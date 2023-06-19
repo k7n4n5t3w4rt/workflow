@@ -7,18 +7,6 @@ import { test, testPromise, should } from "../server/testy.js";
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
 import dragFunction from "../js/workflow/actions/dragFunction.js";
-// //------------------------------------------------------------------
-// // IMPORT: GLOBALS
-// //------------------------------------------------------------------
-// import gSttngs from "../js/workflow/actions/gSttngs.js";
-// import gState from "../js/workflow/actions/gState.js";
-// //------------------------------------------------------------------
-// // IMPORT: SETTINGS/STATE
-// //------------------------------------------------------------------
-// import globalSettings from "../js/workflow/actions/globalSettings.js";
-// import globalState from "../js/workflow/actions/globalState.js";
-// globalSettings({});
-// globalState();
 
 //------------------------------------------------------------------
 // VALUES
