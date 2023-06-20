@@ -14,7 +14,7 @@ export default () => {
   gState("clicks", 0);
   gState("drag", 0);
   gState("endPosition", {});
-  gState("expdtCount", gSttngs().expediteQueue);
+  gState("expdtCount", gSttngs().expdtLimit);
   gState("flwItems", []);
   gState("flwItmTracker", {});
   gState("flwItmTracker", {});
@@ -29,15 +29,15 @@ export default () => {
   gState("flwTmQueue", new xQueue());
   gState("thrPtQueue", new xQueue());
   gState("wipQueue", new xQueue());
-  setUpFlwMap(gState().flwMap, gSttngs().flwSteps);
+  setUpFlwMap(gState().flwMap, gSttngs().steps);
 };
 
 //------------------------------------------------------------------
 // setUpFlwMap(gFlwMap, gFlwSteps)
 //------------------------------------------------------------------
 const setUpFlwMap = (gFlwMap /*: FlwMap */, gFlwSteps /*: FlwStep[] */) => {
-  // Set each flwStepTotal to 0
-  gFlwSteps.forEach((flwStep /*: FlwStep */, index /*: number */) => {
+  // Set each stepTotal to 0
+  gFlwSteps.forEach((step /*: FlwStep */, index /*: number */) => {
     gState().flwMap[index.toString()] = [];
   });
 };

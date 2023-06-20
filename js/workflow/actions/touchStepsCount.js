@@ -8,7 +8,7 @@ import gSttngs from "./gSttngs.js";
 // touchStepsCount()
 //------------------------------------------------------------------
 export default () /*: number */ => {
-  return gSttngs().flwSteps.reduce(checkIfStepIsTouch, 0);
+  return gSttngs().steps.reduce(checkIfStepIsTouch, 0);
 };
 //------------------------------------------------------------------
 // checkIfStepIsTouch()

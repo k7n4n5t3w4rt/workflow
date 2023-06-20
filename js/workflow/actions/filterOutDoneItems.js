@@ -14,8 +14,7 @@ import removeFlowItem from "./removeFlowItem.js";
 //------------------------------------------------------------------
 export default () /*: void */ => {
   gState().vSphere.dRllngTtlVolume = 0;
-  const doneFlwItems =
-    gState().flwMap[(gSttngs().flwSteps.length - 1).toString()];
+  const doneFlwItems = gState().flwMap[(gSttngs().steps.length - 1).toString()];
   if (doneFlwItems.length > 0) {
     // Throughput is easy, we just count the number of items in the doneFlwItems
     updateThroughPutQueue(doneFlwItems.length);

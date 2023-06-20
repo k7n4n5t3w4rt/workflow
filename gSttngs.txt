@@ -6,10 +6,10 @@
   gSttngs("devUnits", cleanInt(props.devunits || "9"));
   gSttngs("dfntnOfReady", 0);
   gSttngs("drag", 0.25);
-  gSttngs("expediteQueue", 18);
+  gSttngs("expdtLimit", 18);
   gSttngs("flwItmSize", { min: 1, max: 8 });
   gSttngs("flwItmSizeFactor", 1);
-  gSttngs("flwSteps", [
+  gSttngs("steps", [
   gSttngs("fps", Math.abs(parseFloat(props.fps) || 1));
   gSttngs("rangeDecreaseRate", 0.75);
   gSttngs("rangeIncreaseRate", 1.75);

@@ -14,8 +14,7 @@ import gState from "./gState.js";
 import clckCbGroup from "./newClickCube.js";
 import click from "./click.js";
 import newVSphere from "./newVSphere.js";
-import getFlwMpSteps from "./getFlwMpSteps.js";
-import newFlwItem from "./newFlwItem.js";
+import populateSteps from "./populateSteps.js";
 
 export default () /*: void */ => {
   // --------------------------------------------------------------
@@ -53,7 +52,7 @@ const createClickCube = () /*: void */ => {
   // --------------------------------------------------------------
   if (gSttngs().autoMode) {
     gState().clckCbGroup.clckCube.position.z +=
-      gSttngs().step * gSttngs().flwSteps.length + 15;
+      gSttngs().step * gSttngs().steps.length + 15;
     gState().clckCbGroup.position.y -= gSttngs().yOffset;
   }
   gState().scnData.scene.add(gState().clckCbGroup);
@@ -92,13 +91,12 @@ const setStartPosition = () /*: void */ => {
 //------------------------------------------------------------------
 const setEndPosition = () /*: void */ => {
   gState().endPosition = gState().strtPosition.clone();
-  gState().endPosition.z +=
-    gSttngs().step * (gSttngs().flwSteps.length + 2) * -1;
+  gState().endPosition.z += gSttngs().step * (gSttngs().steps.length + 2) * -1;
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------
   if (gSttngs().autoMode) {
-    gState().endPosition.z -= gSttngs().step * gSttngs().flwSteps.length + 2;
+    gState().endPosition.z -= gSttngs().step * gSttngs().steps.length + 2;
   }
 };
 //------------------------------------------------------------------
@@ -116,18 +114,4 @@ const createValueSphere = () /*: void */ => {
   gState().vSphere.dPosition.y = gState().endPosition.y;
   gState().vSphere.dPosition.z = gState().endPosition.z;
   gState().clckCbGroup.add(gState().vSphere);
-};
-
-//------------------------------------------------------------------
-// populateSteps()
-//------------------------------------------------------------------
-const populateSteps = () /*: void */ => {
-  const flwMpSteps = getFlwMpSteps();
-  flwMpSteps.forEach(
-    (flwMpStep /*: Array<FlwItem> */, index /*: number */) /*: void */ => {
-      for (let i = 0; i <= gSttngs().flwSteps[index].preload - 1; i++) {
-        newFlwItem(index);
-      }
-    },
-  );
 };

@@ -22,11 +22,11 @@ export default () /*: void */ => {
 //------------------------------------------------------------------
 const calculateWip = () /*: number */ => {
   let wip = 0;
-  // For each flwStep in the flwMap...
+  // For each step in the flwMap...
   getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
     // For each flwItem in this step...
     wip += flwMpStpItems.filter((flwItem /*: FlwItem */) /*: boolean */ => {
-      if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "touch") {
+      if (gSttngs().steps[flwItem.dStpIndex].status === "touch") {
         return true;
       } else {
         return false;

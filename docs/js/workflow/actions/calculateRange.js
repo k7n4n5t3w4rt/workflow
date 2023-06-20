@@ -16,7 +16,7 @@ export default (flwStpsIndex /*: number */) /*: number */ => {
   // Set the required space to the limit of the current step.
   // If the limit is 0, set the required space to thenumber of
   // wrkFlwItems in the current step.
-  let rqrdSpace /* number */ = gSttngs().flwSteps[flwStpsIndex].limit;
+  let rqrdSpace /* number */ = gSttngs().steps[flwStpsIndex].limit;
   if (rqrdSpace === 0) {
     rqrdSpace = gState().flwMap[flwStpsIndex.toString()].length;
   }

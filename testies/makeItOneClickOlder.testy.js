@@ -16,15 +16,17 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
+import newFlwItem from "../js/workflow/actions/newFlwItem.js";
 import newClickCube from "../js/workflow/actions/newClickCube.js";
+import populateSteps from "../js/workflow/actions/populateSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import newFlwItem from "../js/workflow/actions/newFlwItem.js";
+import makeItOneClickOlder from "../js/workflow/actions/makeItOneClickOlder.js";
 //------------------------------------------------------------------
-// TEST: newFlwItem
+// TEST: makeItOneClickOlder()
 //------------------------------------------------------------------
-test("-------------- newFlwItem.js ---------------------", () /*: void */ => {
+test("-------------- makeItOneClickOlder.js ---------------------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
@@ -35,7 +37,26 @@ const fixture = () /*: FlwItem */ => {
   return newFlwItem();
 };
 
-test("Adds a flwItem to the flwMap.", () /*: void */ => {
-  fixture();
-  should(gState().flwMap["0"].length).be.exactly(1);
+test("Returns a flwItem with the updated dAge.", () /*: void */ => {
+  const flwItem = fixture();
+  const newFlwItmRef = makeItOneClickOlder(flwItem);
+  should(newFlwItmRef.dAge).be.exactly(1);
+  const anotherNewFlwItmRef = makeItOneClickOlder(newFlwItmRef);
+  should(anotherNewFlwItmRef.dAge).be.exactly(2);
+});
+
+test("Returns a flwItem with new opacity when death is 10.", () /*: void */ => {
+  const flwItem = fixture();
+  gSttngs().death = 10;
+  const newFlwItmRef = makeItOneClickOlder(flwItem);
+  should(newFlwItmRef.material.opacity).be.exactly(0.9);
+  const anotherNewFlwItmRef = makeItOneClickOlder(newFlwItmRef);
+  should(anotherNewFlwItmRef.material.opacity).be.exactly(0.8);
+});
+
+test("Returns a flwItem with opacity unchanged when death is 0.", () /*: void */ => {
+  const flwItem = fixture();
+  gSttngs().death = 0;
+  const newFlwItmRef = makeItOneClickOlder(flwItem);
+  should(newFlwItmRef.material.opacity).be.exactly(1);
 });

@@ -17,16 +17,16 @@ import flwItmTracker from "./flwItmTracker.js";
 import calculateRange from "./calculateRange.js";
 import touchStepsCount from "./touchStepsCount.js";
 
-export default (flwStepIndex /*: number */ = 0) /*: FlwItem */ => {
+export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
   const flwItem = threeJsCube();
   setDProps(flwItem);
-  setAge(flwItem);
+  setAge(flwItem, stepIndex);
   gState().flwItmTracker[flwItem.name] = [];
-  mapIt(flwItem, flwStepIndex);
+  mapIt(flwItem, stepIndex);
   setDays(flwItem);
   setScaleAndVolume(flwItem);
-  setPosition(flwItem, flwStepIndex);
+  setPosition(flwItem, stepIndex);
   gState().clckCbGroup.add(flwItem);
   return flwItem;
 };
@@ -66,8 +66,8 @@ const mapIt = (
   flwMapIndex /*: number */,
 ) /*: FlwItem */ => {
   // Add the new flwItem to the flwMap in the backlog
-  flwItem.dFlwStpsIndex = flwMapIndex;
-  gState().flwMap[flwItem.dFlwStpsIndex.toString()].push(flwItem);
+  flwItem.dStpIndex = flwMapIndex;
+  gState().flwMap[flwItem.dStpIndex.toString()].push(flwItem);
   return flwItem;
 };
 
@@ -91,13 +91,15 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
 //------------------------------------------------------------------
 // setAge()
 //------------------------------------------------------------------
-const setAge = (flwItem /*: FlwItem */) /*: void */ => {
-  // Some shorthand
-  const death = gSttngs().death;
-  // Set the age
+const setAge = (
+  flwItem /*: FlwItem */,
+  stepIndex /*: number */,
+) /*: void */ => {
+  // Set the age to 0 by default
   flwItem.dAge = 0;
-  if (death > 0) {
-    flwItem.dAge = rndmBetween(0, death);
+  // If this is not the first step we assume that it has some age.
+  if (stepIndex > 0 && gSttngs().death > 0) {
+    flwItem.dAge = rndmBetween(0, gSttngs().death);
   }
 };
 //------------------------------------------------------------------
@@ -136,7 +138,7 @@ const setPosition = (
 // refineNewPosition()
 //------------------------------------------------------------------
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
-  const range = calculateRange(flwItem.dFlwStpsIndex);
+  const range = calculateRange(flwItem.dStpIndex);
   const newPosition = { ...flwItem.dPosition };
 
   newPosition.x =

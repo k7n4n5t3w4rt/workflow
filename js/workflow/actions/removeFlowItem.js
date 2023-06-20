@@ -34,9 +34,10 @@ export default (flwItem /*: FlwItem */, index /*: number */) /*: void */ => {
     flwItem.material.needsUpdate = true;
   }
   // Remove it from the flwMap
-  const deletedFlwItem = gState().flwMap[
-    flwItem.dFlwStpsIndex.toString()
-  ].splice(index, 1);
+  const deletedFlwItem = gState().flwMap[flwItem.dStpIndex.toString()].splice(
+    index,
+    1,
+  );
 };
 //------------------------------------------------------------------
 // removeThreeObject()

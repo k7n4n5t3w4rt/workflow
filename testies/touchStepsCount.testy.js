@@ -25,7 +25,7 @@ test("-------------- touchStepsCount.js ---------------------", () /*: void */ =
 
 test("Returns the correct number of touchSteps.", () /*: void */ => {
   globalSettings({});
-  gSttngs("flwSteps", [
+  gSttngs("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
     { name: "Doing", status: "touch", limit: 3, preload: 3 },

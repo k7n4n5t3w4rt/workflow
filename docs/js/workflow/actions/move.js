@@ -32,7 +32,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // Set the properties of the flwItem to the state they'll
   // should be in when the animation is complete.
   flwItem.dMoving = true;
-  flwItem.dFlwStpsIndex++;
+  flwItem.dStpIndex++;
   flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
 
   anime({
@@ -45,7 +45,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
       flwItem.dMoving = false;
-      if (gSttngs().flwSteps[flwItem.dFlwStpsIndex].status === "done") {
+      if (gSttngs().steps[flwItem.dStpIndex].status === "done") {
         flwItem.visible = false;
       } else {
       }
@@ -82,13 +82,14 @@ const animateColorChange = (
 // newColor()
 //------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
-  const nextStatus = gSttngs().flwSteps[flwItem.dFlwStpsIndex + 1].status;
+  const nextStatus = gSttngs().steps[flwItem.dStpIndex + 1].status;
   let newColor = "#808080"; // Grey for "waiting" status
 
-  if (nextStatus === "touch") {
+  if (nextStatus === "touch" || nextStatus === "done") {
     newColor = "#ffd700"; // Gold for "touch" status
-  } else if (nextStatus === "done") {
-    newColor = "#ffd700"; // Gold for "done" status
+    if (flwItem.dExpedite == true) {
+      newColor = "#00ff00"; // Green for "touch" status
+    }
   }
   return newColor;
 };
@@ -97,9 +98,9 @@ const newColor = (flwItem /*: FlwItem */) /*: string */ => {
 // refineNewPosition()
 //------------------------------------------------------------------
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
-  const range = calculateRange(flwItem.dFlwStpsIndex + 1);
+  const range = calculateRange(flwItem.dStpIndex + 1);
   const newPosition = { ...flwItem.dPosition };
-  const nextStatus = gSttngs().flwSteps[flwItem.dFlwStpsIndex + 1].status;
+  const nextStatus = gSttngs().steps[flwItem.dStpIndex + 1].status;
 
   if (nextStatus === "done") {
     newPosition.x = gState().vSphere.dPosition.x;

@@ -18,15 +18,14 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 import newClickCube from "../js/workflow/actions/newClickCube.js";
 import newFlwItem from "../js/workflow/actions/newFlwItem.js";
-import getFlwMpSteps from "../js/workflow/actions/getFlwMpSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import setExpedite from "../js/workflow/actions/setExpedite.js";
+import expediteAndNormalFlwItems from "../js/workflow/calculations/expediteAndNormalFlwItems.js";
 //------------------------------------------------------------------
-// TEST: setExpedite()
+// TEST: numberExpiditedDevUnits()
 //------------------------------------------------------------------
-test("-------------- setExpedite.js ---------------------", () /*: void */ => {
+test("--------- expediteAndNormalFlwItems.js ----------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
@@ -42,50 +41,18 @@ const fixture = () /*: Array<FlwItem> */ => {
   return flwItems;
 };
 
-test("The dExpedite property is false by default.", () /*: void */ => {
+test("Passing an empty array", () /*: void */ => {
+  const flwItems = [];
+  const { expdtFlwItems, normalFlwItems } = expediteAndNormalFlwItems(flwItems);
+  should(expdtFlwItems.length).be.exactly(0);
+  should(normalFlwItems.length).be.exactly(0);
+});
+
+test("Out of 4 flwItems, 2 are expedite", () /*: void */ => {
   const flwItems = fixture();
-  flwItems.forEach((flwItem /*: FlwItem */) => {
-    // Should be false by default
-    should(flwItem.dExpedite).be.false();
-  });
-});
-
-test("The dExpedite property is properly set up to the limit.", () /*: void */ => {
-  fixture();
-  gSttngs().expdtLimit = 3;
-  gState().expdtCount = 0;
-  let localCounter = 0;
-  setExpedite();
-  const flwMpSteps = getFlwMpSteps();
-  flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) => {
-    const flwMpStpItmsCopy = [...flwMpStpItems];
-    // NOT reversed, so the first flwItem is NOT expedited
-    flwMpStpItmsCopy.forEach((flwItem /*: FlwItem */) => {
-      if (++localCounter === 1) {
-        should(flwItem.dExpedite).be.false();
-      } else {
-        should(flwItem.dExpedite).be.true();
-      }
-    });
-  });
-});
-
-test("Calling setExpedite() twice respects the expediteLimit.", () /*: void */ => {
-  fixture();
-  gSttngs().expdtLimit = 3;
-  gState().expdtCount = 0;
-  let localCounter = 0;
-  setExpedite();
-  const flwMpSteps = getFlwMpSteps();
-  flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) => {
-    const flwMpStpItmsCopy = [...flwMpStpItems];
-    // NOT reversed, so the first flwItem is NOT expedited
-    flwMpStpItmsCopy.forEach((flwItem /*: FlwItem */) => {
-      if (++localCounter === 1) {
-        should(flwItem.dExpedite).be.false();
-      } else {
-        should(flwItem.dExpedite).be.true();
-      }
-    });
-  });
+  flwItems[0].dExpedite = true;
+  flwItems[2].dExpedite = true;
+  const { expdtFlwItems, normalFlwItems } = expediteAndNormalFlwItems(flwItems);
+  should(expdtFlwItems.length).be.exactly(2);
+  should(normalFlwItems.length).be.exactly(2);
 });

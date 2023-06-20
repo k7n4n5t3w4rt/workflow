@@ -49,12 +49,12 @@ export default (props /*: Props */) => {
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
-  gSttngs("flwSteps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 30 },
-    { name: "Ready", status: "wait", limit: 30, preload: 30 },
-    { name: "Doing", status: "touch", limit: 30, preload: 30 },
-    { name: "Ready for Test", status: "wait", limit: 30, preload: 30 },
-    { name: "In Test", status: "touch", limit: 30, preload: 30 },
+  gSttngs("steps", [
+    { name: "Open", status: "backlog", limit: 0, preload: 3 },
+    { name: "Ready", status: "wait", limit: 3, preload: 3 },
+    { name: "Doing", status: "touch", limit: 3, preload: 3 },
+    { name: "Ready for Test", status: "wait", limit: 3, preload: 3 },
+    { name: "In Test", status: "touch", limit: 3, preload: 3 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // Q: In "ideal developer days", how many days does each flow item use up?
@@ -62,7 +62,7 @@ export default (props /*: Props */) => {
   // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
-  gSttngs("flwItmSize", { min: 1, max: 8 });
+  gSttngs("flwItmSize", { min: 1, max: 3 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -70,7 +70,11 @@ export default (props /*: Props */) => {
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs("death", 0);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs("devUnits", cleanInt(props.devunits) || 9);
+  gSttngs("devUnits", cleanInt(props.devunits) || 10);
+  // PARAM: How many things do we expedite each timebox?
+  gSttngs("expdtLimit", 3);
+  // 1 is 100% of the available devUnits.
+  gSttngs("expdtdDvUnitsFactor", 0.5);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
@@ -86,8 +90,6 @@ export default (props /*: Props */) => {
   // effective flwItmSize is reduced by this factor
   // Format: A number between 0 and 1
   gSttngs("dfntnOfReady", 0);
-  // PARAM: How many things do we expedite each timebox?
-  gSttngs("expediteQueue", 18);
 
   //------------------------------------------------------------------
   // Not yet used - things that contribute to "dragFactor"

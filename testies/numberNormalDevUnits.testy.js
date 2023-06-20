@@ -7,7 +7,6 @@ import { test, testPromise, should } from "../server/testy.js";
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "../js/workflow/actions/gSttngs.js";
-import gState from "../js/workflow/actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
@@ -16,26 +15,41 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newClickCube from "../js/workflow/actions/newClickCube.js";
+import dragFunction from "../js/workflow/actions/dragFunction.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import newFlwItem from "../js/workflow/actions/newFlwItem.js";
+import { numberNormalDevUnits } from "../js/workflow/actions/numberDevUnits.js";
 //------------------------------------------------------------------
-// TEST: newFlwItem
+// TEST: dragFunction
 //------------------------------------------------------------------
-test("-------------- newFlwItem.js ---------------------", () /*: void */ => {
+test("-------------- numberNormalDevUnits.js ---------------------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
-const fixture = () /*: FlwItem */ => {
+test("20 devUnits, 2 touchSteps() and factor of 0.5 return 5", () /*: void */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
-  return newFlwItem();
-};
+  gSttngs().devUnits = 20;
+  gSttngs().expdtdDvUnitsFactor = 0.5;
+  const nmNrmlDvUnts = numberNormalDevUnits();
+  should(nmNrmlDvUnts).be.exactly(5);
+});
 
-test("Adds a flwItem to the flwMap.", () /*: void */ => {
-  fixture();
-  should(gState().flwMap["0"].length).be.exactly(1);
+test("5 devUnits, 2 touchSteps() and factor of 0.5 return 1", () /*: void */ => {
+  globalSettings({});
+  globalState();
+  gSttngs().devUnits = 5;
+  gSttngs().expdtdDvUnitsFactor = 0.5;
+  const nmNrmlDvUnts = numberNormalDevUnits();
+  should(nmNrmlDvUnts).be.exactly(1);
+});
+
+test("24 devUnits, 2 touchSteps() and factor of 0.33 return 8", () /*: void */ => {
+  globalSettings({});
+  globalState();
+  gSttngs().devUnits = 24;
+  gSttngs().expdtdDvUnitsFactor = 0.33;
+  const nmNrmlDvUnts = numberNormalDevUnits();
+  should(nmNrmlDvUnts).be.exactly(8);
 });
