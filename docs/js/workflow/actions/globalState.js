@@ -17,7 +17,6 @@ export default () => {
   gState("expdtCount", gSttngs().expdtLimit);
   gState("flwItems", []);
   gState("flwItmTracker", {});
-  gState("flwItmTracker", {});
   gState("flwMap", {});
   gState("scnData", {});
   gState("strtPosition", {});

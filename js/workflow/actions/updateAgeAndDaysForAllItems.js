@@ -1,6 +1,10 @@
 // @flow
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import removeFlowItem from "./removeFlowItem.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import dragFunction from "./dragFunction.js";
@@ -13,15 +17,21 @@ import {
   numberExpiditedDevUnits,
   numberNormalDevUnits,
 } from "./numberDevUnits.js";
+import theNonDead from "./theNonDead.js";
+import inTouch from "./inTouch.js";
+import stepWip from "./stepWip.js";
 //------------------------------------------------------------------
 // updateAgeAndDaysForAllItems()
 //------------------------------------------------------------------
-export default () => {
+export default () /*: void */ => {
   // Get all the flwItems
   const flwItems = getAllFlwItems();
   countExpeditedFlwItems(flwItems);
   const { expdtFlwItems, normalFlwItems } = expediteAndNormalFlwItems(
-    flwItems.map(makeItOneClickOlder).filter(theDead).filter(nonTouch),
+    flwItems
+      .map(makeItOneClickOlder)
+      .filter(theNonDead(removeFlowItem))
+      .filter(inTouch),
   );
   const nmExpdtDvUnits = numberExpiditedDevUnits();
   prepAndUpdateDaysRemaining(expdtFlwItems, nmExpdtDvUnits);
@@ -50,50 +60,6 @@ const prepAndUpdateDaysRemaining = (
   });
 };
 //------------------------------------------------------------------
-// stepWip()
-//------------------------------------------------------------------
-const stepWip = (
-  flwMpKey /*: string */,
-  expedited /*: boolean */,
-) /*: number */ => {
-  return gState().flwMap[flwMpKey].reduce(
-    (_ /*: number */, flwItem /*: FlwItem */) /*: number */ => {
-      if (flwItem.dExpedite === expedited) {
-        return (_ += 1);
-      }
-      return _;
-    },
-    0,
-  );
-};
-//------------------------------------------------------------------
-// nonTouch()
-//------------------------------------------------------------------
-const nonTouch = (
-  flwItem /*: FlwItem */,
-  index /*:number */,
-) /*: boolean */ => {
-  const stpStatus = gSttngs().steps[flwItem.dStpIndex].status;
-  // If this flwItem is in the backlog, don't update it
-  if (stpStatus !== "touch") {
-    // console.log("nonTouch: Filtering out this flwItem");
-    flwItem.dDysRmnngThisStep = 0;
-    return false;
-  }
-  return true;
-};
-//------------------------------------------------------------------
-// theDead()
-//------------------------------------------------------------------
-const theDead = (flwItem /*: FlwItem */, index /*:number */) /*: boolean */ => {
-  if (gSttngs().death > 0 && ++flwItem.dAge >= gSttngs().death) {
-    // console.log("theDead: Filtering out this flwItem");
-    removeFlowItem(flwItem, index);
-    return false;
-  }
-  return true;
-};
-//------------------------------------------------------------------
 // updateDaysRemainingCurrentStep()
 //------------------------------------------------------------------
 const updateDaysRemainingCurrentStep = (
@@ -101,12 +67,8 @@ const updateDaysRemainingCurrentStep = (
   devPower /*: number */,
   drag /*: number */,
 ) /*: void */ => {
-  // Work out the devPower without any decay or drag
-  // If we're skipping this item, set the devPower to 0
   flwItem.dDysRmnngThisStep -= devPower * drag;
-  console.log("dDaysRmnngThisStep: " + flwItem.dDysRmnngThisStep);
   if (flwItem.dDysRmnngThisStep <= 0) {
-    console.log("This one is zero: ", flwItem);
     flwItem.dDysRmnngThisStep = 0;
   }
 };

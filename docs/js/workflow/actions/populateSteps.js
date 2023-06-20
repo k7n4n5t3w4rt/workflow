@@ -11,7 +11,7 @@ import newFlwItem from "./newFlwItem.js";
 //------------------------------------------------------------------
 // populateSteps()
 //------------------------------------------------------------------
-export default () => {
+export default () /*: void */ => {
   const flwMpSteps = getFlwMpSteps();
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
     for (let i = 0; i <= gSttngs().steps[index].preload - 1; i++) {
