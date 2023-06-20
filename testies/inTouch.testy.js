@@ -21,11 +21,11 @@ import newClickCube from "../js/workflow/actions/newClickCube.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import makeItOneClickOlder from "../js/workflow/actions/makeItOneClickOlder.js";
+import inTouch from "../js/workflow/actions/inTouch.js";
 //------------------------------------------------------------------
-// TEST: makeItOneClickOlder()
+// TEST: inTouch()
 //------------------------------------------------------------------
-test("-------------- makeItOneClickOlder.js ---------------------", () /*: void */ => {
+test("-------------- inTouch.js ---------------------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
@@ -33,29 +33,20 @@ const fixture = () /*: FlwItem */ => {
   globalSettings({});
   globalState();
   gState().clckCbGroup = newClickCube();
-  return newFlwItem();
+  const flwItem = newFlwItem();
+  return flwItem;
 };
 
-test("Returns a flwItem with the updated dAge.", () /*: void */ => {
+test("Returns true when the flwItem is in a touch status", () /*: void */ => {
   const flwItem = fixture();
-  const newFlwItmRef = makeItOneClickOlder(flwItem);
-  should(newFlwItmRef.dAge).be.exactly(1);
-  const anotherNewFlwItmRef = makeItOneClickOlder(newFlwItmRef);
-  should(anotherNewFlwItmRef.dAge).be.exactly(2);
+  flwItem.dStpIndex = 2;
+  const result = inTouch(flwItem, 0);
+  should(result).be.true();
 });
 
-test("Returns a flwItem with new opacity when death is 10.", () /*: void */ => {
+test("Returns false when the flwItem is in a wait status", () /*: void */ => {
   const flwItem = fixture();
-  gSttngs().death = 10;
-  const newFlwItmRef = makeItOneClickOlder(flwItem);
-  should(newFlwItmRef.material.opacity).be.exactly(0.9);
-  const anotherNewFlwItmRef = makeItOneClickOlder(newFlwItmRef);
-  should(anotherNewFlwItmRef.material.opacity).be.exactly(0.8);
-});
-
-test("Returns a flwItem with opacity unchanged when death is 0.", () /*: void */ => {
-  const flwItem = fixture();
-  gSttngs().death = 0;
-  const newFlwItmRef = makeItOneClickOlder(flwItem);
-  should(newFlwItmRef.material.opacity).be.exactly(1);
+  flwItem.dStpIndex = 3;
+  const result = inTouch(flwItem, 0);
+  should(result).be.false();
 });
