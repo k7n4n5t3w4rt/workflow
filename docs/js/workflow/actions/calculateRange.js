@@ -32,5 +32,5 @@ export default (flwStpsIndex /*: number */) /*: number */ => {
     range = gSttngs().rangeMax;
   }
 
-  return range;
+  return Math.round(range * 100) / 100;
 };

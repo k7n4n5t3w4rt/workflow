@@ -16,19 +16,21 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
+import newClickCube from "../js/workflow/actions/newClickCube.js";
 import populateSteps from "../js/workflow/actions/populateSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import stepWip from "../js/workflow/actions/stepWip.js";
-import newClickCube from "../js/workflow/actions/newClickCube.js";
+import calculateRange from "../js/workflow/actions/calculateRange.js";
 //------------------------------------------------------------------
-// TEST: stepWip()
+// TEST: dragFunction
 //------------------------------------------------------------------
-test("-------------- stepWip.js ---------------------", () /*: void */ => {
+test("-------------- calculateRange.js ---------------------", () /*: void */ => {
   should(1).be.exactly(1);
 });
+
 const fixture = () /*: void */ => {
+  // Settings
   globalSettings({});
   gSttngs("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
@@ -38,49 +40,19 @@ const fixture = () /*: void */ => {
     { name: "In Test", status: "touch", limit: 3, preload: 3 },
     { name: "Done", status: "done", limit: 0 },
   ]);
+  gSttngs("rangeIncreaseRate", 1.75);
+  gSttngs("rangeDecreaseRate", 0.75);
+  gSttngs("scale", 0.1);
+  gSttngs("yOffset", gSttngs().scale * 10);
+  gSttngs("rangeMax", gSttngs().yOffset * 0.75);
+  // State
   globalState();
-  // Needed for populateSteps()
   gState().clckCbGroup = newClickCube();
   populateSteps();
 };
 
-test("When nothing is expedited, the expedited WIP of all steps is 0", () /*: void */ => {
+test("Calculates a sensible but, really, entirely arbitrary range", () /*: void */ => {
   fixture();
-  should(stepWip("0", true)).be.exactly(0);
-  should(stepWip("1", true)).be.exactly(0);
-  should(stepWip("2", true)).be.exactly(0);
-  should(stepWip("3", true)).be.exactly(0);
-  should(stepWip("4", true)).be.exactly(0);
-  should(stepWip("5", true)).be.exactly(0);
-});
-
-test("When one thing is expedited, the expedited stepWip is 1", () /*: void */ => {
-  fixture();
-  gState().flwMap["0"][0].dExpedite = true;
-  should(stepWip("0", true)).be.exactly(1);
-  should(stepWip("0", false)).be.exactly(2);
-  should(stepWip("1", true)).be.exactly(0);
-  should(stepWip("2", true)).be.exactly(0);
-  should(stepWip("3", true)).be.exactly(0);
-  should(stepWip("4", true)).be.exactly(0);
-  should(stepWip("5", true)).be.exactly(0);
-});
-
-test("Diverse combinations of expedited and normal WIP are easy", () /*: void */ => {
-  fixture();
-  gState().flwMap["0"][0].dExpedite = true;
-  gState().flwMap["0"][1].dExpedite = true;
-  should(stepWip("0", true)).be.exactly(2);
-  should(stepWip("0", false)).be.exactly(1);
-  gState().flwMap["1"][2].dExpedite = true;
-  should(stepWip("1", true)).be.exactly(1);
-  should(stepWip("1", false)).be.exactly(2);
-  should(stepWip("2", true)).be.exactly(0);
-  should(stepWip("3", true)).be.exactly(0);
-  gState().flwMap["4"][0].dExpedite = true;
-  gState().flwMap["4"][1].dExpedite = true;
-  gState().flwMap["4"][2].dExpedite = true;
-  should(stepWip("4", true)).be.exactly(3);
-  should(stepWip("4", false)).be.exactly(0);
-  should(stepWip("5", true)).be.exactly(0);
+  const range = calculateRange(0);
+  should(range).be.exactly(0.39);
 });

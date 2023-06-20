@@ -7,19 +7,9 @@ import { test, testPromise, should } from "../server/testy.js";
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
 import skipForWip from "../js/workflow/actions/skipForWip.js";
-// //------------------------------------------------------------------
-// // IMPORT: GLOBALS
-// //------------------------------------------------------------------
-// import gSttngs from "../js/workflow/actions/gSttngs.js";
-// import gState from "../js/workflow/actions/gState.js";
-// //------------------------------------------------------------------
-// // IMPORT: SETTINGS/STATE
-// //------------------------------------------------------------------
-// import globalSettings from "../js/workflow/actions/globalSettings.js";
-// import globalState from "../js/workflow/actions/globalState.js";
-// globalSettings({});
-// globalState();
-
+//------------------------------------------------------------------
+// TEST: skipForWip()
+//------------------------------------------------------------------
 test("-------------- skipForWip.js ---------------------", () /*: void */ => {
   should(1).be.exactly(1);
 });

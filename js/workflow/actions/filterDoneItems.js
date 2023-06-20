@@ -7,30 +7,30 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import removeFlowItem from "./removeFlowItem.js";
 
 //------------------------------------------------------------------
 // filterDoneItems()
 //------------------------------------------------------------------
-export default () /*: void */ => {
-  gState().vSphere.dRllngTtlVolume = 0;
-  const doneFlwItems = gState().flwMap[(gSttngs().steps.length - 1).toString()];
-  if (doneFlwItems.length > 0) {
-    // Throughput is easy, we just count the number of items in the doneFlwItems
-    updateThroughPutQueue(doneFlwItems.length);
-    // Value is based on the volume of the doneFlwItems
-    const valueFlwItems = [...doneFlwItems];
-    updateValueQueue(valueFlwItems.reduce(processValue, 0));
-    // Flow Time is based on age of the doneFlwItems
-    const flowTimeQueueFlwItems = [...doneFlwItems];
-    updateFlowTimeQueue(flowTimeQueueFlwItems.reduce(processFlowTime, []));
-
-    doneFlwItems.forEach(removeFlowItem);
-  } else {
-    updateValueQueue(0);
-    updateThroughPutQueue(0);
-  }
-};
+export default (
+    removeFlowItem /*: (flwItem:FlwItem, index:number) => void */,
+  ) /*: () => void */ =>
+  () /*: void */ => {
+    gState().vSphere.dRllngTtlVolume = 0;
+    const doneFlwItems =
+      gState().flwMap[(gSttngs().steps.length - 1).toString()];
+    if (doneFlwItems.length > 0) {
+      // Throughput is easy, we just count the number of items in the doneFlwItems
+      updateThroughPutQueue(doneFlwItems.length);
+      // Value is based on the volume of the doneFlwItems
+      updateValueQueue([...doneFlwItems].reduce(processValue, 0));
+      // Flow Time is based on age of the doneFlwItems
+      updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
+      doneFlwItems.forEach(removeFlowItem);
+    } else {
+      updateValueQueue(0);
+      updateThroughPutQueue(0);
+    }
+  };
 //------------------------------------------------------------------
 // processFlowTime()
 //------------------------------------------------------------------

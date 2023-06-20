@@ -8,15 +8,14 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import newFlwItem from "./newFlwItem.js";
-import isDone from "../calculations/isDone.js";
-import flwItmTracker from "./flwItmTracker.js";
-import filterOutDoneItems from "./filterOutDoneItems.js";
+import filterDoneItems from "./filterDoneItems.js";
 import updateWip from "./updateWip.js";
 import setExpedite from "./setExpedite.js";
 import pullFlwItems from "./pullFlwItems.js";
 import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
 import updateAgeAndDaysForAllItems from "./updateAgeAndDaysForAllItems.js";
+import removeFlowItem from "./removeFlowItem.js";
 
 const click = () /*: void */ => {
   if (gState().clicks % gSttngs().timeBox === 0) {
@@ -31,7 +30,8 @@ const click = () /*: void */ => {
 export const onClickComplete = () /*: void */ => {
   updateWip();
   setExpedite();
-  filterOutDoneItems();
+  // For testing, we need to pass in removeFlowItem
+  filterDoneItems(removeFlowItem)();
   resizeVSphere();
   updateAgeAndDaysForAllItems();
   newFlwItem();
