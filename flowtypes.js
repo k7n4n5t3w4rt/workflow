@@ -6,6 +6,10 @@ type GlobalSettings = {
   arrivalFrequency: { min: number, max: number },
   arrivalVolume: { min: number, max: number },
   autoMode: boolean,
+  backlogDeath: number,
+  colorGrey: string,
+  colorGold: string,
+  colorGreen: string,
   death: number,
   debug: boolean,
   devUnits: number,
@@ -70,6 +74,7 @@ type FlwItem = {
   // Data:
   // -----------------------
   dAge: number,
+  dBacklogAge: number,
   dColor: string,
   dDysEachTouchStep: number,
   dDysRmnngInTotal: number,

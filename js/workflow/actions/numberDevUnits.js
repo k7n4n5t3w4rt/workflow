@@ -21,7 +21,11 @@ export const numberExpiditedDevUnits = () /*: number */ => {
 // numberNormalDevUnits()
 //------------------------------------------------------------------
 export const numberNormalDevUnits = () /*: number */ => {
-  const nrmlDvUnitsFactor = 1 - gSttngs().expdtdDvUnitsFactor;
+  // Let's assume that all the dev units are normal dev units
+  // because by the time we if we're working on normal flwItems,
+  // there are no expedited flwItems left
+  const nrmlDvUnitsFactor = 1;
+  // const nrmlDvUnitsFactor = 1 - gSttngs().expdtdDvUnitsFactor;
   // Return the number of normal dev units divided by the number of touch steps
   // as the number of normal dev units per touch step
   return Math.floor(

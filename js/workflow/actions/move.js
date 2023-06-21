@@ -83,12 +83,12 @@ const animateColorChange = (
 //------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
   const nextStatus = gSttngs().steps[flwItem.dStpIndex + 1].status;
-  let newColor = "#808080"; // Grey for "waiting" status
+  let newColor = gSttngs().colorGrey; // Grey for "waiting" status
 
   if (nextStatus === "touch" || nextStatus === "done") {
-    newColor = "#ffd700"; // Gold for "touch" status
+    newColor = gSttngs().colorGold; // Gold for "touch" status
     if (flwItem.dExpedite == true) {
-      newColor = "#00ff00"; // Green for "touch" status
+      newColor = gSttngs().colorGreen; // Green for "touch" status
     }
   }
   return newColor;

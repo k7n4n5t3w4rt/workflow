@@ -39,7 +39,7 @@ export default (props /*: Props */) => {
   // [3] The third kind of drag is technical - technical debt, legacy code, lack
   // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
   // defensive programming, lack of documentation, lack of knowledge sharing
-  gSttngs("drag", 0.03);
+  gSttngs("drag", 0.45);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
@@ -50,11 +50,11 @@ export default (props /*: Props */) => {
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs("steps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 3 },
-    { name: "Ready", status: "wait", limit: 3, preload: 3 },
-    { name: "Doing", status: "touch", limit: 3, preload: 3 },
-    { name: "Ready for Test", status: "wait", limit: 3, preload: 3 },
-    { name: "In Test", status: "touch", limit: 3, preload: 3 },
+    { name: "Open", status: "backlog", limit: 0, preload: 0 },
+    { name: "Ready", status: "wait", limit: 24, preload: 24 },
+    { name: "Doing", status: "touch", limit: 24, preload: 24 },
+    { name: "Ready for Test", status: "wait", limit: 0, preload: 0 },
+    { name: "In Test", status: "touch", limit: 0, preload: 0 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   // Q: In "ideal developer days", how many days does each flow item use up?
@@ -62,19 +62,20 @@ export default (props /*: Props */) => {
   // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
-  gSttngs("flwItmSize", { min: 1, max: 3 });
+  gSttngs("flwItmSize", { min: 10, max: 60 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("timeBox", 10);
+  gSttngs("timeBox", 60);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs("death", 0);
+  gSttngs("backlogDeath", 240);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs("devUnits", cleanInt(props.devunits) || 10);
+  gSttngs("devUnits", cleanInt(props.devunits) || 25);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs("expdtLimit", 3);
+  gSttngs("expdtLimit", 0);
   // 1 is 100% of the available devUnits.
-  gSttngs("expdtdDvUnitsFactor", 0.5);
+  gSttngs("expdtdDvUnitsFactor", 1);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
@@ -113,15 +114,18 @@ export default (props /*: Props */) => {
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
+  gSttngs("colorGold", "#ffd700");
+  gSttngs("colorGrey", "#808080");
+  gSttngs("colorGreen", "#00ff00");
   gSttngs("fps", Math.abs(parseFloat(props.fps) || 1));
-  gSttngs("scaleCm", 7);
+  gSttngs("scaleCm", cleanInt(props.scalecm) || 7);
   gSttngs("scale", cleanInt(gSttngs().scaleCm) / 100);
   gSttngs("x", gSttngs().scale);
   gSttngs("y", gSttngs().scale);
   gSttngs("z", gSttngs().scale);
-  gSttngs("step", cleanInt(props.stepcm) || gSttngs().scale * 4);
+  gSttngs("step", cleanInt(props.stepcm) || gSttngs().scale * 5);
   gSttngs("yOffset", gSttngs().scale * 10);
-  gSttngs("rangeMax", gSttngs().yOffset * 0.75);
-  gSttngs("rangeIncreaseRate", 1.75);
-  gSttngs("rangeDecreaseRate", 0.75);
+  gSttngs("rangeMax", gSttngs().yOffset * 0.3);
+  gSttngs("rangeIncreaseRate", 1.15);
+  gSttngs("rangeDecreaseRate", 0.95);
 };

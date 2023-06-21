@@ -21,9 +21,10 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
   const flwItem = threeJsCube();
   setDProps(flwItem);
+  mapIt(flwItem, stepIndex);
+  setColor(flwItem);
   setAge(flwItem, stepIndex);
   gState().flwItmTracker[flwItem.name] = [];
-  mapIt(flwItem, stepIndex);
   setDays(flwItem);
   setScaleAndVolume(flwItem);
   setPosition(flwItem, stepIndex);
@@ -37,7 +38,7 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
 const threeJsCube = () /*: FlwItem */ => {
   // Basic Three.js geometry and material
   const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
-  const color = "#ffd700"; // gold
+  const color = gSttngs().colorGold; // gold
   const material = new THREE.MeshBasicMaterial({ color });
   const flwItem = new THREE.Mesh(geometry, material);
   // Set the color for changing it later
@@ -58,6 +59,19 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   return flwItem;
 };
 
+//------------------------------------------------------------------
+// setColor(flwItem)
+//------------------------------------------------------------------
+const setColor = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+  const stpStatus = gSttngs().steps[flwItem.dStpIndex].status;
+  // If this flwItem is in the backlog, don't update it
+  if (stpStatus !== "touch") {
+    let color = new THREE.Color(gSttngs().colorGrey);
+    flwItem.material.color.copy(color);
+    flwItem.material.needsUpdate = true;
+  }
+  return flwItem;
+};
 //------------------------------------------------------------------
 // mapIt(flwItem)
 //------------------------------------------------------------------
@@ -95,8 +109,9 @@ const setAge = (
   flwItem /*: FlwItem */,
   stepIndex /*: number */,
 ) /*: void */ => {
-  // Set the age to 0 by default
+  // Set the ages to 0 by default
   flwItem.dAge = 0;
+  flwItem.dBacklogAge = 0;
   // If this is not the first step we assume that it has some age.
   if (stepIndex > 0 && gSttngs().death > 0) {
     flwItem.dAge = rndmBetween(0, gSttngs().death);
@@ -123,7 +138,7 @@ const setPosition = (
 ) /*: void */ => {
   flwItem.position.x = gState().strtPosition.x;
   flwItem.position.y = gState().strtPosition.y;
-  flwItem.position.z = gState().strtPosition.z + gSttngs().step * flwMapIndex;
+  flwItem.position.z = gState().strtPosition.z - gSttngs().step * flwMapIndex;
   // Set the dPosition because refineNewPosition() needs it
   flwItem.dPosition = { ...flwItem.position };
   flwItem.dPosition = { ...refineNewPosition(flwItem) };

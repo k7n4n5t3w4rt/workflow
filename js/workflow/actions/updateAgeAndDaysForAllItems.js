@@ -2,6 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -46,8 +48,8 @@ const prepAndUpdateDaysRemaining = (
   dvUnits /*: number */,
 ) /*: void */ => {
   flwItems.forEach((flwItem /*: FlwItem */) => {
-    // If we're skipping, abort
-    if (skipForWip(dvUnits, flwItems.length)) {
+    // If we're skipping, abort, but don't skip expedited items
+    if (!flwItem.dExpedite && skipForWip(dvUnits, flwItems.length)) {
       return;
     }
     const wipThisStep = stepWip(
@@ -55,7 +57,9 @@ const prepAndUpdateDaysRemaining = (
       flwItem.dExpedite,
     );
     const devPower = dvUnits / wipThisStep;
-    const drag = dragFunction(devPower, wipThisStep);
+    // const drag = dragFunction(devPower, wipThisStep);
+    // const drag = 1 - gSttngs().drag;
+    const drag = 1;
     updateDaysRemainingCurrentStep(flwItem, devPower, drag);
   });
 };
