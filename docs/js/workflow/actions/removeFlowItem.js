@@ -15,7 +15,7 @@ import animateScaleToZero from "./animateScaleToZero.js";
 //------------------------------------------------------------------
 // removeFlowItem()
 //------------------------------------------------------------------
-export default (flwItem /*: FlwItem */, index /*: number */) /*: void */ => {
+export default (flwItem /*: FlwItem */) /*: void */ => {
   if (flwItem.dMoving) {
     return;
   }
@@ -33,11 +33,6 @@ export default (flwItem /*: FlwItem */, index /*: number */) /*: void */ => {
     flwItem.material.color.copy(color);
     flwItem.material.needsUpdate = true;
   }
-  // Remove it from the flwMap
-  const deletedFlwItem = gState().flwMap[flwItem.dStpIndex.toString()].splice(
-    index,
-    1,
-  );
 };
 //------------------------------------------------------------------
 // removeThreeObject()

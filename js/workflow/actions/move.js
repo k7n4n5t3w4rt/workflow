@@ -17,6 +17,7 @@ import calculateRange from "./calculateRange.js";
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import animateScaleToZero from "./animateScaleToZero.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
+import removeFlowItem from "./removeFlowItem.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
   gState().flwItmTracker[flwItem.name].unshift(`Moving`);
@@ -33,7 +34,11 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // should be in when the animation is complete.
   flwItem.dMoving = true;
   flwItem.dStpIndex++;
-  flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
+  // We don't want to reset the days remaining if the item is
+  // in the last step, i.e. Done
+  if (flwItem.dStpIndex < gSttngs().steps.length - 1) {
+    flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
+  }
 
   anime({
     targets: [flwItem.position],
@@ -47,6 +52,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
       flwItem.dMoving = false;
       if (gSttngs().steps[flwItem.dStpIndex].status === "done") {
         flwItem.visible = false;
+        removeFlowItem(flwItem);
       } else {
       }
     },

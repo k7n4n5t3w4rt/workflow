@@ -119,7 +119,7 @@ const updateMetricsOnClickInterval = (
       gState().wipQueue !== undefined
     ) {
       setFlowTime(gState().flwTmQueue.mean());
-      setThroughPut(gState().thrPtQueue.total());
+      setThroughPut(gState().thrPtQueue.mean());
       setWip(gState().wipQueue.mean());
       setValue(gState().vQueue.total());
     }

@@ -3,18 +3,17 @@
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
+
 //------------------------------------------------------------------
-// makeItOneClickOlder()
+// countExpeditedFlwItemsInOneStep();
 //------------------------------------------------------------------
-export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
-  if (flwItem.dStpIndex === 0) {
-    flwItem.dBacklogAge++;
-  } else {
-    flwItem.dAge++;
-    if (gSttngs().death > 0) {
-      flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().death;
-      flwItem.material.needsUpdate = true;
+export default (flwMpStpItems /*: FlwItem[] */) /*: number */ => {
+  let expdtCount = 0;
+  flwMpStpItems.forEach((flwItem /*: FlwItem */) => {
+    if (flwItem.dExpedite == true) {
+      expdtCount += 1;
     }
-  }
-  return flwItem;
+  });
+  return expdtCount;
 };

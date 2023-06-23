@@ -3,6 +3,7 @@
 // gSttngs
 //------------------------------------------------------------------
 type GlobalSettings = {
+  arrivalRate: number,
   arrivalFrequency: { min: number, max: number },
   arrivalVolume: { min: number, max: number },
   autoMode: boolean,
@@ -58,6 +59,7 @@ type GlobalState = {
   endPosition: ThrMeshPosition,
   flwMap: FlwMap,
   flwItems: FlwItem[],
+  flwItmsPulledCount: number,
   clckCbGroup: ClickCubeGroup,
   flwItmTracker: FlwItmTracker,
   // -----------------------
@@ -85,6 +87,7 @@ type FlwItem = {
   dMoving: boolean,
   dPosition: ThrMeshPosition,
   dScale: number,
+  dSkipForWip: boolean,
   dTmNumber: number,
   dVolume: number,
   // -----------------------
@@ -253,11 +256,10 @@ type ThrPtQueue = {
   // -----------------------
   // Data:
   // -----------------------
-  dequeue: () => void,
-  enqueue: (item: number) => void,
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => Array<number>,
   total: () => number,
   length: () => number,
-  _85th: () => number,
   mean: () => number,
 };
 
@@ -265,11 +267,10 @@ type FlwTmQueue = {
   // -----------------------
   // Data:
   // -----------------------
-  dequeue: () => void,
-  enqueue: (item: number) => void,
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  _85th: () => number,
   mean: () => number,
 };
 
@@ -277,11 +278,10 @@ type WipQueue = {
   // -----------------------
   // Data:
   // -----------------------
-  dequeue: () => void,
-  enqueue: (item: number) => void,
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  _85th: () => number,
   mean: () => number,
 };
 
@@ -289,11 +289,10 @@ type VQueue = {
   // -----------------------
   // Data:
   // -----------------------
-  dequeue: () => void,
-  enqueue: (item: number) => void,
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  _85th: () => number,
   mean: () => number,
 };
 

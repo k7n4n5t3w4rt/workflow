@@ -56,6 +56,8 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   flwItem.dTmNumber = rndmBetween(1, gSttngs().devUnits);
   // Expedite is false by default
   flwItem.dExpedite = false;
+  // Skip is false by default
+  flwItem.dSkipForWip = false;
   return flwItem;
 };
 
@@ -113,9 +115,10 @@ const setAge = (
   flwItem.dAge = 0;
   flwItem.dBacklogAge = 0;
   // If this is not the first step we assume that it has some age.
-  if (stepIndex > 0 && gSttngs().death > 0) {
-    flwItem.dAge = rndmBetween(0, gSttngs().death);
-  }
+  flwItem.dAge = stepIndex;
+  // if (stepIndex > 0 && gSttngs().death > 0) {
+  //   flwItem.dAge = rndmBetween(0, gSttngs().death);
+  // }
 };
 //------------------------------------------------------------------
 // setDays()

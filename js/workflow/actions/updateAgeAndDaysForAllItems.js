@@ -8,6 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import removeFlowItem from "./removeFlowItem.js";
+import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import dragFunction from "./dragFunction.js";
 import skipForWip from "./skipForWip.js";
@@ -29,15 +30,19 @@ export default () /*: void */ => {
   // Get all the flwItems
   const flwItems = getAllFlwItems();
   countExpeditedFlwItems(flwItems);
-  const { expdtFlwItems, normalFlwItems } = expediteAndNormalFlwItems(
-    flwItems
-      .map(makeItOneClickOlder)
-      .filter(theNonDead(removeFlowItem))
-      .filter(inTouch),
+  const flwItemsOneClickOlder = flwItems.map(makeItOneClickOlder);
+  const flwItemsNotDead = flwItemsOneClickOlder.filter(
+    theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap),
   );
+  const flwItemsInTouch = flwItemsNotDead.filter(inTouch);
+  const { expdtFlwItems, normalFlwItems } =
+    expediteAndNormalFlwItems(flwItemsInTouch);
   const nmExpdtDvUnits = numberExpiditedDevUnits();
   prepAndUpdateDaysRemaining(expdtFlwItems, nmExpdtDvUnits);
   const nmNrmlDvUnits = numberNormalDevUnits();
+  // normalFlwItems.forEach((flwItem /*: FlwItem */) => {
+  //   flwItem.dSkipForWip = skipForWip(nmNrmlDvUnits, flwItems.length);
+  // });
   prepAndUpdateDaysRemaining(normalFlwItems, nmNrmlDvUnits);
 };
 //------------------------------------------------------------------
@@ -48,19 +53,21 @@ const prepAndUpdateDaysRemaining = (
   dvUnits /*: number */,
 ) /*: void */ => {
   flwItems.forEach((flwItem /*: FlwItem */) => {
-    // If we're skipping, abort, but don't skip expedited items
-    if (!flwItem.dExpedite && skipForWip(dvUnits, flwItems.length)) {
-      return;
-    }
     const wipThisStep = stepWip(
       flwItem.dStpIndex.toString(),
       flwItem.dExpedite,
     );
-    const devPower = dvUnits / wipThisStep;
+    // // If we're skipping, abort
+    // if (flwItem.dSkipForWip === true) {
+    //   flwItem.dSkipForWip = false;
+    //   return;
+    // }
+    // console.log("devUnits", gSttngs().devUnits);
+    // console.log("wip", gState().wipQueue.mean());
+    const devPower = gSttngs().devUnits / wipThisStep;
+    // console.log("devPower", devPower);
     // const drag = dragFunction(devPower, wipThisStep);
-    // const drag = 1 - gSttngs().drag;
-    const drag = 1;
-    updateDaysRemainingCurrentStep(flwItem, devPower, drag);
+    updateDaysRemainingCurrentStep(flwItem, devPower);
   });
 };
 //------------------------------------------------------------------
@@ -69,9 +76,9 @@ const prepAndUpdateDaysRemaining = (
 const updateDaysRemainingCurrentStep = (
   flwItem /*: FlwItem */,
   devPower /*: number */,
-  drag /*: number */,
 ) /*: void */ => {
-  flwItem.dDysRmnngThisStep -= devPower * drag;
+  const dragFactor = 1 - gSttngs().drag;
+  flwItem.dDysRmnngThisStep -= devPower * dragFactor;
   if (flwItem.dDysRmnngThisStep <= 0) {
     flwItem.dDysRmnngThisStep = 0;
   }

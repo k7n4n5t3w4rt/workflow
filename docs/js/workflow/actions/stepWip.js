@@ -13,7 +13,7 @@ export default (
 ) /*: number */ => {
   return gState().flwMap[flwMpKey].reduce(
     (_ /*: number */, flwItem /*: FlwItem */) => {
-      if (flwItem.dExpedite === expedited) {
+      if (flwItem.dExpedite === expedited && flwItem.dSkipForWip === false) {
         return (_ += 1);
       }
       return _;

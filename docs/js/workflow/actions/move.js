@@ -17,6 +17,7 @@ import calculateRange from "./calculateRange.js";
 import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import animateScaleToZero from "./animateScaleToZero.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
+import removeFlowItem from "./removeFlowItem.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
   gState().flwItmTracker[flwItem.name].unshift(`Moving`);
@@ -33,7 +34,11 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // should be in when the animation is complete.
   flwItem.dMoving = true;
   flwItem.dStpIndex++;
-  flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
+  // We don't want to reset the days remaining if the item is
+  // in the last step, i.e. Done
+  if (flwItem.dStpIndex < gSttngs().steps.length - 1) {
+    flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
+  }
 
   anime({
     targets: [flwItem.position],
@@ -47,6 +52,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
       flwItem.dMoving = false;
       if (gSttngs().steps[flwItem.dStpIndex].status === "done") {
         flwItem.visible = false;
+        removeFlowItem(flwItem);
       } else {
       }
     },
@@ -83,12 +89,12 @@ const animateColorChange = (
 //------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
   const nextStatus = gSttngs().steps[flwItem.dStpIndex + 1].status;
-  let newColor = "#808080"; // Grey for "waiting" status
+  let newColor = gSttngs().colorGrey; // Grey for "waiting" status
 
   if (nextStatus === "touch" || nextStatus === "done") {
-    newColor = "#ffd700"; // Gold for "touch" status
+    newColor = gSttngs().colorGold; // Gold for "touch" status
     if (flwItem.dExpedite == true) {
-      newColor = "#00ff00"; // Green for "touch" status
+      newColor = gSttngs().colorGreen; // Green for "touch" status
     }
   }
   return newColor;

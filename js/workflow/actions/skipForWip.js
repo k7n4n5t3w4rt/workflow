@@ -14,9 +14,14 @@ export default (devUnits /*: number */, wip /*: number */) /*: boolean */ => {
     console.log("No WIP, no skip");
     return false;
   }
-  // Get a random number between 0 (inclusive) and 1 (exclusive)
-  const random = Math.random();
+  // So that we can increase the probability of skipping
+  // by increasing the WIP by > * 1
+  // e.g. if drag is 0.25, then dragFacor will be 1.25
+  const dragFactor = 1 + gSttngs().drag;
 
+  console.log("dragFactor", dragFactor);
   // If the random number is more than the probability (a/b), return false
-  return random > devUnits / (wip * (gSttngs().drag * 1.1));
+  const skip = Math.random() > devUnits / (wip * dragFactor);
+  console.log("skip", skip);
+  return skip;
 };

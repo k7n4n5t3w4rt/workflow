@@ -91,7 +91,7 @@ const setStartPosition = () /*: void */ => {
 //------------------------------------------------------------------
 const setEndPosition = () /*: void */ => {
   gState().endPosition = gState().strtPosition.clone();
-  gState().endPosition.z += gSttngs().step * (gSttngs().steps.length + 2) * -1;
+  gState().endPosition.z += gSttngs().step * (gSttngs().steps.length + 1) * -1;
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------

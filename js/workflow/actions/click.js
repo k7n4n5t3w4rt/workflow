@@ -16,10 +16,14 @@ import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
 import updateAgeAndDaysForAllItems from "./updateAgeAndDaysForAllItems.js";
 import removeFlowItem from "./removeFlowItem.js";
+import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 
 const click = () /*: void */ => {
-  if (gState().clicks % gSttngs().timeBox === 0) {
-  }
+  // if (gState().clicks % gSttngs().timeBox === 0) {
+  // }
+  console.log("//------------------------------------------");
+  console.log("// CLICK");
+  console.log("//------------------------------------------");
   gState().clicks++;
   animateClickCube();
 };
@@ -28,15 +32,29 @@ const click = () /*: void */ => {
 // onClickComplete()
 //------------------------------------------------------------------
 export const onClickComplete = () /*: void */ => {
-  updateWip();
+  for (let i = 1; i <= gSttngs().arrivalRate; i++) {
+    newFlwItem();
+  }
   setExpedite();
-  // For testing, we need to pass in removeFlowItem
-  filterDoneItems(removeFlowItem)();
   resizeVSphere();
-  updateAgeAndDaysForAllItems();
-  newFlwItem();
+  // Skip the first time through
+  if (gState().clicks !== 1) {
+    updateAgeAndDaysForAllItems();
+  }
+  // If this is remains zero then nothing was pulled and we can
+  // exit the loop
+  gState().flwItmsPulledCount = 0;
   pullFlwItems();
+  // Update the WIP when everything has been pulled but not yet
+  // worked on
+  updateWip();
+  // For testing, we need to pass in removeFlowItem
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  //if (gState().clicks % (gSttngs().timeBox * 2) !== 0) {
   // Start the click cycle over again
   click();
+  // } else {
+  //   console.log("CLICKS END: " + gState().clicks);
+  // }
 };
 export default click;

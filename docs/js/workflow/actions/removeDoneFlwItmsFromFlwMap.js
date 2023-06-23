@@ -1,23 +1,19 @@
 // @flow
 //------------------------------------------------------------------
-// IMPORT: GLOBAL
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gState from "./gState.js";
-
 //------------------------------------------------------------------
-// stepWip()
+// removeDoneFlwItmsFromFlwMap()
 //------------------------------------------------------------------
 export default (
-  flwMpKey /*: string */,
-  expedited /*: boolean */,
-) /*: number */ => {
-  return gState().flwMap[flwMpKey].reduce(
-    (_ /*: number */, flwItem /*: FlwItem */) => {
-      if (flwItem.dExpedite === expedited && flwItem.dSkipForWip === false) {
-        return (_ += 1);
-      }
-      return _;
-    },
-    0,
+  _ /*: null | void */,
+  flwItem /*: FlwItem */,
+  index /*: number */,
+) /*: void */ => {
+  // Remove it from the flwMap
+  const deletedFlwItem = gState().flwMap[flwItem.dStpIndex.toString()].splice(
+    index,
+    1,
   );
 };

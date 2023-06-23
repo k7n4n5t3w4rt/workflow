@@ -25,7 +25,7 @@ import filterDoneItems from "../js/workflow/actions/filterDoneItems.js";
 //------------------------------------------------------------------
 // MOCKS
 //------------------------------------------------------------------
-const removeFlowItem = (
+const removeDoneFlwItmsFromFlwMap = (
   flwItem /*: FlwItem */,
   index /*: number */,
 ) /*: void */ => {
@@ -71,7 +71,7 @@ const tearDown = () /*: void */ => {
 
 test("Filters out a Done flwItem...", () /*: void */ => {
   fixture();
-  filterDoneItems(removeFlowItem)();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().flwMap["5"].length).be.exactly(0);
   tearDown();
 });
@@ -80,7 +80,7 @@ test("...and updates the thoughput queue", () /*: void */ => {
   // Check it is empty to start with
   should(gState().thrPtQueue.length()).be.exactly(0);
   fixture();
-  filterDoneItems(removeFlowItem)();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().thrPtQueue.length()).be.exactly(1);
   tearDown();
 });
@@ -90,7 +90,7 @@ test("...and updates the value queue", () /*: void */ => {
   should(gState().vQueue.length()).be.exactly(0);
   should(gState().vQueue.total()).be.exactly(0);
   fixture();
-  filterDoneItems(removeFlowItem)();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().vQueue.length()).be.exactly(1);
   should(gState().vQueue.total()).be.exactly(10);
   tearDown();
@@ -101,7 +101,7 @@ test("...and updates the flow time queue", () /*: void */ => {
   should(gState().flwTmQueue.length()).be.exactly(0);
   should(gState().flwTmQueue.total()).be.exactly(0);
   fixture();
-  filterDoneItems(removeFlowItem)();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().flwTmQueue.length()).be.exactly(1);
   should(gState().flwTmQueue.total()).be.exactly(10);
   tearDown();

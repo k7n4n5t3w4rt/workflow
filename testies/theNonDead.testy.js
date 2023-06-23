@@ -26,7 +26,9 @@ import theNonDead from "../js/workflow/actions/theNonDead.js";
 //------------------------------------------------------------------
 // MOCKS
 //------------------------------------------------------------------
-const removeFlowItem = (
+const removeFlowItem = (flwItem /*: FlwItem */) /*: void */ => {};
+const removeDoneFlwItmsFromFlwMap = (
+  _ /*: null | void */,
   flwItem /*: FlwItem */,
   index /*: number */,
 ) /*: void */ => {};
@@ -48,7 +50,10 @@ test("Filters out flwItems that are dead.", () /*: void */ => {
   // Set the dAge - 2 below and w above the death threshold
   const flwItem = newFlwItem();
   flwItem.dAge = 10;
-  const result = theNonDead(removeFlowItem)(flwItem, 0);
+  const result = theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap)(
+    flwItem,
+    0,
+  );
   should(result).be.false();
 });
 
@@ -57,5 +62,7 @@ test("Doesn't filter out flwItems that are alive.", () /*: void */ => {
   // Set the dAge - 2 below and w above the death threshold
   const flwItem = newFlwItem();
   flwItem.dAge = 8;
-  should(theNonDead(removeFlowItem)(flwItem, 0)).be.true();
+  should(
+    theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap)(flwItem, 0),
+  ).be.true();
 });

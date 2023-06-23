@@ -8,12 +8,14 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import getFlwMpSteps from "./getFlwMpSteps.js";
+import getAllFlwItems from "./getAllFlwItems.js";
 
 //------------------------------------------------------------------
 // updateWIP()
 //------------------------------------------------------------------
 export default () /*: void */ => {
   const wip = calculateWip();
+  console.log("WIP: " + wip);
   updateWIPQueue(wip);
 };
 
@@ -21,19 +23,19 @@ export default () /*: void */ => {
 // calculateWip()
 //------------------------------------------------------------------
 const calculateWip = () /*: number */ => {
-  let wip = 0;
-  // For each step in the flwMap...
-  getFlwMpSteps().forEach((flwMpStpItems /*: FlwItem[] */) /*: Object */ => {
-    // For each flwItem in this step...
-    wip += flwMpStpItems.filter((flwItem /*: FlwItem */) /*: boolean */ => {
-      if (gSttngs().steps[flwItem.dStpIndex].status === "touch") {
-        return true;
+  return getAllFlwItems().reduce(
+    (_ /*: number */, flwItem /*: FlwItem */) /*: number */ => {
+      if (
+        gSttngs().steps[flwItem.dStpIndex].status === "touch" ||
+        gSttngs().steps[flwItem.dStpIndex].status === "wait"
+      ) {
+        return ++_;
       } else {
-        return false;
+        return _;
       }
-    }).length;
-  });
-  return wip;
+    },
+    0,
+  );
 };
 
 //------------------------------------------------------------------
@@ -43,5 +45,5 @@ const updateWIPQueue = (wip /*: number */) /*: void */ => {
   if (gState().wipQueue.length() >= gSttngs().timeBox) {
     gState().wipQueue.dequeue();
   }
-  gState().wipQueue.enqueue(wip);
+  gState().wipQueue.enqueue([wip]);
 };

@@ -7,12 +7,13 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
+import newFlwItem from "./newFlwItem.js";
 
 //------------------------------------------------------------------
 // filterDoneItems()
 //------------------------------------------------------------------
 export default (
-    removeFlowItem /*: (flwItem:FlwItem, index:number) => void */,
+    removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:FlwItem, index:number) => void */,
   ) /*: () => void */ =>
   () /*: void */ => {
     gState().vSphere.dRllngTtlVolume = 0;
@@ -20,15 +21,20 @@ export default (
       gState().flwMap[(gSttngs().steps.length - 1).toString()];
     if (doneFlwItems.length > 0) {
       // Throughput is easy, we just count the number of items in the doneFlwItems
-      updateThroughPutQueue(doneFlwItems.length);
+      updateThroughPutQueue([doneFlwItems.length]);
+      // // TEMP - for a stable system, we need to add a new item for each doneFlwItem
+      // for (let i = 0; i <= doneFlwItems.length; i++) {
+      //   newFlwItem();
+      // }
       // Value is based on the volume of the doneFlwItems
-      updateValueQueue([...doneFlwItems].reduce(processValue, 0));
+      updateValueQueue([...doneFlwItems].reduce(processValue, []));
       // Flow Time is based on age of the doneFlwItems
       updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
-      doneFlwItems.forEach(removeFlowItem);
+      [...doneFlwItems].reduceRight(removeDoneFlwItmsFromFlwMap, null);
     } else {
-      updateValueQueue(0);
-      updateThroughPutQueue(0);
+      updateValueQueue([0]);
+      updateThroughPutQueue([0]);
+      updateFlowTimeQueue([0]);
     }
   };
 //------------------------------------------------------------------
@@ -45,40 +51,44 @@ const processFlowTime = (
 // processValue()
 //------------------------------------------------------------------
 const processValue = (
-  _ /*: number */,
+  _ /*: Array<number> */,
   flwItem /*: FlwItem */,
-) /*: number */ => {
-  return _ + flwItem.dVolume;
+) /*: Array<number> */ => {
+  _.push(flwItem.dVolume);
+  return _;
 };
 
 //------------------------------------------------------------------
 // updateValueQueue()
 //------------------------------------------------------------------
-const updateValueQueue = (flwItemValue /*: number */) /*: void */ => {
+const updateValueQueue = (valueArray /*: Array<number> */) /*: void */ => {
   if (gState().vQueue.length() >= gSttngs().timeBox) {
     gState().vQueue.dequeue();
   }
-  gState().vQueue.enqueue(flwItemValue);
+  console.log("valueArray: ", valueArray);
+  gState().vQueue.enqueue(valueArray);
 };
 
 //------------------------------------------------------------------
 // updateThrouPutQueue()
 //------------------------------------------------------------------
-const updateThroughPutQueue = (throughPut /*: number */) /*: void */ => {
+const updateThroughPutQueue = (
+  throughPutArray /*: Array<number> */,
+) /*: void */ => {
   if (gState().thrPtQueue.length() >= gSttngs().timeBox) {
     gState().thrPtQueue.dequeue();
   }
-  gState().thrPtQueue.enqueue(throughPut);
+  console.log("throughPutArray: ", throughPutArray);
+  gState().thrPtQueue.enqueue(throughPutArray);
 };
 
 //------------------------------------------------------------------
 // updateFlowTimeQueue()
 //------------------------------------------------------------------
-const updateFlowTimeQueue = (flwTimes /*: Array<number> */) /*: void */ => {
-  flwTimes.forEach((flwTime /*: number */) /*: void */ => {
-    if (gState().flwTmQueue.length() >= 35) {
-      gState().flwTmQueue.dequeue();
-    }
-    gState().flwTmQueue.enqueue(flwTime);
-  });
+const updateFlowTimeQueue = (flwTimeArray /*: Array<number> */) /*: void */ => {
+  if (gState().flwTmQueue.length() >= gSttngs().timeBox) {
+    gState().flwTmQueue.dequeue();
+  }
+  console.log("flwTimeArray: ", flwTimeArray);
+  gState().flwTmQueue.enqueue(flwTimeArray);
 };

@@ -18,6 +18,7 @@ export default () => {
   gState("flwItems", []);
   gState("flwItmTracker", {});
   gState("flwMap", {});
+  gState("flwItmsPulledCount", 0);
   gState("scnData", {});
   gState("strtPosition", {});
   gState("vSphere", {});
@@ -49,48 +50,58 @@ function xQueue() {
   this.headIndex = 0;
   this.tailIndex = 0;
 
-  this.enqueue = (item /*: number */) => {
+  this.enqueue = (item /*: any */) /*: void */ => {
     this.items[this.tailIndex] = item;
     this.tailIndex++;
   };
 
-  this.dequeue = () => {
+  this.dequeue = () /*: Array<number> */ => {
     const item = this.items[this.headIndex];
     delete this.items[this.headIndex];
     this.headIndex++;
     return item;
   };
 
-  this.total = () => {
+  this.total = () /*: number */ => {
     let total = 0;
     for (const index in this.items) {
-      total += this.items[index];
+      total += this.items[index].reduce(
+        (_ /*: number */, item /*: number */) /*: number */ => _ + item,
+        0,
+      );
     }
     return Math.round(total * 10000) / 10000;
   };
 
-  this._85th = () => {
-    const numbers = [];
-    for (const index in this.items) {
-      numbers.push(this.items[index]);
-    }
-    if (numbers.length === 0) return 0;
-    numbers.sort((a, b) => a - b);
-    let index = Math.ceil((85 / 100) * numbers.length);
-    return numbers[index - 1];
-  };
+  // this._85th = () /*: number */ => {
+  //   const numbers = [];
+  //   for (const index in this.items) {
+  //     numbers.push(this.items[index]);
+  //   }
+  //   if (numbers.length === 0) return 0;
+  //   numbers.sort((a, b) => a - b);
+  //   let index = Math.ceil((85 / 100) * numbers.length);
+  //   return numbers[index - 1];
+  // };
 
-  this.mean = () => {
-    let total = 0;
-    for (const index in this.items) {
-      total += this.items[index];
-    }
+  this.mean = () /*: number */ => {
     if (this.length() === 0) return 0;
-    const mean = total / this.length();
+    let total = 0;
+    let count = 0;
+    for (const index in this.items) {
+      total += this.items[index].reduce(
+        (_ /*: number */, item /*: number */) /*: number */ => {
+          count += 1;
+          return _ + item;
+        },
+        0,
+      );
+    }
+    const mean = total / count;
     return Math.round(mean * 100) / 100;
   };
 
-  this.length = () => {
+  this.length = () /*: number */ => {
     return this.tailIndex - this.headIndex;
   };
 }
