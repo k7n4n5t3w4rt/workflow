@@ -11,7 +11,6 @@ export default (devUnits /*: number */, wip /*: number */) /*: boolean */ => {
   }
   // There are plenty of devs for the WIP
   if (devUnits >= wip) {
-    console.log("No WIP, no skip");
     return false;
   }
   // So that we can increase the probability of skipping
@@ -19,9 +18,7 @@ export default (devUnits /*: number */, wip /*: number */) /*: boolean */ => {
   // e.g. if drag is 0.25, then dragFacor will be 1.25
   const dragFactor = 1 + gSttngs().drag;
 
-  console.log("dragFactor", dragFactor);
   // If the random number is more than the probability (a/b), return false
   const skip = Math.random() > devUnits / (wip * dragFactor);
-  console.log("skip", skip);
   return skip;
 };

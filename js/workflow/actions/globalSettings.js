@@ -69,12 +69,12 @@ export default (props /*: Props */) => {
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  gSttngs("death", 0);
+  gSttngs("death", 20);
   gSttngs("backlogDeath", 0);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
   gSttngs("devUnits", cleanInt(props.devunits) || 3);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs("expdtLimit", 0);
+  gSttngs("expdtLimit", 1);
   // 1 is 100% of the available devUnits.
   gSttngs("expdtdDvUnitsFactor", 1);
   //------------------------------------------------------------------
