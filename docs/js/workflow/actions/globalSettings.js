@@ -39,7 +39,7 @@ export default (props /*: Props */) => {
   // [3] The third kind of drag is technical - technical debt, legacy code, lack
   // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
   // defensive programming, lack of documentation, lack of knowledge sharing
-  gSttngs("drag", 0);
+  gSttngs("drag", 0.45);
   // Minimum of 1
   gSttngs("devPower", 1);
   //------------------------------------------------------------------
@@ -53,19 +53,17 @@ export default (props /*: Props */) => {
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 0 },
-    { name: "Ready", status: "wait", limit: 2, preload: 0 },
-    { name: "Doing", status: "touch", limit: 2, preload: 0 },
-    { name: "Ready for Test", status: "wait", limit: 2, preload: 0 },
-    { name: "In Test", status: "touch", limit: 2, preload: 0 },
+    { name: "Ready", status: "wait", limit: 0, preload: 0 },
+    { name: "Doing", status: "touch", limit: 0, preload: 120 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs("arrivalRate", 5);
+  gSttngs("arrivalRate", 1);
   // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
-  gSttngs("flwItmSize", { min: 6, max: 6 });
+  gSttngs("flwItmSize", { min: 10, max: 60 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs("timeBox", 60);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -73,11 +71,11 @@ export default (props /*: Props */) => {
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs("death", 0);
   gSttngs("backlogDeath", 0);
-  gSttngs("backlogMax", 20);
+  gSttngs("backlogMax", 100);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs("devUnits", cleanInt(props.devunits) || 4);
+  gSttngs("devUnits", cleanInt(props.devunits) || 25);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs("expdtLimit", 0);
+  gSttngs("expdtLimit", 20);
   // 1 is 100% of the available devUnits.
   gSttngs("expdtdDvUnitsFactor", 1);
   //------------------------------------------------------------------

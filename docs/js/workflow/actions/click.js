@@ -14,7 +14,8 @@ import setExpedite from "./setExpedite.js";
 import pullFlwItems from "./pullFlwItems.js";
 import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
-import updateAgeAndDaysForAllItems from "./updateAgeAndDaysForAllItems.js";
+import updateAge from "./updateAge.js";
+import updateDays from "./updateDays.js";
 import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 
@@ -33,7 +34,8 @@ export const onClickComplete = () /*: void */ => {
   resizeVSphere();
   // Skip the first time through
   if (gState().clicks !== 1) {
-    updateAgeAndDaysForAllItems();
+    updateAge();
+    updateDays();
   }
   // pullFlwItems() calls itself recursively until there are no more
   // items left to pull.

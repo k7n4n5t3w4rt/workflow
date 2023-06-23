@@ -30,8 +30,7 @@ export default () /*: void */ => {
   // Get all the flwItems
   const flwItems = getAllFlwItems();
   countExpeditedFlwItems(flwItems);
-  const flwItemsOneClickOlder = flwItems.map(makeItOneClickOlder);
-  const flwItemsNotDead = flwItemsOneClickOlder.filter(
+  const flwItemsNotDead = flwItems.filter(
     theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap),
   );
   const flwItemsInTouch = flwItemsNotDead.filter(inTouch);

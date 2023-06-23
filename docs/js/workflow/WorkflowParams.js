@@ -32,8 +32,9 @@ export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   // Set some defaults for missing props
-  const fps /*: number */ = props.fps;
-  const dispatch /*: function */ = props.dispatch;
+  const setStateFunctions = {};
+  const [fps, setFps] = useState(props.fps);
+  setStateFunctions["fps"] = setFps;
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);
@@ -43,14 +44,12 @@ export default (props /*: Props */) /*: string */ => {
   };
 
   const changeParam =
-    (dispatch /*: function */, param /*: string */) /*: function */ =>
+    (param /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
-      gSttngs(param, parseInt(e.target.value));
-      dispatch({
-        type: "CHANGE_PARAM",
-        payload: { param, value: e.target.value },
-      });
+      const value = parseInt(e.target.value);
+      gSttngs()[param] = parseInt(value);
+      setStateFunctions[param](parseInt(value));
     };
 
   return html`
@@ -75,7 +74,7 @@ export default (props /*: Props */) /*: string */ => {
             min="1"
             max="10"
             step="1"
-            onChange=${changeParam(dispatch, "fps")}
+            onChange=${changeParam("fps")}
             value="${fps.toString()}"
           />
         </div>

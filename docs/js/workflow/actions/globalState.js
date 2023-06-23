@@ -90,12 +90,9 @@ function xQueue() {
     let count = 0;
     for (const index in this.items) {
       total += this.items[index].reduce(
-        (_ /*: number */, flwTime /*: number */) /*: number */ => {
-          if (flwTime > 0) {
-            count += 1;
-            return _ + flwTime;
-          }
-          return _;
+        (_ /*: number */, value /*: number */) /*: number */ => {
+          count += 1;
+          return _ + value;
         },
         0,
       );
@@ -110,16 +107,17 @@ function xQueue() {
     let count = 0;
     for (const index in this.items) {
       total += this.items[index].reduce(
-        (_ /*: number */, flwTime /*: number */) /*: number */ => {
-          if (flwTime > 0) {
+        (_ /*: number */, value /*: number */) /*: number */ => {
+          if (value > 0) {
             count += 1;
-            return _ + flwTime;
+            return _ + value;
           }
           return _;
         },
         0,
       );
     }
+    if (count === 0) return 0;
     const mean = total / count;
     return Math.round(mean * 100) / 100;
   };
