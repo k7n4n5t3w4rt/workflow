@@ -8,11 +8,13 @@ type GlobalSettings = {
   arrivalVolume: { min: number, max: number },
   autoMode: boolean,
   backlogDeath: number,
+  backlogMax: number,
   colorGrey: string,
   colorGold: string,
   colorGreen: string,
   death: number,
   debug: boolean,
+  devPower: number,
   devUnits: number,
   dfntnOfReady: number,
   drag: number,
@@ -260,7 +262,8 @@ type ThrPtQueue = {
   enqueue: (item: Array<number>) => Array<number>,
   total: () => number,
   length: () => number,
-  mean: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
 };
 
 type FlwTmQueue = {
@@ -271,7 +274,8 @@ type FlwTmQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  mean: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
 };
 
 type WipQueue = {
@@ -282,7 +286,8 @@ type WipQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  mean: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
 };
 
 type VQueue = {
@@ -293,7 +298,8 @@ type VQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  mean: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
 };
 
 //------------------------------------------------------------------

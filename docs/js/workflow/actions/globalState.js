@@ -84,15 +84,38 @@ function xQueue() {
   //   return numbers[index - 1];
   // };
 
-  this.mean = () /*: number */ => {
+  this.meanForDays = () /*: number */ => {
     if (this.length() === 0) return 0;
     let total = 0;
     let count = 0;
     for (const index in this.items) {
       total += this.items[index].reduce(
-        (_ /*: number */, item /*: number */) /*: number */ => {
-          count += 1;
-          return _ + item;
+        (_ /*: number */, flwTime /*: number */) /*: number */ => {
+          if (flwTime > 0) {
+            count += 1;
+            return _ + flwTime;
+          }
+          return _;
+        },
+        0,
+      );
+    }
+    const mean = total / count;
+    return Math.round(mean * 100) / 100;
+  };
+
+  this.meanForValues = () /*: number */ => {
+    if (this.length() === 0) return 0;
+    let total = 0;
+    let count = 0;
+    for (const index in this.items) {
+      total += this.items[index].reduce(
+        (_ /*: number */, flwTime /*: number */) /*: number */ => {
+          if (flwTime > 0) {
+            count += 1;
+            return _ + flwTime;
+          }
+          return _;
         },
         0,
       );

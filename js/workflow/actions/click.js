@@ -14,16 +14,12 @@ import setExpedite from "./setExpedite.js";
 import pullFlwItems from "./pullFlwItems.js";
 import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
-import updateAgeAndDaysForAllItems from "./updateAgeAndDaysForAllItems.js";
+import updateAge from "./updateAge.js";
+import updateDays from "./updateDays.js";
 import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 
 const click = () /*: void */ => {
-  // if (gState().clicks % gSttngs().timeBox === 0) {
-  // }
-  console.log("//------------------------------------------");
-  console.log("// CLICK");
-  console.log("//------------------------------------------");
   gState().clicks++;
   animateClickCube();
 };
@@ -32,29 +28,34 @@ const click = () /*: void */ => {
 // onClickComplete()
 //------------------------------------------------------------------
 export const onClickComplete = () /*: void */ => {
-  for (let i = 1; i <= gSttngs().arrivalRate; i++) {
-    newFlwItem();
-  }
+  // NOTE: The order of these function calls is important
+  addNewFlowItemsAtArrivalRate();
   setExpedite();
   resizeVSphere();
   // Skip the first time through
   if (gState().clicks !== 1) {
-    updateAgeAndDaysForAllItems();
+    updateAge();
+    updateDays();
   }
-  // If this is remains zero then nothing was pulled and we can
-  // exit the loop
+  // pullFlwItems() calls itself recursively until there are no more
+  // items left to pull.
   gState().flwItmsPulledCount = 0;
   pullFlwItems();
-  // Update the WIP when everything has been pulled but not yet
-  // worked on
+  // Update the WIP when everything has been pulled but not yet worked on
   updateWip();
-  // For testing, we need to pass in removeFlowItem
+  // For testing, we need to pass in removeDoneFlwItmsFromFlwMap
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-  //if (gState().clicks % (gSttngs().timeBox * 2) !== 0) {
-  // Start the click cycle over again
   click();
-  // } else {
-  //   console.log("CLICKS END: " + gState().clicks);
-  // }
 };
+//------------------------------------------------------------------
+// addNewFlowItemsAtArrivalRate()
+//------------------------------------------------------------------
+const addNewFlowItemsAtArrivalRate = () /*: void */ => {
+  if (gState().flwMap["0"].length < gSttngs().backlogMax) {
+    for (let i = 1; i <= gSttngs().arrivalRate; i++) {
+      newFlwItem();
+    }
+  }
+};
+
 export default click;

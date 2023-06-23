@@ -30,25 +30,24 @@ export default () /*: void */ => {
   // Get all the flwItems
   const flwItems = getAllFlwItems();
   countExpeditedFlwItems(flwItems);
-  const flwItemsOneClickOlder = flwItems.map(makeItOneClickOlder);
-  const flwItemsNotDead = flwItemsOneClickOlder.filter(
+  const flwItemsNotDead = flwItems.filter(
     theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap),
   );
   const flwItemsInTouch = flwItemsNotDead.filter(inTouch);
   const { expdtFlwItems, normalFlwItems } =
     expediteAndNormalFlwItems(flwItemsInTouch);
   const nmExpdtDvUnits = numberExpiditedDevUnits();
-  prepAndUpdateDaysRemaining(expdtFlwItems, nmExpdtDvUnits);
+  updateDaysRemaining(expdtFlwItems, nmExpdtDvUnits);
   const nmNrmlDvUnits = numberNormalDevUnits();
   // normalFlwItems.forEach((flwItem /*: FlwItem */) => {
   //   flwItem.dSkipForWip = skipForWip(nmNrmlDvUnits, flwItems.length);
   // });
-  prepAndUpdateDaysRemaining(normalFlwItems, nmNrmlDvUnits);
+  updateDaysRemaining(normalFlwItems, nmNrmlDvUnits);
 };
 //------------------------------------------------------------------
 // prepAndUpdateDaysRemaining()
 //------------------------------------------------------------------
-const prepAndUpdateDaysRemaining = (
+const updateDaysRemaining = (
   flwItems /*: FlwItem[] */,
   dvUnits /*: number */,
 ) /*: void */ => {
@@ -64,10 +63,12 @@ const prepAndUpdateDaysRemaining = (
     // }
     // console.log("devUnits", gSttngs().devUnits);
     // console.log("wip", gState().wipQueue.mean());
-    const devPower = gSttngs().devUnits / wipThisStep;
+    const devDays =
+      ((gSttngs().devUnits * gSttngs().devPower) / wipThisStep) *
+      (1 - gSttngs().drag);
     // console.log("devPower", devPower);
     // const drag = dragFunction(devPower, wipThisStep);
-    updateDaysRemainingCurrentStep(flwItem, devPower);
+    updateDaysRemainingCurrentStep(flwItem, devDays);
   });
 };
 //------------------------------------------------------------------
@@ -75,10 +76,9 @@ const prepAndUpdateDaysRemaining = (
 //------------------------------------------------------------------
 const updateDaysRemainingCurrentStep = (
   flwItem /*: FlwItem */,
-  devPower /*: number */,
+  devDays /*: number */,
 ) /*: void */ => {
-  const dragFactor = 1 - gSttngs().drag;
-  flwItem.dDysRmnngThisStep -= devPower * dragFactor;
+  flwItem.dDysRmnngThisStep -= devDays;
   if (flwItem.dDysRmnngThisStep <= 0) {
     flwItem.dDysRmnngThisStep = 0;
   }
