@@ -1,7 +1,5 @@
-html {
-	font-size: 30px;
-}
-
 body {
 	font-family: "Poppins","Helvetica","Arial","Lucida",sans-serif;
+	font-size: 14px;
+	line-height: 1.2rem;
 }

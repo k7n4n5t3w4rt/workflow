@@ -77,19 +77,25 @@ export default (props /*: Props */) /*: string */ => {
 
   return html`
     <div id="metrics-container" className="${styles.metricsContainer}">
-      <div>
-        <span>Value: ${value}</span>
+      <div className="${styles.metricsDivs}">
+        <span className="${styles.metricsSpans}">Value: ${value}</span>
       </div>
-      <div>
-        <span>Flow Time: ${flowTime}</span>
-        <span>Throughput: ${throughPut}</span>
-        <span>WIP: ${wip}</span>
+      <div className="${styles.metricsDivs}">
+        <span className="${styles.metricsSpans}">Flow Time: ${flowTime}</span>
+        <span className="${styles.metricsSpans}"
+          >Throughput: ${throughPut}</span
+        >
+        <span className="${styles.metricsSpans}">WIP: ${wip}</span>
       </div>
       ${gSttngs().expdtLimit > 0 &&
-      html` <div>
-        <span>Flow Time Exp: ${flowTimeExp}</span>
-        <span>Throughput Exp: ${throughPutExp}</span>
-        <span>WIP Exp: ${wipExp}</span>
+      html` <div className="${styles.metricsDivs}">
+        <span className="${styles.metricsSpans}"
+          >Flow Time Exp: ${flowTimeExp}</span
+        >
+        <span className="${styles.metricsSpans}"
+          >Throughput Exp: ${throughPutExp}</span
+        >
+        <span className="${styles.metricsSpans}">WIP Exp: ${wipExp}</span>
       </div>`}
     </div>
   `;
@@ -165,7 +171,7 @@ const cssStyles = () /*: Object */ => {
   const [styles] = createStyles({
     metricsContainer: {
       position: "absolute",
-      zIndex: "10000",
+      zIndex: "100",
       boxSizing: "border-box",
       width: "100%",
       padding: "0.5rem",
@@ -173,6 +179,17 @@ const cssStyles = () /*: Object */ => {
       color: "white",
       textShadow: "2px 2px 2px grey",
       paddingBottom: "1.2rem",
+    },
+    metricsDivs: {
+      display: "flex",
+      flexWrap: "nowrap",
+    },
+    metricsSpans: {
+      display: "block",
+      boxSizing: "border-box",
+      width: "33.3%",
+      color: "white",
+      textShadow: "2px 2px 2px grey",
     },
   });
 
@@ -183,18 +200,6 @@ const cssStyles = () /*: Object */ => {
 // getRawStyles()
 //------------------------------------------------------------------
 const getRawStyles = () /*: Object */ => {
-  const rawStyles = {
-    div: {
-      display: "flex",
-      flexWrap: "nowrap",
-    },
-    span: {
-      display: "block",
-      boxSizing: "border-box",
-      width: "33.3%",
-      color: "white",
-      textShadow: "2px 2px 2px grey",
-    },
-  };
+  const rawStyles = {};
   return rawStyles;
 };

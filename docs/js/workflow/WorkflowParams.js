@@ -64,16 +64,15 @@ export default (props /*: Props */) /*: string */ => {
       const value = parseInt(e.target.value);
       gSttngs()[param] = parseInt(value);
       setStateFunctions[param](parseInt(value));
-      gState().updatingParams === false;
     };
 
   return html`
     <div
-      id="settings-close-icon"
-      className="${styles.settingsClose}"
+      id="params-close-icon"
+      className="${styles.paramsClose}"
       onClick="${toggleParam}"
     >
-      <span className="material-icons ${styles.settingsIcon}"> close </span>
+      <span className="material-icons ${styles.paramsIcon}"> close </span>
     </div>
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
@@ -117,12 +116,8 @@ export default (props /*: Props */) /*: string */ => {
         </div>
       </fieldset>
     </div>
-    <div
-      id="settings-icon"
-      className="${styles.settings}"
-      onClick="${toggleParam}"
-    >
-      <span className="material-icons ${styles.settingsIcon}"> settings </span>
+    <div id="params-icon" className="${styles.params}" onClick="${toggleParam}">
+      <span className="material-icons ${styles.paramsIcon}"> build </span>
     </div>
   `;
 };
@@ -163,21 +158,21 @@ export default (props /*: Props */) /*: string */ => {
 const hideOrShowParamsDivs =
   (paramToggle /*: boolean */) /*: () => void */ => () /* void */ => {
     const paramsContainer = document.getElementById("params-container");
-    const settingsIcon = document.getElementById("settings-icon");
-    const settingsCloseIcon = document.getElementById("settings-close-icon");
+    const paramsIcon = document.getElementById("params-icon");
+    const paramsCloseIcon = document.getElementById("params-close-icon");
     if (
       paramsContainer !== null &&
-      settingsIcon !== null &&
-      settingsCloseIcon !== null
+      paramsIcon !== null &&
+      paramsCloseIcon !== null
     ) {
       if (paramToggle === true) {
         paramsContainer.style.display = "block";
-        settingsIcon.style.display = "none";
-        settingsCloseIcon.style.display = "block";
+        paramsIcon.style.display = "none";
+        paramsCloseIcon.style.display = "block";
       } else {
         paramsContainer.style.display = "none";
-        settingsIcon.style.display = "block";
-        settingsCloseIcon.style.display = "none";
+        paramsIcon.style.display = "block";
+        paramsCloseIcon.style.display = "none";
       }
     }
   };
@@ -192,7 +187,7 @@ const cssStyles = () /*: Object */ => {
   const [styles] = createStyles({
     paramsContainer: {
       position: "absolute",
-      zIndex: "10000",
+      zIndex: "310",
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
@@ -200,27 +195,27 @@ const cssStyles = () /*: Object */ => {
       paddingTop: "3rem",
       backgroundColor: "rgba(0, 0, 0, 0.4)",
     },
-    settings: {
+    params: {
       position: "absolute",
-      zIndex: "10000",
+      zIndex: "320",
       boxSizing: "border-box",
       bottom: ".4rem",
       right: ".4rem",
       cursor: "pointer",
     },
-    settingsIcon: {
+    paramsIcon: {
       fontSize: "54px",
       color: "white",
     },
-    settingsClose: {
+    paramsClose: {
       position: "absolute",
-      zIndex: "20000",
+      zIndex: "330",
       boxSizing: "border-box",
       top: ".4rem",
       right: ".4rem",
       cursor: "pointer",
     },
-    settingsCloseIcon: {
+    paramsCloseIcon: {
       fontSize: "54px",
       color: "white",
     },

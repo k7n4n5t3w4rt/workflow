@@ -66,7 +66,6 @@ type GlobalState = {
   flwItmsPulledCount: number,
   clckCbGroup: ClickCubeGroup,
   flwItmTracker: FlwItmTracker,
-  updatingParams: boolean,
   // -----------------------
   // Metrics:
   // -----------------------

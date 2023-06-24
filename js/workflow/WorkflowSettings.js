@@ -50,7 +50,7 @@ export default (props /*: Props */) /*: string */ => {
     setWipLimit(gSttngs().wipLimit);
   }, []);
 
-  useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);
+  useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);
   // useEffect(setSliderValues(props), []);
 
   const toggleParam = () => {
@@ -68,13 +68,13 @@ export default (props /*: Props */) /*: string */ => {
 
   return html`
     <div
-      id="params-close-icon"
-      className="${styles.paramsClose}"
+      id="settings-close-icon"
+      className="${styles.settingsClose}"
       onClick="${toggleParam}"
     >
-      <span className="material-icons ${styles.paramsIcon}"> close </span>
+      <span className="material-icons ${styles.settingsIcon}"> close </span>
     </div>
-    <div id="params-container" className="${styles.paramsContainer}">
+    <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
         <!-- FPS -->
@@ -116,63 +116,37 @@ export default (props /*: Props */) /*: string */ => {
         </div>
       </fieldset>
     </div>
-    <div id="params-icon" className="${styles.params}" onClick="${toggleParam}">
-      <span className="material-icons ${styles.paramsIcon}"> build </span>
+    <div
+      id="settings-icon"
+      className="${styles.settings}"
+      onClick="${toggleParam}"
+    >
+      <span className="material-icons ${styles.settingsIcon}"> settings </span>
     </div>
   `;
 };
 
-// //------------------------------------------------------------------
-// // setSliderValues()
-// //------------------------------------------------------------------
-// const setSliderValues =
-//   (props /*: Props */) /*: () => void */ => () /* void */ => {
-//     //---------------------------
-//     // FPS
-//     //---------------------------
-//     const fpsSlider = document.querySelector('input[name="fps"]');
-//     /*::
-//     if (!(fpsSlider instanceof HTMLInputElement)) {
-//       throw new Error('element is not of type HTMLInputElement');
-//     }
-//   */
-//     if (fpsSlider !== null) {
-//       fpsSlider.value = props.fps.toString();
-//     }
-//     //---------------------------
-//     // WIP LIMIT
-//     //---------------------------
-//     const wiplimitSlider = document.querySelector('input[name="wiplitmit"]');
-//     /*::
-//     if (!(wiplimitSlider instanceof HTMLInputElement)) {
-//       throw new Error('element is not of type HTMLInputElement');
-//     }
-//   */
-//     if (wiplimitSlider !== null) {
-//       wiplimitSlider.value = props.wipLimit.toString();
-//     }
-//   };
 //------------------------------------------------------------------
-// hideOrShowParamsDiv()
+// hideOrShowSettingsDiv()
 //------------------------------------------------------------------
-const hideOrShowParamsDivs =
+const hideOrShowSettingsDivs =
   (paramToggle /*: boolean */) /*: () => void */ => () /* void */ => {
-    const paramsContainer = document.getElementById("params-container");
-    const paramsIcon = document.getElementById("params-icon");
-    const paramsCloseIcon = document.getElementById("params-close-icon");
+    const settingsContainer = document.getElementById("settings-container");
+    const settingsIcon = document.getElementById("settings-icon");
+    const settingsCloseIcon = document.getElementById("settings-close-icon");
     if (
-      paramsContainer !== null &&
-      paramsIcon !== null &&
-      paramsCloseIcon !== null
+      settingsContainer !== null &&
+      settingsIcon !== null &&
+      settingsCloseIcon !== null
     ) {
       if (paramToggle === true) {
-        paramsContainer.style.display = "block";
-        paramsIcon.style.display = "none";
-        paramsCloseIcon.style.display = "block";
+        settingsContainer.style.display = "block";
+        settingsIcon.style.display = "none";
+        settingsCloseIcon.style.display = "block";
       } else {
-        paramsContainer.style.display = "none";
-        paramsIcon.style.display = "block";
-        paramsCloseIcon.style.display = "none";
+        settingsContainer.style.display = "none";
+        settingsIcon.style.display = "block";
+        settingsCloseIcon.style.display = "none";
       }
     }
   };
@@ -182,12 +156,12 @@ const hideOrShowParamsDivs =
 //------------------------------------------------------------------
 const cssStyles = () /*: Object */ => {
   // A seed for getting unique class names
-  setSeed(seedString("flwparams"));
+  setSeed(seedString("flwsettings"));
 
   const [styles] = createStyles({
-    paramsContainer: {
+    settingsContainer: {
       position: "absolute",
-      zIndex: "310",
+      zIndex: "210",
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
@@ -195,27 +169,27 @@ const cssStyles = () /*: Object */ => {
       paddingTop: "3rem",
       backgroundColor: "rgba(0, 0, 0, 0.4)",
     },
-    params: {
+    settings: {
       position: "absolute",
-      zIndex: "320",
+      zIndex: "220",
       boxSizing: "border-box",
       bottom: ".4rem",
-      right: ".4rem",
+      left: ".4rem",
       cursor: "pointer",
     },
-    paramsIcon: {
+    settingsIcon: {
       fontSize: "54px",
       color: "white",
     },
-    paramsClose: {
+    settingsClose: {
       position: "absolute",
-      zIndex: "330",
+      zIndex: "230",
       boxSizing: "border-box",
       top: ".4rem",
       right: ".4rem",
       cursor: "pointer",
     },
-    paramsCloseIcon: {
+    settingsCloseIcon: {
       fontSize: "54px",
       color: "white",
     },

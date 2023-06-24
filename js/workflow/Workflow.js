@@ -24,6 +24,7 @@ import { html } from "../../web_modules/htm/preact.js";
 // COMPONENTS
 //------------------------------------------------------------------
 import Metrics from "./WorkflowMetrics.js";
+import Settings from "./WorkflowSettings.js";
 import Params from "./WorkflowParams.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -75,6 +76,7 @@ export default (props /*: Props */) /*: string */ => {
       <div id="dom-overlay">
         <div id="console-ui"></div>
         <${Metrics} />
+        <${Settings} />
         <${Params} />
       </div>
     </div>
