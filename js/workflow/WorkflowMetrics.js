@@ -47,11 +47,11 @@ export default (props /*: Props */) /*: string */ => {
     useState(0);
   const [wipExp /*: number */, setWipExp /*: function */] = useState(0);
   const [value /*: number */, setValue /*: function */] = useState(0);
-  const [metricToggle, setMetricToggle] = useState(false);
+  const [metricToggle, setMetricToggle] = useState(true);
   const styles = cssStyles();
   rawStyles(getRawStyles());
 
-  useEffect(hideOrShowMetricsDivs(metricToggle), [metricToggle]);
+  useEffect(hideOrShowMetricsDivs(metricToggle), []);
 
   useEffect(() => {
     // setFps(gSttngs().fps);
@@ -75,38 +75,22 @@ export default (props /*: Props */) /*: string */ => {
     );
   }, []);
 
-  const toggleMetric = () /*: void */ => {
-    setMetricToggle(!metricToggle);
-  };
-
   return html`
-    <div
-      id="metrics-close-icon"
-      className="${styles.metricsClose}"
-      onClick="${toggleMetric}"
-    >
-      <span className="material-icons ${styles.metricsIcon}"> close </span>
-    </div>
     <div id="metrics-container" className="${styles.metricsContainer}">
-      <div>Value: ${value}</div>
-      <div>Flow Time: ${flowTime}</div>
-      <div>Throughput: ${throughPut}</div>
-      <div>WIP: ${wip}</div>
+      <div>
+        <span>Value: ${value}</span>
+      </div>
+      <div>
+        <span>Flow Time: ${flowTime}</span>
+        <span>Throughput: ${throughPut}</span>
+        <span>WIP: ${wip}</span>
+      </div>
       ${gSttngs().expdtLimit > 0 &&
-      html`
-        <div>Flow Time Exp.: ${flowTimeExp}</div>
-        <div>Throughput Exp.: ${throughPutExp}</div>
-        <div>WIP Exp.: ${wipExp}</div>
-      `}
-    </div>
-    <div
-      id="metrics-icon"
-      className="${styles.metrics}"
-      onClick="${toggleMetric}"
-    >
-      <span className="material-icons ${styles.metricsIcon}">
-        data_exploration
-      </span>
+      html` <div>
+        <span>Flow Time Exp: ${flowTimeExp}</span>
+        <span>Throughput Exp: ${throughPutExp}</span>
+        <span>WIP Exp: ${wipExp}</span>
+      </div>`}
     </div>
   `;
 };
@@ -162,21 +146,11 @@ const updateMetricsOnClickInterval = (
 const hideOrShowMetricsDivs =
   (metricToggle) /*: () => void */ => () /*: void */ => {
     const metricsContainer = document.getElementById("metrics-container");
-    const metricsIcon = document.getElementById("metrics-icon");
-    const metricsCloseIcon = document.getElementById("metrics-close-icon");
-    if (
-      metricsContainer !== null &&
-      metricsIcon !== null &&
-      metricsCloseIcon !== null
-    ) {
+    if (metricsContainer !== null) {
       if (metricToggle === true) {
         metricsContainer.style.display = "block";
-        metricsIcon.style.display = "none";
-        metricsCloseIcon.style.display = "block";
       } else {
         metricsContainer.style.display = "none";
-        metricsIcon.style.display = "block";
-        metricsCloseIcon.style.display = "none";
       }
     }
   };
@@ -194,35 +168,11 @@ const cssStyles = () /*: Object */ => {
       zIndex: "10000",
       boxSizing: "border-box",
       width: "100%",
-      height: "100%",
-      padding: "1rem",
-      paddingTop: "3rem",
-      backgroundColor: "rgba(0, 0, 0, 0.4)",
+      padding: "0.5rem",
+      backgroundColor: "rgba(0, 0, 0, 0)",
       color: "white",
-    },
-    metrics: {
-      position: "absolute",
-      zIndex: "10000",
-      boxSizing: "border-box",
-      bottom: ".4rem",
-      left: ".4rem",
-      cursor: "pointer",
-    },
-    metricsIcon: {
-      fontSize: "54px",
-      color: "white",
-    },
-    metricsClose: {
-      position: "absolute",
-      zIndex: "20000",
-      boxSizing: "border-box",
-      top: ".4rem",
-      right: ".4rem",
-      cursor: "pointer",
-    },
-    metricsCloseIcon: {
-      fontSize: "54px",
-      color: "white",
+      textShadow: "2px 2px 2px grey",
+      paddingBottom: "1.2rem",
     },
   });
 
@@ -234,25 +184,17 @@ const cssStyles = () /*: Object */ => {
 //------------------------------------------------------------------
 const getRawStyles = () /*: Object */ => {
   const rawStyles = {
-    output: {
+    div: {
+      display: "flex",
+      flexWrap: "nowrap",
+    },
+    span: {
       display: "block",
-      float: "left",
-      fontSize: "1rem",
-      padding: "0.2rem",
+      boxSizing: "border-box",
+      width: "33.3%",
       color: "white",
-      fontWeight: "bold",
       textShadow: "2px 2px 2px grey",
     },
-    label: {
-      display: "block",
-      float: "left",
-      fontSize: "1rem",
-      padding: "0.2rem",
-      color: "white",
-      fontWeight: "bold",
-      textShadow: "2px 2px 2px grey",
-    },
-    ["input[type=range]"]: {},
   };
   return rawStyles;
 };

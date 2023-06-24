@@ -29,6 +29,7 @@ type GlobalSettings = {
   rangeMax: number,
   scale: number,
   scaleCm: number,
+  showMetrics: boolean,
   step: number,
   teamInstability: number,
   timeBox: number,

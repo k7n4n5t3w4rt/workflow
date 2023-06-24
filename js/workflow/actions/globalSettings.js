@@ -132,4 +132,5 @@ export default (props /*: Props */) => {
   gSttngs("rangeMax", gSttngs().yOffset * 0.3);
   gSttngs("rangeIncreaseRate", 1.15);
   gSttngs("rangeDecreaseRate", 0.95);
+  gSttngs("showMetrics", true);
 };
