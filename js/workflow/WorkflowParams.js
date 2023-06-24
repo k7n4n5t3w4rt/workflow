@@ -187,7 +187,7 @@ const cssStyles = () /*: Object */ => {
   const [styles] = createStyles({
     paramsContainer: {
       position: "absolute",
-      zIndex: "310",
+      zIndex: "31000",
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
@@ -197,7 +197,7 @@ const cssStyles = () /*: Object */ => {
     },
     params: {
       position: "absolute",
-      zIndex: "320",
+      zIndex: "32000",
       boxSizing: "border-box",
       bottom: ".4rem",
       right: ".4rem",
@@ -209,7 +209,7 @@ const cssStyles = () /*: Object */ => {
     },
     paramsClose: {
       position: "absolute",
-      zIndex: "330",
+      zIndex: "33000",
       boxSizing: "border-box",
       top: ".4rem",
       right: ".4rem",

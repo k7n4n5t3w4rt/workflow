@@ -25,10 +25,10 @@ import {
 
 /*::
 type Props = {
-	fps: number,
-  setFps: function,
-	wipLimit: number,
-  setWipLimit: function,
+	arrivalRate: number,
+  setArrivalRate: function,
+	drag: number,
+  setDrag: function,
 	dispatch: function
 }
 */
@@ -36,18 +36,18 @@ export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   // Set the local state
-  const [fps, setFps] = useState(1);
-  console.log("fps", fps);
-  const [wipLimit, setWipLimit] = useState(0);
+  const [arrivalRate, setArrivalRate] = useState(1);
+  console.log("arrivalRate", arrivalRate);
+  const [drag, setDrag] = useState(0);
   // Put the setState functions in an object so we can use them dynamically
   const setStateFunctions = {};
-  setStateFunctions["fps"] = setFps;
-  setStateFunctions["wipLimit"] = setWipLimit;
+  setStateFunctions["arrivalRate"] = setArrivalRate;
+  setStateFunctions["drag"] = setDrag;
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
-    setFps(gSttngs().fps);
-    setWipLimit(gSttngs().wipLimit);
+    setArrivalRate(gSttngs().arrivalRate);
+    setDrag(gSttngs().drag);
   }, []);
 
   useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);
@@ -61,9 +61,9 @@ export default (props /*: Props */) /*: string */ => {
     (param /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
-      const value = parseInt(e.target.value);
-      gSttngs()[param] = parseInt(value);
-      setStateFunctions[param](parseInt(value));
+      const value = parseFloat(e.target.value);
+      gSttngs()[param] = parseFloat(value);
+      setStateFunctions[param](parseFloat(value));
     };
 
   return html`
@@ -77,41 +77,44 @@ export default (props /*: Props */) /*: string */ => {
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
-        <!-- FPS -->
+        <!-- Arrival Rate -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="fps">FPS:</label>
-          <output id="fpsOutput" name="fpsOutput" for="fps"
-            >${fps.toString()}</output
+          <label for="arrivalRate">Arrival Rate:</label>
+          <output
+            id="arrivalRateOutput"
+            name="arrivalRateOutput"
+            for="arrivalRate"
+            >${arrivalRate.toString()}</output
           >
           <input
             type="range"
-            id="fps"
-            name="fps"
+            id="arrivalRate"
+            name="arrivalRate"
             min="1"
             max="10"
             step="1"
-            onChange=${changeParam("fps")}
-            value="${fps.toString()}"
+            onChange=${changeParam("arrivalRate")}
+            value="${arrivalRate.toString()}"
           />
         </div>
         <!-------------------------------------------------------------------->
-        <!-- WIP Limit -->
+        <!-- Drag -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="fps">WIP Limit:</label>
-          <output id="wiplimitOutput" name="wiplimitOutput" for="wiplimit"
-            >${wipLimit.toString()}</output
+          <label for="arrivalRate">Drag:</label>
+          <output id="dragOutput" name="dragOutput" for="drag"
+            >${drag.toString()}</output
           >
           <input
             type="range"
-            id="wiplimit"
-            name="wiplimit"
-            min="1"
-            max="100"
-            step="1"
-            onChange=${changeParam("wipLimit")}
-            value="${wipLimit.toString()}"
+            id="drag"
+            name="drag"
+            min="0"
+            max="1"
+            step="0.05"
+            onChange=${changeParam("drag")}
+            value="${drag.toString()}"
           />
         </div>
       </fieldset>
@@ -161,7 +164,7 @@ const cssStyles = () /*: Object */ => {
   const [styles] = createStyles({
     settingsContainer: {
       position: "absolute",
-      zIndex: "210",
+      zIndex: "21000",
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
@@ -171,7 +174,7 @@ const cssStyles = () /*: Object */ => {
     },
     settings: {
       position: "absolute",
-      zIndex: "220",
+      zIndex: "22000",
       boxSizing: "border-box",
       bottom: ".4rem",
       left: ".4rem",
@@ -183,7 +186,7 @@ const cssStyles = () /*: Object */ => {
     },
     settingsClose: {
       position: "absolute",
-      zIndex: "230",
+      zIndex: "23000",
       boxSizing: "border-box",
       top: ".4rem",
       right: ".4rem",
