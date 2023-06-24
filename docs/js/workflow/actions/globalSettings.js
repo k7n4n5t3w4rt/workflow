@@ -54,28 +54,30 @@ export default (props /*: Props */) => {
   gSttngs("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 0 },
     { name: "Ready", status: "wait", limit: 0, preload: 0 },
-    { name: "Doing", status: "touch", limit: 0, preload: 120 },
+    { name: "Doing", status: "touch", limit: 0, preload: 0 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs("arrivalRate", 1);
+  gSttngs("arrivalRate", 2);
   // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
-  gSttngs("flwItmSize", { min: 10, max: 60 });
+  gSttngs("flwItmSize", { min: 1, max: 1 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs("timeBox", 60);
+  gSttngs("timeBox", 100);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs("death", 0);
   gSttngs("backlogDeath", 0);
-  gSttngs("backlogMax", 100);
+  gSttngs("backlogMax", 4);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs("devUnits", cleanInt(props.devunits) || 25);
+  gSttngs("devUnits", cleanInt(props.devunits) || 2);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs("expdtLimit", 20);
+  gSttngs("expdtLimit", 10);
+  // PARAM: Wip limit for wait and touch steps that don't have one set
+  gSttngs("wipLimit", 20);
   // 1 is 100% of the available devUnits.
   gSttngs("expdtdDvUnitsFactor", 1);
   //------------------------------------------------------------------

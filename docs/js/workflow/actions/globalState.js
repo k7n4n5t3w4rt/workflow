@@ -29,7 +29,11 @@ export default () => {
   gState("flwTmQueue", new xQueue());
   gState("thrPtQueue", new xQueue());
   gState("wipQueue", new xQueue());
+  gState("flwTmExpQueue", new xQueue());
+  gState("thrPtExpQueue", new xQueue());
+  gState("wipExpQueue", new xQueue());
   setUpFlwMap(gState().flwMap, gSttngs().steps);
+  gState("updatingParams", false);
 };
 
 //------------------------------------------------------------------

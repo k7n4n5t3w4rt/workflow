@@ -1,7 +1,9 @@
 // @flow
 //------------------------------------------------------------------
-// IMPORTS: THREE.js
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
+import gSttngs from "./actions/gSttngs.js";
+import gState from "./actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -20,24 +22,36 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import gSttngs from "./actions/gSttngs.js";
 
 /*::
 type Props = {
 	fps: number,
+  setFps: function,
+	wipLimit: number,
+  setWipLimit: function,
 	dispatch: function
 }
 */
 export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
-  // Set some defaults for missing props
+  // Set the local state
+  const [fps, setFps] = useState(1);
+  console.log("fps", fps);
+  const [wipLimit, setWipLimit] = useState(0);
+  // Put the setState functions in an object so we can use them dynamically
   const setStateFunctions = {};
-  const [fps, setFps] = useState(props.fps);
   setStateFunctions["fps"] = setFps;
+  setStateFunctions["wipLimit"] = setWipLimit;
   const [paramToggle, setParamToggle] = useState(false);
 
+  useEffect(() => {
+    setFps(gSttngs().fps);
+    setWipLimit(gSttngs().wipLimit);
+  }, []);
+
   useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);
+  // useEffect(setSliderValues(props), []);
 
   const toggleParam = () => {
     setParamToggle(!paramToggle);
@@ -50,6 +64,7 @@ export default (props /*: Props */) /*: string */ => {
       const value = parseInt(e.target.value);
       gSttngs()[param] = parseInt(value);
       setStateFunctions[param](parseInt(value));
+      gState().updatingParams === false;
     };
 
   return html`
@@ -62,6 +77,9 @@ export default (props /*: Props */) /*: string */ => {
     </div>
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
+        <!-------------------------------------------------------------------->
+        <!-- FPS -->
+        <!-------------------------------------------------------------------->
         <div>
           <label for="fps">FPS:</label>
           <output id="fpsOutput" name="fpsOutput" for="fps"
@@ -78,6 +96,25 @@ export default (props /*: Props */) /*: string */ => {
             value="${fps.toString()}"
           />
         </div>
+        <!-------------------------------------------------------------------->
+        <!-- WIP Limit -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <label for="fps">WIP Limit:</label>
+          <output id="wiplimitOutput" name="wiplimitOutput" for="wiplimit"
+            >${wipLimit.toString()}</output
+          >
+          <input
+            type="range"
+            id="wiplimit"
+            name="wiplimit"
+            min="1"
+            max="100"
+            step="1"
+            onChange=${changeParam("wipLimit")}
+            value="${wipLimit.toString()}"
+          />
+        </div>
       </fieldset>
     </div>
     <div
@@ -90,6 +127,36 @@ export default (props /*: Props */) /*: string */ => {
   `;
 };
 
+// //------------------------------------------------------------------
+// // setSliderValues()
+// //------------------------------------------------------------------
+// const setSliderValues =
+//   (props /*: Props */) /*: () => void */ => () /* void */ => {
+//     //---------------------------
+//     // FPS
+//     //---------------------------
+//     const fpsSlider = document.querySelector('input[name="fps"]');
+//     /*::
+//     if (!(fpsSlider instanceof HTMLInputElement)) {
+//       throw new Error('element is not of type HTMLInputElement');
+//     }
+//   */
+//     if (fpsSlider !== null) {
+//       fpsSlider.value = props.fps.toString();
+//     }
+//     //---------------------------
+//     // WIP LIMIT
+//     //---------------------------
+//     const wiplimitSlider = document.querySelector('input[name="wiplitmit"]');
+//     /*::
+//     if (!(wiplimitSlider instanceof HTMLInputElement)) {
+//       throw new Error('element is not of type HTMLInputElement');
+//     }
+//   */
+//     if (wiplimitSlider !== null) {
+//       wiplimitSlider.value = props.wipLimit.toString();
+//     }
+//   };
 //------------------------------------------------------------------
 // hideOrShowParamsDiv()
 //------------------------------------------------------------------

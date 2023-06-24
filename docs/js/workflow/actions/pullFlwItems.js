@@ -44,7 +44,20 @@ const checkStepLimitAndPull = (
   }
 
   // Get the limit of the current step
-  const flwStpLimit = gSttngs().steps[flwMpStpKeyNumber].limit;
+  let flwStpLimit = gSttngs().steps[flwMpStpKeyNumber].limit;
+  if (flwStpLimit === 0) {
+    // Check if `limit` is set in the global steps settings
+    if (
+      // If we're not on the first or last step
+      flwMpStpKeyNumber !== 0 &&
+      flwMpStpKeyNumber !== gSttngs().steps.length - 1 &&
+      // And if the global wipLimit is not 0
+      gSttngs().wipLimit !== 0
+    ) {
+      // Use the global wipLimit
+      flwStpLimit = gSttngs().wipLimit;
+    }
+  }
   // Check that the number of flwItems in this step is less than
   // the limit. Note that a limit of 0 means no limit
   if (flwMpStpItems.length < flwStpLimit || flwStpLimit === 0) {

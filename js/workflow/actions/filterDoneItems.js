@@ -20,15 +20,14 @@ export default (
     const doneFlwItems =
       gState().flwMap[(gSttngs().steps.length - 1).toString()];
     if (doneFlwItems.length > 0) {
-      // Throughput is easy, we just count the number of items in the doneFlwItems
-      updateThroughPutQueue([doneFlwItems.length]);
-      // // TEMP - for a stable system, we need to add a new item for each doneFlwItem
-      // for (let i = 0; i <= doneFlwItems.length; i++) {
-      //   newFlwItem();
-      // }
+      updateThroughPutExpQueue(
+        [...doneFlwItems].reduce(processThroughPutExp, [0]),
+      );
+      updateThroughPutQueue([...doneFlwItems].reduce(processThroughPut, [0]));
       // Value is based on the volume of the doneFlwItems
       updateValueQueue([...doneFlwItems].reduce(processValue, []));
       // Flow Time is based on age of the doneFlwItems
+      updateFlowTimeExpQueue([...doneFlwItems].reduce(processFlowTimeExp, []));
       updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
       [...doneFlwItems].reduceRight(removeDoneFlwItmsFromFlwMap, null);
     } else {
@@ -38,13 +37,51 @@ export default (
     }
   };
 //------------------------------------------------------------------
+// processThroughPut()
+//------------------------------------------------------------------
+const processThroughPut = (
+  _ /*: Array<number> */,
+  flwItem /*: FlwItem */,
+) /*: Array<number> */ => {
+  if (flwItem.dExpedite === false) {
+    _[0] += 1;
+  }
+  return _;
+};
+//------------------------------------------------------------------
+// processThroughPutExp()
+//------------------------------------------------------------------
+const processThroughPutExp = (
+  _ /*: Array<number> */,
+  flwItem /*: FlwItem */,
+) /*: Array<number> */ => {
+  if (flwItem.dExpedite === true) {
+    _[0] += 1;
+  }
+  return _;
+};
+//------------------------------------------------------------------
 // processFlowTime()
 //------------------------------------------------------------------
 const processFlowTime = (
   _ /*: Array<number> */,
   flwItem /*: FlwItem */,
 ) /*: Array<number> */ => {
-  _.push(flwItem.dAge);
+  if (flwItem.dExpedite === false) {
+    _.push(flwItem.dAge);
+  }
+  return _;
+};
+//------------------------------------------------------------------
+// processFlowTimeExp()
+//------------------------------------------------------------------
+const processFlowTimeExp = (
+  _ /*: Array<number> */,
+  flwItem /*: FlwItem */,
+) /*: Array<number> */ => {
+  if (flwItem.dExpedite === true) {
+    _.push(flwItem.dAge);
+  }
   return _;
 };
 //------------------------------------------------------------------
@@ -65,7 +102,6 @@ const updateValueQueue = (valueArray /*: Array<number> */) /*: void */ => {
   if (gState().vQueue.length() >= gSttngs().timeBox) {
     gState().vQueue.dequeue();
   }
-  console.log("valueArray: ", valueArray);
   gState().vQueue.enqueue(valueArray);
 };
 
@@ -78,10 +114,31 @@ const updateThroughPutQueue = (
   if (gState().thrPtQueue.length() >= gSttngs().timeBox) {
     gState().thrPtQueue.dequeue();
   }
-  console.log("throughPutArray: ", throughPutArray);
   gState().thrPtQueue.enqueue(throughPutArray);
 };
 
+//------------------------------------------------------------------
+// updateThrouPutExpQueue()
+//------------------------------------------------------------------
+const updateThroughPutExpQueue = (
+  throughPutExpArray /*: Array<number> */,
+) /*: void */ => {
+  if (gState().thrPtExpQueue.length() >= gSttngs().timeBox) {
+    gState().thrPtExpQueue.dequeue();
+  }
+  gState().thrPtExpQueue.enqueue(throughPutExpArray);
+};
+//------------------------------------------------------------------
+// updateFlowTimeExpQueue()
+//------------------------------------------------------------------
+const updateFlowTimeExpQueue = (
+  flwTimeArray /*: Array<number> */,
+) /*: void */ => {
+  if (gState().flwTmExpQueue.length() >= gSttngs().timeBox) {
+    gState().flwTmExpQueue.dequeue();
+  }
+  gState().flwTmExpQueue.enqueue(flwTimeArray);
+};
 //------------------------------------------------------------------
 // updateFlowTimeQueue()
 //------------------------------------------------------------------
@@ -89,6 +146,5 @@ const updateFlowTimeQueue = (flwTimeArray /*: Array<number> */) /*: void */ => {
   if (gState().flwTmQueue.length() >= gSttngs().timeBox) {
     gState().flwTmQueue.dequeue();
   }
-  console.log("flwTimeArray: ", flwTimeArray);
   gState().flwTmQueue.enqueue(flwTimeArray);
 };

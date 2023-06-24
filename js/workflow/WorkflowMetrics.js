@@ -4,6 +4,8 @@
 //------------------------------------------------------------------
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
+import globalSettings from "./actions/globalSettings.js";
+import globalState from "./actions/globalState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -28,15 +30,50 @@ type Props = {
 	flowTime: number,
 	throughPut: number,
 	wip: number,
+	flowTimeExp: number,
+	throughPutExp: number,
+	wipExp: number,
 	value: number,
 }
 */
 export default (props /*: Props */) /*: string */ => {
+  // Metrics
+  const [flowTime /*: number */, setFlowTime /*: function */] = useState(0);
+  const [throughPut /*: number */, setThroughPut /*: function */] = useState(0);
+  const [wip /*: number */, setWip /*: function */] = useState(0);
+  const [flowTimeExp /*: number */, setFlowTimeExp /*: function */] =
+    useState(0);
+  const [throughPutExp /*: number */, setThroughPutExp /*: function */] =
+    useState(0);
+  const [wipExp /*: number */, setWipExp /*: function */] = useState(0);
+  const [value /*: number */, setValue /*: function */] = useState(0);
   const [metricToggle, setMetricToggle] = useState(false);
   const styles = cssStyles();
   rawStyles(getRawStyles());
 
   useEffect(hideOrShowMetricsDivs(metricToggle), [metricToggle]);
+
+  useEffect(() => {
+    // setFps(gSttngs().fps);
+    // setWipLimit(gSttngs().wipLimit);
+    // setupMobileDebug();
+    updateMetricsOnClickInterval(
+      setFlowTime,
+      flowTime,
+      setThroughPut,
+      throughPut,
+      setWip,
+      wip,
+      setFlowTimeExp,
+      flowTimeExp,
+      setThroughPutExp,
+      throughPutExp,
+      setWipExp,
+      wipExp,
+      setValue,
+      value,
+    );
+  }, []);
 
   const toggleMetric = () /*: void */ => {
     setMetricToggle(!metricToggle);
@@ -51,10 +88,16 @@ export default (props /*: Props */) /*: string */ => {
       <span className="material-icons ${styles.metricsIcon}"> close </span>
     </div>
     <div id="metrics-container" className="${styles.metricsContainer}">
-      <div>Value: ${props.value}</div>
-      <div>Flow Time: ${props.flowTime}</div>
-      <div>Throughput: ${props.throughPut}</div>
-      <div>WIP: ${props.wip}</div>
+      <div>Value: ${value}</div>
+      <div>Flow Time: ${flowTime}</div>
+      <div>Throughput: ${throughPut}</div>
+      <div>WIP: ${wip}</div>
+      ${gSttngs().expdtLimit > 0 &&
+      html`
+        <div>Flow Time Exp.: ${flowTimeExp}</div>
+        <div>Throughput Exp.: ${throughPutExp}</div>
+        <div>WIP Exp.: ${wipExp}</div>
+      `}
     </div>
     <div
       id="metrics-icon"
@@ -67,7 +110,52 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
-
+//------------------------------------------------------------------
+// updateMetricsOnClickInterval()
+//------------------------------------------------------------------
+const updateMetricsOnClickInterval = (
+  setFlowTime /*: function */,
+  flowTime /*: number */,
+  setThroughPut /*: function */,
+  throughPut /*: number */,
+  setWip /*: function */,
+  wip /*: number */,
+  setFlowTimeExp /*: function */,
+  flowTimeExp /*: number */,
+  setThroughPutExp /*: function */,
+  throughPutExp /*: number */,
+  setWipExp /*: function */,
+  wipExp /*: number */,
+  setValue /*: function */,
+  value /*: number */,
+) /*: void */ => {
+  setInterval(() => {
+    if (
+      gState().vQueue !== undefined &&
+      gState().flwTmQueue !== undefined &&
+      gState().thrPtQueue !== undefined &&
+      gState().wipQueue !== undefined &&
+      gState().flwTmExpQueue !== undefined &&
+      gState().thrPtExpQueue !== undefined &&
+      gState().wipExpQueue !== undefined
+    ) {
+      // Only updated them if they have changed. Not sure it makes a difference.jkkk:w
+      if (gState().flwTmQueue.meanForValues() !== flowTime)
+        setFlowTime(gState().flwTmQueue.meanForValues());
+      if (gState().thrPtQueue.meanForDays() !== throughPut)
+        setThroughPut(gState().thrPtQueue.meanForDays());
+      if (gState().wipQueue.meanForDays() !== wip)
+        setWip(gState().wipQueue.meanForDays());
+      if (gState().flwTmExpQueue.meanForValues() !== flowTimeExp)
+        setFlowTimeExp(gState().flwTmExpQueue.meanForValues());
+      if (gState().thrPtExpQueue.meanForDays() !== throughPutExp)
+        setThroughPutExp(gState().thrPtExpQueue.meanForDays());
+      if (gState().wipExpQueue.meanForDays() !== wip)
+        setWipExp(gState().wipExpQueue.meanForDays());
+      if (gState().vQueue.total !== value) setValue(gState().vQueue.total());
+    }
+  }, 1000);
+};
 //------------------------------------------------------------------
 // hideOrShowMetricsDiv()
 //------------------------------------------------------------------

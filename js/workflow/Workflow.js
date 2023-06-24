@@ -1,5 +1,10 @@
 // @flow
 //------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
+import gSttngs from "./actions/gSttngs.js";
+import gState from "./actions/gState.js";
+//------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../web_modules/three.js";
@@ -33,10 +38,6 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
-import gSttngs from "./actions/gSttngs.js";
-import gState from "./actions/gState.js";
-import globalSettings from "./actions/globalSettings.js";
-import globalState from "./actions/globalState.js";
 
 /*::
 type Props = {
@@ -48,34 +49,33 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
-  // Initialize global settings and state
   const styles = cssStyles();
-  const [fps, setFps] = useState(1);
-  const [flowTime /*: number */, setFlowTime /*: function */] = useState(0);
-  const [throughPut /*: number */, setThroughPut /*: function */] = useState(0);
-  const [wip /*: number */, setWip /*: function */] = useState(0);
-  const [value /*: number */, setValue /*: function */] = useState(0);
-
+  // Initialize global settings and state
   useEffect(() => {
-    globalSettings(props);
-    globalState();
     // setupMobileDebug();
     let stats = createStats();
     init();
-    updateMetricsOnClickInterval(setFlowTime, setThroughPut, setWip, setValue);
   }, []);
+  // // Metrics
+  // const [flowTime /*: number */, setFlowTime /*: function */] = useState(0);
+  // const [throughPut /*: number */, setThroughPut /*: function */] = useState(0);
+  // const [wip /*: number */, setWip /*: function */] = useState(0);
+  // const [flowTimeExp /*: number */, setFlowTimeExp /*: function */] =
+  //   useState(0);
+  // const [throughPutExp /*: number */, setThroughPutExp /*: function */] =
+  //   useState(0);
+  // const [wipExp /*: number */, setWipExp /*: function */] = useState(0);
+  // const [value /*: number */, setValue /*: function */] = useState(0);
+  // Params
+  // const [fps, setFps] = useState(1);
+  // const [wipLimit, setWipLimit] = useState(0);
 
   return html`
     <div id="flw" className="${styles.flw}">
       <div id="dom-overlay">
         <div id="console-ui"></div>
-        <${Metrics}
-          flowTime=${flowTime}
-          throughPut=${throughPut}
-          wip=${wip}
-          value=${value}
-        />
-        <${Params} fps="${fps || 0}" />
+        <${Metrics} />
+        <${Params} />
       </div>
     </div>
   `;
@@ -100,28 +100,4 @@ const cssStyles = () /*: Object */ => {
     },
   });
   return styles;
-};
-
-//------------------------------------------------------------------
-// updateMetricsOnClickInterval()
-//------------------------------------------------------------------
-const updateMetricsOnClickInterval = (
-  setFlowTime /*: function */,
-  setThroughPut /*: function */,
-  setWip /*: function */,
-  setValue /*: function */,
-) /*: void */ => {
-  setInterval(() => {
-    if (
-      gState().vQueue !== undefined &&
-      gState().flwTmQueue !== undefined &&
-      gState().thrPtQueue !== undefined &&
-      gState().wipQueue !== undefined
-    ) {
-      setFlowTime(gState().flwTmQueue.meanForValues());
-      setThroughPut(gState().thrPtQueue.meanForDays());
-      setWip(gState().wipQueue.meanForDays());
-      setValue(gState().vQueue.total());
-    }
-  }, 1000);
 };

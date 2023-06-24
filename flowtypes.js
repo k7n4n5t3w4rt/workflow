@@ -33,6 +33,7 @@ type GlobalSettings = {
   teamInstability: number,
   timeBox: number,
   touchSteps: number,
+  wipLimit: number,
   x: number,
   y: number,
   yOffset: number,
@@ -64,6 +65,7 @@ type GlobalState = {
   flwItmsPulledCount: number,
   clckCbGroup: ClickCubeGroup,
   flwItmTracker: FlwItmTracker,
+  updatingParams: boolean,
   // -----------------------
   // Metrics:
   // -----------------------
@@ -71,6 +73,9 @@ type GlobalState = {
   thrPtQueue: ThrPtQueue,
   wipQueue: WipQueue,
   flwTmQueue: FlwTmQueue,
+  thrPtExpQueue: ThrPtQueue,
+  wipExpQueue: WipQueue,
+  flwTmExpQueue: FlwTmQueue,
 };
 
 type FlwItem = {
@@ -279,6 +284,42 @@ type FlwTmQueue = {
 };
 
 type WipQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => void,
+  total: () => number,
+  length: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
+};
+
+type ThrPtExpQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => Array<number>,
+  total: () => number,
+  length: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
+};
+
+type FlwTmExpQueue = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dequeue: () => Array<number>,
+  enqueue: (item: Array<number>) => void,
+  total: () => number,
+  length: () => number,
+  meanForDays: () => number,
+  meanForValues: () => number,
+};
+
+type WipExpQueue = {
   // -----------------------
   // Data:
   // -----------------------

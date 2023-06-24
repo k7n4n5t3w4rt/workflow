@@ -18,7 +18,20 @@ export default (flwStpsIndex /*: number */) /*: number */ => {
   // wrkFlwItems in the current step.
   let rqrdSpace /* number */ = gSttngs().steps[flwStpsIndex].limit;
   if (rqrdSpace === 0) {
-    rqrdSpace = gState().flwMap[flwStpsIndex.toString()].length;
+    // Check if `limit` is set in the global steps settings
+    if (
+      // If we're not on the first or last step
+      flwStpsIndex !== 0 &&
+      flwStpsIndex !== gSttngs().steps.length - 1 &&
+      // And if the global wipLimit is not 0
+      gSttngs().wipLimit !== 0
+    ) {
+      // Use the global wipLimit
+      rqrdSpace = gSttngs().wipLimit;
+    } else {
+      // Last option is to set it to the number of flwItems in the step
+      rqrdSpace = gState().flwMap[flwStpsIndex.toString()].length;
+    }
   }
   // Does this even make sense? GPT-4 told me to do it.
   // The idea is that the rate of increase decrteases as the
