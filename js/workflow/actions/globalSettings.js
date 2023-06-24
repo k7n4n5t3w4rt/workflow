@@ -54,7 +54,9 @@ export default (props /*: Props */) => {
   gSttngs("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 0 },
     { name: "Ready", status: "wait", limit: 0, preload: 0 },
-    { name: "Doing", status: "touch", limit: 0, preload: 0 },
+    { name: "In Progress", status: "touch", limit: 0, preload: 0 },
+    { name: "Ready for Test", status: "wait", limit: 0, preload: 0 },
+    { name: "In Test", status: "touch", limit: 0, preload: 0 },
     { name: "Done", status: "done", limit: 0 },
   ]);
   gSttngs("arrivalRate", 2);
@@ -63,6 +65,8 @@ export default (props /*: Props */) => {
   // person or sub-team could do everything, how long would things take? We want a
   // "min" and a "max" range to cover the different types of work that might be
   // done.
+  gSttngs("flwItmSizeMin", 1);
+  gSttngs("flwItmSizeMax", 1);
   gSttngs("flwItmSize", { min: 1, max: 1 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs("timeBox", 100);
