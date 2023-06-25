@@ -18,7 +18,7 @@ export default () => {
   // Turns on some expensive debug features
   gSttngs().setIfNotCached("debug", false);
   // Starts the simulation automatically
-  gSttngs().setIfNotCached("autoMode", false);
+  gSttngs().setIfNotCached("autoMode", true);
   // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
   // We shoud think about 3 kinds of drag, each one contributing to the total.
   // [1] The first kind of drag is are all the human reasons why things take
@@ -30,7 +30,7 @@ export default () => {
   // [3] The third kind of drag is technical - technical debt, legacy code, lack
   // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
   // defensive programming, lack of documentation, lack of knowledge sharing
-  gSttngs().setIfNotCached("drag", 0.45);
+  gSttngs().setIfNotCached("drag", 0);
   // Minimum of 1
   gSttngs().setIfNotCached("devPower", 1);
   //------------------------------------------------------------------
@@ -50,7 +50,7 @@ export default () => {
     { name: "In Test", status: "touch", limit: 0, preload: 0 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs().setIfNotCached("arrivalRate", 2);
+  gSttngs().setIfNotCached("arrivalRate", 1);
   // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person or sub-team could do everything, how long would things take? We want a
@@ -60,19 +60,19 @@ export default () => {
   gSttngs().setIfNotCached("flwItmSizeMax", 1);
   gSttngs().setIfNotCached("flwItmSize", { min: 1, max: 1 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs().setIfNotCached("timeBox", 100);
+  gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs().setIfNotCached("death", 0);
   gSttngs().setIfNotCached("backlogDeath", 0);
-  gSttngs().setIfNotCached("backlogMax", 4);
+  gSttngs().setIfNotCached("backlogMax", 0);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs().setIfNotCached("devUnits", 2);
+  gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs().setIfNotCached("expdtLimit", 10);
+  gSttngs().setIfNotCached("expdtLimit", 0);
   // PARAM: Wip limit for wait and touch steps that don't have one set
-  gSttngs().setIfNotCached("wipLimit", 20);
+  gSttngs().setIfNotCached("wipLimit", 0);
   // 1 is 100% of the available devUnits.
   gSttngs().setIfNotCached("expdtdDvUnitsFactor", 1);
   //------------------------------------------------------------------
@@ -80,7 +80,7 @@ export default () => {
   //------------------------------------------------------------------
   // Q: How many days can elapse between arrivals of new work items? i.e. how many
   // new items arrive in your backlog each day?
-  gSttngs().setIfNotCached("arrivalFrequency", { min: 0.5, max: 10 });
+  gSttngs().setIfNotCached("arrivalFrequency", 1);
   // Q: When work does arrive, how many items arrive at once?
   gSttngs().setIfNotCached("arrivalVolume", { min: 1, max: 10 });
   // PARAM: Relative to flwItmSize
