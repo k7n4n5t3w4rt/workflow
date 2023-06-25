@@ -1,45 +1,54 @@
 // @flow
+type GlobalModel = {
+  set: (key: string, value: any) => void,
+  get: (key: string) => any,
+  keyValuePairs: { [string]: any },
+};
 //------------------------------------------------------------------
 // gSttngs
 //------------------------------------------------------------------
 type GlobalSettings = {
-  arrivalRate: number,
-  arrivalFrequency: { min: number, max: number },
-  arrivalVolume: { min: number, max: number },
-  autoMode: boolean,
-  backlogDeath: number,
-  backlogMax: number,
-  colorGrey: string,
-  colorGold: string,
-  colorGreen: string,
-  death: number,
-  debug: boolean,
-  devPower: number,
-  devUnits: number,
-  dfntnOfReady: number,
-  drag: number,
-  expdtLimit: number,
-  expdtdDvUnitsFactor: number,
-  flwItmSizeMin: number,
-  flwItmSizeMax: number,
-  flwItmSizeFactor: 1,
-  steps: Array<FlwStep>,
-  fps: number,
-  rangeDecreaseRate: number,
-  rangeIncreaseRate: number,
-  rangeMax: number,
-  scale: number,
-  scaleCm: number,
-  showMetrics: boolean,
-  step: number,
-  teamInstability: number,
-  timeBox: number,
-  touchSteps: number,
-  wipLimit: number,
-  x: number,
-  y: number,
-  yOffset: number,
-  z: number,
+  set: (key: string, value: any) => void,
+  get: (key: string) => any,
+  keyValuePairs: {
+    arrivalRate: number,
+    arrivalFrequency: { min: number, max: number },
+    arrivalVolume: { min: number, max: number },
+    autoMode: boolean,
+    backlogDeath: number,
+    backlogMax: number,
+    colorGrey: string,
+    colorGold: string,
+    colorGreen: string,
+    death: number,
+    debug: boolean,
+    devPower: number,
+    devUnits: number,
+    dfntnOfReady: number,
+    drag: number,
+    expdtLimit: number,
+    expdtdDvUnitsFactor: number,
+    flwItmSizeMin: number,
+    flwItmSizeMax: number,
+    flwItmSizeFactor: 1,
+    steps: Array<FlwStep>,
+    fps: number,
+    rangeDecreaseRate: number,
+    rangeIncreaseRate: number,
+    rangeMax: number,
+    scale: number,
+    scaleCm: number,
+    showMetrics: boolean,
+    step: number,
+    teamInstability: number,
+    timeBox: number,
+    touchSteps: number,
+    wipLimit: number,
+    x: number,
+    y: number,
+    yOffset: number,
+    z: number,
+  },
 };
 
 type FlwStep = {
@@ -53,30 +62,35 @@ type FlwStep = {
 // gState
 //------------------------------------------------------------------
 type GlobalState = {
-  // -----------------------
-  // Data:
-  // -----------------------
-  clicks: number,
-  expdtCount: number,
-  vSphere: VSphere,
-  scnData: SceneData,
-  strtPosition: ThrMeshPosition,
-  endPosition: ThrMeshPosition,
-  flwMap: FlwMap,
-  flwItems: FlwItem[],
-  flwItmsPulledCount: number,
-  clckCbGroup: ClickCubeGroup,
-  flwItmTracker: FlwItmTracker,
-  // -----------------------
-  // Metrics:
-  // -----------------------
-  vQueue: VQueue,
-  thrPtQueue: ThrPtQueue,
-  wipQueue: WipQueue,
-  flwTmQueue: FlwTmQueue,
-  thrPtExpQueue: ThrPtQueue,
-  wipExpQueue: WipQueue,
-  flwTmExpQueue: FlwTmQueue,
+  set: (key: string, value: any) => void,
+  get: (key: string) => any,
+  keyValuePairs: {
+    // -----------------------
+    // Data:
+    // -----------------------
+    clicks: number,
+    expdtCount: number,
+    vSphere: VSphere,
+    scnData: SceneData,
+    strtPosition: ThrMeshPosition,
+    endPosition: ThrMeshPosition,
+    flwMap: FlwMap,
+    flwItems: FlwItem[],
+    flwItmsPulledCount: number,
+    clckCbGroup: ClickCubeGroup,
+    flwItmTracker: FlwItmTracker,
+    // -----------------------
+    // Metrics:
+    // -----------------------
+    vQueue: VQueue,
+    thrPtQueue: ThrPtQueue,
+    wipQueue: WipQueue,
+    flwTmQueue: FlwTmQueue,
+    thrPtExpQueue: ThrPtQueue,
+    wipExpQueue: WipQueue,
+    flwTmExpQueue: FlwTmQueue,
+    started: boolean,
+  },
 };
 
 type FlwItem = {
