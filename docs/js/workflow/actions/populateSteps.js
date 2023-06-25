@@ -22,7 +22,7 @@ export default () /*: void */ => {
       newFlwItem(index);
     }
   });
-  gState().get("set")("expdtCount", 0);
+  gState().set("expdtCount", 0);
   flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) /*: void */ => {
     countExpeditedFlwItems(flwMpStpItems);
   });

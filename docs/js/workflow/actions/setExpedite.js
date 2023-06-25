@@ -19,7 +19,7 @@ import addNewExpeditedFlwItems from "./addNewExpeditedFlwItems.js";
 export default () => {
   // First, decrement gState().get("expedite") to cover all the expedite items
   const flwMpSteps = getFlwMpSteps();
-  gState().get("set")("expdtCount", 0);
+  gState().set("expdtCount", 0);
   flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) /*: void */ => {
     countExpeditedFlwItems(flwMpStpItems);
   });

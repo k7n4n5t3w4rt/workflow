@@ -31,7 +31,7 @@ test("-------------- calculateRange.js ---------------------", () /*: void */ =>
 
 const fixture = () /*: void */ => {
   // Settings
-  globalSettings({});
+  globalSettings();
   gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },

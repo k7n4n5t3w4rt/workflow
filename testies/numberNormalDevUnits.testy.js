@@ -23,33 +23,49 @@ import { numberNormalDevUnits } from "../js/workflow/actions/numberDevUnits.js";
 //------------------------------------------------------------------
 // TEST: dragFunction
 //------------------------------------------------------------------
-test("-------------- numberNormalDevUnits.js ---------------------", () /*: void */ => {
+test("------- numberNormalDevUnits.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
-test("20 devUnits, 2 touchSteps() and factor of 0.5 return 5", () /*: void */ => {
-  globalSettings({});
+const fixture = () /*: void */ => {
+  globalSettings();
+  gSttngs().set("steps", [
+    { name: "Open", status: "backlog", limit: 0, preload: 3 },
+    { name: "Ready", status: "wait", limit: 3, preload: 3 },
+    { name: "Doing", status: "touch", limit: 3, preload: 3 },
+    { name: "Ready for Test", status: "wait", limit: 3, preload: 3 },
+    { name: "In Test", status: "touch", limit: 3, preload: 3 },
+    { name: "Done", status: "done", limit: 0 },
+  ]);
   globalState();
+};
+
+test("20 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
+  fixture();
   gSttngs().set("devUnits", 20);
+  // This no longer has an effect. We're assuming that all the devUnits will
+  // be available if normal flwItems are being worked on at all
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
-  should(nmNrmlDvUnts).be.exactly(5);
+  should(nmNrmlDvUnts).be.exactly(10);
 });
 
-test("5 devUnits, 2 touchSteps() and factor of 0.5 return 1", () /*: void */ => {
-  globalSettings({});
-  globalState();
+test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
+  fixture();
   gSttngs().set("devUnits", 5);
+  // This no longer has an effect. We're assuming that all the devUnits will
+  // be available if normal flwItems are being worked on at all
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
-  should(nmNrmlDvUnts).be.exactly(1);
+  should(nmNrmlDvUnts).be.exactly(2);
 });
 
-test("24 devUnits, 2 touchSteps() and factor of 0.33 return 8", () /*: void */ => {
-  globalSettings({});
-  globalState();
+test("24 devUnits, 2 touchSteps(), factor 0.33", () /*: void */ => {
+  fixture();
   gSttngs().set("devUnits", 24);
+  // This no longer has an effect. We're assuming that all the devUnits will
+  // be available if normal flwItems are being worked on at all
   gSttngs().set("expdtdDvUnitsFactor", 0.33);
   const nmNrmlDvUnts = numberNormalDevUnits();
-  should(nmNrmlDvUnts).be.exactly(8);
+  should(nmNrmlDvUnts).be.exactly(12);
 });

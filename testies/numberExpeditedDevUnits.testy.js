@@ -23,12 +23,12 @@ import { numberExpiditedDevUnits } from "../js/workflow/actions/numberDevUnits.j
 //------------------------------------------------------------------
 // TEST: dragFunction
 //------------------------------------------------------------------
-test("-------------- numberExpiditedDevUnits.js ---------------------", () /*: void */ => {
+test("------ numberExpiditedDevUnits.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
-test("20 devUnits, 2 touchSteps() and factor of 0.5 return 5", () /*: void */ => {
-  globalSettings({});
+test("20 devUnits, 2 touchSteps, factor 0.5", () /*: void */ => {
+  globalSettings();
   globalState();
   gSttngs().set("devUnits", 20);
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
@@ -36,8 +36,8 @@ test("20 devUnits, 2 touchSteps() and factor of 0.5 return 5", () /*: void */ =>
   should(nmExpdtdDvUnts).be.exactly(5);
 });
 
-test("5 devUnits, 2 touchSteps() and factor of 0.5 return 1", () /*: void */ => {
-  globalSettings({});
+test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
+  globalSettings();
   globalState();
   gSttngs().set("devUnits", 5);
   gSttngs().set("expdtdDvUnitsFactor", 0.5);

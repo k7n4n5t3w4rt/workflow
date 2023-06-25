@@ -26,6 +26,7 @@ import filterDoneItems from "../js/workflow/actions/filterDoneItems.js";
 // MOCKS
 //------------------------------------------------------------------
 const removeDoneFlwItmsFromFlwMap = (
+  _ /*: null | void */,
   flwItem /*: FlwItem */,
   index /*: number */,
 ) /*: void */ => {
@@ -43,8 +44,8 @@ test("-------------- filterOutDoneItems.js ---------------------", () /*: void *
   should(1).be.exactly(1);
 });
 
-const fixture = () /*: void */ => {
-  globalSettings({});
+const fixture = () /*: FlwItem */ => {
+  globalSettings();
   gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
@@ -56,10 +57,12 @@ const fixture = () /*: void */ => {
   globalState();
   // Needed for newFlwItem(5) and populateSteps()
   gState().set("clckCbGroup", newClickCube());
+  populateSteps();
   const doneFlwItem = newFlwItem(5);
+  doneFlwItem.dExpedite = false;
   doneFlwItem.dAge = 10;
   doneFlwItem.dVolume = 10;
-  populateSteps();
+  return doneFlwItem;
 };
 
 const tearDown = () /*: void */ => {
@@ -77,8 +80,9 @@ test("Filters out a Done flwItem...", () /*: void */ => {
 
 test("...and updates the thoughput queue", () /*: void */ => {
   // Check it is empty to start with
-  should(gState().get("thrPtQueue").length()).be.exactly(0);
   fixture();
+  const flwItem = fixture();
+  should(gState().get("thrPtQueue").length()).be.exactly(0);
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().get("thrPtQueue").length()).be.exactly(1);
   tearDown();
@@ -86,22 +90,56 @@ test("...and updates the thoughput queue", () /*: void */ => {
 
 test("...and updates the value queue", () /*: void */ => {
   // Check it is empty to start with
+  fixture();
+  const flwItem = fixture();
   should(gState().get("vQueue").length()).be.exactly(0);
   should(gState().get("vQueue").total()).be.exactly(0);
-  fixture();
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().get("vQueue").length()).be.exactly(1);
   should(gState().get("vQueue").total()).be.exactly(10);
   tearDown();
 });
 
+test("...and updates the thoughput queue", () /*: void */ => {
+  // Check it is empty to start with
+  fixture();
+  const flwItem = fixture();
+  should(gState().get("thrPtQueue").length()).be.exactly(0);
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  should(gState().get("thrPtQueue").length()).be.exactly(1);
+  tearDown();
+});
+
+test("...and updates the expedite thoughput queue", () /*: void */ => {
+  // Check it is empty to start with
+  const flwItem = fixture();
+  flwItem.dExpedite = true;
+  should(gState().get("thrPtQueue").length()).be.exactly(0);
+  fixture();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  should(gState().get("thrPtExpQueue").length()).be.exactly(1);
+  tearDown();
+});
+
 test("...and updates the flow time queue", () /*: void */ => {
   // Check it is empty to start with
+  const flwItem = fixture();
   should(gState().get("flwTmQueue").length()).be.exactly(0);
   should(gState().get("flwTmQueue").total()).be.exactly(0);
-  fixture();
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().get("flwTmQueue").length()).be.exactly(1);
   should(gState().get("flwTmQueue").total()).be.exactly(10);
+  tearDown();
+});
+
+test("...and updates the expedite flow time queue", () /*: void */ => {
+  // Check it is empty to start with
+  const flwItem = fixture();
+  flwItem.dExpedite = true;
+  should(gState().get("flwTmExpQueue").length()).be.exactly(0);
+  should(gState().get("flwTmExpQueue").total()).be.exactly(0);
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  should(gState().get("flwTmExpQueue").length()).be.exactly(1);
+  should(gState().get("flwTmExpQueue").total()).be.exactly(10);
   tearDown();
 });

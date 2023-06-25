@@ -46,7 +46,7 @@ const hideReticule = () /*: void */ => {
 // createClickCube()
 //------------------------------------------------------------------
 const createClickCube = () /*: void */ => {
-  gState().get("set")("clckCbGroup", clckCbGroup());
+  gState().set("clckCbGroup", clckCbGroup());
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------
@@ -85,7 +85,7 @@ const orientEverythingToTheClickCube = () /*: void */ => {
 const setStartPosition = () /*: void */ => {
   // Set the start position for all the flw items
   // based on where we put the cube, but higher up
-  gState().get("set")(
+  gState().set(
     "strtPosition",
     gState().get("clckCbGroup").clckCube.position.clone(),
   );
@@ -95,7 +95,7 @@ const setStartPosition = () /*: void */ => {
 // setEndPosition()
 //------------------------------------------------------------------
 const setEndPosition = () /*: void */ => {
-  gState().get("set")("endPosition", gState().get("strtPosition").clone());
+  gState().set("endPosition", gState().get("strtPosition").clone());
   gState().get("endPosition").z +=
     gSttngs().get("step") * (gSttngs().get("steps").length + 1) * -1;
   // --------------------------------------------------------------
@@ -111,7 +111,7 @@ const setEndPosition = () /*: void */ => {
 //------------------------------------------------------------------
 const createValueSphere = () /*: void */ => {
   // Create the valueSphere
-  gState().get("set")("vSphere", newVSphere());
+  gState().set("vSphere", newVSphere());
   gState().get("vSphere").dRllngTtlVolume = 0;
   gState().get("vSphere").dRadius = 0;
   gState().get("vSphere").position.x = 0;

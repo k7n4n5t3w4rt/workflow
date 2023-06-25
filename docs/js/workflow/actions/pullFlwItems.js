@@ -26,7 +26,7 @@ export const pullFlwItems = () => {
   if (gState().get("flwItmsPulledCount") > 0) {
     // If this is remains zero then nothing was pulled and we can
     // exit the loop
-    gState().get("set")("flwItmsPulledCount", 0);
+    gState().set("flwItmsPulledCount", 0);
     pullFlwItems();
   }
 };

@@ -30,7 +30,7 @@ test("-------------- inTouch.js ---------------------", () /*: void */ => {
 });
 
 const fixture = () /*: FlwItem */ => {
-  globalSettings({});
+  globalSettings();
   globalState();
   gState().set("clckCbGroup", newClickCube());
   const flwItem = newFlwItem();

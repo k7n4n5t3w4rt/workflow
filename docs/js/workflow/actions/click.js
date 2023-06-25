@@ -39,7 +39,7 @@ export const onClickComplete = () /*: void */ => {
   }
   // pullFlwItems() calls itself recursively until there are no more
   // items left to pull.
-  gState().get("set")("flwItmsPulledCount", 0);
+  gState().set("flwItmsPulledCount", 0);
   pullFlwItems();
   // Update the WIP when everything has been pulled but not yet worked on
   updateWip();

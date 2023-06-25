@@ -29,7 +29,7 @@ test("-------------- newFlwItem.js ---------------------", () /*: void */ => {
 });
 
 const fixture = () /*: FlwItem */ => {
-  globalSettings({});
+  globalSettings();
   globalState();
   gState().set("clckCbGroup", newClickCube());
   return newFlwItem();

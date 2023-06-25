@@ -30,14 +30,25 @@ test("-------------- makeItOneClickOlder.js ---------------------", () /*: void 
 });
 
 const fixture = () /*: FlwItem */ => {
-  globalSettings({});
+  globalSettings();
   globalState();
   gState().set("clckCbGroup", newClickCube());
   return newFlwItem();
 };
 
+test("Returns a flwItem with the updated dBacklogAge.", () /*: void */ => {
+  const flwItem = fixture();
+  // It will be this by default, unless it isn't...
+  flwItem.dStpIndex = 0;
+  const newFlwItmRef = makeItOneClickOlder(flwItem);
+  should(newFlwItmRef.dBacklogAge).be.exactly(1);
+  const anotherNewFlwItmRef = makeItOneClickOlder(newFlwItmRef);
+  should(anotherNewFlwItmRef.dBacklogAge).be.exactly(2);
+});
+
 test("Returns a flwItem with the updated dAge.", () /*: void */ => {
   const flwItem = fixture();
+  flwItem.dStpIndex = 1;
   const newFlwItmRef = makeItOneClickOlder(flwItem);
   should(newFlwItmRef.dAge).be.exactly(1);
   const anotherNewFlwItmRef = makeItOneClickOlder(newFlwItmRef);
@@ -46,6 +57,7 @@ test("Returns a flwItem with the updated dAge.", () /*: void */ => {
 
 test("Returns a flwItem with new opacity when death is 10.", () /*: void */ => {
   const flwItem = fixture();
+  flwItem.dStpIndex = 1;
   gSttngs().set("death", 10);
   const newFlwItmRef = makeItOneClickOlder(flwItem);
   should(newFlwItmRef.material.opacity).be.exactly(0.9);
@@ -55,6 +67,7 @@ test("Returns a flwItem with new opacity when death is 10.", () /*: void */ => {
 
 test("Returns a flwItem with opacity unchanged when death is 0.", () /*: void */ => {
   const flwItem = fixture();
+  flwItem.dStpIndex = 1;
   gSttngs().set("death", 0);
   const newFlwItmRef = makeItOneClickOlder(flwItem);
   should(newFlwItmRef.material.opacity).be.exactly(1);

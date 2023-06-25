@@ -31,7 +31,7 @@ test("-------------- setExpedite.js ---------------------", () /*: void */ => {
 });
 
 const fixture = () /*: Array<FlwItem> */ => {
-  globalSettings({});
+  globalSettings();
   globalState();
   gState().set("clckCbGroup", newClickCube());
   const flwItems = [];

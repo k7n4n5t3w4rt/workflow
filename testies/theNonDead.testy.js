@@ -39,7 +39,7 @@ test("-------------- theNonDead.js ---------------------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 const fixture = () /*: void */ => {
-  globalSettings({});
+  globalSettings();
   globalState();
   gState().set("clckCbGroup", newClickCube());
 };

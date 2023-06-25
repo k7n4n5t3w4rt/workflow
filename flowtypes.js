@@ -1,6 +1,7 @@
 // @flow
 type GlobalModel = {
-  set: (key: string, value: any) => void,
+  set: (key: string, value: any) => Object,
+  setIfNotCached: (key: string, value: any) => Object,
   get: (key: string) => any,
   keyValuePairs: { [string]: any },
 };

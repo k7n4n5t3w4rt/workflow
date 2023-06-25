@@ -62,7 +62,7 @@ export default (props /*: Props */) /*: string */ => {
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
       const value = parseInt(e.target.value);
-      gSttngs()[param] = parseInt(value);
+      gSttngs().set(param, parseInt(value));
       setStateFunctions[param](parseInt(value));
     };
 
