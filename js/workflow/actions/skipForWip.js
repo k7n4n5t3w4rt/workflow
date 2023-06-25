@@ -33,7 +33,7 @@ export default (devUnits /*: number */, wip /*: number */) /*: boolean */ => {
   // So that we can increase the probability of skipping
   // by increasing the WIP by > * 1
   // e.g. if drag is 0.25, then dragFacor will be 1.25
-  const dragFactor = 1 + gSttngs().drag;
+  const dragFactor = 1 + gSttngs().get("drag");
   // If the random number is more than the probability (a/b), return false
   const skip = Math.random() > devUnits / (wip * dragFactor);
   return skip;

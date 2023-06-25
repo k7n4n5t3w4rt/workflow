@@ -13,14 +13,18 @@ export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group
   const clckCbGroup = new THREE.Group();
 
-  const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
+  const geometry = new THREE.BoxGeometry(
+    gSttngs().get("x"),
+    gSttngs().get("y"),
+    gSttngs().get("z"),
+  );
 
   const material = new THREE.MeshBasicMaterial({
     color: `rgb(135,206,235)`,
   });
   const cube = new THREE.Mesh(geometry, material);
-  cube.position.z = gSttngs().z;
-  cube.position.y = gSttngs().y;
+  cube.position.z = gSttngs().get("z");
+  cube.position.y = gSttngs().get("y");
   cube.castShadow = true;
   cube.receiveShadow = true;
   // Add the cube to the group (and the THREE.js scene)

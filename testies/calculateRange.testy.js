@@ -32,7 +32,7 @@ test("-------------- calculateRange.js ---------------------", () /*: void */ =>
 const fixture = () /*: void */ => {
   // Settings
   globalSettings({});
-  gSttngs("steps", [
+  gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
     { name: "Doing", status: "touch", limit: 3, preload: 3 },
@@ -40,14 +40,14 @@ const fixture = () /*: void */ => {
     { name: "In Test", status: "touch", limit: 3, preload: 3 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs("rangeIncreaseRate", 1.75);
-  gSttngs("rangeDecreaseRate", 0.75);
-  gSttngs("scale", 0.1);
-  gSttngs("yOffset", gSttngs().scale * 10);
-  gSttngs("rangeMax", gSttngs().yOffset * 0.75);
+  gSttngs().set("rangeIncreaseRate", 1.75);
+  gSttngs().set("rangeDecreaseRate", 0.75);
+  gSttngs().set("scale", 0.1);
+  gSttngs().set("yOffset", gSttngs().get("scale") * 10);
+  gSttngs().set("rangeMax", gSttngs().get("yOffset") * 0.75);
   // State
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   populateSteps();
 };
 

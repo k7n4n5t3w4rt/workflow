@@ -9,30 +9,30 @@ export default () => {
   //------------------------------------------------------------------
   // Empty objects and sensible defaults
   //------------------------------------------------------------------
-  gState("clckCbGroup", {});
-  gState("clckCube", {});
-  gState("clicks", 0);
-  gState("drag", 0);
-  gState("endPosition", {});
-  gState("expdtCount", gSttngs().expdtLimit);
-  gState("flwItems", []);
-  gState("flwItmTracker", {});
-  gState("flwMap", {});
-  gState("flwItmsPulledCount", 0);
-  gState("scnData", {});
-  gState("strtPosition", {});
-  gState("vSphere", {});
+  gState().set("clckCbGroup", {});
+  gState().set("clckCube", {});
+  gState().set("clicks", 0);
+  gState().set("drag", 0);
+  gState().set("endPosition", {});
+  gState().set("expdtCount", gSttngs().get("expdtLimit"));
+  gState().set("flwItems", []);
+  gState().set("flwItmTracker", {});
+  gState().set("flwMap", {});
+  gState().set("flwItmsPulledCount", 0);
+  gState().set("scnData", {});
+  gState().set("strtPosition", {});
+  gState().set("vSphere", {});
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------
-  gState("vQueue", new xQueue());
-  gState("flwTmQueue", new xQueue());
-  gState("thrPtQueue", new xQueue());
-  gState("wipQueue", new xQueue());
-  gState("flwTmExpQueue", new xQueue());
-  gState("thrPtExpQueue", new xQueue());
-  gState("wipExpQueue", new xQueue());
-  setUpFlwMap(gState().flwMap, gSttngs().steps);
+  gState().set("vQueue", new xQueue());
+  gState().set("flwTmQueue", new xQueue());
+  gState().set("thrPtQueue", new xQueue());
+  gState().set("wipQueue", new xQueue());
+  gState().set("flwTmExpQueue", new xQueue());
+  gState().set("thrPtExpQueue", new xQueue());
+  gState().set("wipExpQueue", new xQueue());
+  setUpFlwMap(gState().get("flwMap"), gSttngs().get("steps"));
 };
 
 //------------------------------------------------------------------
@@ -41,7 +41,7 @@ export default () => {
 const setUpFlwMap = (gFlwMap /*: FlwMap */, gFlwSteps /*: FlwStep[] */) => {
   // Set each stepTotal to 0
   gFlwSteps.forEach((step /*: FlwStep */, index /*: number */) => {
-    gState().flwMap[index.toString()] = [];
+    gState().get("flwMap")[index.toString()] = [];
   });
 };
 

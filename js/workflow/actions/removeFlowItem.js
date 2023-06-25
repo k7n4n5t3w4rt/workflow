@@ -19,9 +19,9 @@ export default (flwItem /*: FlwItem */) /*: void */ => {
   if (flwItem.dMoving) {
     return;
   }
-  let theActualMeshObject = gState().scnData.scene.getObjectByName(
-    flwItem.name,
-  );
+  let theActualMeshObject = gState()
+    .get("scnData")
+    .scene.getObjectByName(flwItem.name);
   if (theActualMeshObject !== undefined) {
     //
     animateScaleToZero(flwItem, 300, removeThreeObject(theActualMeshObject));

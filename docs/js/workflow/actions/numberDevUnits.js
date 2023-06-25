@@ -14,7 +14,8 @@ export const numberExpiditedDevUnits = () /*: number */ => {
   // Return the number of expedited dev units divided by the number of touch steps
   // as the number of expedited dev units per touch step
   return Math.floor(
-    (gSttngs().devUnits * gSttngs().expdtdDvUnitsFactor) / touchStepsCount(),
+    (gSttngs().get("devUnits") * gSttngs().get("expdtdDvUnitsFactor")) /
+      touchStepsCount(),
   );
 };
 //------------------------------------------------------------------
@@ -25,10 +26,10 @@ export const numberNormalDevUnits = () /*: number */ => {
   // because by the time we if we're working on normal flwItems,
   // there are no expedited flwItems left
   const nrmlDvUnitsFactor = 1;
-  // const nrmlDvUnitsFactor = 1 - gSttngs().expdtdDvUnitsFactor;
+  // const nrmlDvUnitsFactor = 1 - gSttngs().get("expdtdDvUnitsFactor");
   // Return the number of normal dev units divided by the number of touch steps
   // as the number of normal dev units per touch step
   return Math.floor(
-    (gSttngs().devUnits * nrmlDvUnitsFactor) / touchStepsCount(),
+    (gSttngs().get("devUnits") * nrmlDvUnitsFactor) / touchStepsCount(),
   );
 };

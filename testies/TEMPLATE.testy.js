@@ -30,7 +30,7 @@ test("-------------- setExpedite.js ---------------------", () /*: void */ => {
 
 const fixture = () /*: void */ => {
   globalSettings({});
-  gSttngs("steps", [
+  gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
     { name: "Doing", status: "touch", limit: 3, preload: 3 },
@@ -39,7 +39,7 @@ const fixture = () /*: void */ => {
     { name: "Done", status: "done", limit: 0 },
   ]);
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   populateSteps();
 };
 

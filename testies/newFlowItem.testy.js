@@ -31,11 +31,11 @@ test("-------------- newFlwItem.js ---------------------", () /*: void */ => {
 const fixture = () /*: FlwItem */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   return newFlwItem();
 };
 
 test("Adds a flwItem to the flwMap.", () /*: void */ => {
   fixture();
-  should(gState().flwMap["0"].length).be.exactly(1);
+  should(gState().get("flwMap")["0"].length).be.exactly(1);
 });

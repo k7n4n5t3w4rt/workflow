@@ -42,7 +42,7 @@ export default () /*: void */ => {
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------
-  if (gSttngs().autoMode) {
+  if (gSttngs().get("autoMode")) {
     reticleStuff = {
       reticle: {},
       active: false,
@@ -51,7 +51,7 @@ export default () /*: void */ => {
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
-  if (!gSttngs().autoMode) {
+  if (!gSttngs().get("autoMode")) {
     // The reticle is the donut that appears on the ground
     reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
     // This start the whole process when the user clicks the
@@ -67,7 +67,7 @@ export default () /*: void */ => {
   // A fix for when the phone is rotated, etc
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
   // Populate the global state, for posterity
-  gState().scnData = { stats, scene, camera, reticleStuff, renderer };
+  gState().set("scnData", { stats, scene, camera, reticleStuff, renderer });
 };
 
 //------------------------------------------------------------------
@@ -144,7 +144,7 @@ const cameraSetup = () /*: Object */ => {
   );
   // Does this really get used? Probably not in AR mode
   camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(4 / 2)) * gSttngs().y;
-  camera.position.x = Math.abs(parseInt(5 / 2)) * gSttngs().x;
+  camera.position.y = Math.abs(parseInt(4 / 2)) * gSttngs().get("y");
+  camera.position.x = Math.abs(parseInt(5 / 2)) * gSttngs().get("x");
   return camera;
 };

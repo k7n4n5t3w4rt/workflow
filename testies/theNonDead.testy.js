@@ -41,12 +41,12 @@ test("-------------- theNonDead.js ---------------------", () /*: void */ => {
 const fixture = () /*: void */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
 };
 
 test("Filters out flwItems that are dead.", () /*: void */ => {
   fixture();
-  gSttngs().death = 10;
+  gSttngs().set("death", 10);
   // Set the dAge - 2 below and w above the death threshold
   const flwItem = newFlwItem();
   flwItem.dAge = 10;
@@ -58,7 +58,7 @@ test("Filters out flwItems that are dead.", () /*: void */ => {
 });
 
 test("Doesn't filter out flwItems that are alive.", () /*: void */ => {
-  gSttngs().death = 10;
+  gSttngs().set("death", 10);
   // Set the dAge - 2 below and w above the death threshold
   const flwItem = newFlwItem();
   flwItem.dAge = 8;

@@ -16,7 +16,7 @@ export default (devDays /*: number */, wip /*: number */) /*: number */ => {
   }
   // We actually want the inverse of drag, so we subtract it from 1.
   // Also has the benefit of handling drag = 0.
-  const dragFactor = 1 - gSttngs().drag;
+  const dragFactor = 1 - gSttngs().get("drag");
   // The Math.round() is to avoid floating point errors.
   return (
     Math.round(((devDays + (wip - devDays) / 1.05) / wip) * dragFactor * 100) /

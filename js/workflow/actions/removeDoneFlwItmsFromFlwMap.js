@@ -12,8 +12,7 @@ export default (
   index /*: number */,
 ) /*: void */ => {
   // Remove it from the flwMap
-  const deletedFlwItem = gState().flwMap[flwItem.dStpIndex.toString()].splice(
-    index,
-    1,
-  );
+  const deletedFlwItem = gState()
+    .get("flwMap")
+    [flwItem.dStpIndex.toString()].splice(index, 1);
 };

@@ -16,33 +16,35 @@ export default (flwStpsIndex /*: number */) /*: number */ => {
   // Set the required space to the limit of the current step.
   // If the limit is 0, set the required space to thenumber of
   // wrkFlwItems in the current step.
-  let rqrdSpace /* number */ = gSttngs().steps[flwStpsIndex].limit;
+  let rqrdSpace /* number */ = gSttngs().get("steps")[flwStpsIndex].limit;
   if (rqrdSpace === 0) {
     // Check if `limit` is set in the global steps settings
     if (
       // If we're not on the first or last step
       flwStpsIndex !== 0 &&
-      flwStpsIndex !== gSttngs().steps.length - 1 &&
+      flwStpsIndex !== gSttngs().get("steps").length - 1 &&
       // And if the global wipLimit is not 0
-      gSttngs().wipLimit !== 0
+      gSttngs().get("wipLimit") !== 0
     ) {
       // Use the global wipLimit
-      rqrdSpace = gSttngs().wipLimit;
+      rqrdSpace = gSttngs().get("wipLimit");
     } else {
       // Last option is to set it to the number of flwItems in the step
-      rqrdSpace = gState().flwMap[flwStpsIndex.toString()].length;
+      rqrdSpace = gState().get("flwMap")[flwStpsIndex.toString()].length;
     }
   }
   // Does this even make sense? GPT-4 told me to do it.
   // The idea is that the rate of increase decrteases as the
   // numbers get bigger
   let incrsFactor =
-    rqrdSpace * gSttngs().rangeIncreaseRate * gSttngs().rangeDecreaseRate;
+    rqrdSpace *
+    gSttngs().get("rangeIncreaseRate") *
+    gSttngs().get("rangeDecreaseRate");
 
-  range = gSttngs().scale * incrsFactor;
+  range = gSttngs().get("scale") * incrsFactor;
   // Don't let it go over the max range
-  if (range > gSttngs().rangeMax) {
-    range = gSttngs().rangeMax;
+  if (range > gSttngs().get("rangeMax")) {
+    range = gSttngs().get("rangeMax");
   }
 
   return Math.round(range * 100) / 100;

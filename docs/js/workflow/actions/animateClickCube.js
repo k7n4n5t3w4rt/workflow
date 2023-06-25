@@ -15,9 +15,9 @@ import { onClickComplete } from "./click.js";
 export default () => {
   // Rotate the clckCube
   anime({
-    targets: [gState().clckCbGroup.clckCube.rotation],
-    y: gState().clckCbGroup.clckCube.rotation.y + Math.PI / 2,
-    duration: 1000 / gSttngs().fps,
+    targets: [gState().get("clckCbGroup").clckCube.rotation],
+    y: gState().get("clckCbGroup").clckCube.rotation.y + Math.PI / 2,
+    duration: 1000 / gSttngs().get("fps"),
     easing: "easeInOutSine",
     complete: onClickComplete,
   });

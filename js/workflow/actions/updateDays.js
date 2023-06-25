@@ -61,11 +61,11 @@ const updateDaysRemaining = (
     //   flwItem.dSkipForWip = false;
     //   return;
     // }
-    // console.log("devUnits", gSttngs().devUnits);
-    // console.log("wip", gState().wipQueue.mean());
+    // console.log("devUnits", gSttngs().get("devUnits"));
+    // console.log("wip", gState().get("wipQueue").mean());
     const devDays =
-      ((gSttngs().devUnits * gSttngs().devPower) / wipThisStep) *
-      (1 - gSttngs().drag);
+      ((gSttngs().get("devUnits") * gSttngs().get("devPower")) / wipThisStep) *
+      (1 - gSttngs().get("drag"));
     // console.log("devPower", devPower);
     // const drag = dragFunction(devPower, wipThisStep);
     updateDaysRemainingCurrentStep(flwItem, devDays);

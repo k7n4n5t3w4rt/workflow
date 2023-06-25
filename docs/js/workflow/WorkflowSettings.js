@@ -49,10 +49,10 @@ export default (props /*: Props */) /*: string */ => {
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
-    setExpdtLimit(gSttngs().expdtLimit);
-    setArrivalRate(gSttngs().arrivalRate);
-    setDrag(gSttngs().drag);
-    setDevUnits(gSttngs().devUnits);
+    setExpdtLimit(gSttngs().get("expdtLimit"));
+    setArrivalRate(gSttngs().get("arrivalRate"));
+    setDrag(gSttngs().get("drag"));
+    setDevUnits(gSttngs().get("devUnits"));
   }, []);
 
   useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);

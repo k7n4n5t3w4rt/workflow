@@ -27,8 +27,8 @@ const calculateWip = (expedite /*: boolean */) /*: number */ => {
     (_ /*: number */, flwItem /*: FlwItem */) /*: number */ => {
       if (
         flwItem.dExpedite === expedite &&
-        (gSttngs().steps[flwItem.dStpIndex].status === "touch" ||
-          gSttngs().steps[flwItem.dStpIndex].status === "wait")
+        (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch" ||
+          gSttngs().get("steps")[flwItem.dStpIndex].status === "wait")
       ) {
         return ++_;
       } else {
@@ -42,17 +42,17 @@ const calculateWip = (expedite /*: boolean */) /*: number */ => {
 // updateWIPQueue()
 //------------------------------------------------------------------
 const updateWIPQueue = (wip /*: number */) /*: void */ => {
-  if (gState().wipQueue.length() >= gSttngs().timeBox) {
-    gState().wipQueue.dequeue();
+  if (gState().get("wipQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("wipQueue").dequeue();
   }
-  gState().wipQueue.enqueue([wip]);
+  gState().get("wipQueue").enqueue([wip]);
 };
 //------------------------------------------------------------------
 // updateWIPExpQueue()
 //------------------------------------------------------------------
 const updateWIPExpQueue = (wipExp /*: number */) /*: void */ => {
-  if (gState().wipExpQueue.length() >= gSttngs().timeBox) {
-    gState().wipExpQueue.dequeue();
+  if (gState().get("wipExpQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("wipExpQueue").dequeue();
   }
-  gState().wipExpQueue.enqueue([wipExp]);
+  gState().get("wipExpQueue").enqueue([wipExp]);
 };

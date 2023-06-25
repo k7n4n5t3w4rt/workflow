@@ -54,8 +54,8 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(hideOrShowMetricsDivs(metricToggle), []);
 
   useEffect(() => {
-    // setFps(gSttngs().fps);
-    // setWipLimit(gSttngs().wipLimit);
+    // setFps(gSttngs().get("fps"));
+    // setWipLimit(gSttngs().get("wipLimit"));
     // setupMobileDebug();
     updateMetricsOnClickInterval(
       setFlowTime,
@@ -87,7 +87,7 @@ export default (props /*: Props */) /*: string */ => {
         >
         <span className="${styles.metricsSpans}">WIP: ${wip}</span>
       </div>
-      ${gSttngs().expdtLimit > 0 &&
+      ${gSttngs().get("expdtLimit") > 0 &&
       html` <div className="${styles.metricsDivs}">
         <span className="${styles.metricsSpans}"
           >Flow Time Exp: ${flowTimeExp}</span
@@ -121,28 +121,29 @@ const updateMetricsOnClickInterval = (
 ) /*: void */ => {
   setInterval(() => {
     if (
-      gState().vQueue !== undefined &&
-      gState().flwTmQueue !== undefined &&
-      gState().thrPtQueue !== undefined &&
-      gState().wipQueue !== undefined &&
-      gState().flwTmExpQueue !== undefined &&
-      gState().thrPtExpQueue !== undefined &&
-      gState().wipExpQueue !== undefined
+      gState().get("vQueue") !== undefined &&
+      gState().get("flwTmQueue") !== undefined &&
+      gState().get("thrPtQueue") !== undefined &&
+      gState().get("wipQueue") !== undefined &&
+      gState().get("flwTmExpQueue") !== undefined &&
+      gState().get("thrPtExpQueue") !== undefined &&
+      gState().get("wipExpQueue") !== undefined
     ) {
       // Only updated them if they have changed. Not sure it makes a difference.jkkk:w
-      if (gState().flwTmQueue.meanForValues() !== flowTime)
-        setFlowTime(gState().flwTmQueue.meanForValues());
-      if (gState().thrPtQueue.meanForDays() !== throughPut)
-        setThroughPut(gState().thrPtQueue.meanForDays());
-      if (gState().wipQueue.meanForDays() !== wip)
-        setWip(gState().wipQueue.meanForDays());
-      if (gState().flwTmExpQueue.meanForValues() !== flowTimeExp)
-        setFlowTimeExp(gState().flwTmExpQueue.meanForValues());
-      if (gState().thrPtExpQueue.meanForDays() !== throughPutExp)
-        setThroughPutExp(gState().thrPtExpQueue.meanForDays());
-      if (gState().wipExpQueue.meanForDays() !== wip)
-        setWipExp(gState().wipExpQueue.meanForDays());
-      if (gState().vQueue.total !== value) setValue(gState().vQueue.total());
+      if (gState().get("flwTmQueue").meanForValues() !== flowTime)
+        setFlowTime(gState().get("flwTmQueue").meanForValues());
+      if (gState().get("thrPtQueue").meanForDays() !== throughPut)
+        setThroughPut(gState().get("thrPtQueue").meanForDays());
+      if (gState().get("wipQueue").meanForDays() !== wip)
+        setWip(gState().get("wipQueue").meanForDays());
+      if (gState().get("flwTmExpQueue").meanForValues() !== flowTimeExp)
+        setFlowTimeExp(gState().get("flwTmExpQueue").meanForValues());
+      if (gState().get("thrPtExpQueue").meanForDays() !== throughPutExp)
+        setThroughPutExp(gState().get("thrPtExpQueue").meanForDays());
+      if (gState().get("wipExpQueue").meanForDays() !== wip)
+        setWipExp(gState().get("wipExpQueue").meanForDays());
+      if (gState().get("vQueue").total !== value)
+        setValue(gState().get("vQueue").total());
     }
   }, 1000);
 };

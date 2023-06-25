@@ -20,7 +20,7 @@ import rndmBetween from "./rndmBetweenWhatever.js";
 import removeFlowItem from "./removeFlowItem.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
-  gState().flwItmTracker[flwItem.name].unshift(`Moving`);
+  gState().get("flwItmTracker")[flwItem.name].unshift(`Moving`);
   animateColorChange(flwItem, newColor(flwItem));
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   animatePositionChange(flwItem);
@@ -36,7 +36,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dStpIndex++;
   // We don't want to reset the days remaining if the item is
   // in the last step, i.e. Done
-  if (flwItem.dStpIndex < gSttngs().steps.length - 1) {
+  if (flwItem.dStpIndex < gSttngs().get("steps").length - 1) {
     flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
   }
 
@@ -45,12 +45,12 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
     x: flwItem.dPosition.x,
     y: flwItem.dPosition.y,
     z: flwItem.dPosition.z,
-    duration: 1000 / gSttngs().fps,
+    duration: 1000 / gSttngs().get("fps"),
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
       flwItem.dMoving = false;
-      if (gSttngs().steps[flwItem.dStpIndex].status === "done") {
+      if (gSttngs().get("steps")[flwItem.dStpIndex].status === "done") {
         flwItem.visible = false;
         removeFlowItem(flwItem);
       } else {
@@ -88,13 +88,13 @@ const animateColorChange = (
 // newColor()
 //------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
-  const nextStatus = gSttngs().steps[flwItem.dStpIndex + 1].status;
-  let newColor = gSttngs().colorGrey; // Grey for "waiting" status
+  const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex + 1].status;
+  let newColor = gSttngs().get("colorGrey"); // Grey for "waiting" status
 
   if (nextStatus === "touch" || nextStatus === "done") {
-    newColor = gSttngs().colorGold; // Gold for "touch" status
+    newColor = gSttngs().get("colorGold"); // Gold for "touch" status
     if (flwItem.dExpedite == true) {
-      newColor = gSttngs().colorGreen; // Green for "touch" status
+      newColor = gSttngs().get("colorGreen"); // Green for "touch" status
     }
   }
   return newColor;
@@ -106,24 +106,25 @@ const newColor = (flwItem /*: FlwItem */) /*: string */ => {
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   const range = calculateRange(flwItem.dStpIndex + 1);
   const newPosition = { ...flwItem.dPosition };
-  const nextStatus = gSttngs().steps[flwItem.dStpIndex + 1].status;
+  const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex + 1].status;
 
   if (nextStatus === "done") {
-    newPosition.x = gState().vSphere.dPosition.x;
-    newPosition.y = gState().vSphere.dPosition.y;
+    newPosition.x = gState().get("vSphere").dPosition.x;
+    newPosition.y = gState().get("vSphere").dPosition.y;
     newPosition.z =
-      gState().vSphere.dPosition.z + gSttngs().step * flwItem.scale.z;
+      gState().get("vSphere").dPosition.z +
+      gSttngs().get("step") * flwItem.scale.z;
 
     animateScaleToZero(flwItem);
   } else {
     newPosition.x =
-      gState().strtPosition.x +
+      gState().get("strtPosition").x +
       (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
         rndmPosOrNeg();
     newPosition.y =
-      gState().strtPosition.y +
+      gState().get("strtPosition").y +
       (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
   }
-  newPosition.z -= gSttngs().step;
+  newPosition.z -= gSttngs().get("step");
   return newPosition;
 };

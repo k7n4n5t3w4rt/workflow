@@ -18,7 +18,7 @@ import anime from "../../../web_modules/animejs.js";
 
 export default () /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
-    const scnData = gState().scnData;
+    const scnData = gState().get("scnData");
 
     if (frame) {
       // 1. create a hit test source once and keep it for all the frames

@@ -32,7 +32,7 @@ test("--------- expediteAndNormalFlwItems.js ----------", () /*: void */ => {
 const fixture = () /*: Array<FlwItem> */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   const flwItems = [];
   flwItems.push(newFlwItem());
   flwItems.push(newFlwItem());

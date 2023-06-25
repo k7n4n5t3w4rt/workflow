@@ -12,8 +12,8 @@ export default (
   ) /*: (flwItem:FlwItem, index:number) => boolean */ =>
   (flwItem /*: FlwItem */, index /*:number */) /*: boolean */ => {
     if (
-      gSttngs().backlogDeath > 0 &&
-      flwItem.dBacklogAge >= gSttngs().backlogDeath
+      gSttngs().get("backlogDeath") > 0 &&
+      flwItem.dBacklogAge >= gSttngs().get("backlogDeath")
     ) {
       // console.log("theNonDead: Filtering out this flwItem");
       removeFlowItem(flwItem);
@@ -21,7 +21,7 @@ export default (
 
       return false;
     }
-    if (gSttngs().death > 0 && flwItem.dAge >= gSttngs().death) {
+    if (gSttngs().get("death") > 0 && flwItem.dAge >= gSttngs().get("death")) {
       // console.log("theNonDead: Filtering out this flwItem");
       removeFlowItem(flwItem);
       removeDoneFlwItmsFromFlwMap(null, flwItem, index);

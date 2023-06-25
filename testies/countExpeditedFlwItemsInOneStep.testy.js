@@ -31,7 +31,7 @@ test("-------------- countExpeditedFlwItemsInOneStep.js ---------------------", 
 
 const fixture = () /*: void */ => {
   globalSettings({});
-  gSttngs("steps", [
+  gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
     { name: "Doing", status: "touch", limit: 3, preload: 3 },
@@ -41,16 +41,18 @@ const fixture = () /*: void */ => {
   ]);
   globalState();
   // Needed for populateSteps()
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   populateSteps();
 };
 
 test("Counts the correct number of expedited flwItems.", () /*: void */ => {
   fixture();
-  // gState("expdtCount", 0);
-  // gSttngs("expdtLimit", 3);
-  gState().flwMap["0"][0].dExpedite = true;
-  // It doesn't return anything, but it does set gState().expdtCount
-  const expdtCount = countExpeditedFlwItemsInOneStep(gState().flwMap["0"]);
+  // gState().set("expdtCount", 0);
+  // gSttngs().set("expdtLimit", 3);
+  gState().get("flwMap")["0"][0].dExpedite = true;
+  // It doesn't return anything, but it does set gState().get("expdtCount")
+  const expdtCount = countExpeditedFlwItemsInOneStep(
+    gState().get("flwMap")["0"],
+  );
   should(expdtCount).be.exactly(1);
 });

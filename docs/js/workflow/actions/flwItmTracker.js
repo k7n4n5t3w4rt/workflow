@@ -9,7 +9,7 @@ export default (
   flwItmName /*: string */,
   message /*: string */,
 ) /*: void  */ => {
-  if (gSttngs().debug === true) {
-    gState().flwItmTracker[flwItmName].unshift(message);
+  if (gSttngs().get("debug") === true) {
+    gState().get("flwItmTracker")[flwItmName].unshift(message);
   }
 };

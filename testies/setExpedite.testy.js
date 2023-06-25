@@ -33,7 +33,7 @@ test("-------------- setExpedite.js ---------------------", () /*: void */ => {
 const fixture = () /*: Array<FlwItem> */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   const flwItems = [];
   flwItems.push(newFlwItem());
   flwItems.push(newFlwItem());
@@ -52,8 +52,8 @@ test("The dExpedite property is false by default.", () /*: void */ => {
 
 test("The dExpedite property is properly set up to the limit.", () /*: void */ => {
   fixture();
-  gSttngs().expdtLimit = 3;
-  gState().expdtCount = 0;
+  gSttngs().set("expdtLimit", 3);
+  gState().set("expdtCount", 0);
   let localCounter = 0;
   setExpedite();
   const flwMpSteps = getFlwMpSteps();
@@ -72,8 +72,8 @@ test("The dExpedite property is properly set up to the limit.", () /*: void */ =
 
 test("Calling setExpedite() twice respects the expediteLimit.", () /*: void */ => {
   fixture();
-  gSttngs().expdtLimit = 3;
-  gState().expdtCount = 0;
+  gSttngs().set("expdtLimit", 3);
+  gState().set("expdtCount", 0);
   let localCounter = 0;
   setExpedite();
   const flwMpSteps = getFlwMpSteps();

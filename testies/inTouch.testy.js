@@ -32,7 +32,7 @@ test("-------------- inTouch.js ---------------------", () /*: void */ => {
 const fixture = () /*: FlwItem */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   const flwItem = newFlwItem();
   return flwItem;
 };

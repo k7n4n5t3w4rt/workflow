@@ -11,13 +11,12 @@ export default (
   flwMpKey /*: string */,
   expedited /*: boolean */,
 ) /*: number */ => {
-  return gState().flwMap[flwMpKey].reduce(
-    (_ /*: number */, flwItem /*: FlwItem */) => {
+  return gState()
+    .get("flwMap")
+    [flwMpKey].reduce((_ /*: number */, flwItem /*: FlwItem */) => {
       if (flwItem.dExpedite === expedited && flwItem.dSkipForWip === false) {
         return (_ += 1);
       }
       return _;
-    },
-    0,
-  );
+    }, 0);
 };

@@ -26,7 +26,7 @@ test("Returns 0.01 if wip is 20:1 and drag is 0.8", () /*: void */ => {
   globalSettings({});
   const devDays = 5;
   const wip = 100;
-  gSttngs().drag = 0.8;
+  gSttngs().set("drag", 0.8);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.01);
 });
@@ -35,7 +35,7 @@ test("Returns 0.1 if wip is 2:1 and drag is 0.8", () /*: void */ => {
   globalSettings({});
   const devDays = 5;
   const wip = 10;
-  gSttngs().drag = 0.8;
+  gSttngs().set("drag", 0.8);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.1);
 });
@@ -44,7 +44,7 @@ test("Returns 0.4 if wip is 2:1 and drag is 0.2", () /*: void */ => {
   globalSettings({});
   const devDays = 5;
   const wip = 10;
-  gSttngs().drag = 0.2;
+  gSttngs().set("drag", 0.2);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.4);
 });
@@ -53,7 +53,7 @@ test("Returns 0.25 if wip is 2:1 and drag is 0.5", () /*: void */ => {
   globalSettings({});
   const devDays = 5;
   const wip = 10;
-  gSttngs().drag = 0.5;
+  gSttngs().set("drag", 0.5);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.25);
 });
@@ -62,7 +62,7 @@ test("Returns 0.33 if wip is 3:1 and drag is 0", () /*: void */ => {
   globalSettings({});
   const devDays = 5;
   const wip = 15;
-  gSttngs().drag = 0;
+  gSttngs().set("drag", 0);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.33);
 });
@@ -71,7 +71,7 @@ test("Returns 0.5 if wip is 2:1 and drag is 0", () /*: void */ => {
   globalSettings({});
   const devDays = 5;
   const wip = 10;
-  gSttngs().drag = 0;
+  gSttngs().set("drag", 0);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.5);
 });
@@ -83,7 +83,7 @@ test("Returns zero if wip is zero", () /*: void */ => {
   globalSettings({});
   const devDays = 7;
   const wip = 0;
-  gSttngs().drag = 0.25;
+  gSttngs().set("drag", 0.25);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0);
 });
@@ -92,7 +92,7 @@ test("Returns zero if devDays is zero", () /*: void */ => {
   globalSettings({});
   const devDays = 0;
   const wip = 10;
-  gSttngs().drag = 0.25;
+  gSttngs().set("drag", 0.25);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0);
 });
@@ -101,7 +101,7 @@ test("Returns just devDays/wip if drag is zero", () /*: void */ => {
   globalSettings({});
   const devDays = 7;
   const wip = 10;
-  gSttngs().drag = 0;
+  gSttngs().set("drag", 0);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.7);
 });
@@ -110,7 +110,7 @@ test("Returns 1 if wip is less than devDays", () /*: void */ => {
   globalSettings({});
   const devDays = 7;
   const wip = 6;
-  gSttngs().drag = 0.25;
+  gSttngs().set("drag", 0.25);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.88);
 });
@@ -119,7 +119,7 @@ test("Returns 1 if wip is equal to devDays", () /*: void */ => {
   globalSettings({});
   const devDays = 7;
   const wip = 7;
-  gSttngs().drag = 0.25;
+  gSttngs().set("drag", 0.25);
   const newDrag = dragFunction(devDays, wip);
   should(newDrag).be.exactly(0.75);
 });

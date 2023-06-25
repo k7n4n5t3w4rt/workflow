@@ -18,11 +18,11 @@ import addNewExpeditedFlwItems from "./addNewExpeditedFlwItems.js";
 export default () /*: void */ => {
   const flwMpSteps = getFlwMpSteps();
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
-    for (let i = 0; i <= gSttngs().steps[index].preload - 1; i++) {
+    for (let i = 0; i <= gSttngs().get("steps")[index].preload - 1; i++) {
       newFlwItem(index);
     }
   });
-  gState().expdtCount = 0;
+  gState().set("expdtCount", 0);
   flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) /*: void */ => {
     countExpeditedFlwItems(flwMpStpItems);
   });

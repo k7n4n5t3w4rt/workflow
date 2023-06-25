@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // The purpose of this function is to get a) a hit test source and b) a reference space
 
 export default async () /*: Promise<void> */ => {
-  const scnData = gState().scnData;
+  const scnData = gState().get("scnData");
   const session = scnData.renderer.xr.getSession();
 
   // Reference spaces express relationships between an origin and the world.

@@ -46,8 +46,8 @@ export default (props /*: Props */) /*: string */ => {
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
-    setFps(gSttngs().fps);
-    setWipLimit(gSttngs().wipLimit);
+    setFps(gSttngs().get("fps"));
+    setWipLimit(gSttngs().get("wipLimit"));
   }, []);
 
   useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);

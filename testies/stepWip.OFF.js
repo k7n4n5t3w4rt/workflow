@@ -30,7 +30,7 @@ test("-------------- stepWip.js ---------------------", () /*: void */ => {
 });
 const fixture = () /*: void */ => {
   globalSettings({});
-  gSttngs("steps", [
+  gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
     { name: "Doing", status: "touch", limit: 3, preload: 3 },
@@ -40,7 +40,7 @@ const fixture = () /*: void */ => {
   ]);
   globalState();
   // Needed for populateSteps()
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   populateSteps();
 };
 
@@ -56,7 +56,7 @@ test("When nothing is expedited, the expedited WIP of all steps is 0", () /*: vo
 
 test("When one thing is expedited, the expedited stepWip is 1", () /*: void */ => {
   fixture();
-  gState().flwMap["0"][0].dExpedite = true;
+  gState().get("flwMap")["0"][0].dExpedite = true;
   should(stepWip("0", true)).be.exactly(1);
   should(stepWip("0", false)).be.exactly(2);
   should(stepWip("1", true)).be.exactly(0);
@@ -68,18 +68,18 @@ test("When one thing is expedited, the expedited stepWip is 1", () /*: void */ =
 
 test("Diverse combinations of expedited and normal WIP are easy", () /*: void */ => {
   fixture();
-  gState().flwMap["0"][0].dExpedite = true;
-  gState().flwMap["0"][1].dExpedite = true;
+  gState().get("flwMap")["0"][0].dExpedite = true;
+  gState().get("flwMap")["0"][1].dExpedite = true;
   should(stepWip("0", true)).be.exactly(2);
   should(stepWip("0", false)).be.exactly(1);
-  gState().flwMap["1"][2].dExpedite = true;
+  gState().get("flwMap")["1"][2].dExpedite = true;
   should(stepWip("1", true)).be.exactly(1);
   should(stepWip("1", false)).be.exactly(2);
   should(stepWip("2", true)).be.exactly(0);
   should(stepWip("3", true)).be.exactly(0);
-  gState().flwMap["4"][0].dExpedite = true;
-  gState().flwMap["4"][1].dExpedite = true;
-  gState().flwMap["4"][2].dExpedite = true;
+  gState().get("flwMap")["4"][0].dExpedite = true;
+  gState().get("flwMap")["4"][1].dExpedite = true;
+  gState().get("flwMap")["4"][2].dExpedite = true;
   should(stepWip("4", true)).be.exactly(3);
   should(stepWip("4", false)).be.exactly(0);
   should(stepWip("5", true)).be.exactly(0);

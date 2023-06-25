@@ -16,9 +16,9 @@ export default (
     removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:FlwItem, index:number) => void */,
   ) /*: () => void */ =>
   () /*: void */ => {
-    gState().vSphere.dRllngTtlVolume = 0;
+    gState().get("vSphere").dRllngTtlVolume = 0;
     const doneFlwItems =
-      gState().flwMap[(gSttngs().steps.length - 1).toString()];
+      gState().get("flwMap")[(gSttngs().get("steps").length - 1).toString()];
     if (doneFlwItems.length > 0) {
       updateThroughPutExpQueue(
         [...doneFlwItems].reduce(processThroughPutExp, [0]),
@@ -99,10 +99,10 @@ const processValue = (
 // updateValueQueue()
 //------------------------------------------------------------------
 const updateValueQueue = (valueArray /*: Array<number> */) /*: void */ => {
-  if (gState().vQueue.length() >= gSttngs().timeBox) {
-    gState().vQueue.dequeue();
+  if (gState().get("vQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("vQueue").dequeue();
   }
-  gState().vQueue.enqueue(valueArray);
+  gState().get("vQueue").enqueue(valueArray);
 };
 
 //------------------------------------------------------------------
@@ -111,10 +111,10 @@ const updateValueQueue = (valueArray /*: Array<number> */) /*: void */ => {
 const updateThroughPutQueue = (
   throughPutArray /*: Array<number> */,
 ) /*: void */ => {
-  if (gState().thrPtQueue.length() >= gSttngs().timeBox) {
-    gState().thrPtQueue.dequeue();
+  if (gState().get("thrPtQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("thrPtQueue").dequeue();
   }
-  gState().thrPtQueue.enqueue(throughPutArray);
+  gState().get("thrPtQueue").enqueue(throughPutArray);
 };
 
 //------------------------------------------------------------------
@@ -123,10 +123,10 @@ const updateThroughPutQueue = (
 const updateThroughPutExpQueue = (
   throughPutExpArray /*: Array<number> */,
 ) /*: void */ => {
-  if (gState().thrPtExpQueue.length() >= gSttngs().timeBox) {
-    gState().thrPtExpQueue.dequeue();
+  if (gState().get("thrPtExpQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("thrPtExpQueue").dequeue();
   }
-  gState().thrPtExpQueue.enqueue(throughPutExpArray);
+  gState().get("thrPtExpQueue").enqueue(throughPutExpArray);
 };
 //------------------------------------------------------------------
 // updateFlowTimeExpQueue()
@@ -134,17 +134,17 @@ const updateThroughPutExpQueue = (
 const updateFlowTimeExpQueue = (
   flwTimeArray /*: Array<number> */,
 ) /*: void */ => {
-  if (gState().flwTmExpQueue.length() >= gSttngs().timeBox) {
-    gState().flwTmExpQueue.dequeue();
+  if (gState().get("flwTmExpQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("flwTmExpQueue").dequeue();
   }
-  gState().flwTmExpQueue.enqueue(flwTimeArray);
+  gState().get("flwTmExpQueue").enqueue(flwTimeArray);
 };
 //------------------------------------------------------------------
 // updateFlowTimeQueue()
 //------------------------------------------------------------------
 const updateFlowTimeQueue = (flwTimeArray /*: Array<number> */) /*: void */ => {
-  if (gState().flwTmQueue.length() >= gSttngs().timeBox) {
-    gState().flwTmQueue.dequeue();
+  if (gState().get("flwTmQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("flwTmQueue").dequeue();
   }
-  gState().flwTmQueue.enqueue(flwTimeArray);
+  gState().get("flwTmQueue").enqueue(flwTimeArray);
 };

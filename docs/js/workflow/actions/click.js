@@ -20,7 +20,7 @@ import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 
 const click = () /*: void */ => {
-  gState().clicks++;
+  gState().set("clicks"), gState().get("clicks") + 1;
   animateClickCube();
 };
 
@@ -33,13 +33,13 @@ export const onClickComplete = () /*: void */ => {
   setExpedite();
   resizeVSphere();
   // Skip the first time through
-  if (gState().clicks !== 1) {
+  if (gState().get("clicks") !== 1) {
     updateAge();
     updateDays();
   }
   // pullFlwItems() calls itself recursively until there are no more
   // items left to pull.
-  gState().flwItmsPulledCount = 0;
+  gState().get("set")("flwItmsPulledCount", 0);
   pullFlwItems();
   // Update the WIP when everything has been pulled but not yet worked on
   updateWip();
@@ -51,8 +51,8 @@ export const onClickComplete = () /*: void */ => {
 // addNewFlowItemsAtArrivalRate()
 //------------------------------------------------------------------
 const addNewFlowItemsAtArrivalRate = () /*: void */ => {
-  if (gState().flwMap["0"].length < gSttngs().backlogMax) {
-    for (let i = 1; i <= gSttngs().arrivalRate; i++) {
+  if (gState().get("flwMap")["0"].length < gSttngs().get("backlogMax")) {
+    for (let i = 1; i <= gSttngs().get("arrivalRate"); i++) {
       newFlwItem();
     }
   }

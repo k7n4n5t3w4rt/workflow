@@ -30,8 +30,8 @@ test("-------------- numberNormalDevUnits.js ---------------------", () /*: void
 test("20 devUnits, 2 touchSteps() and factor of 0.5 return 5", () /*: void */ => {
   globalSettings({});
   globalState();
-  gSttngs().devUnits = 20;
-  gSttngs().expdtdDvUnitsFactor = 0.5;
+  gSttngs().set("devUnits", 20);
+  gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(5);
 });
@@ -39,8 +39,8 @@ test("20 devUnits, 2 touchSteps() and factor of 0.5 return 5", () /*: void */ =>
 test("5 devUnits, 2 touchSteps() and factor of 0.5 return 1", () /*: void */ => {
   globalSettings({});
   globalState();
-  gSttngs().devUnits = 5;
-  gSttngs().expdtdDvUnitsFactor = 0.5;
+  gSttngs().set("devUnits", 5);
+  gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(1);
 });
@@ -48,8 +48,8 @@ test("5 devUnits, 2 touchSteps() and factor of 0.5 return 1", () /*: void */ => 
 test("24 devUnits, 2 touchSteps() and factor of 0.33 return 8", () /*: void */ => {
   globalSettings({});
   globalState();
-  gSttngs().devUnits = 24;
-  gSttngs().expdtdDvUnitsFactor = 0.33;
+  gSttngs().set("devUnits", 24);
+  gSttngs().set("expdtdDvUnitsFactor", 0.33);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(8);
 });

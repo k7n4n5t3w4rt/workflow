@@ -24,11 +24,11 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   mapIt(flwItem, stepIndex);
   setColor(flwItem);
   setAge(flwItem, stepIndex);
-  gState().flwItmTracker[flwItem.name] = [];
+  gState().get("flwItmTracker")[flwItem.name] = [];
   setDays(flwItem);
   setScaleAndVolume(flwItem);
   setPosition(flwItem, stepIndex);
-  gState().clckCbGroup.add(flwItem);
+  gState().get("clckCbGroup").add(flwItem);
   return flwItem;
 };
 
@@ -37,8 +37,12 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
 //------------------------------------------------------------------
 const threeJsCube = () /*: FlwItem */ => {
   // Basic Three.js geometry and material
-  const geometry = new THREE.BoxGeometry(gSttngs().x, gSttngs().y, gSttngs().z);
-  const color = gSttngs().colorGold; // gold
+  const geometry = new THREE.BoxGeometry(
+    gSttngs().get("x"),
+    gSttngs().get("y"),
+    gSttngs().get("z"),
+  );
+  const color = gSttngs().get("colorGold"); // gold
   const material = new THREE.MeshBasicMaterial({ color });
   const flwItem = new THREE.Mesh(geometry, material);
   // Set the color for changing it later
@@ -53,7 +57,7 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the name to the uuid so we can find it later - Three.js "needs" a name property
   flwItem.name = flwItem.uuid;
   // Set the team number (there is only one for now)
-  flwItem.dTmNumber = rndmBetween(1, gSttngs().devUnits);
+  flwItem.dTmNumber = rndmBetween(1, gSttngs().get("devUnits"));
   // Expedite is false by default
   flwItem.dExpedite = false;
   // Skip is false by default
@@ -65,10 +69,10 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
 // setColor(flwItem)
 //------------------------------------------------------------------
 const setColor = (flwItem /*: FlwItem */) /*: FlwItem */ => {
-  const stpStatus = gSttngs().steps[flwItem.dStpIndex].status;
+  const stpStatus = gSttngs().get("steps")[flwItem.dStpIndex].status;
   // If this flwItem is in the backlog, don't update it
   if (stpStatus !== "touch") {
-    let color = new THREE.Color(gSttngs().colorGrey);
+    let color = new THREE.Color(gSttngs().get("colorGrey"));
     flwItem.material.color.copy(color);
     flwItem.material.needsUpdate = true;
   }
@@ -83,7 +87,7 @@ const mapIt = (
 ) /*: FlwItem */ => {
   // Add the new flwItem to the flwMap in the backlog
   flwItem.dStpIndex = flwMapIndex;
-  gState().flwMap[flwItem.dStpIndex.toString()].push(flwItem);
+  gState().get("flwMap")[flwItem.dStpIndex.toString()].push(flwItem);
   return flwItem;
 };
 
@@ -92,7 +96,7 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
-  const daysMax = gSttngs().flwItmSizeMax;
+  const daysMax = gSttngs().get("flwItmSizeMax");
   const daysTotal = flwItem.dDysTotal;
 
   const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
@@ -100,7 +104,10 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   flwItem.scale.set(scale, scale, scale);
   flwItem.dScale = scale;
   flwItem.dVolume =
-    gSttngs().x * scale * (gSttngs().y * scale) * (gSttngs().z * scale);
+    gSttngs().get("x") *
+    scale *
+    (gSttngs().get("y") * scale) *
+    (gSttngs().get("z") * scale);
   return flwItem;
 };
 
@@ -116,8 +123,8 @@ const setAge = (
   flwItem.dBacklogAge = 0;
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
-  // if (stepIndex > 0 && gSttngs().death > 0) {
-  //   flwItem.dAge = rndmBetween(0, gSttngs().death);
+  // if (stepIndex > 0 && gSttngs().get("death") > 0) {
+  //   flwItem.dAge = rndmBetween(0, gSttngs().get("death"));
   // }
 };
 //------------------------------------------------------------------
@@ -125,8 +132,8 @@ const setAge = (
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dDysTotal = rndmBetween(
-    gSttngs().flwItmSizeMin,
-    gSttngs().flwItmSizeMax,
+    gSttngs().get("flwItmSizeMin"),
+    gSttngs().get("flwItmSizeMax"),
   );
   flwItem.dDysRmnngThisStep = flwItem.dDysTotal / touchStepsCount();
   flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;
@@ -139,9 +146,10 @@ const setPosition = (
   flwItem /*: FlwItem */,
   flwMapIndex /*: number */,
 ) /*: void */ => {
-  flwItem.position.x = gState().strtPosition.x;
-  flwItem.position.y = gState().strtPosition.y;
-  flwItem.position.z = gState().strtPosition.z - gSttngs().step * flwMapIndex;
+  flwItem.position.x = gState().get("strtPosition").x;
+  flwItem.position.y = gState().get("strtPosition").y;
+  flwItem.position.z =
+    gState().get("strtPosition").z - gSttngs().get("step") * flwMapIndex;
   // Set the dPosition because refineNewPosition() needs it
   flwItem.dPosition = { ...flwItem.position };
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
@@ -160,12 +168,12 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   const newPosition = { ...flwItem.dPosition };
 
   newPosition.x =
-    gState().strtPosition.x +
+    gState().get("strtPosition").x +
     (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
       rndmPosOrNeg();
   newPosition.y =
-    gState().strtPosition.y +
+    gState().get("strtPosition").y +
     (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
-  newPosition.z -= gSttngs().step;
+  newPosition.z -= gSttngs().get("step");
   return newPosition;
 };

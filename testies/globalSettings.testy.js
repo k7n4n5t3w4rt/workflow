@@ -14,7 +14,7 @@ test("Returns an empty object if the globalThis.gSttngs object is not set", () /
 });
 
 test("Passing in a key/value pair sets the parameter", () /*: void */ => {
-  should(JSON.stringify(gSttngs("speed", 2))).be.exactly(
+  should(JSON.stringify(gSttngs().set("speed", 2))).be.exactly(
     JSON.stringify({ speed: 2 }),
   );
 });

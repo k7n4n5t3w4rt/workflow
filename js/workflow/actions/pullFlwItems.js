@@ -23,10 +23,10 @@ export const pullFlwItems = () => {
   flwMpSteps.reduceRight(checkStepLimitAndPull, null);
   // If we pulled any flwItems, we should do another run through in case
   // we can pull more. We only stop when there is nothing left to pull
-  if (gState().flwItmsPulledCount > 0) {
+  if (gState().get("flwItmsPulledCount") > 0) {
     // If this is remains zero then nothing was pulled and we can
     // exit the loop
-    gState().flwItmsPulledCount = 0;
+    gState().set("flwItmsPulledCount", 0);
     pullFlwItems();
   }
 };
@@ -44,18 +44,18 @@ const checkStepLimitAndPull = (
   }
 
   // Get the limit of the current step
-  let flwStpLimit = gSttngs().steps[flwMpStpKeyNumber].limit;
+  let flwStpLimit = gSttngs().get("steps")[flwMpStpKeyNumber].limit;
   if (flwStpLimit === 0) {
     // Check if `limit` is set in the global steps settings
     if (
       // If we're not on the first or last step
       flwMpStpKeyNumber !== 0 &&
-      flwMpStpKeyNumber !== gSttngs().steps.length - 1 &&
+      flwMpStpKeyNumber !== gSttngs().get("steps").length - 1 &&
       // And if the global wipLimit is not 0
-      gSttngs().wipLimit !== 0
+      gSttngs().get("wipLimit") !== 0
     ) {
       // Use the global wipLimit
-      flwStpLimit = gSttngs().wipLimit;
+      flwStpLimit = gSttngs().get("wipLimit");
     }
   }
   // Check that the number of flwItems in this step is less than
@@ -87,7 +87,7 @@ const pullFromPreviousStep = (
     return;
   }
   const stpKey = flwStpIndex.toString();
-  const flwItems = gState().flwMap[stpKey];
+  const flwItems = gState().get("flwMap")[stpKey];
   if (flwItems.length > 0) {
     // Pull the expedited flwItems first
     let expediteFlag = true;
@@ -113,7 +113,7 @@ const pullFlowItem =
     index /*: number */,
   ) /*: "no limit" | number */ => {
     // Check if the fwItem has died of old age
-    if (gSttngs().death > 0 && flwItem.dAge >= gSttngs().death) {
+    if (gSttngs().get("death") > 0 && flwItem.dAge >= gSttngs().get("death")) {
       return availableLimit;
     }
     if (flwItem.dExpedite !== expediteFlag) {
@@ -124,7 +124,7 @@ const pullFlowItem =
       // which case the dDysRmnngThisStep is not relevant
       flwItem.dStpIndex === 0 ||
       // This is a wait step so no work is being done
-      gSttngs().steps[flwItem.dStpIndex].status === "wait" ||
+      gSttngs().get("steps")[flwItem.dStpIndex].status === "wait" ||
       // In all other cases, we only want to move the flwItem if it is
       // not moving and it has no days remaining
       (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)
@@ -142,7 +142,10 @@ const pullFlowItem =
 
       move(flwItem);
       updateFlowMap(flwItem, index);
-      gState().flwItmsPulledCount += 1;
+      gState().set(
+        "flwItmsPulledCount",
+        gState().get("flwItmsPulledCount") + 1,
+      );
     } else {
     }
     return availableLimit;

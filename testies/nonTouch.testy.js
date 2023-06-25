@@ -38,7 +38,7 @@ test("-------------- theNonDead.js ---------------------", () /*: void */ => {
 const fixture = () /*: FlwItem[] */ => {
   globalSettings({});
   globalState();
-  gState().clckCbGroup = newClickCube();
+  gState().set("clckCbGroup", newClickCube());
   const flwItems = [];
   flwItems.push(newFlwItem(0));
   flwItems.push(newFlwItem(1));

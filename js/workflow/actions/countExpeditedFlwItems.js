@@ -11,11 +11,11 @@ import gState from "./gState.js";
 export default (flwMpStpItems /*: FlwItem[] */) /*: void */ => {
   flwMpStpItems.forEach((flwItem /*: FlwItem */) => {
     if (
-      gSttngs().expdtLimit > 0 &&
-      gState().expdtCount < gSttngs().expdtLimit &&
+      gSttngs().get("expdtLimit") > 0 &&
+      gState().get("expdtCount") < gSttngs().get("expdtLimit") &&
       flwItem.dExpedite == true
     ) {
-      gState().expdtCount += 1;
+      gState().set("expdtCount", gState().get("expdtCount") + 1);
     }
   });
 };
