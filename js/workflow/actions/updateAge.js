@@ -8,10 +8,9 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import makeItOneClickOlder from "./makeItOneClickOlder.js";
-import countExpeditedFlwItems from "./countExpeditedFlwItems.js";
 import getAllFlwItems from "./getAllFlwItems.js";
 //------------------------------------------------------------------
-// updateAgeAndDaysForAllItems()
+// updateAge()
 //------------------------------------------------------------------
 export default () /*: void */ => {
   // Get all the flwItems

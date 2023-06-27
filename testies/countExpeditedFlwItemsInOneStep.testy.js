@@ -21,7 +21,7 @@ import newClickCube from "../js/workflow/actions/newClickCube.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import countExpeditedFlwItemsInOneStep from "../js/workflow/actions/countExpeditedFlwItemsInOneStep.js";
+import countExpeditedFlwItems from "../js/workflow/actions/countExpeditedFlwItems.js";
 //------------------------------------------------------------------
 // TEST: countExpeditedFlwItemsInOneStep()
 //------------------------------------------------------------------
@@ -51,8 +51,6 @@ test("Counts the correct number of expedited flwItems.", () /*: void */ => {
   // gSttngs().set("expdtLimit", 3);
   gState().get("flwMap")["0"][0].dExpedite = true;
   // It doesn't return anything, but it does set gState().get("expdtCount")
-  const expdtCount = countExpeditedFlwItemsInOneStep(
-    gState().get("flwMap")["0"],
-  );
+  const expdtCount = countExpeditedFlwItems(gState().get("flwMap")["0"]);
   should(expdtCount).be.exactly(1);
 });

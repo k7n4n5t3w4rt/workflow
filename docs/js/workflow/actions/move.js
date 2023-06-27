@@ -20,7 +20,7 @@ import rndmBetween from "./rndmBetweenWhatever.js";
 import removeFlowItem from "./removeFlowItem.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
-  gState().get("flwItmTracker")[flwItem.name].unshift(`Moving`);
+  // gState().get("flwItmTracker")[flwItem.name].unshift(`Moving`);
   animateColorChange(flwItem, newColor(flwItem));
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   animatePositionChange(flwItem);

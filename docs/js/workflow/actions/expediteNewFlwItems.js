@@ -11,25 +11,21 @@ import * as THREE from "../../../web_modules/three.js";
 import gState from "./gState.js";
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
-// addNewExpeditedFlwItems();
+// expediteNewFlwItems();
 //------------------------------------------------------------------
 export default (flwMpStpItems /*: FlwItem[] */) => {
-  const flwMpStpItmsCopy = [...flwMpStpItems].reverse();
-  flwMpStpItmsCopy.forEach((flwItem /*: FlwItem */) => {
+  [...flwMpStpItems].reverse().forEach((flwItem /*: FlwItem */) => {
     if (
       gSttngs().get("expdtLimit") > 0 &&
       gState().get("expdtCount") < gSttngs().get("expdtLimit") &&
       flwItem.dExpedite === false
     ) {
       flwItem.dExpedite = true;
+      flwItem.name = "EXP-" + flwItem.name;
+      // Increment the global counter
       gState().set("expdtCount", gState().get("expdtCount") + 1);
-      const stpStatus = gSttngs().get("steps")[flwItem.dStpIndex].status;
-      // If this flwItem is in the backlog, don't update it
-      let color = gSttngs().get("colorGrey");
-      if (stpStatus === "touch") {
-        color = gSttngs().get("colorGreen");
-      }
       // Change the color of the item to green
+      let color = gSttngs().get("colorGreen");
       let colorObject = new THREE.Color(color);
       flwItem.material.color.copy(colorObject);
       flwItem.material.needsUpdate = true;

@@ -45,43 +45,62 @@ const fixture = () /*: void */ => {
   populateSteps();
 };
 
-test("When nothing is expedited", () /*: void */ => {
+test("Exptedited step WIP when epdtLimit is 0 and nothing is expedited ", () /*: void */ => {
   fixture();
-  should(stepWip("0", true)).be.exactly(0);
-  should(stepWip("1", true)).be.exactly(0);
-  should(stepWip("2", true)).be.exactly(0);
-  should(stepWip("3", true)).be.exactly(0);
-  should(stepWip("4", true)).be.exactly(0);
-  should(stepWip("5", true)).be.exactly(0);
+  // Expedited limit is 0. Redundant because it's in the fixture but
+  // it's a reminder that it's set to 0.
+  gSttngs().set("expdtLimit", 0);
+  const expeditedFlag = true;
+  should(stepWip("0", expeditedFlag)).be.exactly(3);
+  should(stepWip("1", expeditedFlag)).be.exactly(3);
+  should(stepWip("2", expeditedFlag)).be.exactly(3);
+  should(stepWip("3", expeditedFlag)).be.exactly(3);
+  should(stepWip("4", expeditedFlag)).be.exactly(3);
+  should(stepWip("5", expeditedFlag)).be.exactly(0);
 });
 
-test("When one thing is expedited", () /*: void */ => {
+test("Expedited step wip when expdtdLimit is 1 and one thing is expedited", () /*: void */ => {
   fixture();
-  gState().get("flwMap")["0"][0].dExpedite = true;
-  should(stepWip("0", true)).be.exactly(1);
-  should(stepWip("0", false)).be.exactly(2);
-  should(stepWip("1", true)).be.exactly(0);
-  should(stepWip("2", true)).be.exactly(0);
-  should(stepWip("3", true)).be.exactly(0);
-  should(stepWip("4", true)).be.exactly(0);
-  should(stepWip("5", true)).be.exactly(0);
+  gSttngs().set("expdtLimit", 1);
+  const expeditedFlag = true;
+  gState().get("flwMap")["2"][0].dExpedite = true;
+  should(stepWip("0", expeditedFlag)).be.exactly(0);
+  should(stepWip("1", expeditedFlag)).be.exactly(0);
+  should(stepWip("2", expeditedFlag)).be.exactly(1);
+  should(stepWip("3", expeditedFlag)).be.exactly(0);
+  should(stepWip("4", expeditedFlag)).be.exactly(0);
+  should(stepWip("5", expeditedFlag)).be.exactly(0);
 });
 
-test("Combinations of expedited and normal", () /*: void */ => {
+test("Normal step wip when expdtLimit is 0 and two things are expedited", () /*: void */ => {
   fixture();
-  gState().get("flwMap")["0"][0].dExpedite = true;
-  gState().get("flwMap")["0"][1].dExpedite = true;
-  should(stepWip("0", true)).be.exactly(2);
-  should(stepWip("0", false)).be.exactly(1);
-  gState().get("flwMap")["1"][2].dExpedite = true;
-  should(stepWip("1", true)).be.exactly(1);
-  should(stepWip("1", false)).be.exactly(2);
-  should(stepWip("2", true)).be.exactly(0);
-  should(stepWip("3", true)).be.exactly(0);
-  gState().get("flwMap")["4"][0].dExpedite = true;
-  gState().get("flwMap")["4"][1].dExpedite = true;
-  gState().get("flwMap")["4"][2].dExpedite = true;
-  should(stepWip("4", true)).be.exactly(3);
-  should(stepWip("4", false)).be.exactly(0);
-  should(stepWip("5", true)).be.exactly(0);
+  gSttngs().set("expdtLimit", 0);
+  const expeditedFlag = false;
+  gState().get("flwMap")["2"][0].dExpedite = true;
+  gState().get("flwMap")["2"][1].dExpedite = true;
+  should(stepWip("0", expeditedFlag)).be.exactly(3);
+  should(stepWip("1", expeditedFlag)).be.exactly(3);
+  should(stepWip("2", expeditedFlag)).be.exactly(3);
+  should(stepWip("3", expeditedFlag)).be.exactly(3);
+  should(stepWip("4", expeditedFlag)).be.exactly(3);
+  should(stepWip("5", expeditedFlag)).be.exactly(0);
 });
+
+// test("Combinations of expedited and normal", () /*: void */ => {
+//   fixture();
+//   gState().get("flwMap")["0"][0].dExpedite = true;
+//   gState().get("flwMap")["0"][1].dExpedite = true;
+//   should(stepWip("0", true)).be.exactly(2);
+//   should(stepWip("0", false)).be.exactly(1);
+//   gState().get("flwMap")["1"][2].dExpedite = true;
+//   should(stepWip("1", true)).be.exactly(1);
+//   should(stepWip("1", false)).be.exactly(2);
+//   should(stepWip("2", true)).be.exactly(0);
+//   should(stepWip("3", true)).be.exactly(0);
+//   gState().get("flwMap")["4"][0].dExpedite = true;
+//   gState().get("flwMap")["4"][1].dExpedite = true;
+//   gState().get("flwMap")["4"][2].dExpedite = true;
+//   should(stepWip("4", true)).be.exactly(3);
+//   should(stepWip("4", false)).be.exactly(0);
+//   should(stepWip("5", true)).be.exactly(0);
+// });

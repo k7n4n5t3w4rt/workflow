@@ -66,7 +66,7 @@ export default () => {
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs().setIfNotCached("death", 0);
   gSttngs().setIfNotCached("backlogDeath", 0);
-  gSttngs().setIfNotCached("backlogMax", 0);
+  gSttngs().setIfNotCached("backlogMax", 2);
   // Q: How many people are in your whole team - or how many sub-teams do you have?
   gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
@@ -117,13 +117,13 @@ export default () => {
   gSttngs().set("colorGreen", "#00ff00");
   gSttngs().set("fps", 1);
   gSttngs().set("scaleCm", 7);
-  gSttngs().set("scale", cleanInt(gSttngs().get("scaleCm")) / 100);
+  gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
   gSttngs().set("x", gSttngs().get("scale"));
   gSttngs().set("y", gSttngs().get("scale"));
   gSttngs().set("z", gSttngs().get("scale"));
-  gSttngs().set("step", parseInt(gSttngs().get("scale")) * 5);
-  gSttngs().set("yOffset", parseInt(gSttngs().get("scale")) * 10);
-  gSttngs().set("rangeMax", parseInt(gSttngs().get("yOffset")) * 0.3);
+  gSttngs().set("step", gSttngs().get("scale") * 5);
+  gSttngs().set("yOffset", gSttngs().get("scale") * 10);
+  gSttngs().set("rangeMax", gSttngs().get("yOffset") * 0.3);
   gSttngs().set("rangeIncreaseRate", 1.15);
   gSttngs().set("rangeDecreaseRate", 0.95);
   gSttngs().set("showMetrics", true);

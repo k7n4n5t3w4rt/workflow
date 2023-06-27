@@ -11,20 +11,23 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import countExpeditedFlwItems from "./countExpeditedFlwItems.js";
-import addNewExpeditedFlwItems from "./addNewExpeditedFlwItems.js";
+import expediteNewFlwItems from "./expediteNewFlwItems.js";
 
 //------------------------------------------------------------------
 // setExpedite(flwItem)
 //------------------------------------------------------------------
 export default () => {
-  // First, decrement gState().get("expedite") to cover all the expedite items
   const flwMpSteps = getFlwMpSteps();
-  gState().set("expdtCount", 0);
+  let expdtCount = flwMpSteps.reduce(
+    (expdtCount, flwMpStpItems /*: FlwItem[] */) => {
+      return expdtCount + countExpeditedFlwItems(flwMpStpItems);
+    },
+    0,
+  );
+  // Update the `expdtCount`, used in `expediteNewFlwItems()`
+  gState().set("expdtCount", expdtCount);
+  // Expedite new items until the `expdtCount` reaches the `expdtLimit`
   flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) /*: void */ => {
-    countExpeditedFlwItems(flwMpStpItems);
-  });
-  // Then, set the expedite flag on some new items to make up the difference
-  flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) => {
-    addNewExpeditedFlwItems(flwMpStpItems);
+    expediteNewFlwItems(flwMpStpItems);
   });
 };

@@ -9,8 +9,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import newFlwItem from "./newFlwItem.js";
-import countExpeditedFlwItems from "./countExpeditedFlwItems.js";
-import addNewExpeditedFlwItems from "./addNewExpeditedFlwItems.js";
+import expediteNewFlwItems from "./expediteNewFlwItems.js";
 
 //------------------------------------------------------------------
 // populateSteps()
@@ -21,13 +20,5 @@ export default () /*: void */ => {
     for (let i = 0; i <= gSttngs().get("steps")[index].preload - 1; i++) {
       newFlwItem(index);
     }
-  });
-  gState().set("expdtCount", 0);
-  flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) /*: void */ => {
-    countExpeditedFlwItems(flwMpStpItems);
-  });
-  // Then, set the expedite flag on some new items to make up the difference
-  flwMpSteps.reverse().forEach((flwMpStpItems /*: FlwItem[] */) => {
-    addNewExpeditedFlwItems(flwMpStpItems);
   });
 };

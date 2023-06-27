@@ -17,7 +17,7 @@ function gModel() /*: void */ {
     this.keyValuePairs[key] = value;
     try {
       const cachedValue = JSON.parse(localStorage.getItem(key) || "");
-      if (cachedValue) {
+      if (cachedValue !== "") {
         this.keyValuePairs[key] = cachedValue;
       }
     } catch (e) {}

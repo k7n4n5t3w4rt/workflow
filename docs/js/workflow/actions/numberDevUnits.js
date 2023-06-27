@@ -11,6 +11,12 @@ import touchStepsCount from "./touchStepsCount.js";
 // numberExpiditedDevUnits()
 //------------------------------------------------------------------
 export const numberExpiditedDevUnits = () /*: number */ => {
+  if (
+    gSttngs().get("expdtdDvUnitsFactor") === 0 ||
+    gSttngs().get("expdtLimit") === 0
+  ) {
+    return 0;
+  }
   // Return the number of expedited dev units divided by the number of touch steps
   // as the number of expedited dev units per touch step
   return Math.floor(
@@ -22,11 +28,16 @@ export const numberExpiditedDevUnits = () /*: number */ => {
 // numberNormalDevUnits()
 //------------------------------------------------------------------
 export const numberNormalDevUnits = () /*: number */ => {
-  // Let's assume that all the dev units are normal dev units
-  // because by the time we if we're working on normal flwItems,
-  // there are no expedited flwItems left
-  const nrmlDvUnitsFactor = 1;
-  // const nrmlDvUnitsFactor = 1 - gSttngs().get("expdtdDvUnitsFactor");
+  // There are always going to be some normal dev units sitting
+  // in the flwMap, so we need to only allocate resources if there are
+  // some speciically allocated to normal work
+  if (
+    gSttngs().get("expdtdDvUnitsFactor") === 0 ||
+    gSttngs().get("expdtLimit") === 0
+  ) {
+    return Math.floor(gSttngs().get("devUnits") / touchStepsCount());
+  }
+  const nrmlDvUnitsFactor = 1 - gSttngs().get("expdtdDvUnitsFactor");
   // Return the number of normal dev units divided by the number of touch steps
   // as the number of normal dev units per touch step
   return Math.floor(

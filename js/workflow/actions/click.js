@@ -51,7 +51,10 @@ export const onClickComplete = () /*: void */ => {
 // addNewFlowItemsAtArrivalRate()
 //------------------------------------------------------------------
 const addNewFlowItemsAtArrivalRate = () /*: void */ => {
-  if (gState().get("flwMap")["0"].length < gSttngs().get("backlogMax")) {
+  if (
+    gState().get("flwMap")["0"].length < gSttngs().get("backlogMax") ||
+    gSttngs().get("backlogMax") === 0
+  ) {
     for (let i = 1; i <= gSttngs().get("arrivalRate"); i++) {
       newFlwItem();
     }

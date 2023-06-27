@@ -25,11 +25,6 @@ import {
 
 /*::
 type Props = {
-	fps: number,
-  setFps: function,
-	wipLimit: number,
-  setWipLimit: function,
-	dispatch: function
 }
 */
 export default (props /*: Props */) /*: string */ => {
@@ -37,17 +32,22 @@ export default (props /*: Props */) /*: string */ => {
   rawStyles(getRawStyles());
   // Set the local state
   const [fps, setFps] = useState(1);
-  console.log("fps", fps);
   const [wipLimit, setWipLimit] = useState(0);
+  const [expdtLimit, setExpdtLimit] = useState(0);
+  const [expdtdDvUnitsFactor, setExpdtdDvUnitsFactor] = useState(0);
   // Put the setState functions in an object so we can use them dynamically
   const setStateFunctions = {};
   setStateFunctions["fps"] = setFps;
   setStateFunctions["wipLimit"] = setWipLimit;
+  setStateFunctions["expdtLimit"] = setExpdtLimit;
+  setStateFunctions["expdtdDvUnitsFactor"] = setExpdtdDvUnitsFactor;
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
     setFps(gSttngs().get("fps"));
     setWipLimit(gSttngs().get("wipLimit"));
+    setExpdtLimit(gSttngs().get("expdtLimit"));
+    setExpdtdDvUnitsFactor(gSttngs().get("expdtdDvUnitsFactor"));
   }, []);
 
   useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);
@@ -61,9 +61,9 @@ export default (props /*: Props */) /*: string */ => {
     (param /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
-      const value = parseInt(e.target.value);
-      gSttngs().set(param, parseInt(value));
-      setStateFunctions[param](parseInt(value));
+      const value = parseFloat(e.target.value);
+      gSttngs().set(param, parseFloat(value));
+      setStateFunctions[param](parseFloat(value));
     };
 
   return html`
@@ -107,11 +107,52 @@ export default (props /*: Props */) /*: string */ => {
             type="range"
             id="wiplimit"
             name="wiplimit"
-            min="1"
+            min="0"
             max="100"
             step="1"
             onChange=${changeParam("wipLimit")}
             value="${wipLimit.toString()}"
+          />
+        </div>
+        <!-------------------------------------------------------------------->
+        <!-- Expedite Limit -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <label for="expdtLimit">Expedite Limit:</label>
+          <output id="expdtLimitOutput" name="expdtLimitOutput" for="expdtLimit"
+            >${expdtLimit.toString()}</output
+          >
+          <input
+            type="range"
+            id="expdtLimit"
+            name="expdtLimit"
+            min="0"
+            max="50"
+            step="1"
+            onChange=${changeParam("expdtLimit")}
+            value="${expdtLimit.toString()}"
+          />
+        </div>
+        <!-------------------------------------------------------------------->
+        <!-- Expedited Dev Units Factor -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <label for="fps">Expedited Dev Units Factor:</label>
+          <output
+            id="expdtdDvUnitsFactorOutput"
+            name="expdtdDvUnitsFactorOutput"
+            for="expdtdDvUnitsFactor"
+            >${expdtdDvUnitsFactor.toString()}</output
+          >
+          <input
+            type="range"
+            id="expdtdDvUnitsFactor"
+            name="expdtdDvUnitsFactor"
+            min="0"
+            max="1"
+            step="0.05"
+            onChange=${changeParam("expdtdDvUnitsFactor")}
+            value="${expdtdDvUnitsFactor.toString()}"
           />
         </div>
       </fieldset>

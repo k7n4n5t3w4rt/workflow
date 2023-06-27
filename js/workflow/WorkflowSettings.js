@@ -36,20 +36,17 @@ export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   // Set the local state
-  const [expdtLimit, setExpdtLimit] = useState(0);
   const [arrivalRate, setArrivalRate] = useState(1);
   const [devUnits, setDevUnits] = useState(1);
   const [drag, setDrag] = useState(0);
   // Put the setState functions in an object so we can use them dynamically
   const setStateFunctions = {};
-  setStateFunctions["expdtLimit"] = setExpdtLimit;
   setStateFunctions["arrivalRate"] = setArrivalRate;
   setStateFunctions["drag"] = setDrag;
   setStateFunctions["devUnits"] = setDevUnits;
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
-    setExpdtLimit(gSttngs().get("expdtLimit"));
     setArrivalRate(gSttngs().get("arrivalRate"));
     setDrag(gSttngs().get("drag"));
     setDevUnits(gSttngs().get("devUnits"));
@@ -81,25 +78,6 @@ export default (props /*: Props */) /*: string */ => {
     </div>
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
-        <!-------------------------------------------------------------------->
-        <!-- Expedite Limit -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <label for="expdtLimit">Expedite Limit:</label>
-          <output id="expdtLimitOutput" name="expdtLimitOutput" for="expdtLimit"
-            >${expdtLimit.toString()}</output
-          >
-          <input
-            type="range"
-            id="expdtLimit"
-            name="expdtLimit"
-            min="0"
-            max="50"
-            step="1"
-            onChange=${changeParam("expdtLimit")}
-            value="${expdtLimit.toString()}"
-          />
-        </div>
         <!-------------------------------------------------------------------->
         <!-- Arrival Rate -->
         <!-------------------------------------------------------------------->

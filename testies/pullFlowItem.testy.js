@@ -109,3 +109,23 @@ test("Pulls normal items", () /*: void */ => {
   should(flwItem.dStpIndex).be.exactly(4);
   //tearDown();
 });
+//------------------------------------------------------------------
+// TEST: "Pulls expedited items when expedite limit is zero"
+//------------------------------------------------------------------
+test("Pulls expedited items when expedited limit is zero", () /*: void */ => {
+  //fixture();
+  const flwItem = gState().get("flwMap")["1"][0];
+  gSttngs().set("expdtLimit", 0);
+  flwItem.dExpedite = true;
+  const expediteFlag = false;
+  const index = 0;
+  let availableLimit = 0;
+  availableLimit = pullFlowItem(expediteFlag, move, updateFlowMap)(
+    availableLimit,
+    flwItem,
+    index,
+  );
+  should(availableLimit).be.exactly(0);
+  should(flwItem.dStpIndex).be.exactly(2);
+  //tearDown();
+});

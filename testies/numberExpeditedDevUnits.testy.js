@@ -27,9 +27,15 @@ test("------ numberExpiditedDevUnits.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
-test("20 devUnits, 2 touchSteps, factor 0.5", () /*: void */ => {
+const fixture = () /*: void */ => {
   globalSettings();
   globalState();
+  gSttngs().set("expdtdDvUnitsFactor", 1);
+  gSttngs().set("expdtLimit", 1);
+};
+
+test("20 devUnits, 2 touchSteps, factor 0.5", () /*: void */ => {
+  fixture();
   gSttngs().set("devUnits", 20);
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmExpdtdDvUnts = numberExpiditedDevUnits();
@@ -37,8 +43,7 @@ test("20 devUnits, 2 touchSteps, factor 0.5", () /*: void */ => {
 });
 
 test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
-  globalSettings();
-  globalState();
+  fixture();
   gSttngs().set("devUnits", 5);
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmExpdtdDvUnts = numberExpiditedDevUnits();

@@ -2,6 +2,7 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBAL
 //------------------------------------------------------------------
+import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 
 //------------------------------------------------------------------
@@ -14,7 +15,11 @@ export default (
   return gState()
     .get("flwMap")
     [flwMpKey].reduce((_ /*: number */, flwItem /*: FlwItem */) => {
-      if (flwItem.dExpedite === expedited && flwItem.dSkipForWip === false) {
+      if (
+        (flwItem.dExpedite === expedited ||
+          gSttngs().get("expdtLimit") === 0) &&
+        flwItem.dSkipForWip === false
+      ) {
         return (_ += 1);
       }
       return _;

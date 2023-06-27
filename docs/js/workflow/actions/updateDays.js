@@ -12,9 +12,8 @@ import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import dragFunction from "./dragFunction.js";
 import skipForWip from "./skipForWip.js";
-import expediteAndNormalFlwItems from "../calculations/expediteAndNormalFlwItems.js";
 import makeItOneClickOlder from "./makeItOneClickOlder.js";
-import countExpeditedFlwItems from "./countExpeditedFlwItems.js";
+import expediteNewFlwItems from "./expediteNewFlwItems.js";
 import getAllFlwItems from "./getAllFlwItems.js";
 import {
   numberExpiditedDevUnits,
@@ -22,64 +21,41 @@ import {
 } from "./numberDevUnits.js";
 import theNonDead from "./theNonDead.js";
 import inTouch from "./inTouch.js";
+import applyAdjustedReduction from "./applyAdjustedReduction.js";
 import stepWip from "./stepWip.js";
 //------------------------------------------------------------------
-// updateAgeAndDaysForAllItems()
+// updateDays()
 //------------------------------------------------------------------
 export default () /*: void */ => {
-  // Get all the flwItems
-  const flwItems = getAllFlwItems();
-  countExpeditedFlwItems(flwItems);
-  const flwItemsNotDead = flwItems.filter(
-    theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap),
-  );
-  const flwItemsInTouch = flwItemsNotDead.filter(inTouch);
-  const { expdtFlwItems, normalFlwItems } =
-    expediteAndNormalFlwItems(flwItemsInTouch);
-  const nmExpdtDvUnits = numberExpiditedDevUnits();
-  updateDaysRemaining(expdtFlwItems, nmExpdtDvUnits);
+  // Get all the flwItems, remove the dead ones, and then remove the done ones.
+  const flwItems = getAllFlwItems()
+    .filter(theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap))
+    .filter(inTouch);
+  //------------------------------------------------------------------
+  // EXPEDITED
+  //------------------------------------------------------------------
+  // If expdtLimit is set, we need to process the expedited items first.
+  if (gSttngs().get("expdtLimit") > 0) {
+    // Get the expedited items
+    const expdtFlwItems = flwItems.filter((flwItem /*: FlwItem */) => {
+      return flwItem.dExpedite === true;
+    });
+    const nmExpdtDvUnits = numberExpiditedDevUnits();
+    applyAdjustedReduction(stepWip)(expdtFlwItems, nmExpdtDvUnits);
+  }
+  const normalFlwItems = flwItems.filter((flwItem /*: FlwItem */) => {
+    // We only want to exclude expedited items if the expedite limit is set.
+    // There might be expedited items left in the flwMap if the limit
+    // was set and then removed.
+    if (gSttngs().get("expdtLimit") > 0) {
+      return flwItem.dExpedite === false;
+    } else {
+      return flwItem;
+    }
+  });
   const nmNrmlDvUnits = numberNormalDevUnits();
   // normalFlwItems.forEach((flwItem /*: FlwItem */) => {
   //   flwItem.dSkipForWip = skipForWip(nmNrmlDvUnits, flwItems.length);
   // });
-  updateDaysRemaining(normalFlwItems, nmNrmlDvUnits);
-};
-//------------------------------------------------------------------
-// prepAndUpdateDaysRemaining()
-//------------------------------------------------------------------
-const updateDaysRemaining = (
-  flwItems /*: FlwItem[] */,
-  dvUnits /*: number */,
-) /*: void */ => {
-  flwItems.forEach((flwItem /*: FlwItem */) => {
-    const wipThisStep = stepWip(
-      flwItem.dStpIndex.toString(),
-      flwItem.dExpedite,
-    );
-    // // If we're skipping, abort
-    // if (flwItem.dSkipForWip === true) {
-    //   flwItem.dSkipForWip = false;
-    //   return;
-    // }
-    // console.log("devUnits", gSttngs().get("devUnits"));
-    // console.log("wip", gState().get("wipQueue").mean());
-    const devDays =
-      ((gSttngs().get("devUnits") * gSttngs().get("devPower")) / wipThisStep) *
-      (1 - gSttngs().get("drag"));
-    // console.log("devPower", devPower);
-    // const drag = dragFunction(devPower, wipThisStep);
-    updateDaysRemainingCurrentStep(flwItem, devDays);
-  });
-};
-//------------------------------------------------------------------
-// updateDaysRemainingCurrentStep()
-//------------------------------------------------------------------
-const updateDaysRemainingCurrentStep = (
-  flwItem /*: FlwItem */,
-  devDays /*: number */,
-) /*: void */ => {
-  flwItem.dDysRmnngThisStep -= devDays;
-  if (flwItem.dDysRmnngThisStep <= 0) {
-    flwItem.dDysRmnngThisStep = 0;
-  }
+  applyAdjustedReduction(stepWip)(normalFlwItems, nmNrmlDvUnits);
 };

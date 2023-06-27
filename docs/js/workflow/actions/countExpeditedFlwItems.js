@@ -6,16 +6,14 @@ import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 
 //------------------------------------------------------------------
-// countExpeditedFlwItems();
+// countExpeditedFlwItemsInOneStep();
 //------------------------------------------------------------------
-export default (flwMpStpItems /*: FlwItem[] */) /*: void */ => {
+export default (flwMpStpItems /*: FlwItem[] */) /*: number */ => {
+  let expdtCount = 0;
   flwMpStpItems.forEach((flwItem /*: FlwItem */) => {
-    if (
-      gSttngs().get("expdtLimit") > 0 &&
-      gState().get("expdtCount") < gSttngs().get("expdtLimit") &&
-      flwItem.dExpedite == true
-    ) {
-      gState().set("expdtCount", gState().get("expdtCount") + 1);
+    if (flwItem.dExpedite == true) {
+      expdtCount += 1;
     }
   });
+  return expdtCount;
 };

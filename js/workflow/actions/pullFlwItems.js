@@ -7,7 +7,6 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import getFlwMpSteps from "./getFlwMpSteps.js";
-import countExpeditedFlwItemsInOneStep from "./countExpeditedFlwItemsInOneStep.js";
 import checkStepLimitAndPull from "./checkStepLimitAndPull.js";
 //------------------------------------------------------------------
 // pullFlwItems()
