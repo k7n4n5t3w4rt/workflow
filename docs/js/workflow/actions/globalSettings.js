@@ -18,7 +18,7 @@ export default () => {
   // Turns on some expensive debug features
   gSttngs().setIfNotCached("debug", false);
   // Starts the simulation automatically
-  gSttngs().setIfNotCached("autoMode", false);
+  gSttngs().setIfNotCached("autoMode", true);
   // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
   // We shoud think about 3 kinds of drag, each one contributing to the total.
   // [1] The first kind of drag is are all the human reasons why things take

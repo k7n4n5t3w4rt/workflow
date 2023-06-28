@@ -16,6 +16,11 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
+import {
+  isParsableAsNumber,
+  isParsableAsBoolean,
+  isParsableAsArray,
+} from "./actions/isParsable.js";
 import seedString from "../simple_css_seed.js";
 import {
   rawStyles,
@@ -61,9 +66,17 @@ export default (props /*: Props */) /*: string */ => {
     (param /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
-      const value = parseFloat(e.target.value);
-      gSttngs().set(param, parseFloat(value));
-      setStateFunctions[param](parseFloat(value));
+      let value = e.target.value;
+      if (
+        isParsableAsNumber(value) ||
+        isParsableAsNumber(value) ||
+        isParsableAsBoolean(value) ||
+        isParsableAsArray(value)
+      ) {
+        value = JSON.parse(value);
+      }
+      gSttngs().set(param, value);
+      setStateFunctions[param](value);
     };
 
   return html`

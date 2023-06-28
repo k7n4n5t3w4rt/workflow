@@ -19,9 +19,12 @@ export const numberExpiditedDevUnits = () /*: number */ => {
   }
   // Return the number of expedited dev units divided by the number of touch steps
   // as the number of expedited dev units per touch step
-  return Math.floor(
-    (gSttngs().get("devUnits") * gSttngs().get("expdtdDvUnitsFactor")) /
-      touchStepsCount(),
+  return (
+    Math.round(
+      ((gSttngs().get("devUnits") * gSttngs().get("expdtdDvUnitsFactor")) /
+        touchStepsCount()) *
+        100,
+    ) / 100
   );
 };
 //------------------------------------------------------------------
@@ -35,12 +38,17 @@ export const numberNormalDevUnits = () /*: number */ => {
     gSttngs().get("expdtdDvUnitsFactor") === 0 ||
     gSttngs().get("expdtLimit") === 0
   ) {
-    return Math.floor(gSttngs().get("devUnits") / touchStepsCount());
+    return (
+      Math.round((gSttngs().get("devUnits") / touchStepsCount()) * 100) / 100
+    );
   }
   const nrmlDvUnitsFactor = 1 - gSttngs().get("expdtdDvUnitsFactor");
   // Return the number of normal dev units divided by the number of touch steps
   // as the number of normal dev units per touch step
-  return Math.floor(
-    (gSttngs().get("devUnits") * nrmlDvUnitsFactor) / touchStepsCount(),
+  return (
+    Math.round(
+      ((gSttngs().get("devUnits") * nrmlDvUnitsFactor) / touchStepsCount()) *
+        100,
+    ) / 100
   );
 };

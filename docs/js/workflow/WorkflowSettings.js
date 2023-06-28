@@ -16,6 +16,11 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
+import {
+  isParsableAsNumber,
+  isParsableAsBoolean,
+  isParsableAsArray,
+} from "./actions/isParsable.js";
 import seedString from "../simple_css_seed.js";
 import {
   rawStyles,
@@ -48,6 +53,8 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["drag"] = setDrag;
   const [devPower, setDevPower] = useState(1);
   setStateFunctions["devPower"] = setDevPower;
+  const [autoMode, setAutoMode] = useState(false);
+  setStateFunctions["autoMode"] = setAutoMode;
   //----------------------------------------
   // OUT
   //----------------------------------------
@@ -80,8 +87,6 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["showMetrics"] = setShowMetrics;
   const [debug, setDebug] = useState(false);
   setStateFunctions["debug"] = setDebug;
-  const [autoMode, setAutoMode] = useState(false);
-  setStateFunctions["autoMode"] = setAutoMode;
   //----------------------------------------
   // PARAMS
   //----------------------------------------
@@ -102,6 +107,7 @@ export default (props /*: Props */) /*: string */ => {
     setDrag(gSttngs().get("drag"));
     setDevUnits(gSttngs().get("devUnits"));
     setDevPower(gSttngs().get("devPower"));
+    setAutoMode(gSttngs().get("autoMode"));
     //----------------------------------------
     // OUT
     //----------------------------------------
@@ -120,7 +126,6 @@ export default (props /*: Props */) /*: string */ => {
     // Boolean
     setShowMetrics(gSttngs().get("showMetrics"));
     setDebug(gSttngs().get("debug"));
-    setAutoMode(gSttngs().get("autoMode"));
     //----------------------------------------
     // PARAMS
     //----------------------------------------
@@ -140,9 +145,17 @@ export default (props /*: Props */) /*: string */ => {
     (param /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
-      const value = parseFloat(e.target.value);
-      gSttngs().set(param, parseFloat(value));
-      setStateFunctions[param](parseFloat(value));
+      let value = e.target.value;
+      if (
+        isParsableAsNumber(value) ||
+        isParsableAsNumber(value) ||
+        isParsableAsBoolean(value) ||
+        isParsableAsArray(value)
+      ) {
+        value = JSON.parse(value);
+      }
+      gSttngs().set(param, value);
+      setStateFunctions[param](value);
     };
 
   return html`
@@ -234,6 +247,56 @@ export default (props /*: Props */) /*: string */ => {
             value="${drag.toString()}"
           />
         </div>
+        <!-------------------------------------------------------------------->
+        <!-- Auto Mode -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <div className="${styles.inputHeading}">Automode:</div>
+          <label for="autoModeTrue">
+            ${autoMode === true &&
+            html`<input
+              type="radio"
+              id="autoModeTrue"
+              name="autoMode"
+              value="true"
+              onChange=${changeParam("autoMode")}
+              checked
+            />`}
+            ${autoMode === false &&
+            html`<input
+              type="radio"
+              id="autoModeTrue"
+              name="autoMode"
+              value="true"
+              onChange=${changeParam("autoMode")}
+            />`}
+            <span>True</span>
+          </label>
+          <label for="autoModeFalse">
+            ${autoMode === false &&
+            html`
+              <input
+                type="radio"
+                id="autoModeFalse"
+                name="autoMode"
+                value="false"
+                onChange=${changeParam("autoMode")}
+                checked
+              />
+            `}
+            ${autoMode === true &&
+            html`
+              <input
+                type="radio"
+                id="autoModeFalse"
+                name="autoMode"
+                value="false"
+                onChange=${changeParam("autoMode")}
+              />
+            `}
+            <span>false</span>
+          </label>
+        </div>
       </fieldset>
     </div>
     <div
@@ -245,7 +308,6 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
-
 //------------------------------------------------------------------
 // hideOrShowSettingsDiv()
 //------------------------------------------------------------------
@@ -279,6 +341,13 @@ const cssStyles = () /*: Object */ => {
   setSeed(seedString("flwsettings"));
 
   const [styles] = createStyles({
+    inputHeading: {
+      fontSize: "1rem",
+      padding: "0.2rem",
+      color: "white",
+      fontWeight: "bold",
+      textShadow: "2px 2px 2px grey",
+    },
     settingsContainer: {
       position: "absolute",
       zIndex: "21000",

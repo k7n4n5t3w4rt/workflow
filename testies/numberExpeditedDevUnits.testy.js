@@ -47,5 +47,5 @@ test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
   gSttngs().set("devUnits", 5);
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmExpdtdDvUnts = numberExpiditedDevUnits();
-  should(nmExpdtdDvUnts).be.exactly(1);
+  should(nmExpdtdDvUnts).be.exactly(1.25);
 });
