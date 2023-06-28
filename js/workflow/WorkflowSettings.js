@@ -35,25 +35,102 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
-  // Set the local state
-  const [arrivalRate, setArrivalRate] = useState(1);
-  const [devUnits, setDevUnits] = useState(1);
-  const [drag, setDrag] = useState(0);
-  // Put the setState functions in an object so we can use them dynamically
-  const setStateFunctions = {};
-  setStateFunctions["arrivalRate"] = setArrivalRate;
-  setStateFunctions["drag"] = setDrag;
-  setStateFunctions["devUnits"] = setDevUnits;
   const [paramToggle, setParamToggle] = useState(false);
+  //----------------------------------------
+  // IN
+  //----------------------------------------
+  const setStateFunctions = {};
+  const [arrivalRate, setArrivalRate] = useState(1);
+  setStateFunctions["arrivalRate"] = setArrivalRate;
+  const [devUnits, setDevUnits] = useState(1);
+  setStateFunctions["devUnits"] = setDevUnits;
+  const [drag, setDrag] = useState(0);
+  setStateFunctions["drag"] = setDrag;
+  const [devPower, setDevPower] = useState(1);
+  setStateFunctions["devPower"] = setDevPower;
+  //----------------------------------------
+  // OUT
+  //----------------------------------------
+  const [flwItmSizeMin, setFlwItmSizeMin] = useState(1);
+  setStateFunctions["flwItmSizeMin"] = setFlwItmSizeMin;
+  const [flwItmSizeMax, setFlwItmSizeMax] = useState(1);
+  setStateFunctions["flwItmSizeMax"] = setFlwItmSizeMax;
+  const [timeBox, setTimeBox] = useState(10);
+  setStateFunctions["timeBox"] = setTimeBox;
+  const [death, setDeath] = useState(0);
+  setStateFunctions["death"] = setDeath;
+  const [backlogDeath, setBacklogDeath] = useState(0);
+  setStateFunctions["backlogDeath"] = setBacklogDeath;
+  const [backlogMax, setBacklogMax] = useState(2);
+  setStateFunctions["backlogMax"] = setBacklogMax;
+  const [arrivalFrequency, setArrivalFrequency] = useState(1);
+  setStateFunctions["arrivalFrequency"] = setArrivalFrequency;
+  const [arrivalVolume, setArrivalVolume] = useState({ min: 1, max: 10 });
+  setStateFunctions["arrivalVolume"] = setArrivalVolume;
+  const [flwItmSizeFactor, setFlwItmSizeFactor] = useState(1);
+  setStateFunctions["flwItmSizeFactor"] = setFlwItmSizeFactor;
+  const [dfntnOfReady, setDfntnOfReady] = useState(0);
+  setStateFunctions["dfntnOfReady"] = setDfntnOfReady;
+  const [specialisation, setSpecialisation] = useState(0);
+  setStateFunctions["specialisation"] = setSpecialisation;
+  const [teamInstability, setTeamInstability] = useState(0);
+  setStateFunctions["teamInstability"] = setTeamInstability;
+  // Boolean
+  const [showMetrics, setShowMetrics] = useState(true);
+  setStateFunctions["showMetrics"] = setShowMetrics;
+  const [debug, setDebug] = useState(false);
+  setStateFunctions["debug"] = setDebug;
+  const [autoMode, setAutoMode] = useState(false);
+  setStateFunctions["autoMode"] = setAutoMode;
+  //----------------------------------------
+  // PARAMS
+  //----------------------------------------
+  const [fps, setFps] = useState(1);
+  setStateFunctions["fps"] = setFps;
+  const [expdtLimit, setExpdtLimit] = useState(0);
+  setStateFunctions["expdtLimit"] = setExpdtLimit;
+  const [wipLimit, setWipLimit] = useState(0);
+  setStateFunctions["wipLimit"] = setWipLimit;
+  const [expdtdDvUnitsFactor, setExpdtdDvUnitsFactor] = useState(1);
+  setStateFunctions["expdtdDvUnitsFactor"] = setExpdtdDvUnitsFactor;
 
   useEffect(() => {
+    //----------------------------------------
+    // IN
+    //----------------------------------------
     setArrivalRate(gSttngs().get("arrivalRate"));
     setDrag(gSttngs().get("drag"));
     setDevUnits(gSttngs().get("devUnits"));
+    setDevPower(gSttngs().get("devPower"));
+    //----------------------------------------
+    // OUT
+    //----------------------------------------
+    setFlwItmSizeMin(gSttngs().get("flwItmSizeMin"));
+    setFlwItmSizeMax(gSttngs().get("flwItmSizeMax"));
+    setTimeBox(gSttngs().get("timeBox"));
+    setDeath(gSttngs().get("death"));
+    setBacklogDeath(gSttngs().get("backlogDeath"));
+    setBacklogMax(gSttngs().get("backlogMax"));
+    setArrivalFrequency(gSttngs().get("arrivalFrequency"));
+    setArrivalVolume(gSttngs().get("arrivalVolume"));
+    setFlwItmSizeFactor(gSttngs().get("flwItmSizeFactor"));
+    setDfntnOfReady(gSttngs().get("dfntnOfReady"));
+    setSpecialisation(gSttngs().get("specialisation"));
+    setTeamInstability(gSttngs().get("teamInstability"));
+    // Boolean
+    setShowMetrics(gSttngs().get("showMetrics"));
+    setDebug(gSttngs().get("debug"));
+    setAutoMode(gSttngs().get("autoMode"));
+    //----------------------------------------
+    // PARAMS
+    //----------------------------------------
+    setFps(gSttngs().get("fps"));
+    setExpdtLimit(gSttngs().get("expdtLimit"));
+    setWipLimit(gSttngs().get("wipLimit"));
+    setExpdtdDvUnitsFactor(gSttngs().get("expdtdDvUnitsFactor"));
   }, []);
 
   useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);
-  // useEffect(setSliderValues(props), []);
 
   const toggleParam = () => {
     setParamToggle(!paramToggle);
@@ -117,6 +194,25 @@ export default (props /*: Props */) /*: string */ => {
             step="1"
             onChange=${changeParam("devUnits")}
             value="${devUnits.toString()}"
+          />
+        </div>
+        <!-------------------------------------------------------------------->
+        <!-- DevPower -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <label for="devPower">Dev. Power:</label>
+          <output id="devPowerOutput" name="devPowerOutput" for="devPower"
+            >${devPower.toString()}</output
+          >
+          <input
+            type="range"
+            id="devPower"
+            name="devPower"
+            min="0"
+            max="1"
+            step="0.05"
+            onChange=${changeParam("devPower")}
+            value="${devPower.toString()}"
           />
         </div>
         <!-------------------------------------------------------------------->
