@@ -81,21 +81,17 @@ export default (props /*: Props */) /*: string */ => {
         <span className="${styles.metricsSpans}">Value: ${value}</span>
       </div>
       <div className="${styles.metricsDivs}">
-        <span className="${styles.metricsSpans}">Flow Time: ${flowTime}</span>
-        <span className="${styles.metricsSpans}"
-          >Throughput: ${throughPut}</span
-        >
-        <span className="${styles.metricsSpans}">WIP: ${wip}</span>
+        <span className="${styles.metricsSpans}">FlwTm: ${flowTime}</span>
+        <span className="${styles.metricsSpans}">ThrPt: ${throughPut}</span>
+        <span className="${styles.metricsSpans}">Wip: ${wip}</span>
       </div>
       ${gSttngs().get("expdtLimit") > 0 &&
       html` <div className="${styles.metricsDivs}">
+        <span className="${styles.metricsSpans}">FlwTmExp: ${flowTimeExp}</span>
         <span className="${styles.metricsSpans}"
-          >Flow Time Exp: ${flowTimeExp}</span
+          >ThrPtExp: ${throughPutExp}</span
         >
-        <span className="${styles.metricsSpans}"
-          >Throughput Exp: ${throughPutExp}</span
-        >
-        <span className="${styles.metricsSpans}">WIP Exp: ${wipExp}</span>
+        <span className="${styles.metricsSpans}">WipExp: ${wipExp}</span>
       </div>`}
     </div>
   `;
