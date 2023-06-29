@@ -52,7 +52,7 @@ test("The dExpedite property is false by default.", () /*: void */ => {
 
 test("The dExpedite property is properly set up to the limit.", () /*: void */ => {
   fixture();
-  gSttngs().set("expdtLimit", 3);
+  gSttngs().set("expdtQueueLength", 3);
   gState().set("expdtCount", 0);
   let localCounter = 0;
   setExpedite();
@@ -72,7 +72,7 @@ test("The dExpedite property is properly set up to the limit.", () /*: void */ =
 
 test("Calling setExpedite() twice respects the expediteLimit.", () /*: void */ => {
   fixture();
-  gSttngs().set("expdtLimit", 3);
+  gSttngs().set("expdtQueueLength", 3);
   gState().set("expdtCount", 0);
   let localCounter = 0;
   setExpedite();

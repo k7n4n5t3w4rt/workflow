@@ -23,11 +23,11 @@ export default (flwStpsIndex /*: number */) /*: number */ => {
       // If we're not on the first or last step
       flwStpsIndex !== 0 &&
       flwStpsIndex !== gSttngs().get("steps").length - 1 &&
-      // And if the global wipLimit is not 0
-      gSttngs().get("wipLimit") !== 0
+      // And if the global wipLimitEachStep is not 0
+      gSttngs().get("wipLimitEachStep") !== 0
     ) {
-      // Use the global wipLimit
-      rqrdSpace = gSttngs().get("wipLimit");
+      // Use the global wipLimitEachStep
+      rqrdSpace = gSttngs().get("wipLimitEachStep");
     } else {
       // Last option is to set it to the number of flwItems in the step
       rqrdSpace = gState().get("flwMap")[flwStpsIndex.toString()].length;

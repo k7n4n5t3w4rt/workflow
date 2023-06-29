@@ -26,7 +26,7 @@ export default () => {
   );
   // Update the `expdtCount`, used in `expediteNewFlwItems()`
   gState().set("expdtCount", expdtCount);
-  // Expedite new items until the `expdtCount` reaches the `expdtLimit`
+  // Expedite new items until the `expdtCount` reaches the `expdtQueueLength`
   flwMpSteps.forEach((flwMpStpItems /*: FlwItem[] */) /*: void */ => {
     expediteNewFlwItems(flwMpStpItems);
   });

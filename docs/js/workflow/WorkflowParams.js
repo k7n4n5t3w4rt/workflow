@@ -37,21 +37,21 @@ export default (props /*: Props */) /*: string */ => {
   rawStyles(getRawStyles());
   // Set the local state
   const [fps, setFps] = useState(1);
-  const [wipLimit, setWipLimit] = useState(0);
-  const [expdtLimit, setExpdtLimit] = useState(0);
+  const [wipLimitEachStep, setWipLimit] = useState(0);
+  const [expdtQueueLength, setExpdtLimit] = useState(0);
   const [expdtdDvUnitsFactor, setExpdtdDvUnitsFactor] = useState(0);
   // Put the setState functions in an object so we can use them dynamically
   const setStateFunctions = {};
   setStateFunctions["fps"] = setFps;
-  setStateFunctions["wipLimit"] = setWipLimit;
-  setStateFunctions["expdtLimit"] = setExpdtLimit;
+  setStateFunctions["wipLimitEachStep"] = setWipLimit;
+  setStateFunctions["expdtQueueLength"] = setExpdtLimit;
   setStateFunctions["expdtdDvUnitsFactor"] = setExpdtdDvUnitsFactor;
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
     setFps(gSttngs().get("fps"));
-    setWipLimit(gSttngs().get("wipLimit"));
-    setExpdtLimit(gSttngs().get("expdtLimit"));
+    setWipLimit(gSttngs().get("wipLimitEachStep"));
+    setExpdtLimit(gSttngs().get("expdtQueueLength"));
     setExpdtdDvUnitsFactor(gSttngs().get("expdtdDvUnitsFactor"));
   }, []);
 
@@ -114,7 +114,7 @@ export default (props /*: Props */) /*: string */ => {
         <div>
           <label for="fps">WIP Limit:</label>
           <output id="wiplimitOutput" name="wiplimitOutput" for="wiplimit"
-            >${wipLimit.toString()}</output
+            >${wipLimitEachStep.toString()}</output
           >
           <input
             type="range"
@@ -123,27 +123,30 @@ export default (props /*: Props */) /*: string */ => {
             min="0"
             max="100"
             step="1"
-            onChange=${changeParam("wipLimit")}
-            value="${wipLimit.toString()}"
+            onChange=${changeParam("wipLimitEachStep")}
+            value="${wipLimitEachStep.toString()}"
           />
         </div>
         <!-------------------------------------------------------------------->
         <!-- Expedite Limit -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="expdtLimit">Expedite Limit:</label>
-          <output id="expdtLimitOutput" name="expdtLimitOutput" for="expdtLimit"
-            >${expdtLimit.toString()}</output
+          <label for="expdtQueueLength">Expedite Limit:</label>
+          <output
+            id="expdtQueueLengthOutput"
+            name="expdtQueueLengthOutput"
+            for="expdtQueueLength"
+            >${expdtQueueLength.toString()}</output
           >
           <input
             type="range"
-            id="expdtLimit"
-            name="expdtLimit"
+            id="expdtQueueLength"
+            name="expdtQueueLength"
             min="0"
             max="50"
             step="1"
-            onChange=${changeParam("expdtLimit")}
-            value="${expdtLimit.toString()}"
+            onChange=${changeParam("expdtQueueLength")}
+            value="${expdtQueueLength.toString()}"
           />
         </div>
         <!-------------------------------------------------------------------->
@@ -203,7 +206,7 @@ export default (props /*: Props */) /*: string */ => {
 //     }
 //   */
 //     if (wiplimitSlider !== null) {
-//       wiplimitSlider.value = props.wipLimit.toString();
+//       wiplimitSlider.value = props.wipLimitEachStep.toString();
 //     }
 //   };
 //------------------------------------------------------------------

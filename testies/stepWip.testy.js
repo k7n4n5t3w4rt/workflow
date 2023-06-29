@@ -30,7 +30,7 @@ test("------- stepWip.js -------", () /*: void */ => {
 });
 const fixture = () /*: void */ => {
   globalSettings();
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("expdtQueueLength", 0);
   gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
@@ -49,7 +49,7 @@ test("Exptedited step WIP when epdtLimit is 0 and nothing is expedited ", () /*:
   fixture();
   // Expedited limit is 0. Redundant because it's in the fixture but
   // it's a reminder that it's set to 0.
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("expdtQueueLength", 0);
   const expeditedFlag = true;
   should(stepWip("0", expeditedFlag)).be.exactly(3);
   should(stepWip("1", expeditedFlag)).be.exactly(3);
@@ -61,7 +61,7 @@ test("Exptedited step WIP when epdtLimit is 0 and nothing is expedited ", () /*:
 
 test("Expedited step wip when expdtdLimit is 1 and one thing is expedited", () /*: void */ => {
   fixture();
-  gSttngs().set("expdtLimit", 1);
+  gSttngs().set("expdtQueueLength", 1);
   const expeditedFlag = true;
   gState().get("flwMap")["2"][0].dExpedite = true;
   should(stepWip("0", expeditedFlag)).be.exactly(0);
@@ -72,9 +72,9 @@ test("Expedited step wip when expdtdLimit is 1 and one thing is expedited", () /
   should(stepWip("5", expeditedFlag)).be.exactly(0);
 });
 
-test("Normal step wip when expdtLimit is 0 and two things are expedited", () /*: void */ => {
+test("Normal step wip when expdtQueueLength is 0 and two things are expedited", () /*: void */ => {
   fixture();
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("expdtQueueLength", 0);
   const expeditedFlag = false;
   gState().get("flwMap")["2"][0].dExpedite = true;
   gState().get("flwMap")["2"][1].dExpedite = true;

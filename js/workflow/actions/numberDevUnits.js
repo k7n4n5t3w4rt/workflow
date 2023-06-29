@@ -13,7 +13,7 @@ import touchStepsCount from "./touchStepsCount.js";
 export const numberExpiditedDevUnits = () /*: number */ => {
   if (
     gSttngs().get("expdtdDvUnitsFactor") === 0 ||
-    gSttngs().get("expdtLimit") === 0
+    gSttngs().get("expdtQueueLength") === 0
   ) {
     return 0;
   }
@@ -36,7 +36,7 @@ export const numberNormalDevUnits = () /*: number */ => {
   // some speciically allocated to normal work
   if (
     gSttngs().get("expdtdDvUnitsFactor") === 0 ||
-    gSttngs().get("expdtLimit") === 0
+    gSttngs().get("expdtQueueLength") === 0
   ) {
     return (
       Math.round((gSttngs().get("devUnits") / touchStepsCount()) * 100) / 100

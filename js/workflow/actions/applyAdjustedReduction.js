@@ -24,11 +24,11 @@ export default (
       // Work out how many days to reduce the `dDysRmnngThisStep` by,
       // based on:
       //  - `dvUnits`: the number of dev units
-      //  - `devPower`: the power of each dev unit
+      //  - `devCapacityAvailable`: the power of each dev unit
       //  - `wipThisStep`: the number of flow items in the step
       //  - `drag`: the drag factor
       const devDays =
-        ((dvUnits * gSttngs().get("devPower")) / wipThisStep) *
+        ((dvUnits * gSttngs().get("devCapacityAvailable")) / wipThisStep) *
         (1 - gSttngs().get("drag"));
       // Reduce the days remaining by the number of days calculated above.
       flwItem.dDysRmnngThisStep -= devDays;

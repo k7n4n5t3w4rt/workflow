@@ -58,8 +58,8 @@ const fixture = () /*: void */ => {
     { name: "In Test", status: "touch", limit: 0, preload: 1 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs().set("wipLimit", 2);
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("wipLimitEachStep", 2);
+  gSttngs().set("expdtQueueLength", 0);
   globalState();
   // Needed for populateSteps()
   gState().set("clckCbGroup", newClickCube());
@@ -115,7 +115,7 @@ test("Pulls normal items", () /*: void */ => {
 test("Pulls expedited items when expedited limit is zero", () /*: void */ => {
   //fixture();
   const flwItem = gState().get("flwMap")["1"][0];
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("expdtQueueLength", 0);
   flwItem.dExpedite = true;
   const expediteFlag = false;
   const index = 0;

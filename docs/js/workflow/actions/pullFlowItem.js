@@ -39,7 +39,10 @@ export default (
     //------------------------------------------------------------------
     // We're either looking for expedited flwItems or normal flwItems - or
     // we don't care
-    if (gSttngs().get("expdtLimit") > 0 && flwItem.dExpedite !== expediteFlag) {
+    if (
+      gSttngs().get("expdtQueueLength") > 0 &&
+      flwItem.dExpedite !== expediteFlag
+    ) {
       return availableLimit;
     }
     // Check if the fwItem has died of old age and ignore it if it has

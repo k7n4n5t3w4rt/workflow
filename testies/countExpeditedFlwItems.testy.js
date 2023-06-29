@@ -43,14 +43,14 @@ const fixture = () /*: void */ => {
   // Needed for populateSteps()
   gState().set("clckCbGroup", newClickCube());
   // Just in case some expedited items would otherwise be set
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("expdtQueueLength", 0);
   populateSteps();
 };
 
 test("Counts the correct number of expedited flwItems.", () /*: void */ => {
   fixture();
   gState().set("expdtCount", 1);
-  gSttngs().set("expdtLimit", 3);
+  gSttngs().set("expdtQueueLength", 3);
   gState().get("flwMap")["0"][0].dExpedite = true;
   // It doesn't return anything, but it does set gState().get("expdtCount")
   expediteNewFlwItems(gState().get("flwMap")["0"]);

@@ -32,7 +32,7 @@ export default () => {
   // defensive programming, lack of documentation, lack of knowledge sharing
   gSttngs().setIfNotCached("drag", 0);
   // Minimum of 1
-  gSttngs().setIfNotCached("devPower", 1);
+  gSttngs().setIfNotCached("devCapacityAvailable", 1);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
@@ -50,7 +50,6 @@ export default () => {
     { name: "In Test", status: "touch", limit: 0, preload: 0 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs().setIfNotCached("arrivalRate", 1);
   // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person or sub-team could do everything, how long would things take? We want a
@@ -58,7 +57,6 @@ export default () => {
   // done.
   gSttngs().setIfNotCached("flwItmSizeMin", 1);
   gSttngs().setIfNotCached("flwItmSizeMax", 1);
-  gSttngs().setIfNotCached("flwItmSize", { min: 1, max: 1 });
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -70,9 +68,9 @@ export default () => {
   // Q: How many people are in your whole team - or how many sub-teams do you have?
   gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs().setIfNotCached("expdtLimit", 0);
+  gSttngs().setIfNotCached("expdtQueueLength", 0);
   // PARAM: Wip limit for wait and touch steps that don't have one set
-  gSttngs().setIfNotCached("wipLimit", 0);
+  gSttngs().setIfNotCached("wipLimitEachStep", 0);
   // 1 is 100% of the available devUnits.
   gSttngs().setIfNotCached("expdtdDvUnitsFactor", 1);
   //------------------------------------------------------------------
@@ -82,7 +80,7 @@ export default () => {
   // new items arrive in your backlog each day?
   gSttngs().setIfNotCached("arrivalFrequency", 1);
   // Q: When work does arrive, how many items arrive at once?
-  gSttngs().setIfNotCached("arrivalVolume", { min: 1, max: 10 });
+  gSttngs().setIfNotCached("arrivalNumber", 1);
   // PARAM: Relative to flwItmSize
   // Format: A number between 0 and 1
   gSttngs().setIfNotCached("flwItmSizeFactor", 1);

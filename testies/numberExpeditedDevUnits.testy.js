@@ -31,7 +31,7 @@ const fixture = () /*: void */ => {
   globalSettings();
   globalState();
   gSttngs().set("expdtdDvUnitsFactor", 1);
-  gSttngs().set("expdtLimit", 1);
+  gSttngs().set("expdtQueueLength", 1);
 };
 
 test("20 devUnits, 2 touchSteps, factor 0.5", () /*: void */ => {

@@ -55,7 +55,7 @@ const addNewFlowItemsAtArrivalRate = () /*: void */ => {
     gState().get("flwMap")["0"].length < gSttngs().get("backlogMax") ||
     gSttngs().get("backlogMax") === 0
   ) {
-    for (let i = 1; i <= gSttngs().get("arrivalRate"); i++) {
+    for (let i = 1; i <= gSttngs().get("arrivalNumber"); i++) {
       newFlwItem();
     }
   }

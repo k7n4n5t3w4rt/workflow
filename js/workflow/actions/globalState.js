@@ -14,7 +14,7 @@ export default () => {
   gState().set("clicks", 0);
   gState().set("drag", 0);
   gState().set("endPosition", {});
-  gState().set("expdtCount", gSttngs().get("expdtLimit"));
+  gState().set("expdtCount", gSttngs().get("expdtQueueLength"));
   gState().set("flwItems", []);
   gState().set("flwItmTracker", {});
   gState().set("flwMap", {});

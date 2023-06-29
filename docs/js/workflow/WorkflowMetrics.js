@@ -55,7 +55,7 @@ export default (props /*: Props */) /*: string */ => {
 
   useEffect(() => {
     // setFps(gSttngs().get("fps"));
-    // setWipLimit(gSttngs().get("wipLimit"));
+    // setWipLimit(gSttngs().get("wipLimitEachStep"));
     // setupMobileDebug();
     updateMetricsOnClickInterval(
       setFlowTime,
@@ -85,7 +85,7 @@ export default (props /*: Props */) /*: string */ => {
         <span className="${styles.metricsSpans}">ThrPt: ${throughPut}</span>
         <span className="${styles.metricsSpans}">Wip: ${wip}</span>
       </div>
-      ${gSttngs().get("expdtLimit") > 0 &&
+      ${gSttngs().get("expdtQueueLength") > 0 &&
       html` <div className="${styles.metricsDivs}">
         <span className="${styles.metricsSpans}">FlwTmExp: ${flowTimeExp}</span>
         <span className="${styles.metricsSpans}"

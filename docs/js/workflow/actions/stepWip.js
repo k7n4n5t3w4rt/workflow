@@ -17,7 +17,7 @@ export default (
     [flwMpKey].reduce((_ /*: number */, flwItem /*: FlwItem */) => {
       if (
         (flwItem.dExpedite === expedited ||
-          gSttngs().get("expdtLimit") === 0) &&
+          gSttngs().get("expdtQueueLength") === 0) &&
         flwItem.dSkipForWip === false
       ) {
         return (_ += 1);

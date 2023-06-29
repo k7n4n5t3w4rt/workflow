@@ -69,7 +69,7 @@ export default (props /*: Props */) /*: string */ => {
   // const [value /*: number */, setValue /*: function */] = useState(0);
   // Params
   // const [fps, setFps] = useState(1);
-  // const [wipLimit, setWipLimit] = useState(0);
+  // const [wipLimitEachStep, setWipLimit] = useState(0);
 
   return html`
     <div id="flw" className="${styles.flw}">

@@ -30,7 +30,7 @@ import {
 
 /*::
 type Props = {
-	arrivalRate: number,
+	arrivalNumber: number,
   setArrivalRate: function,
 	drag: number,
   setDrag: function,
@@ -45,14 +45,14 @@ export default (props /*: Props */) /*: string */ => {
   // IN
   //----------------------------------------
   const setStateFunctions = {};
-  const [arrivalRate, setArrivalRate] = useState(1);
-  setStateFunctions["arrivalRate"] = setArrivalRate;
+  const [arrivalNumber, setArrivalRate] = useState(1);
+  setStateFunctions["arrivalNumber"] = setArrivalRate;
   const [devUnits, setDevUnits] = useState(1);
   setStateFunctions["devUnits"] = setDevUnits;
   const [drag, setDrag] = useState(0);
   setStateFunctions["drag"] = setDrag;
-  const [devPower, setDevPower] = useState(1);
-  setStateFunctions["devPower"] = setDevPower;
+  const [devCapacityAvailable, setDevPower] = useState(1);
+  setStateFunctions["devCapacityAvailable"] = setDevPower;
   const [autoMode, setAutoMode] = useState(false);
   setStateFunctions["autoMode"] = setAutoMode;
   //----------------------------------------
@@ -72,8 +72,6 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["backlogMax"] = setBacklogMax;
   const [arrivalFrequency, setArrivalFrequency] = useState(1);
   setStateFunctions["arrivalFrequency"] = setArrivalFrequency;
-  const [arrivalVolume, setArrivalVolume] = useState({ min: 1, max: 10 });
-  setStateFunctions["arrivalVolume"] = setArrivalVolume;
   const [flwItmSizeFactor, setFlwItmSizeFactor] = useState(1);
   setStateFunctions["flwItmSizeFactor"] = setFlwItmSizeFactor;
   const [dfntnOfReady, setDfntnOfReady] = useState(0);
@@ -92,10 +90,10 @@ export default (props /*: Props */) /*: string */ => {
   //----------------------------------------
   const [fps, setFps] = useState(1);
   setStateFunctions["fps"] = setFps;
-  const [expdtLimit, setExpdtLimit] = useState(0);
-  setStateFunctions["expdtLimit"] = setExpdtLimit;
-  const [wipLimit, setWipLimit] = useState(0);
-  setStateFunctions["wipLimit"] = setWipLimit;
+  const [expdtQueueLength, setExpdtLimit] = useState(0);
+  setStateFunctions["expdtQueueLength"] = setExpdtLimit;
+  const [wipLimitEachStep, setWipLimit] = useState(0);
+  setStateFunctions["wipLimitEachStep"] = setWipLimit;
   const [expdtdDvUnitsFactor, setExpdtdDvUnitsFactor] = useState(1);
   setStateFunctions["expdtdDvUnitsFactor"] = setExpdtdDvUnitsFactor;
 
@@ -103,10 +101,10 @@ export default (props /*: Props */) /*: string */ => {
     //----------------------------------------
     // IN
     //----------------------------------------
-    setArrivalRate(gSttngs().get("arrivalRate"));
+    setArrivalRate(gSttngs().get("arrivalNumber"));
     setDrag(gSttngs().get("drag"));
     setDevUnits(gSttngs().get("devUnits"));
-    setDevPower(gSttngs().get("devPower"));
+    setDevPower(gSttngs().get("devCapacityAvailable"));
     setAutoMode(gSttngs().get("autoMode"));
     //----------------------------------------
     // OUT
@@ -118,7 +116,6 @@ export default (props /*: Props */) /*: string */ => {
     setBacklogDeath(gSttngs().get("backlogDeath"));
     setBacklogMax(gSttngs().get("backlogMax"));
     setArrivalFrequency(gSttngs().get("arrivalFrequency"));
-    setArrivalVolume(gSttngs().get("arrivalVolume"));
     setFlwItmSizeFactor(gSttngs().get("flwItmSizeFactor"));
     setDfntnOfReady(gSttngs().get("dfntnOfReady"));
     setSpecialisation(gSttngs().get("specialisation"));
@@ -130,8 +127,8 @@ export default (props /*: Props */) /*: string */ => {
     // PARAMS
     //----------------------------------------
     setFps(gSttngs().get("fps"));
-    setExpdtLimit(gSttngs().get("expdtLimit"));
-    setWipLimit(gSttngs().get("wipLimit"));
+    setExpdtLimit(gSttngs().get("expdtQueueLength"));
+    setWipLimit(gSttngs().get("wipLimitEachStep"));
     setExpdtdDvUnitsFactor(gSttngs().get("expdtdDvUnitsFactor"));
   }, []);
 
@@ -172,22 +169,22 @@ export default (props /*: Props */) /*: string */ => {
         <!-- Arrival Rate -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="arrivalRate">Arrival Rate:</label>
+          <label for="arrivalNumber">Arrival Rate:</label>
           <output
-            id="arrivalRateOutput"
-            name="arrivalRateOutput"
-            for="arrivalRate"
-            >${arrivalRate.toString()}</output
+            id="arrivalNumberOutput"
+            name="arrivalNumberOutput"
+            for="arrivalNumber"
+            >${arrivalNumber.toString()}</output
           >
           <input
             type="range"
-            id="arrivalRate"
-            name="arrivalRate"
+            id="arrivalNumber"
+            name="arrivalNumber"
             min="0"
             max="50"
             step="1"
-            onChange=${changeParam("arrivalRate")}
-            value="${arrivalRate.toString()}"
+            onChange=${changeParam("arrivalNumber")}
+            value="${arrivalNumber.toString()}"
           />
         </div>
         <!-------------------------------------------------------------------->
@@ -213,19 +210,22 @@ export default (props /*: Props */) /*: string */ => {
         <!-- DevPower -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="devPower">Dev. Power:</label>
-          <output id="devPowerOutput" name="devPowerOutput" for="devPower"
-            >${devPower.toString()}</output
+          <label for="devCapacityAvailable">Dev. Power:</label>
+          <output
+            id="devCapacityAvailableOutput"
+            name="devCapacityAvailableOutput"
+            for="devCapacityAvailable"
+            >${devCapacityAvailable.toString()}</output
           >
           <input
             type="range"
-            id="devPower"
-            name="devPower"
+            id="devCapacityAvailable"
+            name="devCapacityAvailable"
             min="0"
             max="1"
             step="0.05"
-            onChange=${changeParam("devPower")}
-            value="${devPower.toString()}"
+            onChange=${changeParam("devCapacityAvailable")}
+            value="${devCapacityAvailable.toString()}"
           />
         </div>
         <!-------------------------------------------------------------------->

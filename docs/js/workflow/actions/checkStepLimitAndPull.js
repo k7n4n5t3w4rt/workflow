@@ -28,11 +28,11 @@ export default (
       // If we're not on the first or last step
       flwMpStpKeyNumber !== 0 &&
       flwMpStpKeyNumber !== gSttngs().get("steps").length - 1 &&
-      // And if the global wipLimit is not 0
-      gSttngs().get("wipLimit") !== 0
+      // And if the global wipLimitEachStep is not 0
+      gSttngs().get("wipLimitEachStep") !== 0
     ) {
-      // Use the global wipLimit
-      flwStpLimit = gSttngs().get("wipLimit");
+      // Use the global wipLimitEachStep
+      flwStpLimit = gSttngs().get("wipLimitEachStep");
     }
   }
   // Check that the number of flwItems in this step is less than

@@ -16,8 +16,8 @@ import gSttngs from "./gSttngs.js";
 export default (flwMpStpItems /*: FlwItem[] */) => {
   [...flwMpStpItems].reverse().forEach((flwItem /*: FlwItem */) => {
     if (
-      gSttngs().get("expdtLimit") > 0 &&
-      gState().get("expdtCount") < gSttngs().get("expdtLimit") &&
+      gSttngs().get("expdtQueueLength") > 0 &&
+      gState().get("expdtCount") < gSttngs().get("expdtQueueLength") &&
       flwItem.dExpedite === false
     ) {
       flwItem.dExpedite = true;

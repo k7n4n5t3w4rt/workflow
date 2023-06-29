@@ -48,7 +48,7 @@ const fixture = () /*: void */ => {
 test("Counts the correct number of expedited flwItems.", () /*: void */ => {
   fixture();
   // gState().set("expdtCount", 0);
-  // gSttngs().set("expdtLimit", 3);
+  // gSttngs().set("expdtQueueLength", 3);
   gState().get("flwMap")["0"][0].dExpedite = true;
   // It doesn't return anything, but it does set gState().get("expdtCount")
   const expdtCount = countExpeditedFlwItems(gState().get("flwMap")["0"]);

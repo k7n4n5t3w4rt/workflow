@@ -36,7 +36,7 @@ test("------- applyAdjustedReduction.js -------", () /*: void */ => {
 
 const fixture = () /*: void */ => {
   globalSettings();
-  gSttngs().set("expdtLimit", 0);
+  gSttngs().set("expdtQueueLength", 0);
   gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
@@ -57,7 +57,7 @@ test("Applies the right reduction to remaining days - normal.", () /*: void */ =
   const stepWip = (stpKey /*: string */, expediteFlag /*: boolean */) => {
     return 3;
   };
-  gSttngs().set("devPower", 1);
+  gSttngs().set("devCapacityAvailable", 1);
   gSttngs().set("drag", 0.5);
   const flwItems = gState().get("flwMap")["2"];
   const dvUnits = 2;

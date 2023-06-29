@@ -29,6 +29,7 @@ test("------- numberNormalDevUnits.js -------", () /*: void */ => {
 
 const fixture = () /*: void */ => {
   globalSettings();
+  // So there are 2 touch steps
   gSttngs().set("steps", [
     { name: "Open", status: "backlog", limit: 0, preload: 3 },
     { name: "Ready", status: "wait", limit: 3, preload: 3 },
@@ -40,11 +41,21 @@ const fixture = () /*: void */ => {
   globalState();
 };
 
-test("20 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
+test("With expedited items, 20 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
   fixture();
+  // Just so it's not 0
+  gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("devUnits", 20);
-  // This no longer has an effect. We're assuming that all the devUnits will
-  // be available if normal flwItems are being worked on at all
+  gSttngs().set("expdtdDvUnitsFactor", 0.5);
+  const nmNrmlDvUnts = numberNormalDevUnits();
+  should(nmNrmlDvUnts).be.exactly(5);
+});
+
+test("When there is no `expdtQueueLength` it's all normal / touch steps", () /*: void */ => {
+  fixture();
+  // Just so it's not 0
+  gSttngs().set("expdtQueueLength", 0);
+  gSttngs().set("devUnits", 20);
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(10);
@@ -52,20 +63,29 @@ test("20 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
 
 test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
   fixture();
+  // Just so it's not 0
+  gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("devUnits", 5);
-  // This no longer has an effect. We're assuming that all the devUnits will
-  // be available if normal flwItems are being worked on at all
   gSttngs().set("expdtdDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
-  should(nmNrmlDvUnts).be.exactly(2);
+  should(nmNrmlDvUnts).be.exactly(1.25);
 });
 
 test("24 devUnits, 2 touchSteps(), factor 0.33", () /*: void */ => {
   fixture();
+  // Just so it's not 0
+  gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("devUnits", 24);
-  // This no longer has an effect. We're assuming that all the devUnits will
-  // be available if normal flwItems are being worked on at all
-  gSttngs().set("expdtdDvUnitsFactor", 0.33);
+  gSttngs().set("expdtdDvUnitsFactor", 1 / 3);
+  const nmNrmlDvUnts = numberNormalDevUnits();
+  should(nmNrmlDvUnts).be.exactly(8);
+});
+
+test("No expedited items, 24 devUnits, 2 touchSteps(), factor 0.33", () /*: void */ => {
+  fixture();
+  gSttngs().set("expdtQueueLength", 0);
+  gSttngs().set("devUnits", 24);
+  gSttngs().set("expdtdDvUnitsFactor", 1 / 3);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(12);
 });

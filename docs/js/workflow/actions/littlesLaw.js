@@ -3,7 +3,7 @@
 /*:: type Callback = (number, number) => void; */
 
 const simulateLittlesLaw = (
-  arrivalRate /*: number */,
+  arrivalNumber /*: number */,
   callback /*: Callback */,
 ) /*: void */ => {
   let totalCycleTime = 0;
@@ -13,7 +13,7 @@ const simulateLittlesLaw = (
   let totalItems = 0;
 
   const intervalId = setInterval(() => {
-    for (let i = 0; i < arrivalRate; i++) {
+    for (let i = 0; i < arrivalNumber; i++) {
       totalItems++;
       inProgressItems++;
       const cycleTime = Math.random() * 10; // Random cycle time between 0 and 10 seconds
