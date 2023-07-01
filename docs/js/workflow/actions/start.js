@@ -20,6 +20,11 @@ export default () /*: void */ => {
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
+  if (gState().get("started") === true) {
+    return;
+  } else {
+    gState().set("started", true);
+  }
   if (!gSttngs().get("autoMode")) {
     hideReticule();
   }

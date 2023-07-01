@@ -18,11 +18,12 @@ import onWindowResize from "../calculations/onWindowResize.js";
 import start from "./start.js";
 import addReticleToScene from "../calculations/addReticleToScene.js";
 import render from "./render.js";
-
+//------------------------------------------------------------------
+// init()
+//------------------------------------------------------------------
 export default () /*: void */ => {
   // The AR container is where the AR scene will be rendered
   const ARContainer = addArContainerToDom();
-
   // Make the scene, camera, geometry, etc.
   const light = lightSetup();
   const camera = cameraSetup();
@@ -32,13 +33,11 @@ export default () /*: void */ => {
   // Not appearing for some reason. I think it is hidden
   const stats = createStats();
   ARContainer.appendChild(stats.dom);
-
   // Declare it for later
   let reticleStuff = {
     reticle: {},
     active: false,
   };
-
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------
@@ -69,9 +68,8 @@ export default () /*: void */ => {
   // Populate the global state, for posterity
   gState().set("scnData", { stats, scene, camera, reticleStuff, renderer });
 };
-
 //------------------------------------------------------------------
-// startButtonSetip()
+// startButtonSetup()
 //------------------------------------------------------------------
 const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
   // The overlay for sliders, etc
@@ -84,11 +82,9 @@ const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
       root: domOverlayDiv,
     },
   });
-
   // $FlowFixMe
   domOverlayDiv.appendChild(button);
 };
-
 //------------------------------------------------------------------
 // rendererSetup()
 //------------------------------------------------------------------
@@ -101,10 +97,8 @@ const rendererSetup = () /*: Object */ => {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true;
-
   return renderer;
 };
-
 //------------------------------------------------------------------
 // lightSetup()
 //------------------------------------------------------------------
@@ -112,13 +106,10 @@ const lightSetup = () /*: Object */ => {
   // https://threejs.org/docs/#api/en/lights/HemisphereLight
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   light.position.set(0.5, 1, 0.25);
-
   //   const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
   //   scene.add(ambientLight);
-
   return light;
 };
-
 //------------------------------------------------------------------
 // addArContainerToDom()
 //------------------------------------------------------------------
@@ -128,10 +119,8 @@ const addArContainerToDom = () /*: HTMLDivElement */ => {
   const flw = document.getElementById("flw");
   // $FlowFixMe - Flow doesn't know about the DOM
   flw.appendChild(ARContainer);
-
   return ARContainer;
 };
-
 //------------------------------------------------------------------
 // cameraSetup()
 //------------------------------------------------------------------
