@@ -59,7 +59,7 @@ test("Exptedited step WIP when epdtLimit is 0 and nothing is expedited ", () /*:
   should(stepWip("5", expeditedFlag)).be.exactly(0);
 });
 
-test("Expedited step wip when expdtdLimit is 1 and one thing is expedited", () /*: void */ => {
+test("Expedited step wip when expdtLimit is 1 and one thing is expedited", () /*: void */ => {
   fixture();
   gSttngs().set("expdtQueueLength", 1);
   const expeditedFlag = true;

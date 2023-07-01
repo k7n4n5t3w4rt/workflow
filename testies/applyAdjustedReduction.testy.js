@@ -16,7 +16,6 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import dragFunction from "../js/workflow/actions/dragFunction.js";
 import populateSteps from "../js/workflow/actions/populateSteps.js";
 import newClickCube from "../js/workflow/actions/newClickCube.js";
 import newFlwItem from "../js/workflow/actions/newFlwItem.js";

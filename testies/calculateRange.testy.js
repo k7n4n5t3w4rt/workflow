@@ -25,7 +25,7 @@ import calculateRange from "../js/workflow/actions/calculateRange.js";
 //------------------------------------------------------------------
 // TEST: dragFunction
 //------------------------------------------------------------------
-test("-------------- calculateRange.js ---------------------", () /*: void */ => {
+test("------- calculateRange.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

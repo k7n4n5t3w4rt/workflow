@@ -10,7 +10,7 @@ import skipForWip from "../js/workflow/actions/skipForWip.js";
 //------------------------------------------------------------------
 // TEST: skipForWip()
 //------------------------------------------------------------------
-test("-------------- skipForWip.js ---------------------", () /*: void */ => {
+test("------- skipForWip.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

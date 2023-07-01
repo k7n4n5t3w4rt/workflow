@@ -25,7 +25,7 @@ import countExpeditedFlwItems from "../js/workflow/actions/countExpeditedFlwItem
 //------------------------------------------------------------------
 // TEST: countExpeditedFlwItemsInOneStep()
 //------------------------------------------------------------------
-test("-------------- countExpeditedFlwItemsInOneStep.js ---------------------", () /*: void */ => {
+test("------- countExpeditedFlwItemsInOneStep.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

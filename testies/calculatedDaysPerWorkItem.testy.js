@@ -5,7 +5,7 @@ import calculatedDaysPerWorkItem from "../js/workflow/calculations/calculatedDay
 
 const skip = false;
 
-test("-------------- calculateDaysPerWorkItem.js ---------------------", () /*: void */ => {
+test("------- calculateDaysPerWorkItem.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 test("Returns the total days power for all the people / number of work items", () /*: void */ => {

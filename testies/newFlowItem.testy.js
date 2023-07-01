@@ -24,7 +24,7 @@ import newFlwItem from "../js/workflow/actions/newFlwItem.js";
 //------------------------------------------------------------------
 // TEST: newFlwItem
 //------------------------------------------------------------------
-test("-------------- newFlwItem.js ---------------------", () /*: void */ => {
+test("------- newFlwItem.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

@@ -11,7 +11,7 @@ import findRadius from "../js/workflow/calculations/findRadius.js";
 //------------------------------------------------------------------
 // TEST: findRadius()
 //------------------------------------------------------------------
-test("-------------- findRadius.js ---------------------", () /*: void */ => {
+test("------- findRadius.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

@@ -5,7 +5,7 @@ import calculateDaysRemaining from "../js/workflow/calculations/calculateDaysRem
 
 const skip = false;
 
-test("-------------- calculateDaysRemaining.js ---------------------", () /*: void */ => {
+test("------- calculateDaysRemaining.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 test("Returns the new days remaining", () /*: void */ => {

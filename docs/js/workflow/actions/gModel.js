@@ -2,16 +2,24 @@
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import {
-  isParsableAsNumber,
-  isParsableAsBoolean,
-  isParsableAsArray,
-} from "./isParsable.js";
+import isParsable from "./isParsable.1.js";
 
 // gModel() - Needs to use the `function` keyword so we can do `new gModel()`
 function gModel() /*: void */ {
+  //------------------------------------------------------------------------------
+  // keyValuePairs
+  //------------------------------------------------------------------------------
   this.keyValuePairs = {};
-
+  //---------------------------------------------------------------------------
+  // get()
+  //---------------------------------------------------------------------------
+  this.get = (key /*: string */) /*: any */ => {
+    const value = this.keyValuePairs[key];
+    return value;
+  };
+  //------------------------------------------------------------------------------
+  // set()
+  //------------------------------------------------------------------------------
   this.set = (key /*: string */, value /*: any  */) /*: () => void */ => {
     this.keyValuePairs[key] = value;
     try {
@@ -21,6 +29,9 @@ function gModel() /*: void */ {
     }
     return this;
   };
+  //---------------------------------------------------------------------------
+  // setIfNotCached()
+  //---------------------------------------------------------------------------
   // Set this, but only if it is not already in the cache.
   this.setIfNotCached = (
     key /*: string */,
@@ -30,12 +41,7 @@ function gModel() /*: void */ {
     try {
       let lSValue = localStorage.getItem(key);
       if (lSValue !== null && lSValue !== undefined) {
-        if (
-          isParsableAsNumber(lSValue) ||
-          isParsableAsNumber(lSValue) ||
-          isParsableAsBoolean(lSValue) ||
-          isParsableAsArray(lSValue)
-        ) {
+        if (isParsable(lSValue)) {
           lSValue = JSON.parse(lSValue);
         }
         this.keyValuePairs[key] = lSValue;
@@ -46,10 +52,6 @@ function gModel() /*: void */ {
       // console.error(e);
     }
     return this;
-  };
-  this.get = (key /*: string */) /*: any */ => {
-    const value = this.keyValuePairs[key];
-    return value;
   };
 }
 export default gModel;

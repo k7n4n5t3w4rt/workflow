@@ -30,9 +30,9 @@ const removeFlowItem = (
   index /*: number */,
 ) /*: void */ => {};
 //------------------------------------------------------------------
-// TEST: theNonDead()
+// TEST: inTouch()
 //------------------------------------------------------------------
-test("-------------- theNonDead.js ---------------------", () /*: void */ => {
+test("------- inTouch.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 const fixture = () /*: FlwItem[] */ => {

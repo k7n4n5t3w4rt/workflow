@@ -10,7 +10,6 @@ import gState from "./gState.js";
 import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
-import dragFunction from "./dragFunction.js";
 import skipForWip from "./skipForWip.js";
 import makeItOneClickOlder from "./makeItOneClickOlder.js";
 import expediteNewFlwItems from "./expediteNewFlwItems.js";
@@ -33,7 +32,7 @@ export default () /*: void */ => {
   // If expdtQueueLength is set, we need to process the expedited items first.
   if (
     gSttngs().get("expdtQueueLength") > 0 &&
-    gSttngs().get("expdtdDvUnitsFactor") > 0
+    gSttngs().get("expdtDvUnitsFactor") > 0
   ) {
     // Get the expedited items
     updateDaysRemainingExpdt(flwItems);

@@ -4,6 +4,7 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
+import setUpFlwMap from "./setUpFlwMap.js";
 
 export default () => {
   //------------------------------------------------------------------
@@ -31,20 +32,9 @@ export default () => {
   gState().set("wipQueue", new xQueue());
   gState().set("flwTmExpQueue", new xQueue());
   gState().set("thrPtExpQueue", new xQueue());
-  gState().set("wipExpQueue", new xQueue());
+  gState().set("wipExpdtQueue", new xQueue());
   setUpFlwMap(gState().get("flwMap"), gSttngs().get("steps"));
 };
-
-//------------------------------------------------------------------
-// setUpFlwMap(gFlwMap, gFlwSteps)
-//------------------------------------------------------------------
-const setUpFlwMap = (gFlwMap /*: FlwMap */, gFlwSteps /*: FlwStep[] */) => {
-  // Set each stepTotal to 0
-  gFlwSteps.forEach((step /*: FlwStep */, index /*: number */) => {
-    gState().get("flwMap")[index.toString()] = [];
-  });
-};
-
 //------------------------------------------------------------------
 // new vQueue()
 //------------------------------------------------------------------
@@ -87,32 +77,15 @@ function xQueue() {
   //   return numbers[index - 1];
   // };
 
-  this.meanForDays = () /*: number */ => {
+  this.dailyMean = () /*: number */ => {
     if (this.length() === 0) return 0;
     let total = 0;
     let count = 0;
     for (const index in this.items) {
-      total += this.items[index].reduce(
-        (_ /*: number */, value /*: number */) /*: number */ => {
-          count += 1;
-          return _ + value;
-        },
-        0,
-      );
-    }
-    const mean = total / count;
-    return Math.round(mean * 100) / 100;
-  };
-
-  this.meanForValues = () /*: number */ => {
-    if (this.length() === 0) return 0;
-    let total = 0;
-    let count = 0;
-    for (const index in this.items) {
+      count += 1;
       total += this.items[index].reduce(
         (_ /*: number */, value /*: number */) /*: number */ => {
           if (value > 0) {
-            count += 1;
             return _ + value;
           }
           return _;
@@ -120,6 +93,29 @@ function xQueue() {
         0,
       );
     }
+    // 0/0 = NaN
+    if (count === 0) return 0;
+    const mean = total / count;
+    return Math.round(mean * 100) / 100;
+  };
+
+  this.flwItemMean = () /*: number */ => {
+    if (this.length() === 0) return 0;
+    let total = 0;
+    let count = 0;
+    for (const index in this.items) {
+      total += this.items[index].reduce(
+        (_ /*: number */, value /*: number */) /*: number */ => {
+          count += 1;
+          if (value > 0) {
+            return _ + value;
+          }
+          return _;
+        },
+        0,
+      );
+    }
+    // 0/0 = NaN
     if (count === 0) return 0;
     const mean = total / count;
     return Math.round(mean * 100) / 100;

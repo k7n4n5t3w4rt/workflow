@@ -94,8 +94,8 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["expdtQueueLength"] = setExpdtLimit;
   const [wipLimitEachStep, setWipLimit] = useState(0);
   setStateFunctions["wipLimitEachStep"] = setWipLimit;
-  const [expdtdDvUnitsFactor, setExpdtdDvUnitsFactor] = useState(1);
-  setStateFunctions["expdtdDvUnitsFactor"] = setExpdtdDvUnitsFactor;
+  const [expdtDvUnitsFactor, setExpdtDvUnitsFactor] = useState(1);
+  setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
 
   useEffect(() => {
     //----------------------------------------
@@ -114,7 +114,7 @@ export default (props /*: Props */) /*: string */ => {
     setTimeBox(gSttngs().get("timeBox"));
     setDeath(gSttngs().get("death"));
     setBacklogDeath(gSttngs().get("backlogDeath"));
-    setBacklogMax(gSttngs().get("backlogMax"));
+    setBacklogMax(gSttngs().get("steps")["0"].limit);
     setArrivalFrequency(gSttngs().get("arrivalFrequency"));
     setFlwItmSizeFactor(gSttngs().get("flwItmSizeFactor"));
     setDfntnOfReady(gSttngs().get("dfntnOfReady"));
@@ -129,7 +129,7 @@ export default (props /*: Props */) /*: string */ => {
     setFps(gSttngs().get("fps"));
     setExpdtLimit(gSttngs().get("expdtQueueLength"));
     setWipLimit(gSttngs().get("wipLimitEachStep"));
-    setExpdtdDvUnitsFactor(gSttngs().get("expdtdDvUnitsFactor"));
+    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
   }, []);
 
   useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);

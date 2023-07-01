@@ -9,7 +9,8 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import newFlwItem from "./newFlwItem.js";
 import filterDoneItems from "./filterDoneItems.js";
-import updateWip from "./updateWip.js";
+import updateExpdtWip from "./updateExpdtWip.js";
+import updateNrmlWip from "./updateNrmlWip.js";
 import setExpedite from "./setExpedite.js";
 import pullFlwItems from "./pullFlwItems.js";
 import resizeVSphere from "./resizeVSphere.js";
@@ -23,7 +24,6 @@ const click = () /*: void */ => {
   gState().set("clicks"), gState().get("clicks") + 1;
   animateClickCube();
 };
-
 //------------------------------------------------------------------
 // onClickComplete()
 //------------------------------------------------------------------
@@ -41,8 +41,9 @@ export const onClickComplete = () /*: void */ => {
   // items left to pull.
   gState().set("flwItmsPulledCount", 0);
   pullFlwItems();
-  // Update the WIP when everything has been pulled but not yet worked on
-  updateWip();
+  // Update the WIPs when everything has been pulled but not yet worked on
+  updateExpdtWip();
+  updateNrmlWip();
   // For testing, we need to pass in removeDoneFlwItmsFromFlwMap
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   click();
@@ -52,8 +53,8 @@ export const onClickComplete = () /*: void */ => {
 //------------------------------------------------------------------
 const addNewFlowItemsAtArrivalRate = () /*: void */ => {
   if (
-    gState().get("flwMap")["0"].length < gSttngs().get("backlogMax") ||
-    gSttngs().get("backlogMax") === 0
+    gState().get("flwMap")["0"].length < gSttngs().get("steps")["0"].limit ||
+    gSttngs().get("steps")["0"].limit === 0
   ) {
     for (let i = 1; i <= gSttngs().get("arrivalNumber"); i++) {
       newFlwItem();

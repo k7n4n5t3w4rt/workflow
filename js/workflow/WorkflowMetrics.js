@@ -123,21 +123,21 @@ const updateMetricsOnClickInterval = (
       gState().get("wipQueue") !== undefined &&
       gState().get("flwTmExpQueue") !== undefined &&
       gState().get("thrPtExpQueue") !== undefined &&
-      gState().get("wipExpQueue") !== undefined
+      gState().get("wipExpdtQueue") !== undefined
     ) {
       // Only updated them if they have changed. Not sure it makes a difference.jkkk:w
-      if (gState().get("flwTmQueue").meanForValues() !== flowTime)
-        setFlowTime(gState().get("flwTmQueue").meanForValues());
-      if (gState().get("thrPtQueue").meanForDays() !== throughPut)
-        setThroughPut(gState().get("thrPtQueue").meanForDays());
-      if (gState().get("wipQueue").meanForDays() !== wip)
-        setWip(gState().get("wipQueue").meanForDays());
-      if (gState().get("flwTmExpQueue").meanForValues() !== flowTimeExp)
-        setFlowTimeExp(gState().get("flwTmExpQueue").meanForValues());
-      if (gState().get("thrPtExpQueue").meanForDays() !== throughPutExp)
-        setThroughPutExp(gState().get("thrPtExpQueue").meanForDays());
-      if (gState().get("wipExpQueue").meanForDays() !== wip)
-        setWipExp(gState().get("wipExpQueue").meanForDays());
+      if (gState().get("flwTmQueue").flwItemMean() !== flowTime)
+        setFlowTime(gState().get("flwTmQueue").flwItemMean());
+      if (gState().get("thrPtQueue").dailyMean() !== throughPut)
+        setThroughPut(gState().get("thrPtQueue").dailyMean());
+      if (gState().get("wipQueue").dailyMean() !== wip)
+        setWip(gState().get("wipQueue").dailyMean());
+      if (gState().get("flwTmExpQueue").dailyMean() !== flowTimeExp)
+        setFlowTimeExp(gState().get("flwTmExpQueue").dailyMean());
+      if (gState().get("thrPtExpQueue").dailyMean() !== throughPutExp)
+        setThroughPutExp(gState().get("thrPtExpQueue").dailyMean());
+      if (gState().get("wipExpdtQueue").dailyMean() !== wip)
+        setWipExp(gState().get("wipExpdtQueue").dailyMean());
       if (gState().get("vQueue").total !== value)
         setValue(gState().get("vQueue").total());
     }

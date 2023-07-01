@@ -27,7 +27,7 @@ type GlobalSettings = {
     dfntnOfReady: number,
     drag: number,
     expdtQueueLength: number,
-    expdtdDvUnitsFactor: number,
+    expdtDvUnitsFactor: number,
     flwItmSizeMin: number,
     flwItmSizeMax: number,
     flwItmSizeFactor: 1,
@@ -87,7 +87,7 @@ type GlobalState = {
     wipQueue: WipQueue,
     flwTmQueue: FlwTmQueue,
     thrPtExpQueue: ThrPtQueue,
-    wipExpQueue: WipQueue,
+    wipExpdtQueue: WipQueue,
     flwTmExpQueue: FlwTmQueue,
     started: boolean,
   },
@@ -282,8 +282,8 @@ type ThrPtQueue = {
   enqueue: (item: Array<number>) => Array<number>,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 type FlwTmQueue = {
@@ -294,8 +294,8 @@ type FlwTmQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 type WipQueue = {
@@ -306,8 +306,8 @@ type WipQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 type ThrPtExpQueue = {
@@ -318,8 +318,8 @@ type ThrPtExpQueue = {
   enqueue: (item: Array<number>) => Array<number>,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 type FlwTmExpQueue = {
@@ -330,8 +330,8 @@ type FlwTmExpQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 type WipExpQueue = {
@@ -342,8 +342,8 @@ type WipExpQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 type VQueue = {
@@ -354,8 +354,8 @@ type VQueue = {
   enqueue: (item: Array<number>) => void,
   total: () => number,
   length: () => number,
-  meanForDays: () => number,
-  meanForValues: () => number,
+  dailyMean: () => number,
+  mean: () => number,
 };
 
 //------------------------------------------------------------------

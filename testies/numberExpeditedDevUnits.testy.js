@@ -15,7 +15,6 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import dragFunction from "../js/workflow/actions/dragFunction.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
@@ -30,22 +29,22 @@ test("------ numberExpiditedDevUnits.js -------", () /*: void */ => {
 const fixture = () /*: void */ => {
   globalSettings();
   globalState();
-  gSttngs().set("expdtdDvUnitsFactor", 1);
+  gSttngs().set("expdtDvUnitsFactor", 1);
   gSttngs().set("expdtQueueLength", 1);
 };
 
 test("20 devUnits, 2 touchSteps, factor 0.5", () /*: void */ => {
   fixture();
   gSttngs().set("devUnits", 20);
-  gSttngs().set("expdtdDvUnitsFactor", 0.5);
-  const nmExpdtdDvUnts = numberExpiditedDevUnits();
-  should(nmExpdtdDvUnts).be.exactly(5);
+  gSttngs().set("expdtDvUnitsFactor", 0.5);
+  const nmExpdtDvUnts = numberExpiditedDevUnits();
+  should(nmExpdtDvUnts).be.exactly(5);
 });
 
 test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
   fixture();
   gSttngs().set("devUnits", 5);
-  gSttngs().set("expdtdDvUnitsFactor", 0.5);
-  const nmExpdtdDvUnts = numberExpiditedDevUnits();
-  should(nmExpdtdDvUnts).be.exactly(1.25);
+  gSttngs().set("expdtDvUnitsFactor", 0.5);
+  const nmExpdtDvUnts = numberExpiditedDevUnits();
+  should(nmExpdtDvUnts).be.exactly(1.25);
 });

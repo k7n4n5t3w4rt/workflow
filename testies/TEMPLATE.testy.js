@@ -24,7 +24,7 @@ import populateSteps from "../js/workflow/actions/populateSteps.js";
 //------------------------------------------------------------------
 // TEST: setExpedite()
 //------------------------------------------------------------------
-test("-------------- setExpedite.js ---------------------", () /*: void */ => {
+test("------- setExpedite.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

@@ -14,11 +14,11 @@ import globalSettings from "../js/workflow/actions/globalSettings.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import dragFunction from "../js/workflow/actions/dragFunction.js";
+import dragFunction from "../js/workflow/actions/NOT_USED_dragFunction.js";
 //------------------------------------------------------------------
 // TEST: dragFunction
 //------------------------------------------------------------------
-test("-------------- dragFunction.js ---------------------", () /*: void */ => {
+test("------- dragFunction.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

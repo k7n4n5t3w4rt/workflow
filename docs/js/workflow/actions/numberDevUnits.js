@@ -12,7 +12,7 @@ import touchStepsCount from "./touchStepsCount.js";
 //------------------------------------------------------------------
 export const numberExpiditedDevUnits = () /*: number */ => {
   if (
-    gSttngs().get("expdtdDvUnitsFactor") === 0 ||
+    gSttngs().get("expdtDvUnitsFactor") === 0 ||
     gSttngs().get("expdtQueueLength") === 0
   ) {
     return 0;
@@ -21,7 +21,7 @@ export const numberExpiditedDevUnits = () /*: number */ => {
   // as the number of expedited dev units per touch step
   return (
     Math.round(
-      ((gSttngs().get("devUnits") * gSttngs().get("expdtdDvUnitsFactor")) /
+      ((gSttngs().get("devUnits") * gSttngs().get("expdtDvUnitsFactor")) /
         touchStepsCount()) *
         100,
     ) / 100
@@ -35,14 +35,14 @@ export const numberNormalDevUnits = () /*: number */ => {
   // in the flwMap, so we need to only allocate resources if there are
   // some speciically allocated to normal work
   if (
-    gSttngs().get("expdtdDvUnitsFactor") === 0 ||
+    gSttngs().get("expdtDvUnitsFactor") === 0 ||
     gSttngs().get("expdtQueueLength") === 0
   ) {
     return (
       Math.round((gSttngs().get("devUnits") / touchStepsCount()) * 100) / 100
     );
   }
-  const nrmlDvUnitsFactor = 1 - gSttngs().get("expdtdDvUnitsFactor");
+  const nrmlDvUnitsFactor = 1 - gSttngs().get("expdtDvUnitsFactor");
   // Return the number of normal dev units divided by the number of touch steps
   // as the number of normal dev units per touch step
   return (

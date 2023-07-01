@@ -26,7 +26,7 @@ import setExpedite from "../js/workflow/actions/setExpedite.js";
 //------------------------------------------------------------------
 // TEST: setExpedite()
 //------------------------------------------------------------------
-test("-------------- setExpedite.js ---------------------", () /*: void */ => {
+test("------- setExpedite.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

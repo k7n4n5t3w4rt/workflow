@@ -39,20 +39,20 @@ export default (props /*: Props */) /*: string */ => {
   const [fps, setFps] = useState(1);
   const [wipLimitEachStep, setWipLimit] = useState(0);
   const [expdtQueueLength, setExpdtLimit] = useState(0);
-  const [expdtdDvUnitsFactor, setExpdtdDvUnitsFactor] = useState(0);
+  const [expdtDvUnitsFactor, setExpdtDvUnitsFactor] = useState(0);
   // Put the setState functions in an object so we can use them dynamically
   const setStateFunctions = {};
   setStateFunctions["fps"] = setFps;
   setStateFunctions["wipLimitEachStep"] = setWipLimit;
   setStateFunctions["expdtQueueLength"] = setExpdtLimit;
-  setStateFunctions["expdtdDvUnitsFactor"] = setExpdtdDvUnitsFactor;
+  setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
   const [paramToggle, setParamToggle] = useState(false);
 
   useEffect(() => {
     setFps(gSttngs().get("fps"));
     setWipLimit(gSttngs().get("wipLimitEachStep"));
     setExpdtLimit(gSttngs().get("expdtQueueLength"));
-    setExpdtdDvUnitsFactor(gSttngs().get("expdtdDvUnitsFactor"));
+    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
   }, []);
 
   useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);
@@ -155,20 +155,20 @@ export default (props /*: Props */) /*: string */ => {
         <div>
           <label for="fps">Expedited Dev Units Factor:</label>
           <output
-            id="expdtdDvUnitsFactorOutput"
-            name="expdtdDvUnitsFactorOutput"
-            for="expdtdDvUnitsFactor"
-            >${expdtdDvUnitsFactor.toString()}</output
+            id="expdtDvUnitsFactorOutput"
+            name="expdtDvUnitsFactorOutput"
+            for="expdtDvUnitsFactor"
+            >${expdtDvUnitsFactor.toString()}</output
           >
           <input
             type="range"
-            id="expdtdDvUnitsFactor"
-            name="expdtdDvUnitsFactor"
+            id="expdtDvUnitsFactor"
+            name="expdtDvUnitsFactor"
             min="0"
             max="1"
             step="0.05"
-            onChange=${changeParam("expdtdDvUnitsFactor")}
-            value="${expdtdDvUnitsFactor.toString()}"
+            onChange=${changeParam("expdtDvUnitsFactor")}
+            value="${expdtDvUnitsFactor.toString()}"
           />
         </div>
       </fieldset>

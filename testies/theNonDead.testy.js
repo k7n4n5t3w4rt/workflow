@@ -35,7 +35,7 @@ const removeDoneFlwItmsFromFlwMap = (
 //------------------------------------------------------------------
 // TEST: theNonDead()
 //------------------------------------------------------------------
-test("-------------- theNonDead.js ---------------------", () /*: void */ => {
+test("------- theNonDead.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 const fixture = () /*: void */ => {

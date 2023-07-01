@@ -19,7 +19,7 @@ import globalSettings from "../js/workflow/actions/globalSettings.js";
 //------------------------------------------------------------------
 // VALUES
 //------------------------------------------------------------------
-test("-------------- touchStepsCount.js ---------------------", () /*: void */ => {
+test("------- touchStepsCount.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 

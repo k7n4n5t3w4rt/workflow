@@ -15,7 +15,6 @@ import globalState from "../js/workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import dragFunction from "../js/workflow/actions/dragFunction.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
@@ -46,7 +45,7 @@ test("With expedited items, 20 devUnits, 2 touchSteps(), factor 0.5", () /*: voi
   // Just so it's not 0
   gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("devUnits", 20);
-  gSttngs().set("expdtdDvUnitsFactor", 0.5);
+  gSttngs().set("expdtDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(5);
 });
@@ -56,7 +55,7 @@ test("When there is no `expdtQueueLength` it's all normal / touch steps", () /*:
   // Just so it's not 0
   gSttngs().set("expdtQueueLength", 0);
   gSttngs().set("devUnits", 20);
-  gSttngs().set("expdtdDvUnitsFactor", 0.5);
+  gSttngs().set("expdtDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(10);
 });
@@ -66,7 +65,7 @@ test("5 devUnits, 2 touchSteps(), factor 0.5", () /*: void */ => {
   // Just so it's not 0
   gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("devUnits", 5);
-  gSttngs().set("expdtdDvUnitsFactor", 0.5);
+  gSttngs().set("expdtDvUnitsFactor", 0.5);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(1.25);
 });
@@ -76,7 +75,7 @@ test("24 devUnits, 2 touchSteps(), factor 0.33", () /*: void */ => {
   // Just so it's not 0
   gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("devUnits", 24);
-  gSttngs().set("expdtdDvUnitsFactor", 1 / 3);
+  gSttngs().set("expdtDvUnitsFactor", 1 / 3);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(8);
 });
@@ -85,7 +84,7 @@ test("No expedited items, 24 devUnits, 2 touchSteps(), factor 0.33", () /*: void
   fixture();
   gSttngs().set("expdtQueueLength", 0);
   gSttngs().set("devUnits", 24);
-  gSttngs().set("expdtdDvUnitsFactor", 1 / 3);
+  gSttngs().set("expdtDvUnitsFactor", 1 / 3);
   const nmNrmlDvUnts = numberNormalDevUnits();
   should(nmNrmlDvUnts).be.exactly(12);
 });

@@ -25,7 +25,7 @@ import makeItOneClickOlder from "../js/workflow/actions/makeItOneClickOlder.js";
 //------------------------------------------------------------------
 // TEST: makeItOneClickOlder()
 //------------------------------------------------------------------
-test("-------------- makeItOneClickOlder.js ---------------------", () /*: void */ => {
+test("------- makeItOneClickOlder.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
 
