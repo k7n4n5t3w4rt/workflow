@@ -2,6 +2,7 @@
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
+import easyStorage from "./easyStorage.js";
 import isParsable from "./isParsable.1.js";
 
 // gModel() - Needs to use the `function` keyword so we can do `new gModel()`
@@ -24,6 +25,7 @@ function gModel() /*: void */ {
     this.keyValuePairs[key] = value;
     try {
       localStorage.setItem(key, JSON.stringify(value));
+      easyStorage.set(key, JSON.stringify(value));
     } catch (e) {
       // console.error(e);
     }
@@ -33,6 +35,8 @@ function gModel() /*: void */ {
   // setIfNotCached()
   //---------------------------------------------------------------------------
   // Set this, but only if it is not already in the cache.
+  // NOTE: We're assuming that something in localStorage is also in the
+  // easyStorage cache.
   this.setIfNotCached = (
     key /*: string */,
     value /*: any  */,
@@ -47,6 +51,7 @@ function gModel() /*: void */ {
         this.keyValuePairs[key] = lSValue;
       } else {
         localStorage.setItem(key, JSON.stringify(value));
+        easyStorage.set(key, JSON.stringify(value));
       }
     } catch (e) {
       // console.error(e);

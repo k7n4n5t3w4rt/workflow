@@ -109,9 +109,9 @@ export default () => {
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  gSttngs().set("colorGold", "#ffd700");
-  gSttngs().set("colorGrey", "#808080");
-  gSttngs().set("colorGreen", "#00ff00");
+  gSttngs().set("colorGold", "ffd700");
+  gSttngs().set("colorGrey", "808080");
+  gSttngs().set("colorGreen", "00ff00");
   gSttngs().set("fps", 1);
   gSttngs().set("scaleCm", 7);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);

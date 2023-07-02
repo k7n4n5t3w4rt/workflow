@@ -20,6 +20,8 @@ export default () /*: void */ => {
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
+  // Trying to stop the duplication of the animation ariseing from
+  // subsequent touch events.
   if (gState().get("started") === true) {
     return;
   } else {

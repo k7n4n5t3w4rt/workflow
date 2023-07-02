@@ -42,7 +42,7 @@ const threeJsCube = () /*: FlwItem */ => {
     gSttngs().get("y"),
     gSttngs().get("z"),
   );
-  const color = gSttngs().get("colorGold"); // gold
+  const color = "#" + gSttngs().get("colorGold"); // gold
   const material = new THREE.MeshBasicMaterial({ color });
   const flwItem = new THREE.Mesh(geometry, material);
   // Set the color for changing it later

@@ -27,7 +27,7 @@ export default (flwMpStpItems /*: FlwItem[] */) => {
       // Increment the global counter
       gState().set("expdtCount", gState().get("expdtCount") + 1);
       // Change the color of the item to green
-      let color = gSttngs().get("colorGreen");
+      let color = "#" + gSttngs().get("colorGreen");
       setFlowItemColor(flwItem, color);
     }
   });
