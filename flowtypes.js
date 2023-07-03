@@ -1,6 +1,9 @@
 // @flow
 type GlobalModel = {
+  sid: string,
   set: (key: string, value: any) => Object,
+  setSid: (sid: string) => Object,
+  getSid: () => string,
   setIfNotCached: (key: string, value: any) => Object,
   get: (key: string) => any,
   keyValuePairs: { [string]: any },
@@ -9,8 +12,11 @@ type GlobalModel = {
 // gSttngs
 //------------------------------------------------------------------
 type GlobalSettings = {
+  sid: string,
   set: (key: string, value: any) => void,
   get: (key: string) => any,
+  setSid: (sid: string) => Object,
+  getSid: () => string,
   keyValuePairs: {
     arrivalNumber: number,
     arrivalFrequency: number,
@@ -62,8 +68,11 @@ type FlwStep = {
 // gState
 //------------------------------------------------------------------
 type GlobalState = {
+  sid: string,
   set: (key: string, value: any) => void,
   get: (key: string) => any,
+  setSid: (sid: string) => Object,
+  getSid: () => string,
   keyValuePairs: {
     // -----------------------
     // Data:

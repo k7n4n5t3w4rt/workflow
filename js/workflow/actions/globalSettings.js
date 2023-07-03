@@ -7,11 +7,13 @@ import gSttngs from "./gSttngs.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import cleanInt from "../calculations/cleanInt.js";
+import round2Places from "../calculations/round2Places.js";
 
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
 export default () => {
+  gSttngs().setSid("workflowSttngs");
   //------------------------------------------------------------------
   // Development
   //------------------------------------------------------------------
@@ -118,9 +120,9 @@ export default () => {
   gSttngs().set("x", gSttngs().get("scale"));
   gSttngs().set("y", gSttngs().get("scale"));
   gSttngs().set("z", gSttngs().get("scale"));
-  gSttngs().set("step", gSttngs().get("scale") * 5);
-  gSttngs().set("yOffset", gSttngs().get("scale") * 10);
-  gSttngs().set("rangeMax", gSttngs().get("yOffset") * 0.3);
+  gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
+  gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
+  gSttngs().set("rangeMax", round2Places(gSttngs().get("yOffset") * 0.3));
   gSttngs().set("rangeIncreaseRate", 1.15);
   gSttngs().set("rangeDecreaseRate", 0.95);
   gSttngs().set("showMetrics", true);

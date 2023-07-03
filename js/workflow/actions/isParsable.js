@@ -1,5 +1,16 @@
 // @flow
 //------------------------------------------------------------------------------
+// isParsable()
+//------------------------------------------------------------------------------
+export default (lSValue /*: string */) /*: boolean */ => {
+  return (
+    isParsableAsNumber(lSValue) ||
+    isParsableAsNumber(lSValue) ||
+    isParsableAsBoolean(lSValue) ||
+    isParsableAsArray(lSValue)
+  );
+};
+//------------------------------------------------------------------------------
 // isParsableAsNumber()
 //------------------------------------------------------------------------------
 export const isParsableAsNumber = (str /*: string */) /*: boolean */ => {

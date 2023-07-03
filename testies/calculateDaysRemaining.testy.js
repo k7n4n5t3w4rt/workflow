@@ -1,6 +1,5 @@
 // @flow
 import { test, testPromise, should } from "../server/testy.js";
-import glob from "glob";
 import calculateDaysRemaining from "../js/workflow/calculations/calculateDaysRemaining.js";
 
 const skip = false;

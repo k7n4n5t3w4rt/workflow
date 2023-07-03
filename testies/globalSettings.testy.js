@@ -1,7 +1,6 @@
 // @flow
 import { test, testPromise, should } from "../server/testy.js";
 import gSttngs from "../js/workflow/actions/gSttngs.js";
-import glob from "glob";
 
 const skip = false;
 

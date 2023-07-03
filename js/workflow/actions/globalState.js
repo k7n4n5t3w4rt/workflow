@@ -7,6 +7,7 @@ import gState from "./gState.js";
 import setUpFlwMap from "./setUpFlwMap.js";
 
 export default () => {
+  gState().setSid("workflowState");
   //------------------------------------------------------------------
   // Empty objects and sensible defaults
   //------------------------------------------------------------------

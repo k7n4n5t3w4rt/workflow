@@ -7,19 +7,23 @@ import gSttngs from "./gSttngs.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import easyStorage from "./easyStorage.js";
+import isParsable from "./isParsable.js";
 //------------------------------------------------------------------
 // getSttngsFromEasyStorage()
 //------------------------------------------------------------------
 export default () => {
   Object.keys(gSttngs().keyValuePairs).forEach((key /*: string */) => {
-    if (easyStorage.get(key) !== undefined) {
-      easyStorage.get(key).then((value /*: string */) => {
-        if (value !== null && value !== undefined) {
-          if (value !== gSttngs().get(key)) {
-            gSttngs().set(key, value);
-          }
+    easyStorage
+      .get(gSttngs().getSid(), key)
+      .then((valueObj /*: { [string]: string } */) => {
+        if (
+          valueObj[key] !== null &&
+          valueObj[key] !== undefined &&
+          valueObj[key] !== gSttngs().get(key) &&
+          isParsable(valueObj[key])
+        ) {
+          gSttngs().set(key, JSON.parse(valueObj[key]));
         }
       });
-    }
   });
 };
