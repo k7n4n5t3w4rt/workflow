@@ -47,7 +47,6 @@ export const onClickComplete = () /*: void */ => {
   updateNrmlWip();
   // For testing, we need to pass in removeDoneFlwItmsFromFlwMap
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-  getSttngsFromEasyStorage();
   click();
 };
 //------------------------------------------------------------------

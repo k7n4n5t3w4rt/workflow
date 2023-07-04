@@ -11,7 +11,7 @@ import isParsable from "./isParsable.js";
 //------------------------------------------------------------------
 // getSttngsFromEasyStorage()
 //------------------------------------------------------------------
-export default () => {
+const getSttngsFromEasyStorage = () => {
   Object.keys(gSttngs().keyValuePairs).forEach((key /*: string */) => {
     easyStorage
       .get(gSttngs().getSid(), key)
@@ -26,4 +26,7 @@ export default () => {
         }
       });
   });
+  setTimeout(getSttngsFromEasyStorage, 1000 / gSttngs().get("fps"));
 };
+
+export default getSttngsFromEasyStorage;
