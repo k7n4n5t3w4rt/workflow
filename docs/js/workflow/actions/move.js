@@ -45,7 +45,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
     x: flwItem.dPosition.x,
     y: flwItem.dPosition.y,
     z: flwItem.dPosition.z,
-    duration: 1000 / gSttngs().get("fps"),
+    duration: 1000 / (gSttngs().get("fps") >= 1 ? gSttngs().get("fps") : 1),
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {
@@ -89,12 +89,12 @@ const animateColorChange = (
 //------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
   const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex + 1].status;
-  let newColor = gSttngs().get("colorGrey"); // Grey for "waiting" status
+  let newColor = "#" + gSttngs().get("colorGrey"); // Grey for "waiting" status
 
   if (nextStatus === "touch" || nextStatus === "done") {
-    newColor = gSttngs().get("colorGold"); // Gold for "touch" status
+    newColor = "#" + gSttngs().get("colorGold"); // Gold for "touch" status
     if (flwItem.dExpedite == true) {
-      newColor = gSttngs().get("colorGreen"); // Green for "touch" status
+      newColor = "#" + gSttngs().get("colorGreen"); // Green for "touch" status
     }
   }
   return newColor;

@@ -188,6 +188,50 @@ export default (props /*: Props */) /*: string */ => {
           />
         </div>
         <!-------------------------------------------------------------------->
+        <!-- Flow Item Size Min -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <label for="flwItmSizeMin">Flow Item Size Min.:</label>
+          <output
+            id="flwItmSizeMinOutput"
+            name="flwItmSizeMinOutput"
+            for="flwItmSizeMin"
+            >${flwItmSizeMin.toString()}</output
+          >
+          <input
+            type="range"
+            id="flwItmSizeMin"
+            name="flwItmSizeMin"
+            min="1"
+            max="50"
+            step="1"
+            onChange=${changeParam("flwItmSizeMin")}
+            value="${flwItmSizeMin.toString()}"
+          />
+        </div>
+        <!-------------------------------------------------------------------->
+        <!-- Flow Item Size Max -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <label for="flwItmSizeMax">Flow Item Size Max.:</label>
+          <output
+            id="flwItmSizeMaxOutput"
+            name="flwItmSizeMaxOutput"
+            for="flwItmSizeMax"
+            >${flwItmSizeMax.toString()}</output
+          >
+          <input
+            type="range"
+            id="flwItmSizeMax"
+            name="flwItmSizeMax"
+            min="1"
+            max="50"
+            step="1"
+            onChange=${changeParam("flwItmSizeMax")}
+            value="${flwItmSizeMax.toString()}"
+          />
+        </div>
+        <!-------------------------------------------------------------------->
         <!-- Dev Units -->
         <!-------------------------------------------------------------------->
         <div>

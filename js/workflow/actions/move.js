@@ -45,7 +45,7 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
     x: flwItem.dPosition.x,
     y: flwItem.dPosition.y,
     z: flwItem.dPosition.z,
-    duration: 1000 / gSttngs().get("fps"),
+    duration: 1000 / (gSttngs().get("fps") >= 1 ? gSttngs().get("fps") : 1),
     delay: 0,
     easing: "easeInOutCirc",
     complete: (anim) /*: void */ => {

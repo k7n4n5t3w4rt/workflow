@@ -2,10 +2,28 @@
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import isParsable from "./isParsable.1.js";
+import easyStorage from "./easyStorage.js";
+import isParsable from "./isParsable.js";
 
 // gModel() - Needs to use the `function` keyword so we can do `new gModel()`
 function gModel() /*: void */ {
+  //------------------------------------------------------------------------------
+  // easyStorageSid
+  //------------------------------------------------------------------------------
+  this.sid = "workflow"; // a default value
+  //---------------------------------------------------------------------------
+  // setSid()
+  //---------------------------------------------------------------------------
+  this.setSid = (sid /*: string */) /*: () => void */ => {
+    this.sid = sid;
+    return this;
+  };
+  //---------------------------------------------------------------------------
+  // getSid()
+  //---------------------------------------------------------------------------
+  this.getSid = () /*: string */ => {
+    return this.sid;
+  };
   //------------------------------------------------------------------------------
   // keyValuePairs
   //------------------------------------------------------------------------------
@@ -23,9 +41,13 @@ function gModel() /*: void */ {
   this.set = (key /*: string */, value /*: any  */) /*: () => void */ => {
     this.keyValuePairs[key] = value;
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      if (typeof value !== "string") {
+        value = JSON.stringify(value);
+      }
+      localStorage.setItem(key, value);
+      easyStorage.set(this.sid, key, value);
     } catch (e) {
-      // console.error(e);
+      console.error(e);
     }
     return this;
   };
@@ -33,6 +55,8 @@ function gModel() /*: void */ {
   // setIfNotCached()
   //---------------------------------------------------------------------------
   // Set this, but only if it is not already in the cache.
+  // NOTE: We're assuming that something in localStorage is also in the
+  // easyStorage cache.
   this.setIfNotCached = (
     key /*: string */,
     value /*: any  */,
@@ -46,10 +70,14 @@ function gModel() /*: void */ {
         }
         this.keyValuePairs[key] = lSValue;
       } else {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (typeof value !== "string") {
+          value = JSON.stringify(value);
+        }
+        localStorage.setItem(key, value);
+        easyStorage.set(this.sid, key, value);
       }
     } catch (e) {
-      // console.error(e);
+      console.error(e);
     }
     return this;
   };

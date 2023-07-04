@@ -48,12 +48,15 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
   const [paramToggle, setParamToggle] = useState(false);
 
-  useEffect(() => {
-    setFps(gSttngs().get("fps"));
-    setWipLimit(gSttngs().get("wipLimitEachStep"));
-    setExpdtLimit(gSttngs().get("expdtQueueLength"));
-    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
-  }, []);
+  useEffect(
+    setStateFromGlobalSettings(
+      setFps,
+      setWipLimit,
+      setExpdtLimit,
+      setExpdtDvUnitsFactor,
+    ),
+    [],
+  );
 
   useEffect(hideOrShowParamsDivs(paramToggle), [paramToggle]);
   // useEffect(setSliderValues(props), []);
@@ -101,9 +104,9 @@ export default (props /*: Props */) /*: string */ => {
             type="range"
             id="fps"
             name="fps"
-            min="1"
-            max="10"
-            step="1"
+            min="0"
+            max="1"
+            step=".1"
             onChange=${changeParam("fps")}
             value="${fps.toString()}"
           />
@@ -112,7 +115,7 @@ export default (props /*: Props */) /*: string */ => {
         <!-- WIP Limit -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="fps">WIP Limit:</label>
+          <label for="fps">WIP Limit Each Step:</label>
           <output id="wiplimitOutput" name="wiplimitOutput" for="wiplimit"
             >${wipLimitEachStep.toString()}</output
           >
@@ -128,10 +131,10 @@ export default (props /*: Props */) /*: string */ => {
           />
         </div>
         <!-------------------------------------------------------------------->
-        <!-- Expedite Limit -->
+        <!-- Expedite Queue -->
         <!-------------------------------------------------------------------->
         <div>
-          <label for="expdtQueueLength">Expedite Limit:</label>
+          <label for="expdtQueueLength">Expedite Queue:</label>
           <output
             id="expdtQueueLengthOutput"
             name="expdtQueueLengthOutput"
@@ -178,6 +181,29 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
+
+const setStateFromGlobalSettings =
+  (
+    setFps /*: (any) => void */,
+    setWipLimit /*: (any) => void */,
+    setExpdtLimit /*: (any) => void */,
+    setExpdtDvUnitsFactor /*: (any) => void */,
+  ) /*: () => void */ =>
+  () /* void */ => {
+    setFps(gSttngs().get("fps"));
+    setWipLimit(gSttngs().get("wipLimitEachStep"));
+    setExpdtLimit(gSttngs().get("expdtQueueLength"));
+    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
+    setTimeout(
+      setStateFromGlobalSettings(
+        setFps,
+        setWipLimit,
+        setExpdtLimit,
+        setExpdtDvUnitsFactor,
+      ),
+      1000 / gSttngs().get("fps"),
+    );
+  };
 
 // //------------------------------------------------------------------
 // // setSliderValues()

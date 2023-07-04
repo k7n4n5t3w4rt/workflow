@@ -19,6 +19,7 @@ import updateAge from "./updateAge.js";
 import updateDays from "./updateDays.js";
 import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
+import getSttngsFromEasyStorage from "./getSttngsFromEasyStorage.js";
 
 const click = () /*: void */ => {
   gState().set("clicks"), gState().get("clicks") + 1;
@@ -46,6 +47,7 @@ export const onClickComplete = () /*: void */ => {
   updateNrmlWip();
   // For testing, we need to pass in removeDoneFlwItmsFromFlwMap
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  getSttngsFromEasyStorage();
   click();
 };
 //------------------------------------------------------------------
@@ -61,5 +63,4 @@ const addNewFlowItemsAtArrivalRate = () /*: void */ => {
     }
   }
 };
-
 export default click;
