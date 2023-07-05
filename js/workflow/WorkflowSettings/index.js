@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./actions/gSttngs.js";
-import gState from "./actions/gState.js";
+import gSttngs from "../actions/gSttngs.js";
+import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -11,8 +11,9 @@ import {
   useEffect,
   useState,
   useReducer,
-} from "../../web_modules/preact/hooks.js";
-import { html } from "../../web_modules/htm/preact.js";
+} from "../../../web_modules/preact/hooks.js";
+import { html } from "../../../web_modules/htm/preact.js";
+import ArrivalNumber from "./ArrivalNumber.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -20,33 +21,29 @@ import {
   isParsableAsNumber,
   isParsableAsBoolean,
   isParsableAsArray,
-} from "./actions/isParsable.js";
-import seedString from "../simple_css_seed.js";
+} from "../actions/isParsable.js";
+import seedString from "../../simple_css_seed.js";
 import {
   rawStyles,
   createStyles,
   setSeed,
-} from "../../web_modules/simplestyle-js.js";
+} from "../../../web_modules/simplestyle-js.js";
 
 /*::
 type Props = {
-	arrivalNumber: number,
-  setArrivalRate: function,
-	drag: number,
-  setDrag: function,
-	dispatch: function
 }
 */
 export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   const [paramToggle, setParamToggle] = useState(false);
+  const setStateFunctions = {};
   //----------------------------------------
   // IN
   //----------------------------------------
-  const setStateFunctions = {};
-  const [arrivalNumber, setArrivalRate] = useState(1);
-  setStateFunctions["arrivalNumber"] = setArrivalRate;
+  const [arrivalNumber, setArrivalNumber] = useState(1);
+  setStateFunctions["arrivalNumber"] = setArrivalNumber;
+
   const [devUnits, setDevUnits] = useState(1);
   setStateFunctions["devUnits"] = setDevUnits;
   const [drag, setDrag] = useState(0);
@@ -101,7 +98,6 @@ export default (props /*: Props */) /*: string */ => {
     //----------------------------------------
     // IN
     //----------------------------------------
-    setArrivalRate(gSttngs().get("arrivalNumber"));
     setDrag(gSttngs().get("drag"));
     setDevUnits(gSttngs().get("devUnits"));
     setDevPower(gSttngs().get("devCapacityAvailable"));
@@ -138,8 +134,8 @@ export default (props /*: Props */) /*: string */ => {
     setParamToggle(!paramToggle);
   };
 
-  const changeParam =
-    (param /*: string */) /*: function */ =>
+  const changeSetting =
+    (setting /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
       let value = e.target.value;
@@ -151,8 +147,8 @@ export default (props /*: Props */) /*: string */ => {
       ) {
         value = JSON.parse(value);
       }
-      gSttngs().set(param, value);
-      setStateFunctions[param](value);
+      gSttngs().set(setting, value);
+      setStateFunctions[setting](value);
     };
 
   return html`
@@ -166,27 +162,12 @@ export default (props /*: Props */) /*: string */ => {
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
-        <!-- Arrival Rate -->
+        <!-- ArrivalNumber -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="arrivalNumber">Arrival Rate:</label>
-          <output
-            id="arrivalNumberOutput"
-            name="arrivalNumberOutput"
-            for="arrivalNumber"
-            >${arrivalNumber.toString()}</output
-          >
-          <input
-            type="range"
-            id="arrivalNumber"
-            name="arrivalNumber"
-            min="0"
-            max="50"
-            step="1"
-            onChange=${changeParam("arrivalNumber")}
-            value="${arrivalNumber.toString()}"
-          />
-        </div>
+        <${ArrivalNumber}
+          arrivalNumber=${arrivalNumber}
+          changeArrivalNumber=${changeSetting("arrivalNumber")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->
         <!-------------------------------------------------------------------->
@@ -205,7 +186,7 @@ export default (props /*: Props */) /*: string */ => {
             min="1"
             max="50"
             step="1"
-            onChange=${changeParam("flwItmSizeMin")}
+            onChange=${changeSetting("flwItmSizeMin")}
             value="${flwItmSizeMin.toString()}"
           />
         </div>
@@ -227,7 +208,7 @@ export default (props /*: Props */) /*: string */ => {
             min="1"
             max="50"
             step="1"
-            onChange=${changeParam("flwItmSizeMax")}
+            onChange=${changeSetting("flwItmSizeMax")}
             value="${flwItmSizeMax.toString()}"
           />
         </div>
@@ -246,7 +227,7 @@ export default (props /*: Props */) /*: string */ => {
             min="1"
             max="50"
             step="1"
-            onChange=${changeParam("devUnits")}
+            onChange=${changeSetting("devUnits")}
             value="${devUnits.toString()}"
           />
         </div>
@@ -268,7 +249,7 @@ export default (props /*: Props */) /*: string */ => {
             min="0"
             max="1"
             step="0.05"
-            onChange=${changeParam("devCapacityAvailable")}
+            onChange=${changeSetting("devCapacityAvailable")}
             value="${devCapacityAvailable.toString()}"
           />
         </div>
@@ -287,7 +268,7 @@ export default (props /*: Props */) /*: string */ => {
             min="0"
             max="1"
             step="0.05"
-            onChange=${changeParam("drag")}
+            onChange=${changeSetting("drag")}
             value="${drag.toString()}"
           />
         </div>
@@ -303,7 +284,7 @@ export default (props /*: Props */) /*: string */ => {
               id="autoModeTrue"
               name="autoMode"
               value="true"
-              onChange=${changeParam("autoMode")}
+              onChange=${changeSetting("autoMode")}
               checked
             />`}
             ${autoMode === false &&
@@ -312,7 +293,7 @@ export default (props /*: Props */) /*: string */ => {
               id="autoModeTrue"
               name="autoMode"
               value="true"
-              onChange=${changeParam("autoMode")}
+              onChange=${changeSetting("autoMode")}
             />`}
             <span>True</span>
           </label>
@@ -324,7 +305,7 @@ export default (props /*: Props */) /*: string */ => {
                 id="autoModeFalse"
                 name="autoMode"
                 value="false"
-                onChange=${changeParam("autoMode")}
+                onChange=${changeSetting("autoMode")}
                 checked
               />
             `}
@@ -335,7 +316,7 @@ export default (props /*: Props */) /*: string */ => {
                 id="autoModeFalse"
                 name="autoMode"
                 value="false"
-                onChange=${changeParam("autoMode")}
+                onChange=${changeSetting("autoMode")}
               />
             `}
             <span>false</span>

@@ -394,11 +394,35 @@ declare module "glob" {
   declare module.exports: any;
 }
 
+//------------------------------------------------------------------
+// WEB_MODULES: Level 1
+//------------------------------------------------------------------
+
 declare module "../web_modules/should/as-function.js" {
   declare module.exports: any;
 }
 
+declare module "../web_modules/htm/preact.js" {
+  declare module.exports: any;
+}
+
+declare module "../web_modules/preact-router.js" {
+  declare module.exports: any;
+}
+
 declare module "../web_modules/preact/hooks.js" {
+  declare module.exports: any;
+}
+
+declare module "../web_modules/history.js" {
+  declare module.exports: any;
+}
+
+//------------------------------------------------------------------
+// WEB_MODULES: Level 2
+//------------------------------------------------------------------
+
+declare module "../../web_modules/htm/preact.js" {
   declare module.exports: any;
 }
 
@@ -410,23 +434,27 @@ declare module "../../web_modules/simplestyle-js.js" {
   declare module.exports: any;
 }
 
-declare module "../web_modules/htm/preact.js" {
-  declare module.exports: any;
-}
-
-declare module "../../web_modules/htm/preact.js" {
-  declare module.exports: any;
-}
-
-declare module "../web_modules/preact-router.js" {
-  declare module.exports: any;
-}
-
-declare module "../web_modules/history.js" {
-  declare module.exports: any;
-}
-
 declare module "../../web_modules/three.js" {
+  declare module.exports: any;
+}
+
+declare module "../../web_modules/three/examples/jsm/controls/OrbitControls.js" {
+  declare module.exports: any;
+}
+
+//------------------------------------------------------------------
+// WEB_MODULES: Level 3
+//------------------------------------------------------------------
+
+declare module "../../../web_modules/htm/preact.js" {
+  declare module.exports: any;
+}
+
+declare module "../../../web_modules/preact/hooks.js" {
+  declare module.exports: any;
+}
+
+declare module "../../../web_modules/simplestyle-js.js" {
   declare module.exports: any;
 }
 
@@ -435,10 +463,6 @@ declare module "../../../web_modules/three.js" {
 }
 
 declare module "../../web_modules/three/examples/jsm/libs/stats.module.js" {
-  declare module.exports: any;
-}
-
-declare module "../../web_modules/three/examples/jsm/controls/OrbitControls.js" {
   declare module.exports: any;
 }
 
