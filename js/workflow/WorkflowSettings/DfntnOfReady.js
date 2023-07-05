@@ -9,7 +9,7 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	autoMode: boolean,
+	dfntnOfReady: boolean,
   changeSetting: () => void,
   styles: Object
 }
@@ -17,46 +17,46 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <div className="${props.styles.inputHeading}">Automode:</div>
+      <div className="${props.styles.inputHeading}">Definition of Ready:</div>
       <div className="${props.styles.radioContainer}">
-        <label for="autoModeTrue">
-          ${props.autoMode === true &&
+        <label for="dfntnOfReadyTrue">
+          ${props.dfntnOfReady === true &&
           html`<input
             type="radio"
-            id="autoModeTrue"
-            name="autoMode"
+            id="dfntnOfReadyTrue"
+            name="dfntnOfReady"
             value="true"
             onChange=${props.changeSetting}
             checked
           />`}
-          ${props.autoMode === false &&
+          ${props.dfntnOfReady === false &&
           html`<input
             type="radio"
-            id="autoModeTrue"
-            name="autoMode"
+            id="dfntnOfReadyTrue"
+            name="dfntnOfReady"
             value="true"
             onChange=${props.changeSetting}
           />`}
           <span>True</span>
         </label>
-        <label for="autoModeFalse">
-          ${props.autoMode === false &&
+        <label for="dfntnOfReadyFalse">
+          ${props.dfntnOfReady === false &&
           html`
             <input
               type="radio"
-              id="autoModeFalse"
-              name="autoMode"
+              id="dfntnOfReadyFalse"
+              name="dfntnOfReady"
               value="false"
               onChange=${props.changeSetting}
               checked
             />
           `}
-          ${props.autoMode === true &&
+          ${props.dfntnOfReady === true &&
           html`
             <input
               type="radio"
-              id="autoModeFalse"
-              name="autoMode"
+              id="dfntnOfReadyFalse"
+              name="dfntnOfReady"
               value="false"
               onChange=${props.changeSetting}
             />

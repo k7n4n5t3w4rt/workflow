@@ -22,7 +22,6 @@ type GlobalSettings = {
     arrivalFrequency: number,
     autoMode: boolean,
     backlogDeath: number,
-    backlogMax: number,
     colorGrey: string,
     colorGold: string,
     colorGreen: string,
