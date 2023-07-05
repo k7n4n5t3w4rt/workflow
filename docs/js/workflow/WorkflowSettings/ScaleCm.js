@@ -1,0 +1,35 @@
+// @flow
+//------------------------------------------------------------------
+// PREACT
+//------------------------------------------------------------------
+import { html } from "../../../web_modules/htm/preact.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+
+/*::
+type Props = {
+	scaleCm: number,
+  changeSetting: () => void,
+}
+*/
+export default (props /*: Props */) /*: string */ => {
+  return html`
+    <div>
+      <label for="scaleCm">Scale (cm):</label>
+      <output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm"
+        >${props.scaleCm.toString()}</output
+      >
+      <input
+        type="range"
+        id="scaleCm"
+        name="scaleCm"
+        min="5"
+        max="100"
+        step="5"
+        onChange=${props.changeSetting}
+        value="${props.scaleCm.toString()}"
+      />
+    </div>
+  `;
+};

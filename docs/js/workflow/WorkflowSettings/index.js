@@ -31,6 +31,7 @@ import Fps from "./Fps.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import WipLimiitEachStep from "./WipLimitEachStep.js";
+import ScaleCm from "./ScaleCm.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -98,6 +99,8 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
   const [wipLimitEachStep, setWipLimitEachStep] = useState(0);
   setStateFunctions["wipLimitEachStep"] = setWipLimitEachStep;
+  const [scaleCm, setScaleCm] = useState(10);
+  setStateFunctions["scaleCm"] = setScaleCm;
   // Not implemented yet
   const [specialisation, setSpecialisation] = useState(0);
   setStateFunctions["specialisation"] = setSpecialisation;
@@ -130,6 +133,7 @@ export default (props /*: Props */) /*: string */ => {
     setExpdtQueueLength(gSttngs().get("expdtQueueLength"));
     setWipLimitEachStep(gSttngs().get("wipLimitEachStep"));
     setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
+    setScaleCm(gSttngs().get("scaleCm"));
     // Not implimented yet
     setSpecialisation(gSttngs().get("specialisation"));
     setTeamInstability(gSttngs().get("teamInstability"));
@@ -288,6 +292,13 @@ export default (props /*: Props */) /*: string */ => {
         <${WipLimiitEachStep}
           wipLimitEachStep=${wipLimitEachStep}
           changeSetting=${changeSetting("wipLimitEachStep")}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- ScaleCm -->
+        <!-------------------------------------------------------------------->
+        <${ScaleCm}
+          scaleCm=${scaleCm}
+          changeSetting=${changeSetting("scaleCm")}
         />
         <!-------------------------------------------------------------------->
         <!-- specialisation -->
