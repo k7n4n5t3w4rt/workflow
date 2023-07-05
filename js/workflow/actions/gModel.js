@@ -62,6 +62,9 @@ function gModel() /*: void */ {
     value /*: any  */,
   ) /*: () => void */ => {
     this.keyValuePairs[key] = value;
+    // ----------------------------------------------------
+    // localStorage
+    // ----------------------------------------------------
     try {
       let lSValue = localStorage.getItem(key);
       if (lSValue !== null && lSValue !== undefined) {
@@ -74,8 +77,31 @@ function gModel() /*: void */ {
           value = JSON.stringify(value);
         }
         localStorage.setItem(key, value);
-        easyStorage.set(this.sid, key, value);
       }
+    } catch (e) {
+      console.error(e);
+    }
+    // ----------------------------------------------------
+    // easyStorage
+    // ----------------------------------------------------
+    try {
+      easyStorage
+        .get(this.sid, key)
+        .then((valueObj /*: {[string]:string} */) /*: void */ => {
+          if (
+            valueObj[key] !== undefined &&
+            valueObj[key] !== this.keyValuePairs[key]
+          ) {
+            if (isParsable(valueObj[key])) {
+              this.keyValuePairs[key] = JSON.parse(valueObj[key]);
+            }
+          } else {
+            if (typeof value !== "string") {
+              value = JSON.stringify(value);
+            }
+            easyStorage.set(this.sid, key, value);
+          }
+        });
     } catch (e) {
       console.error(e);
     }

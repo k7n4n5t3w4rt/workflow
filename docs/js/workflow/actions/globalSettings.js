@@ -111,11 +111,14 @@ export default () => {
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  gSttngs().set("colorGold", "ffd700");
-  gSttngs().set("colorGrey", "808080");
-  gSttngs().set("colorGreen", "00ff00");
-  gSttngs().set("fps", 0.1);
-  gSttngs().set("scaleCm", 7);
+  gSttngs().setIfNotCached("colorGold", "ffd700");
+  gSttngs().setIfNotCached("colorGrey", "808080");
+  gSttngs().setIfNotCached("colorGreen", "00ff00");
+  gSttngs().setIfNotCached("fps", 0.1);
+  gSttngs().setIfNotCached("scaleCm", 7);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 1.15);
+  gSttngs().setIfNotCached("rangeDecreaseRate", 0.95);
+  gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
   gSttngs().set("x", gSttngs().get("scale"));
   gSttngs().set("y", gSttngs().get("scale"));
@@ -123,7 +126,4 @@ export default () => {
   gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   gSttngs().set("rangeMax", round2Places(gSttngs().get("yOffset") * 0.3));
-  gSttngs().set("rangeIncreaseRate", 1.15);
-  gSttngs().set("rangeDecreaseRate", 0.95);
-  gSttngs().set("showMetrics", true);
 };

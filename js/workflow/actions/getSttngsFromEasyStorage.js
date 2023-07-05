@@ -17,7 +17,7 @@ const getSttngsFromEasyStorage = () => {
       .get(gSttngs().getSid(), key)
       .then((valueObj /*: { [string]: string } */) => {
         if (
-          valueObj[key] !== null &&
+          valueObj !== undefined &&
           valueObj[key] !== undefined &&
           valueObj[key] !== gSttngs().get(key) &&
           isParsable(valueObj[key])
@@ -26,7 +26,7 @@ const getSttngsFromEasyStorage = () => {
         }
       });
   });
-  setTimeout(getSttngsFromEasyStorage, 1000 / gSttngs().get("fps"));
+  setTimeout(getSttngsFromEasyStorage, 3000);
 };
 
 export default getSttngsFromEasyStorage;
