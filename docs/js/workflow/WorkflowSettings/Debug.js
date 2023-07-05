@@ -9,7 +9,7 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	autoMode: boolean,
+	debug: boolean,
   changeSetting: () => void,
   styles: Object
 }
@@ -17,46 +17,46 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <div className="${props.styles.inputHeading}">Automode:</div>
+      <div className="${props.styles.inputHeading}">Debug:</div>
       <div className="${props.styles.radioContainer}">
-        <label for="autoModeTrue">
-          ${props.autoMode === true &&
+        <label for="debugTrue">
+          ${props.debug === true &&
           html`<input
             type="radio"
-            id="autoModeTrue"
-            name="autoMode"
+            id="debugTrue"
+            name="debug"
             value="true"
             onChange=${props.changeSetting}
             checked
           />`}
-          ${props.autoMode === false &&
+          ${props.debug === false &&
           html`<input
             type="radio"
-            id="autoModeTrue"
-            name="autoMode"
+            id="debugTrue"
+            name="debug"
             value="true"
             onChange=${props.changeSetting}
           />`}
           <span>True</span>
         </label>
-        <label for="autoModeFalse">
-          ${props.autoMode === false &&
+        <label for="debugFalse">
+          ${props.debug === false &&
           html`
             <input
               type="radio"
-              id="autoModeFalse"
-              name="autoMode"
+              id="debugFalse"
+              name="debug"
               value="false"
               onChange=${props.changeSetting}
               checked
             />
           `}
-          ${props.autoMode === true &&
+          ${props.debug === true &&
           html`
             <input
               type="radio"
-              id="autoModeFalse"
-              name="autoMode"
+              id="debugFalse"
+              name="debug"
               value="false"
               onChange=${props.changeSetting}
             />

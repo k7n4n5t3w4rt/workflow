@@ -87,8 +87,8 @@ export default () => {
   gSttngs().setIfNotCached("flwItmSizeFactor", 1);
   // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
   // effective flwItmSize is reduced by this factor
-  // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("dfntnOfReady", 0);
+  // Format: True or False
+  gSttngs().setIfNotCached("dfntnOfReady", false);
   //------------------------------------------------------------------
   // Not yet used - things that contribute to "dragFactor"
   //------------------------------------------------------------------

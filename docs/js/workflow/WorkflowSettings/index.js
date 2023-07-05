@@ -20,6 +20,17 @@ import DevUnits from "./DevUnits.js";
 import DevCapacityAvailable from "./DevCapacityAvailable.js";
 import Drag from "./Drag.js";
 import AutoMode from "./AutoMode.js";
+import ShowMetrics from "./ShowMetrics.js";
+import Debug from "./Debug.js";
+import TimeBox from "./TimeBox.js";
+import Death from "./Death.js";
+import BacklogDeath from "./BacklogDeath.js";
+import FlwItmSizeFactor from "./FlwItmSizeFactor.js";
+import DfntnOfReady from "./DfntnOfReady.js";
+import Fps from "./Fps.js";
+import ExpdtQueueLength from "./ExpdtQueueLength.js";
+import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
+import WipLimiitEachStep from "./WipLimitEachStep.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -54,6 +65,8 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["showMetrics"] = setShowMetrics;
   const [debug, setDebug] = useState(false);
   setStateFunctions["debug"] = setDebug;
+  const [dfntnOfReady, setDfntnOfReady] = useState(false);
+  setStateFunctions["dfntnOfReady"] = setDfntnOfReady;
   //----------------------------------------
   // Sliders
   //----------------------------------------
@@ -69,33 +82,27 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["devCapacityAvailable"] = setDevCapacityAvailable;
   const [drag, setDrag] = useState(0);
   setStateFunctions["drag"] = setDrag;
-  // Not implemented yet
   const [timeBox, setTimeBox] = useState(10);
   setStateFunctions["timeBox"] = setTimeBox;
   const [death, setDeath] = useState(0);
   setStateFunctions["death"] = setDeath;
   const [backlogDeath, setBacklogDeath] = useState(0);
   setStateFunctions["backlogDeath"] = setBacklogDeath;
-  const [backlogMax, setBacklogMax] = useState(2);
-  setStateFunctions["backlogMax"] = setBacklogMax;
-  const [arrivalFrequency, setArrivalFrequency] = useState(1);
-  setStateFunctions["arrivalFrequency"] = setArrivalFrequency;
   const [flwItmSizeFactor, setFlwItmSizeFactor] = useState(1);
   setStateFunctions["flwItmSizeFactor"] = setFlwItmSizeFactor;
-  const [dfntnOfReady, setDfntnOfReady] = useState(0);
-  setStateFunctions["dfntnOfReady"] = setDfntnOfReady;
+  const [fps, setFps] = useState(1);
+  setStateFunctions["fps"] = setFps;
+  const [expdtQueueLength, setExpdtQueueLength] = useState(0);
+  setStateFunctions["expdtQueueLength"] = setExpdtQueueLength;
+  const [expdtDvUnitsFactor, setExpdtDvUnitsFactor] = useState(1);
+  setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
+  const [wipLimitEachStep, setWipLimitEachStep] = useState(0);
+  setStateFunctions["wipLimitEachStep"] = setWipLimitEachStep;
+  // Not implemented yet
   const [specialisation, setSpecialisation] = useState(0);
   setStateFunctions["specialisation"] = setSpecialisation;
   const [teamInstability, setTeamInstability] = useState(0);
   setStateFunctions["teamInstability"] = setTeamInstability;
-  const [fps, setFps] = useState(1);
-  setStateFunctions["fps"] = setFps;
-  const [expdtQueueLength, setExpdtLimit] = useState(0);
-  setStateFunctions["expdtQueueLength"] = setExpdtLimit;
-  const [wipLimitEachStep, setWipLimit] = useState(0);
-  setStateFunctions["wipLimitEachStep"] = setWipLimit;
-  const [expdtDvUnitsFactor, setExpdtDvUnitsFactor] = useState(1);
-  setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
 
   useEffect(() => {
     //----------------------------------------
@@ -105,6 +112,7 @@ export default (props /*: Props */) /*: string */ => {
     // Not implimented yet
     setShowMetrics(gSttngs().get("showMetrics"));
     setDebug(gSttngs().get("debug"));
+    setDfntnOfReady(gSttngs().get("dfntnOfReady"));
     //----------------------------------------
     // Sliders
     //----------------------------------------
@@ -114,20 +122,17 @@ export default (props /*: Props */) /*: string */ => {
     setDevUnits(gSttngs().get("devUnits"));
     setDevCapacityAvailable(gSttngs().get("devCapacityAvailable"));
     setDrag(gSttngs().get("drag"));
-    // Not implimented yet
     setTimeBox(gSttngs().get("timeBox"));
     setDeath(gSttngs().get("death"));
     setBacklogDeath(gSttngs().get("backlogDeath"));
-    setBacklogMax(gSttngs().get("steps")["0"].limit);
-    setArrivalFrequency(gSttngs().get("arrivalFrequency"));
     setFlwItmSizeFactor(gSttngs().get("flwItmSizeFactor"));
-    setDfntnOfReady(gSttngs().get("dfntnOfReady"));
+    setFps(gSttngs().get("fps"));
+    setExpdtQueueLength(gSttngs().get("expdtQueueLength"));
+    setWipLimitEachStep(gSttngs().get("wipLimitEachStep"));
+    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
+    // Not implimented yet
     setSpecialisation(gSttngs().get("specialisation"));
     setTeamInstability(gSttngs().get("teamInstability"));
-    setFps(gSttngs().get("fps"));
-    setExpdtLimit(gSttngs().get("expdtQueueLength"));
-    setWipLimit(gSttngs().get("wipLimitEachStep"));
-    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
   }, []);
 
   useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);
@@ -172,6 +177,30 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("autoMode")}
         />
         <!-------------------------------------------------------------------->
+        <!-- showMetrics -->
+        <!-------------------------------------------------------------------->
+        <${ShowMetrics}
+          showMetrics=${showMetrics}
+          styles=${styles}
+          changeSetting=${changeSetting("showMetrics")}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- debug -->
+        <!-------------------------------------------------------------------->
+        <${Debug}
+          debug=${debug}
+          styles=${styles}
+          changeSetting=${changeSetting("debug")}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- dfntnOfReady -->
+        <!-------------------------------------------------------------------->
+        <${DfntnOfReady}
+          dfntnOfReady=${dfntnOfReady}
+          styles=${styles}
+          changeSetting=${changeSetting("dfntnOfReady")}
+        />
+        <!-------------------------------------------------------------------->
         <!-- ArrivalNumber -->
         <!-------------------------------------------------------------------->
         <${ArrivalNumber}
@@ -213,24 +242,53 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- timeBox -->
         <!-------------------------------------------------------------------->
+        <${TimeBox}
+          timeBox=${timeBox}
+          changeSetting=${changeSetting("timeBox")}
+        />
         <!-------------------------------------------------------------------->
-        <!-- death -->
+        <!-- Death -->
         <!-------------------------------------------------------------------->
+        <${Death} death=${death} changeSetting=${changeSetting("death")} />
         <!-------------------------------------------------------------------->
-        <!-- backlogDeath -->
+        <!-- BacklogDeath -->
         <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- steps["0"].limit -->
-        <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- arrivalFrequency -->
-        <!-------------------------------------------------------------------->
+        <${BacklogDeath}
+          backlogDeath=${backlogDeath}
+          changeSetting=${changeSetting("backlogDeath")}
+        />
         <!-------------------------------------------------------------------->
         <!-- flwItmSizeFactor -->
         <!-------------------------------------------------------------------->
+        <${FlwItmSizeFactor}
+          flwItmSizeFactor=${flwItmSizeFactor}
+          changeSetting=${changeSetting("flwItmSizeFactor")}
+        />
         <!-------------------------------------------------------------------->
-        <!-- dfntnOfReady -->
+        <!-- fps -->
         <!-------------------------------------------------------------------->
+        <${Fps} fps=${fps} changeSetting=${changeSetting("fps")} />
+        <!-------------------------------------------------------------------->
+        <!-- expdtQueueLength -->
+        <!-------------------------------------------------------------------->
+        <${ExpdtQueueLength}
+          expdtQueueLength=${expdtQueueLength}
+          changeSetting=${changeSetting("expdtQueueLength")}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- expdtDvUnitsFactor -->
+        <!-------------------------------------------------------------------->
+        <${ExpdtDvUnitsFactor}
+          expdtDvUnitsFactor=${expdtDvUnitsFactor}
+          changeSetting=${changeSetting("expdtDvUnitsFactor")}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- wipLimitEachStep -->
+        <!-------------------------------------------------------------------->
+        <${WipLimiitEachStep}
+          wipLimitEachStep=${wipLimitEachStep}
+          changeSetting=${changeSetting("wipLimitEachStep")}
+        />
         <!-------------------------------------------------------------------->
         <!-- specialisation -->
         <!-------------------------------------------------------------------->
@@ -238,22 +296,7 @@ export default (props /*: Props */) /*: string */ => {
         <!-- teamInstability -->
         <!-------------------------------------------------------------------->
         <!-------------------------------------------------------------------->
-        <!-- showMetrics -->
-        <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- debug -->
-        <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- fps -->
-        <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- expdtQueueLength -->
-        <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- wipLimitEachStep -->
-        <!-------------------------------------------------------------------->
-        <!-------------------------------------------------------------------->
-        <!-- expdtDvUnitsFactor -->
+        <!-- steps["0"].limit -->
         <!-------------------------------------------------------------------->
       </fieldset>
     </div>
@@ -312,9 +355,9 @@ const cssStyles = () /*: Object */ => {
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
-      padding: "1rem",
-      paddingTop: "3rem",
       backgroundColor: "rgba(0, 0, 0, 0.4)",
+      padding: "3rem",
+      paddingBottom: "6rem",
     },
     settings: {
       position: "absolute",
@@ -340,6 +383,10 @@ const cssStyles = () /*: Object */ => {
       fontSize: "54px",
       color: "white",
     },
+    radioContainer: {
+      display: "flex",
+      marginBottom: "1rem",
+    },
   });
 
   return styles;
@@ -361,7 +408,6 @@ const getRawStyles = () /*: Object */ => {
     },
     label: {
       display: "block",
-      float: "left",
       fontSize: "1rem",
       padding: "0.2rem",
       color: "white",
@@ -369,6 +415,12 @@ const getRawStyles = () /*: Object */ => {
       textShadow: "2px 2px 2px grey",
     },
     ["input[type=range]"]: {},
+    fieldset: {
+      display: "block",
+      height: "100%",
+      boxSizing: "border-box",
+      overflow: "auto",
+    },
   });
 
   return rawStyles;
