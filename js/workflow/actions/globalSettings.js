@@ -45,7 +45,7 @@ export default () => {
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs().setIfNotCached("steps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 0 },
+    { name: "Open", status: "backlog", limit: 10, preload: 0 },
     { name: "Ready", status: "wait", limit: 0, preload: 0 },
     { name: "In Progress", status: "touch", limit: 0, preload: 0 },
     { name: "Ready for Test", status: "wait", limit: 0, preload: 0 },
