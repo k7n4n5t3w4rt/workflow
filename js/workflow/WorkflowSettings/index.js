@@ -14,6 +14,12 @@ import {
 } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalNumber from "./ArrivalNumber.js";
+import FlwItmSizeMin from "./FlwItmSizeMin.js";
+import FlwItmSizeMax from "./FlwItmSizeMax.js";
+import DevUnits from "./DevUnits.js";
+import DevCapacityAvailable from "./DevCapacityAvailable.js";
+import Drag from "./Drag.js";
+import AutoMode from "./AutoMode.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -39,26 +45,31 @@ export default (props /*: Props */) /*: string */ => {
   const [paramToggle, setParamToggle] = useState(false);
   const setStateFunctions = {};
   //----------------------------------------
-  // IN
+  // Boolean
+  //----------------------------------------
+  const [autoMode, setAutoMode] = useState(false);
+  setStateFunctions["autoMode"] = setAutoMode;
+  // Not implemented yet
+  const [showMetrics, setShowMetrics] = useState(true);
+  setStateFunctions["showMetrics"] = setShowMetrics;
+  const [debug, setDebug] = useState(false);
+  setStateFunctions["debug"] = setDebug;
+  //----------------------------------------
+  // Sliders
   //----------------------------------------
   const [arrivalNumber, setArrivalNumber] = useState(1);
   setStateFunctions["arrivalNumber"] = setArrivalNumber;
-
-  const [devUnits, setDevUnits] = useState(1);
-  setStateFunctions["devUnits"] = setDevUnits;
-  const [drag, setDrag] = useState(0);
-  setStateFunctions["drag"] = setDrag;
-  const [devCapacityAvailable, setDevPower] = useState(1);
-  setStateFunctions["devCapacityAvailable"] = setDevPower;
-  const [autoMode, setAutoMode] = useState(false);
-  setStateFunctions["autoMode"] = setAutoMode;
-  //----------------------------------------
-  // OUT
-  //----------------------------------------
   const [flwItmSizeMin, setFlwItmSizeMin] = useState(1);
   setStateFunctions["flwItmSizeMin"] = setFlwItmSizeMin;
   const [flwItmSizeMax, setFlwItmSizeMax] = useState(1);
   setStateFunctions["flwItmSizeMax"] = setFlwItmSizeMax;
+  const [devUnits, setDevUnits] = useState(1);
+  setStateFunctions["devUnits"] = setDevUnits;
+  const [devCapacityAvailable, setDevCapacityAvailable] = useState(1);
+  setStateFunctions["devCapacityAvailable"] = setDevCapacityAvailable;
+  const [drag, setDrag] = useState(0);
+  setStateFunctions["drag"] = setDrag;
+  // Not implemented yet
   const [timeBox, setTimeBox] = useState(10);
   setStateFunctions["timeBox"] = setTimeBox;
   const [death, setDeath] = useState(0);
@@ -77,14 +88,6 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["specialisation"] = setSpecialisation;
   const [teamInstability, setTeamInstability] = useState(0);
   setStateFunctions["teamInstability"] = setTeamInstability;
-  // Boolean
-  const [showMetrics, setShowMetrics] = useState(true);
-  setStateFunctions["showMetrics"] = setShowMetrics;
-  const [debug, setDebug] = useState(false);
-  setStateFunctions["debug"] = setDebug;
-  //----------------------------------------
-  // PARAMS
-  //----------------------------------------
   const [fps, setFps] = useState(1);
   setStateFunctions["fps"] = setFps;
   const [expdtQueueLength, setExpdtLimit] = useState(0);
@@ -96,17 +99,22 @@ export default (props /*: Props */) /*: string */ => {
 
   useEffect(() => {
     //----------------------------------------
-    // IN
+    // Boolean
     //----------------------------------------
-    setDrag(gSttngs().get("drag"));
-    setDevUnits(gSttngs().get("devUnits"));
-    setDevPower(gSttngs().get("devCapacityAvailable"));
     setAutoMode(gSttngs().get("autoMode"));
+    // Not implimented yet
+    setShowMetrics(gSttngs().get("showMetrics"));
+    setDebug(gSttngs().get("debug"));
     //----------------------------------------
-    // OUT
+    // Sliders
     //----------------------------------------
+    setArrivalNumber(gSttngs().get("arrivalNumber"));
     setFlwItmSizeMin(gSttngs().get("flwItmSizeMin"));
     setFlwItmSizeMax(gSttngs().get("flwItmSizeMax"));
+    setDevUnits(gSttngs().get("devUnits"));
+    setDevCapacityAvailable(gSttngs().get("devCapacityAvailable"));
+    setDrag(gSttngs().get("drag"));
+    // Not implimented yet
     setTimeBox(gSttngs().get("timeBox"));
     setDeath(gSttngs().get("death"));
     setBacklogDeath(gSttngs().get("backlogDeath"));
@@ -116,12 +124,6 @@ export default (props /*: Props */) /*: string */ => {
     setDfntnOfReady(gSttngs().get("dfntnOfReady"));
     setSpecialisation(gSttngs().get("specialisation"));
     setTeamInstability(gSttngs().get("teamInstability"));
-    // Boolean
-    setShowMetrics(gSttngs().get("showMetrics"));
-    setDebug(gSttngs().get("debug"));
-    //----------------------------------------
-    // PARAMS
-    //----------------------------------------
     setFps(gSttngs().get("fps"));
     setExpdtLimit(gSttngs().get("expdtQueueLength"));
     setWipLimit(gSttngs().get("wipLimitEachStep"));
@@ -162,166 +164,97 @@ export default (props /*: Props */) /*: string */ => {
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
+        <!-- Auto Mode -->
+        <!-------------------------------------------------------------------->
+        <${AutoMode}
+          autoMode=${autoMode}
+          styles=${styles}
+          changeSetting=${changeSetting("autoMode")}
+        />
+        <!-------------------------------------------------------------------->
         <!-- ArrivalNumber -->
         <!-------------------------------------------------------------------->
         <${ArrivalNumber}
           arrivalNumber=${arrivalNumber}
-          changeArrivalNumber=${changeSetting("arrivalNumber")}
+          changeSetting=${changeSetting("arrivalNumber")}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="flwItmSizeMin">Flow Item Size Min.:</label>
-          <output
-            id="flwItmSizeMinOutput"
-            name="flwItmSizeMinOutput"
-            for="flwItmSizeMin"
-            >${flwItmSizeMin.toString()}</output
-          >
-          <input
-            type="range"
-            id="flwItmSizeMin"
-            name="flwItmSizeMin"
-            min="1"
-            max="50"
-            step="1"
-            onChange=${changeSetting("flwItmSizeMin")}
-            value="${flwItmSizeMin.toString()}"
-          />
-        </div>
+        <${FlwItmSizeMin}
+          flwItmSizeMin=${flwItmSizeMin}
+          changeSetting=${changeSetting("flwItmSizeMin")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Max -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="flwItmSizeMax">Flow Item Size Max.:</label>
-          <output
-            id="flwItmSizeMaxOutput"
-            name="flwItmSizeMaxOutput"
-            for="flwItmSizeMax"
-            >${flwItmSizeMax.toString()}</output
-          >
-          <input
-            type="range"
-            id="flwItmSizeMax"
-            name="flwItmSizeMax"
-            min="1"
-            max="50"
-            step="1"
-            onChange=${changeSetting("flwItmSizeMax")}
-            value="${flwItmSizeMax.toString()}"
-          />
-        </div>
+        <${FlwItmSizeMax}
+          flwItmSizeMax=${flwItmSizeMax}
+          changeSetting=${changeSetting("flwItmSizeMax")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Dev Units -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="devUnits">Dev Units:</label>
-          <output id="devUnitsOutput" name="devUnitsOutput" for="devUnits"
-            >${devUnits.toString()}</output
-          >
-          <input
-            type="range"
-            id="devUnits"
-            name="devUnits"
-            min="1"
-            max="50"
-            step="1"
-            onChange=${changeSetting("devUnits")}
-            value="${devUnits.toString()}"
-          />
-        </div>
+        <${DevUnits}
+          devUnits=${devUnits}
+          changeSetting=${changeSetting("devUnits")}
+        />
         <!-------------------------------------------------------------------->
-        <!-- DevPower -->
+        <!-- Dev Capacity Available -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="devCapacityAvailable">Dev. Power:</label>
-          <output
-            id="devCapacityAvailableOutput"
-            name="devCapacityAvailableOutput"
-            for="devCapacityAvailable"
-            >${devCapacityAvailable.toString()}</output
-          >
-          <input
-            type="range"
-            id="devCapacityAvailable"
-            name="devCapacityAvailable"
-            min="0"
-            max="1"
-            step="0.05"
-            onChange=${changeSetting("devCapacityAvailable")}
-            value="${devCapacityAvailable.toString()}"
-          />
-        </div>
+        <${DevCapacityAvailable}
+          devCapacityAvailable=${devCapacityAvailable}
+          changeSetting=${changeSetting("devCapacityAvailable")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="drag">Drag:</label>
-          <output id="dragOutput" name="dragOutput" for="drag"
-            >${drag.toString()}</output
-          >
-          <input
-            type="range"
-            id="drag"
-            name="drag"
-            min="0"
-            max="1"
-            step="0.05"
-            onChange=${changeSetting("drag")}
-            value="${drag.toString()}"
-          />
-        </div>
+        <${Drag} drag=${drag} changeSetting=${changeSetting("drag")} />
         <!-------------------------------------------------------------------->
-        <!-- Auto Mode -->
+        <!-- timeBox -->
         <!-------------------------------------------------------------------->
-        <div>
-          <div className="${styles.inputHeading}">Automode:</div>
-          <label for="autoModeTrue">
-            ${autoMode === true &&
-            html`<input
-              type="radio"
-              id="autoModeTrue"
-              name="autoMode"
-              value="true"
-              onChange=${changeSetting("autoMode")}
-              checked
-            />`}
-            ${autoMode === false &&
-            html`<input
-              type="radio"
-              id="autoModeTrue"
-              name="autoMode"
-              value="true"
-              onChange=${changeSetting("autoMode")}
-            />`}
-            <span>True</span>
-          </label>
-          <label for="autoModeFalse">
-            ${autoMode === false &&
-            html`
-              <input
-                type="radio"
-                id="autoModeFalse"
-                name="autoMode"
-                value="false"
-                onChange=${changeSetting("autoMode")}
-                checked
-              />
-            `}
-            ${autoMode === true &&
-            html`
-              <input
-                type="radio"
-                id="autoModeFalse"
-                name="autoMode"
-                value="false"
-                onChange=${changeSetting("autoMode")}
-              />
-            `}
-            <span>false</span>
-          </label>
-        </div>
+        <!-------------------------------------------------------------------->
+        <!-- death -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- backlogDeath -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- steps["0"].limit -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- arrivalFrequency -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- flwItmSizeFactor -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- dfntnOfReady -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- specialisation -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- teamInstability -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- showMetrics -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- debug -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- fps -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- expdtQueueLength -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- wipLimitEachStep -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- expdtDvUnitsFactor -->
+        <!-------------------------------------------------------------------->
       </fieldset>
     </div>
     <div

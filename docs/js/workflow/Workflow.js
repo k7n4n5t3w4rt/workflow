@@ -24,7 +24,7 @@ import { html } from "../../web_modules/htm/preact.js";
 // COMPONENTS
 //------------------------------------------------------------------
 import Metrics from "./WorkflowMetrics.js";
-import Settings from "./WorkflowSettings.js";
+import Settings from "./WorkflowSettings/index.js";
 import Params from "./WorkflowParams.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS

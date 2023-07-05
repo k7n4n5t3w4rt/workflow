@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./actions/gSttngs.js";
-import gState from "./actions/gState.js";
+import gSttngs from "../actions/gSttngs.js";
+import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -11,8 +11,15 @@ import {
   useEffect,
   useState,
   useReducer,
-} from "../../web_modules/preact/hooks.js";
-import { html } from "../../web_modules/htm/preact.js";
+} from "../../../web_modules/preact/hooks.js";
+import { html } from "../../../web_modules/htm/preact.js";
+import ArrivalNumber from "./ArrivalNumber.js";
+import FlwItmSizeMin from "./FlwItmSizeMin.js";
+import FlwItmSizeMax from "./FlwItmSizeMax.js";
+import DevUnits from "./DevUnits.js";
+import DevCapacityAvailable from "./DevCapacityAvailable.js";
+import Drag from "./Drag.js";
+import AutoMode from "./AutoMode.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -20,48 +27,49 @@ import {
   isParsableAsNumber,
   isParsableAsBoolean,
   isParsableAsArray,
-} from "./actions/isParsable.js";
-import seedString from "../simple_css_seed.js";
+} from "../actions/isParsable.js";
+import seedString from "../../simple_css_seed.js";
 import {
   rawStyles,
   createStyles,
   setSeed,
-} from "../../web_modules/simplestyle-js.js";
+} from "../../../web_modules/simplestyle-js.js";
 
 /*::
 type Props = {
-	arrivalNumber: number,
-  setArrivalRate: function,
-	drag: number,
-  setDrag: function,
-	dispatch: function
 }
 */
 export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   const [paramToggle, setParamToggle] = useState(false);
-  //----------------------------------------
-  // IN
-  //----------------------------------------
   const setStateFunctions = {};
-  const [arrivalNumber, setArrivalRate] = useState(1);
-  setStateFunctions["arrivalNumber"] = setArrivalRate;
-  const [devUnits, setDevUnits] = useState(1);
-  setStateFunctions["devUnits"] = setDevUnits;
-  const [drag, setDrag] = useState(0);
-  setStateFunctions["drag"] = setDrag;
-  const [devCapacityAvailable, setDevPower] = useState(1);
-  setStateFunctions["devCapacityAvailable"] = setDevPower;
+  //----------------------------------------
+  // Boolean
+  //----------------------------------------
   const [autoMode, setAutoMode] = useState(false);
   setStateFunctions["autoMode"] = setAutoMode;
+  // Not implemented yet
+  const [showMetrics, setShowMetrics] = useState(true);
+  setStateFunctions["showMetrics"] = setShowMetrics;
+  const [debug, setDebug] = useState(false);
+  setStateFunctions["debug"] = setDebug;
   //----------------------------------------
-  // OUT
+  // Sliders
   //----------------------------------------
+  const [arrivalNumber, setArrivalNumber] = useState(1);
+  setStateFunctions["arrivalNumber"] = setArrivalNumber;
   const [flwItmSizeMin, setFlwItmSizeMin] = useState(1);
   setStateFunctions["flwItmSizeMin"] = setFlwItmSizeMin;
   const [flwItmSizeMax, setFlwItmSizeMax] = useState(1);
   setStateFunctions["flwItmSizeMax"] = setFlwItmSizeMax;
+  const [devUnits, setDevUnits] = useState(1);
+  setStateFunctions["devUnits"] = setDevUnits;
+  const [devCapacityAvailable, setDevCapacityAvailable] = useState(1);
+  setStateFunctions["devCapacityAvailable"] = setDevCapacityAvailable;
+  const [drag, setDrag] = useState(0);
+  setStateFunctions["drag"] = setDrag;
+  // Not implemented yet
   const [timeBox, setTimeBox] = useState(10);
   setStateFunctions["timeBox"] = setTimeBox;
   const [death, setDeath] = useState(0);
@@ -80,14 +88,6 @@ export default (props /*: Props */) /*: string */ => {
   setStateFunctions["specialisation"] = setSpecialisation;
   const [teamInstability, setTeamInstability] = useState(0);
   setStateFunctions["teamInstability"] = setTeamInstability;
-  // Boolean
-  const [showMetrics, setShowMetrics] = useState(true);
-  setStateFunctions["showMetrics"] = setShowMetrics;
-  const [debug, setDebug] = useState(false);
-  setStateFunctions["debug"] = setDebug;
-  //----------------------------------------
-  // PARAMS
-  //----------------------------------------
   const [fps, setFps] = useState(1);
   setStateFunctions["fps"] = setFps;
   const [expdtQueueLength, setExpdtLimit] = useState(0);
@@ -99,18 +99,22 @@ export default (props /*: Props */) /*: string */ => {
 
   useEffect(() => {
     //----------------------------------------
-    // IN
+    // Boolean
     //----------------------------------------
-    setArrivalRate(gSttngs().get("arrivalNumber"));
-    setDrag(gSttngs().get("drag"));
-    setDevUnits(gSttngs().get("devUnits"));
-    setDevPower(gSttngs().get("devCapacityAvailable"));
     setAutoMode(gSttngs().get("autoMode"));
+    // Not implimented yet
+    setShowMetrics(gSttngs().get("showMetrics"));
+    setDebug(gSttngs().get("debug"));
     //----------------------------------------
-    // OUT
+    // Sliders
     //----------------------------------------
+    setArrivalNumber(gSttngs().get("arrivalNumber"));
     setFlwItmSizeMin(gSttngs().get("flwItmSizeMin"));
     setFlwItmSizeMax(gSttngs().get("flwItmSizeMax"));
+    setDevUnits(gSttngs().get("devUnits"));
+    setDevCapacityAvailable(gSttngs().get("devCapacityAvailable"));
+    setDrag(gSttngs().get("drag"));
+    // Not implimented yet
     setTimeBox(gSttngs().get("timeBox"));
     setDeath(gSttngs().get("death"));
     setBacklogDeath(gSttngs().get("backlogDeath"));
@@ -120,12 +124,6 @@ export default (props /*: Props */) /*: string */ => {
     setDfntnOfReady(gSttngs().get("dfntnOfReady"));
     setSpecialisation(gSttngs().get("specialisation"));
     setTeamInstability(gSttngs().get("teamInstability"));
-    // Boolean
-    setShowMetrics(gSttngs().get("showMetrics"));
-    setDebug(gSttngs().get("debug"));
-    //----------------------------------------
-    // PARAMS
-    //----------------------------------------
     setFps(gSttngs().get("fps"));
     setExpdtLimit(gSttngs().get("expdtQueueLength"));
     setWipLimit(gSttngs().get("wipLimitEachStep"));
@@ -138,8 +136,8 @@ export default (props /*: Props */) /*: string */ => {
     setParamToggle(!paramToggle);
   };
 
-  const changeParam =
-    (param /*: string */) /*: function */ =>
+  const changeSetting =
+    (setting /*: string */) /*: function */ =>
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
       let value = e.target.value;
@@ -151,8 +149,8 @@ export default (props /*: Props */) /*: string */ => {
       ) {
         value = JSON.parse(value);
       }
-      gSttngs().set(param, value);
-      setStateFunctions[param](value);
+      gSttngs().set(setting, value);
+      setStateFunctions[setting](value);
     };
 
   return html`
@@ -166,181 +164,97 @@ export default (props /*: Props */) /*: string */ => {
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
-        <!-- Arrival Rate -->
+        <!-- Auto Mode -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="arrivalNumber">Arrival Rate:</label>
-          <output
-            id="arrivalNumberOutput"
-            name="arrivalNumberOutput"
-            for="arrivalNumber"
-            >${arrivalNumber.toString()}</output
-          >
-          <input
-            type="range"
-            id="arrivalNumber"
-            name="arrivalNumber"
-            min="0"
-            max="50"
-            step="1"
-            onChange=${changeParam("arrivalNumber")}
-            value="${arrivalNumber.toString()}"
-          />
-        </div>
+        <${AutoMode}
+          autoMode=${autoMode}
+          styles=${styles}
+          changeSetting=${changeSetting("autoMode")}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- ArrivalNumber -->
+        <!-------------------------------------------------------------------->
+        <${ArrivalNumber}
+          arrivalNumber=${arrivalNumber}
+          changeSetting=${changeSetting("arrivalNumber")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="flwItmSizeMin">Flow Item Size Min.:</label>
-          <output
-            id="flwItmSizeMinOutput"
-            name="flwItmSizeMinOutput"
-            for="flwItmSizeMin"
-            >${flwItmSizeMin.toString()}</output
-          >
-          <input
-            type="range"
-            id="flwItmSizeMin"
-            name="flwItmSizeMin"
-            min="1"
-            max="50"
-            step="1"
-            onChange=${changeParam("flwItmSizeMin")}
-            value="${flwItmSizeMin.toString()}"
-          />
-        </div>
+        <${FlwItmSizeMin}
+          flwItmSizeMin=${flwItmSizeMin}
+          changeSetting=${changeSetting("flwItmSizeMin")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Max -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="flwItmSizeMax">Flow Item Size Max.:</label>
-          <output
-            id="flwItmSizeMaxOutput"
-            name="flwItmSizeMaxOutput"
-            for="flwItmSizeMax"
-            >${flwItmSizeMax.toString()}</output
-          >
-          <input
-            type="range"
-            id="flwItmSizeMax"
-            name="flwItmSizeMax"
-            min="1"
-            max="50"
-            step="1"
-            onChange=${changeParam("flwItmSizeMax")}
-            value="${flwItmSizeMax.toString()}"
-          />
-        </div>
+        <${FlwItmSizeMax}
+          flwItmSizeMax=${flwItmSizeMax}
+          changeSetting=${changeSetting("flwItmSizeMax")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Dev Units -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="devUnits">Dev Units:</label>
-          <output id="devUnitsOutput" name="devUnitsOutput" for="devUnits"
-            >${devUnits.toString()}</output
-          >
-          <input
-            type="range"
-            id="devUnits"
-            name="devUnits"
-            min="1"
-            max="50"
-            step="1"
-            onChange=${changeParam("devUnits")}
-            value="${devUnits.toString()}"
-          />
-        </div>
+        <${DevUnits}
+          devUnits=${devUnits}
+          changeSetting=${changeSetting("devUnits")}
+        />
         <!-------------------------------------------------------------------->
-        <!-- DevPower -->
+        <!-- Dev Capacity Available -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="devCapacityAvailable">Dev. Power:</label>
-          <output
-            id="devCapacityAvailableOutput"
-            name="devCapacityAvailableOutput"
-            for="devCapacityAvailable"
-            >${devCapacityAvailable.toString()}</output
-          >
-          <input
-            type="range"
-            id="devCapacityAvailable"
-            name="devCapacityAvailable"
-            min="0"
-            max="1"
-            step="0.05"
-            onChange=${changeParam("devCapacityAvailable")}
-            value="${devCapacityAvailable.toString()}"
-          />
-        </div>
+        <${DevCapacityAvailable}
+          devCapacityAvailable=${devCapacityAvailable}
+          changeSetting=${changeSetting("devCapacityAvailable")}
+        />
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->
-        <div>
-          <label for="drag">Drag:</label>
-          <output id="dragOutput" name="dragOutput" for="drag"
-            >${drag.toString()}</output
-          >
-          <input
-            type="range"
-            id="drag"
-            name="drag"
-            min="0"
-            max="1"
-            step="0.05"
-            onChange=${changeParam("drag")}
-            value="${drag.toString()}"
-          />
-        </div>
+        <${Drag} drag=${drag} changeSetting=${changeSetting("drag")} />
         <!-------------------------------------------------------------------->
-        <!-- Auto Mode -->
+        <!-- timeBox -->
         <!-------------------------------------------------------------------->
-        <div>
-          <div className="${styles.inputHeading}">Automode:</div>
-          <label for="autoModeTrue">
-            ${autoMode === true &&
-            html`<input
-              type="radio"
-              id="autoModeTrue"
-              name="autoMode"
-              value="true"
-              onChange=${changeParam("autoMode")}
-              checked
-            />`}
-            ${autoMode === false &&
-            html`<input
-              type="radio"
-              id="autoModeTrue"
-              name="autoMode"
-              value="true"
-              onChange=${changeParam("autoMode")}
-            />`}
-            <span>True</span>
-          </label>
-          <label for="autoModeFalse">
-            ${autoMode === false &&
-            html`
-              <input
-                type="radio"
-                id="autoModeFalse"
-                name="autoMode"
-                value="false"
-                onChange=${changeParam("autoMode")}
-                checked
-              />
-            `}
-            ${autoMode === true &&
-            html`
-              <input
-                type="radio"
-                id="autoModeFalse"
-                name="autoMode"
-                value="false"
-                onChange=${changeParam("autoMode")}
-              />
-            `}
-            <span>false</span>
-          </label>
-        </div>
+        <!-------------------------------------------------------------------->
+        <!-- death -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- backlogDeath -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- steps["0"].limit -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- arrivalFrequency -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- flwItmSizeFactor -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- dfntnOfReady -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- specialisation -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- teamInstability -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- showMetrics -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- debug -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- fps -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- expdtQueueLength -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- wipLimitEachStep -->
+        <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- expdtDvUnitsFactor -->
+        <!-------------------------------------------------------------------->
       </fieldset>
     </div>
     <div
