@@ -9,8 +9,8 @@ const easyStorage = {
   ) /*: Promise<{ [string]: string }> */ => {
     try {
       return fetch(
-        // `https://easy-oe3ejk3kya-ts.a.run.app/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
-        `http://localhost:5000/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
+        `https://easy-oe3ejk3kya-ts.a.run.app/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
+        // `http://localhost:5000/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
         {
           method: "GET",
           mode: "cors",
@@ -45,8 +45,8 @@ const easyStorage = {
   ) /*: Promise<{ [string]: string }> */ => {
     try {
       return fetch(
-        // `https://easy-oe3ejk3kya-ts.a.run.app/get?sid=${sid}&dkey=${dKey}`,
-        `http://localhost:5000/get?sid=${sid}&dkey=${dKey}`,
+        `https://easy-oe3ejk3kya-ts.a.run.app/get?sid=${sid}&dkey=${dKey}`,
+        // `http://localhost:5000/get?sid=${sid}&dkey=${dKey}`,
         {
           method: "GET",
           mode: "cors",
