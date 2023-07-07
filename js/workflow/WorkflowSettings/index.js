@@ -35,11 +35,7 @@ import ScaleCm from "./ScaleCm.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import {
-  isParsableAsNumber,
-  isParsableAsBoolean,
-  isParsableAsArray,
-} from "../actions/isParsable.js";
+import isParsable from "../actions/isParsable.js";
 import seedString from "../../simple_css_seed.js";
 import {
   rawStyles,
@@ -150,12 +146,7 @@ export default (props /*: Props */) /*: string */ => {
     (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
       // Set the global param for use in real-time, non-Preact JS
       let value = e.target.value;
-      if (
-        isParsableAsNumber(value) ||
-        isParsableAsNumber(value) ||
-        isParsableAsBoolean(value) ||
-        isParsableAsArray(value)
-      ) {
+      if (isParsable(value)) {
         value = JSON.parse(value);
       }
       gSttngs().set(setting, value);

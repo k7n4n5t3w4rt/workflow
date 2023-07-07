@@ -17,5 +17,5 @@ import { html } from "../web_modules/htm/preact.js";
 
 globalSettings();
 globalState();
-getSttngsFromEasyStorage();
+// getSttngsFromEasyStorage();
 render(html` <${App} /> `, document.getElementById("goodthing"));

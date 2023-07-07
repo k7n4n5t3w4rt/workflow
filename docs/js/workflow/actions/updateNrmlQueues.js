@@ -45,7 +45,7 @@ export const processFlowTime = (
 export const updateThroughPutQueue = (
   throughPutArray /*: Array<number> */,
 ) /*: void */ => {
-  if (gState().get("thrPtQueue").length() >= gSttngs().get("timeBox")) {
+  while (gState().get("thrPtQueue").length() >= gSttngs().get("timeBox")) {
     gState().get("thrPtQueue").dequeue();
   }
   gState().get("thrPtQueue").enqueue(throughPutArray);
@@ -56,7 +56,7 @@ export const updateThroughPutQueue = (
 export const updateFlowTimeQueue = (
   flwTimeArray /*: Array<number> */,
 ) /*: void */ => {
-  if (gState().get("flwTmQueue").length() >= gSttngs().get("timeBox")) {
+  while (gState().get("flwTmQueue").length() >= gSttngs().get("timeBox")) {
     gState().get("flwTmQueue").dequeue();
   }
   gState().get("flwTmQueue").enqueue(flwTimeArray);

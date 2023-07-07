@@ -24,9 +24,9 @@ export default (props /*: Props */) /*: string */ => {
         type="range"
         id="timeBox"
         name="timeBox"
-        min="0"
-        max="60"
-        step="10"
+        min="1"
+        max="20"
+        step="1"
         onChange=${props.changeSetting}
         value="${props.timeBox.toString()}"
       />

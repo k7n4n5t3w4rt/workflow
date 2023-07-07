@@ -5,7 +5,7 @@
 export default (lSValue /*: string */) /*: boolean */ => {
   return (
     isParsableAsNumber(lSValue) ||
-    isParsableAsNumber(lSValue) ||
+    isParsableAsObject(lSValue) ||
     isParsableAsBoolean(lSValue) ||
     isParsableAsArray(lSValue)
   );

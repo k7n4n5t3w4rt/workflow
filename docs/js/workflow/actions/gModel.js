@@ -32,7 +32,10 @@ function gModel() /*: void */ {
   // get()
   //---------------------------------------------------------------------------
   this.get = (key /*: string */) /*: any */ => {
-    const value = this.keyValuePairs[key];
+    let value = this.keyValuePairs[key];
+    if (isParsable(value)) {
+      value = JSON.parse(value);
+    }
     return value;
   };
   //------------------------------------------------------------------------------
@@ -40,14 +43,26 @@ function gModel() /*: void */ {
   //------------------------------------------------------------------------------
   this.set = (key /*: string */, value /*: any  */) /*: () => void */ => {
     this.keyValuePairs[key] = value;
-    try {
-      if (typeof value !== "string") {
-        value = JSON.stringify(value);
+    if (
+      key !== "vQueue" &&
+      key !== "flwTmQueue" &&
+      key !== "thrPtQueue" &&
+      key !== "wipQueue" &&
+      key !== "flwTmExpQueue" &&
+      key !== "thrPtExpQueue" &&
+      key !== "wipExpdtQueue"
+    ) {
+      try {
+        if (typeof value !== "string") {
+          value = JSON.stringify(value);
+        }
+        // Add the timestamp for localStorage and easyStorage
+        value += "___" + Date.now().toString();
+        localStorage.setItem(key, value);
+        easyStorage.set(this.sid, key, value);
+      } catch (e) {
+        console.error(e);
       }
-      localStorage.setItem(key, value);
-      easyStorage.set(this.sid, key, value);
-    } catch (e) {
-      console.error(e);
     }
     return this;
   };
@@ -65,46 +80,65 @@ function gModel() /*: void */ {
     // ----------------------------------------------------
     // localStorage
     // ----------------------------------------------------
-    try {
-      let lSValue = localStorage.getItem(key);
-      if (lSValue !== null && lSValue !== undefined) {
-        if (isParsable(lSValue)) {
-          lSValue = JSON.parse(lSValue);
+    if (
+      key !== "vQueue" &&
+      key !== "flwTmQueue" &&
+      key !== "thrPtQueue" &&
+      key !== "wipQueue" &&
+      key !== "flwTmExpQueue" &&
+      key !== "thrPtExpQueue" &&
+      key !== "wipExpdtQueue"
+    ) {
+      try {
+        // Check if it already exists in localStorage
+        const lSValueTimestamp /*: string | null | typeof undefined */ =
+          localStorage.getItem(key);
+        if (lSValueTimestamp !== null && lSValueTimestamp !== undefined) {
+          let lSValue /*: string */ = lSValueTimestamp.split("___")[0];
+          let lSTimestamp /*: string */ = lSValueTimestamp.split("___")[1];
+          // Strings don't need to be parsed - and will throw an error
+          if (lSValue !== undefined && lSTimestamp !== undefined) {
+            if (isParsable(lSValue)) {
+              lSValue = JSON.parse(lSValue);
+            }
+            // Use the value from localStorage
+            this.keyValuePairs[key] = lSValue;
+          }
+        } else {
+          // It doesn't exist in localStorage, so set it
+          localStorage.setItem(
+            key,
+            JSON.stringify(value) + "___" + Date.now().toString(),
+          );
         }
-        this.keyValuePairs[key] = lSValue;
-      } else {
-        if (typeof value !== "string") {
-          value = JSON.stringify(value);
-        }
-        localStorage.setItem(key, value);
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
     }
     // ----------------------------------------------------
     // easyStorage
     // ----------------------------------------------------
-    try {
-      easyStorage
-        .get(this.sid, key)
-        .then((valueObj /*: {[string]:string} */) /*: void */ => {
-          if (
-            valueObj[key] !== undefined &&
-            valueObj[key] !== this.keyValuePairs[key]
-          ) {
-            if (isParsable(valueObj[key])) {
-              this.keyValuePairs[key] = JSON.parse(valueObj[key]);
-            }
-          } else {
-            if (typeof value !== "string") {
-              value = JSON.stringify(value);
-            }
-            easyStorage.set(this.sid, key, value);
-          }
-        });
-    } catch (e) {
-      console.error(e);
-    }
+    // try {
+    //   easyStorage
+    //     .get(this.sid, key)
+    //     .then((valueObj /*: {[string]:string} */) /*: void */ => {
+    //       if (
+    //         valueObj[key] !== undefined &&
+    //         valueObj[key] !== this.keyValuePairs[key]
+    //       ) {
+    //         if (isParsable(valueObj[key])) {
+    //           this.keyValuePairs[key] = JSON.parse(valueObj[key]);
+    //         }
+    //       } else {
+    //         if (typeof value !== "string") {
+    //           value = JSON.stringify(value);
+    //         }
+    //         easyStorage.set(this.sid, key, value);
+    //       }
+    //     });
+    // } catch (e) {
+    //   console.error(e);
+    // }
     return this;
   };
 }
