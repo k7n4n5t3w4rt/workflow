@@ -120,6 +120,7 @@ type FlwItem = {
   dSkipForWip: boolean,
   dTmNumber: number,
   dVolume: number,
+  dValue: number,
   // -----------------------
   // Three.js:
   // -----------------------

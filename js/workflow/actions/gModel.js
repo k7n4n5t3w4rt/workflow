@@ -84,27 +84,27 @@ function gModel() /*: void */ {
     // ----------------------------------------------------
     // easyStorage
     // ----------------------------------------------------
-    try {
-      easyStorage
-        .get(this.sid, key)
-        .then((valueObj /*: {[string]:string} */) /*: void */ => {
-          if (
-            valueObj[key] !== undefined &&
-            valueObj[key] !== this.keyValuePairs[key]
-          ) {
-            if (isParsable(valueObj[key])) {
-              this.keyValuePairs[key] = JSON.parse(valueObj[key]);
-            }
-          } else {
-            if (typeof value !== "string") {
-              value = JSON.stringify(value);
-            }
-            easyStorage.set(this.sid, key, value);
-          }
-        });
-    } catch (e) {
-      console.error(e);
-    }
+    // try {
+    //   easyStorage
+    //     .get(this.sid, key)
+    //     .then((valueObj /*: {[string]:string} */) /*: void */ => {
+    //       if (
+    //         valueObj[key] !== undefined &&
+    //         valueObj[key] !== this.keyValuePairs[key]
+    //       ) {
+    //         if (isParsable(valueObj[key])) {
+    //           this.keyValuePairs[key] = JSON.parse(valueObj[key]);
+    //         }
+    //       } else {
+    //         if (typeof value !== "string") {
+    //           value = JSON.stringify(value);
+    //         }
+    //         easyStorage.set(this.sid, key, value);
+    //       }
+    //     });
+    // } catch (e) {
+    //   console.error(e);
+    // }
     return this;
   };
 }

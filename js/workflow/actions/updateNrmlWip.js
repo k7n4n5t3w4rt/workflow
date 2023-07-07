@@ -21,7 +21,7 @@ export default () /*: void */ => {
 // updateWIPQueue()
 //------------------------------------------------------------------
 const updateWIPQueue = (wip /*: number */) /*: void */ => {
-  if (gState().get("wipQueue").length() >= gSttngs().get("timeBox")) {
+  while (gState().get("wipQueue").length() >= gSttngs().get("timeBox")) {
     gState().get("wipQueue").dequeue();
   }
   gState().get("wipQueue").enqueue([wip]);

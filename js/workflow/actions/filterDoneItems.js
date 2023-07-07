@@ -35,7 +35,8 @@ export const processValue = (
   _ /*: Array<number> */,
   flwItem /*: FlwItem */,
 ) /*: Array<number> */ => {
-  _.push(flwItem.dVolume);
+  _.push(flwItem.dValue);
+  // _.push(flwItem.dVolume);
   return _;
 };
 //------------------------------------------------------------------
@@ -44,7 +45,7 @@ export const processValue = (
 export const updateValueQueue = (
   valueArray /*: Array<number> */,
 ) /*: void */ => {
-  if (gState().get("vQueue").length() >= gSttngs().get("timeBox")) {
+  while (gState().get("vQueue").length() >= gSttngs().get("timeBox")) {
     gState().get("vQueue").dequeue();
   }
   gState().get("vQueue").enqueue(valueArray);

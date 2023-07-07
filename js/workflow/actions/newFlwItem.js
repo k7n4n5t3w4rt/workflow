@@ -99,7 +99,8 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   const daysMax = gSttngs().get("flwItmSizeMax");
   const daysTotal = flwItem.dDysTotal;
 
-  const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
+  // const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
+  const scale = daysTotal / daysMax;
 
   flwItem.scale.set(scale, scale, scale);
   flwItem.dScale = scale;
@@ -108,6 +109,8 @@ const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
     scale *
     (gSttngs().get("y") * scale) *
     (gSttngs().get("z") * scale);
+  // flwItem.dValue = flwItem.dVolume * 1000 * 3;
+  flwItem.dValue = scale;
   return flwItem;
 };
 

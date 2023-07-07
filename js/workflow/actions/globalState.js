@@ -64,7 +64,7 @@ function xQueue() {
         0,
       );
     }
-    return Math.round(total * 10000) / 10000;
+    return Math.round(total * 100) / 100;
   };
 
   // this._85th = () /*: number */ => {
