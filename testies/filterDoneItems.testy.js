@@ -63,12 +63,14 @@ const fixture = (stepLength /*: number */) /*: FlwItem */ => {
     doneFlwItems[i] = newFlwItem(5);
     doneFlwItems[i].dExpedite = false;
     doneFlwItems[i].dAge = 10;
-    doneFlwItems[i].dVolume = 10;
+    doneFlwItems[i].scale.set(1, 1, 1);
   }
   return doneFlwItems;
 };
 
 const tearDown = () /*: void */ => {
+  // I don't think this does anything. It only
+  // removes one item from each queue
   gState().get("thrPtQueue").dequeue();
   gState().get("vQueue").dequeue();
   gState().get("flwTmQueue").dequeue();
@@ -129,16 +131,16 @@ test("Updates the value queue", () /*: void */ => {
   doneFlwItems[2].dExpedite = true;
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().get("vQueue").length()).be.exactly(1);
-  should(gState().get("vQueue").total()).be.exactly(30);
-  should(gState().get("vQueue").dailyMean()).be.exactly(30);
-  should(gState().get("vQueue").flwItemMean()).be.exactly(10);
+  should(gState().get("vQueue").total()).be.exactly(3);
+  should(gState().get("vQueue").dailyMean()).be.exactly(3);
+  should(gState().get("vQueue").flwItemMean()).be.exactly(1);
   // Another click
   const doneFlwItems2 = [];
   for (let i = 0; i <= 2; i++) {
     doneFlwItems2[i] = newFlwItem(5);
     doneFlwItems2[i].dExpedite = false;
     doneFlwItems2[i].dAge = 10;
-    doneFlwItems2[i].dVolume = 10;
+    doneFlwItems2[i].scale.set(1, 1, 1);
   }
   gSttngs().set("expdtQueueLength", 1);
   gSttngs().set("expdtDvUnitsFactor", 1);
@@ -147,9 +149,9 @@ test("Updates the value queue", () /*: void */ => {
   doneFlwItems2[2].dExpedite = true;
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   should(gState().get("vQueue").length()).be.exactly(2);
-  should(gState().get("vQueue").total()).be.exactly(60);
-  should(gState().get("vQueue").dailyMean()).be.exactly(30);
-  should(gState().get("vQueue").flwItemMean()).be.exactly(10);
+  should(gState().get("vQueue").total()).be.exactly(6);
+  should(gState().get("vQueue").dailyMean()).be.exactly(3);
+  should(gState().get("vQueue").flwItemMean()).be.exactly(1);
   tearDown();
 });
 

@@ -61,7 +61,7 @@ function gModel() /*: void */ {
         localStorage.setItem(key, value);
         easyStorage.set(this.sid, key, value);
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     }
     return this;
@@ -112,7 +112,7 @@ function gModel() /*: void */ {
           );
         }
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     }
     // ----------------------------------------------------
