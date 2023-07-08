@@ -1,10 +1,14 @@
+// @flow
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import seedString from "../../simple_css_seed.js";
 import { createStyles, setSeed } from "../../../web_modules/simplestyle-js.js";
 
 //------------------------------------------------------------------
-// cssStyles()
+// FUNCTION: cssStylesSettings()
 //------------------------------------------------------------------
-export const cssStyles = () => {
+export default () /*: Object */ => {
   // A seed for getting unique class names
   setSeed(seedString("flwsettings"));
 

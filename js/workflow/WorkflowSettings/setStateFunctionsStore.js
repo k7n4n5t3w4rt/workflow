@@ -1,6 +1,10 @@
-export const setStateFunctionsStore = (
+// @flow
+//------------------------------------------------------------------
+// FUNCTION: setStateFunctionsStore()
+//------------------------------------------------------------------
+export default (
   useState /*: (any) => [any,function] */,
-) => {
+) /*: [Object, Object] */ => {
   const setStateFunctions = {};
   const lState = {};
   //----------------------------------------

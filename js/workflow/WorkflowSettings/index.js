@@ -35,12 +35,12 @@ import ScaleCm from "./ScaleCm.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
-import { updateLocalStateFromGlobalState } from "./updateLocalStateFromGlobalState.js";
-import { hideOrShowSettingsDivs } from "./hideOrShowSettingsDivs.js";
-import { cssStyles } from "./cssStyles.js";
-import { getRawStyles } from "./getRawStyles.js";
-import { setStateFunctionsStore } from "./setStateFunctionsStore.js";
-import { changeSetting } from "./changeSetting.js";
+import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
+import hideOrShowSettingsDivs from "./hideOrShowSettingsDivs.js";
+import cssStyles from "./cssStylesSettings.js";
+import getRawStyles from "./getRawStyles.js";
+import setStateFunctionsStore from "./setStateFunctionsStore.js";
+import changeSetting from "./changeSetting.js";
 
 /*::
 type Props = {
@@ -222,7 +222,7 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <${WipLimiitEachStep}
           wipLimitEachStep=${lState.wipLimitEachStep}
-          changeSetting=${changeSetting("wipLimitEachStep")}
+          changeSetting=${changeSetting("wipLimitEachStep", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- ScaleCm -->

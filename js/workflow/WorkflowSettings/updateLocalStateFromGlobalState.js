@@ -1,7 +1,15 @@
+// @flow
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "../actions/gSttngs.js";
-
-export const updateLocalStateFromGlobalState =
-  (setStateFunctions /*: {[string]: function} */) => () => {
+//------------------------------------------------------------------
+// FUNCTION: updateLocalStateFromGlobalState()
+//------------------------------------------------------------------
+const updateLocalStateFromGlobalState =
+  (setStateFunctions /*: {[string]: function} */) /*: () => void */ =>
+  () /*: void */ => {
+    // This function calls itself every second to update the local state
     setTimeout(updateLocalStateFromGlobalState(setStateFunctions), 1000);
     //----------------------------------------
     // Boolean
@@ -37,3 +45,5 @@ export const updateLocalStateFromGlobalState =
     setStateFunctions["specialisation"](gSttngs().get("specialisation"));
     setStateFunctions["teamInstability"](gSttngs().get("teamInstability"));
   };
+
+export default updateLocalStateFromGlobalState;

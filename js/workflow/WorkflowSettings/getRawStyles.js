@@ -1,9 +1,9 @@
+// @flow
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
-
 //------------------------------------------------------------------
-// getRawStyles()
+// FUNCTION: getRawStyles()
 //------------------------------------------------------------------
-export const getRawStyles = () => {
+export default () /*: Object */ => {
   rawStyles({
     output: {
       display: "block",
