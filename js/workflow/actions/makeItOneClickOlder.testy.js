@@ -2,26 +2,26 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
-import gState from "../js/workflow/actions/gState.js";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import globalState from "../js/workflow/actions/globalState.js";
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newFlwItem from "../js/workflow/actions/newFlwItem.js";
-import newClickCube from "../js/workflow/actions/newClickCube.js";
+import newFlwItem from "./newFlwItem.js";
+import newClickCube from "./newClickCube.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import makeItOneClickOlder from "../js/workflow/actions/makeItOneClickOlder.js";
+import makeItOneClickOlder from "./makeItOneClickOlder.js";
 //------------------------------------------------------------------
 // TEST: makeItOneClickOlder()
 //------------------------------------------------------------------

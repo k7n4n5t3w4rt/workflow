@@ -2,19 +2,19 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import touchStepsCount from "../js/workflow/actions/touchStepsCount.js";
+import touchStepsCount from "./touchStepsCount.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
+import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
+import globalSettings from "./globalSettings.js";
 
 //------------------------------------------------------------------
 // VALUES

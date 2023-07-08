@@ -1,6 +1,6 @@
 // @flow
-import { test, testPromise, should } from "../server/testy.js";
-import calculatedDaysPerWorkItem from "../js/workflow/calculations/calculatedDaysPerWorkItem.js";
+import { test, testPromise, should } from "../../../server/testy.js";
+import calculatedDaysPerWorkItem from "./calculatedDaysPerWorkItem.js";
 
 const skip = false;
 

@@ -1,6 +1,6 @@
 // @flow
-import { test, testPromise, should } from "../server/testy.js";
-import gSttngs from "../js/workflow/actions/gSttngs.js";
+import { test, testPromise, should } from "../../../server/testy.js";
+import gSttngs from "./gSttngs.js";
 
 const skip = false;
 

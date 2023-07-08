@@ -14,9 +14,9 @@ import gState from "./gState.js";
 import ARButton from "./ARButton.js";
 import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
 import createStats from "../../create_stats.js";
-import onWindowResize from "../calculations/onWindowResize.js";
+import onWindowResize from "../actions/onWindowResize.js";
 import start from "./start.js";
-import addReticleToScene from "../calculations/addReticleToScene.js";
+import addReticleToScene from "./addReticleToScene.js";
 import render from "./render.js";
 //------------------------------------------------------------------
 // init()

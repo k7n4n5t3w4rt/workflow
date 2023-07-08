@@ -2,26 +2,26 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
-import gState from "../js/workflow/actions/gState.js";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import globalState from "../js/workflow/actions/globalState.js";
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import populateSteps from "../js/workflow/actions/populateSteps.js";
+import populateSteps from "./populateSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import stepWip from "../js/workflow/actions/stepWip.js";
-import newClickCube from "../js/workflow/actions/newClickCube.js";
+import stepWip from "./stepWip.js";
+import newClickCube from "./newClickCube.js";
 //------------------------------------------------------------------
 // TEST: stepWip()
 //------------------------------------------------------------------

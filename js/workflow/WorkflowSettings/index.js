@@ -2,7 +2,6 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../actions/gSttngs.js";
 import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
@@ -35,99 +34,41 @@ import ScaleCm from "./ScaleCm.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import isParsable from "../actions/isParsable.js";
-import seedString from "../../simple_css_seed.js";
-import {
-  rawStyles,
-  createStyles,
-  setSeed,
-} from "../../../web_modules/simplestyle-js.js";
+import { rawStyles } from "../../../web_modules/simplestyle-js.js";
+import { updateLocalStateFromGlobalState } from "./updateLocalStateFromGlobalState.js";
+import { hideOrShowSettingsDivs } from "./hideOrShowSettingsDivs.js";
+import { cssStyles } from "./cssStyles.js";
+import { getRawStyles } from "./getRawStyles.js";
+import { setStateFunctionsStore } from "./setStateFunctionsStore.js";
+import { changeSetting } from "./changeSetting.js";
 
 /*::
 type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
+  // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
-  const [paramToggle, setParamToggle] = useState(false);
-  const setStateFunctions = {};
-  //----------------------------------------
-  // Boolean
-  //----------------------------------------
-  const [autoMode, setAutoMode] = useState(false);
-  setStateFunctions["autoMode"] = setAutoMode;
-  // Not implemented yet
-  const [showMetrics, setShowMetrics] = useState(true);
-  setStateFunctions["showMetrics"] = setShowMetrics;
-  const [debug, setDebug] = useState(false);
-  setStateFunctions["debug"] = setDebug;
-  const [dfntnOfReady, setDfntnOfReady] = useState(false);
-  setStateFunctions["dfntnOfReady"] = setDfntnOfReady;
-  //----------------------------------------
-  // Sliders
-  //----------------------------------------
-  const [arrivalNumber, setArrivalNumber] = useState(1);
-  setStateFunctions["arrivalNumber"] = setArrivalNumber;
-  const [flwItmSizeMin, setFlwItmSizeMin] = useState(1);
-  setStateFunctions["flwItmSizeMin"] = setFlwItmSizeMin;
-  const [flwItmSizeMax, setFlwItmSizeMax] = useState(1);
-  setStateFunctions["flwItmSizeMax"] = setFlwItmSizeMax;
-  const [devUnits, setDevUnits] = useState(1);
-  setStateFunctions["devUnits"] = setDevUnits;
-  const [devCapacityAvailable, setDevCapacityAvailable] = useState(1);
-  setStateFunctions["devCapacityAvailable"] = setDevCapacityAvailable;
-  const [drag, setDrag] = useState(0);
-  setStateFunctions["drag"] = setDrag;
-  const [timeBox, setTimeBox] = useState(10);
-  setStateFunctions["timeBox"] = setTimeBox;
-  const [death, setDeath] = useState(0);
-  setStateFunctions["death"] = setDeath;
-  const [backlogDeath, setBacklogDeath] = useState(0);
-  setStateFunctions["backlogDeath"] = setBacklogDeath;
-  const [flwItmSizeFactor, setFlwItmSizeFactor] = useState(1);
-  setStateFunctions["flwItmSizeFactor"] = setFlwItmSizeFactor;
-  const [fps, setFps] = useState(1);
-  setStateFunctions["fps"] = setFps;
-  const [expdtQueueLength, setExpdtQueueLength] = useState(0);
-  setStateFunctions["expdtQueueLength"] = setExpdtQueueLength;
-  const [expdtDvUnitsFactor, setExpdtDvUnitsFactor] = useState(1);
-  setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
-  const [wipLimitEachStep, setWipLimitEachStep] = useState(0);
-  setStateFunctions["wipLimitEachStep"] = setWipLimitEachStep;
-  const [scaleCm, setScaleCm] = useState(10);
-  setStateFunctions["scaleCm"] = setScaleCm;
-  // Not implemented yet
-  const [specialisation, setSpecialisation] = useState(0);
-  setStateFunctions["specialisation"] = setSpecialisation;
-  const [teamInstability, setTeamInstability] = useState(0);
-  setStateFunctions["teamInstability"] = setTeamInstability;
-
-  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
-
-  useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);
-
-  const toggleParam = () => {
-    setParamToggle(!paramToggle);
+  // A toggle to show or hide the settings
+  const [settingsToggle, setSettingsToggle] = useState(false);
+  // Hide or show the settings divs when the toggle changes
+  useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
+  // The function that toggles the settings by setting the toggle
+  // to whatever it isn't
+  const toggleSettings = () => {
+    setSettingsToggle(!settingsToggle);
   };
-
-  const changeSetting =
-    (setting /*: string */) /*: function */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      // Set the global param for use in real-time, non-Preact JS
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      gSttngs().set(setting, value);
-      setStateFunctions[setting](value);
-    };
+  // A local state to hold the settings
+  const [lState, setStateFunctions] = setStateFunctionsStore(useState);
+  // Once, on load, update the local state from the global state
+  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
 
   return html`
     <div
       id="settings-close-icon"
       className="${styles.settingsClose}"
-      onClick="${toggleParam}"
+      onClick="${toggleSettings}"
     >
       <span className="material-icons ${styles.settingsIcon}"> close </span>
     </div>
@@ -137,18 +78,18 @@ export default (props /*: Props */) /*: string */ => {
         <!-- Auto Mode -->
         <!-------------------------------------------------------------------->
         <${AutoMode}
-          autoMode=${autoMode}
+          autoMode=${lState.autoMode}
           styles=${styles}
-          changeSetting=${changeSetting("autoMode")}
+          changeSetting=${changeSetting("autoMode", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- showMetrics -->
         <!-------------------------------------------------------------------->
         <!--
         <${ShowMetrics}
-          showMetrics=${showMetrics}
+          showMetrics=${lState.showMetrics}
           styles=${styles}
-          changeSetting=${changeSetting("showMetrics")}
+          changeSetting=${changeSetting("showMetrics", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->
@@ -156,9 +97,9 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!--
         <${Debug}
-          debug=${debug}
+          debug=${lState.debug}
           styles=${styles}
-          changeSetting=${changeSetting("debug")}
+          changeSetting=${changeSetting("debug", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->
@@ -166,72 +107,81 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!--
         <${DfntnOfReady}
-          dfntnOfReady=${dfntnOfReady}
+          dfntnOfReady=${lState.dfntnOfReady}
           styles=${styles}
-          changeSetting=${changeSetting("dfntnOfReady")}
+          changeSetting=${changeSetting("dfntnOfReady", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->
         <!-- ArrivalNumber -->
         <!-------------------------------------------------------------------->
         <${ArrivalNumber}
-          arrivalNumber=${arrivalNumber}
-          changeSetting=${changeSetting("arrivalNumber")}
+          arrivalNumber=${lState.arrivalNumber}
+          changeSetting=${changeSetting("arrivalNumber", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->
         <!-------------------------------------------------------------------->
         <${FlwItmSizeMin}
-          flwItmSizeMin=${flwItmSizeMin}
-          changeSetting=${changeSetting("flwItmSizeMin")}
+          flwItmSizeMin=${lState.flwItmSizeMin}
+          changeSetting=${changeSetting("flwItmSizeMin", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Max -->
         <!-------------------------------------------------------------------->
         <${FlwItmSizeMax}
-          flwItmSizeMax=${flwItmSizeMax}
-          changeSetting=${changeSetting("flwItmSizeMax")}
+          flwItmSizeMax=${lState.flwItmSizeMax}
+          changeSetting=${changeSetting("flwItmSizeMax", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Dev Units -->
         <!-------------------------------------------------------------------->
         <${DevUnits}
-          devUnits=${devUnits}
-          changeSetting=${changeSetting("devUnits")}
+          devUnits=${lState.devUnits}
+          changeSetting=${changeSetting("devUnits", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Dev Capacity Available -->
         <!-------------------------------------------------------------------->
         <${DevCapacityAvailable}
-          devCapacityAvailable=${devCapacityAvailable}
-          changeSetting=${changeSetting("devCapacityAvailable")}
+          devCapacityAvailable=${lState.devCapacityAvailable}
+          changeSetting=${changeSetting(
+            "devCapacityAvailable",
+            setStateFunctions,
+          )}
         />
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->
         <!--
-        <${Drag} drag=${drag} changeSetting=${changeSetting("drag")} />
+        <${Drag} drag=${lState.drag} changeSetting=${changeSetting(
+          "drag",
+          setStateFunctions,
+        )} />
         -->
         <!-------------------------------------------------------------------->
         <!-- timeBox -->
         <!-------------------------------------------------------------------->
         <${TimeBox}
-          timeBox=${timeBox}
-          changeSetting=${changeSetting("timeBox")}
+          timeBox=${lState.timeBox}
+          changeSetting=${changeSetting("timeBox", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Death -->
         <!-------------------------------------------------------------------->
         <!--
-        <${Death} death=${death} changeSetting=${changeSetting("death")} />
+        <${Death} death=${lState.death} changeSetting=${changeSetting(
+          "death",
+          setStateFunctions,
+        )} />
         -->
         <!-------------------------------------------------------------------->
         <!-- BacklogDeath -->
         <!-------------------------------------------------------------------->
         <!--
         <${BacklogDeath}
-          backlogDeath=${backlogDeath}
-          changeSetting=${changeSetting("backlogDeath")}
+          backlogDeath=${lState.backlogDeath}
+          changeSetting=${changeSetting("backlogDeath", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->
@@ -239,41 +189,47 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!--
         <${FlwItmSizeFactor}
-          flwItmSizeFactor=${flwItmSizeFactor}
-          changeSetting=${changeSetting("flwItmSizeFactor")}
+          flwItmSizeFactor=${lState.flwItmSizeFactor}
+          changeSetting=${changeSetting("flwItmSizeFactor", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->
         <!-- fps -->
         <!-------------------------------------------------------------------->
-        <${Fps} fps=${fps} changeSetting=${changeSetting("fps")} />
+        <${Fps}
+          fps=${lState.fps}
+          changeSetting=${changeSetting("fps", setStateFunctions)}
+        />
         <!-------------------------------------------------------------------->
         <!-- expdtQueueLength -->
         <!-------------------------------------------------------------------->
         <${ExpdtQueueLength}
-          expdtQueueLength=${expdtQueueLength}
-          changeSetting=${changeSetting("expdtQueueLength")}
+          expdtQueueLength=${lState.expdtQueueLength}
+          changeSetting=${changeSetting("expdtQueueLength", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- expdtDvUnitsFactor -->
         <!-------------------------------------------------------------------->
         <${ExpdtDvUnitsFactor}
-          expdtDvUnitsFactor=${expdtDvUnitsFactor}
-          changeSetting=${changeSetting("expdtDvUnitsFactor")}
+          expdtDvUnitsFactor=${lState.expdtDvUnitsFactor}
+          changeSetting=${changeSetting(
+            "expdtDvUnitsFactor",
+            setStateFunctions,
+          )}
         />
         <!-------------------------------------------------------------------->
         <!-- wipLimitEachStep -->
         <!-------------------------------------------------------------------->
         <${WipLimiitEachStep}
-          wipLimitEachStep=${wipLimitEachStep}
+          wipLimitEachStep=${lState.wipLimitEachStep}
           changeSetting=${changeSetting("wipLimitEachStep")}
         />
         <!-------------------------------------------------------------------->
         <!-- ScaleCm -->
         <!-------------------------------------------------------------------->
         <${ScaleCm}
-          scaleCm=${scaleCm}
-          changeSetting=${changeSetting("scaleCm")}
+          scaleCm=${lState.scaleCm}
+          changeSetting=${changeSetting("scaleCm", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- specialisation -->
@@ -286,163 +242,9 @@ export default (props /*: Props */) /*: string */ => {
     <div
       id="settings-icon"
       className="${styles.settings}"
-      onClick="${toggleParam}"
+      onClick="${toggleSettings}"
     >
       <span className="material-icons ${styles.settingsIcon}"> settings </span>
     </div>
   `;
-};
-const updateLocalStateFromGlobalState =
-  (setStateFunctions /*: {[string]: function} */) /*: () => void */ =>
-  () /*: void */ => {
-    setTimeout(updateLocalStateFromGlobalState(setStateFunctions), 1000);
-    //----------------------------------------
-    // Boolean
-    //----------------------------------------
-    setStateFunctions["autoMode"](gSttngs().get("autoMode"));
-    // Not implimented yet
-    setStateFunctions["showMetrics"](gSttngs().get("showMetrics"));
-    setStateFunctions["debug"](gSttngs().get("debug"));
-    setStateFunctions["dfntnOfReady"](gSttngs().get("dfntnOfReady"));
-    //----------------------------------------
-    // Sliders
-    //----------------------------------------
-    setStateFunctions["arrivalNumber"](gSttngs().get("arrivalNumber"));
-    setStateFunctions["flwItmSizeMin"](gSttngs().get("flwItmSizeMin"));
-    setStateFunctions["flwItmSizeMax"](gSttngs().get("flwItmSizeMax"));
-    setStateFunctions["devUnits"](gSttngs().get("devUnits"));
-    setStateFunctions["devCapacityAvailable"](
-      gSttngs().get("devCapacityAvailable"),
-    );
-    setStateFunctions["drag"](gSttngs().get("drag"));
-    setStateFunctions["timeBox"](gSttngs().get("timeBox"));
-    setStateFunctions["death"](gSttngs().get("death"));
-    setStateFunctions["backlogDeath"](gSttngs().get("backlogDeath"));
-    setStateFunctions["flwItmSizeFactor"](gSttngs().get("flwItmSizeFactor"));
-    setStateFunctions["fps"](gSttngs().get("fps"));
-    setStateFunctions["expdtQueueLength"](gSttngs().get("expdtQueueLength"));
-    setStateFunctions["wipLimitEachStep"](gSttngs().get("wipLimitEachStep"));
-    setStateFunctions["expdtDvUnitsFactor"](
-      gSttngs().get("expdtDvUnitsFactor"),
-    );
-    setStateFunctions["scaleCm"](gSttngs().get("scaleCm"));
-    // Not implimented yet
-    setStateFunctions["specialisation"](gSttngs().get("specialisation"));
-    setStateFunctions["teamInstability"](gSttngs().get("teamInstability"));
-  };
-//------------------------------------------------------------------
-// hideOrShowSettingsDiv()
-//------------------------------------------------------------------
-const hideOrShowSettingsDivs =
-  (paramToggle /*: boolean */) /*: () => void */ => () /* void */ => {
-    const settingsContainer = document.getElementById("settings-container");
-    const settingsIcon = document.getElementById("settings-icon");
-    const settingsCloseIcon = document.getElementById("settings-close-icon");
-    if (
-      settingsContainer !== null &&
-      settingsIcon !== null &&
-      settingsCloseIcon !== null
-    ) {
-      if (paramToggle === true) {
-        settingsContainer.style.display = "block";
-        settingsIcon.style.display = "none";
-        settingsCloseIcon.style.display = "block";
-      } else {
-        settingsContainer.style.display = "none";
-        settingsIcon.style.display = "block";
-        settingsCloseIcon.style.display = "none";
-      }
-    }
-  };
-
-//------------------------------------------------------------------
-// cssStyles()
-//------------------------------------------------------------------
-const cssStyles = () /*: Object */ => {
-  // A seed for getting unique class names
-  setSeed(seedString("flwsettings"));
-
-  const [styles] = createStyles({
-    inputHeading: {
-      fontSize: "1rem",
-      padding: "0.2rem",
-      color: "white",
-      fontWeight: "bold",
-      textShadow: "2px 2px 2px grey",
-    },
-    settingsContainer: {
-      position: "absolute",
-      zIndex: "21000",
-      boxSizing: "border-box",
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.4)",
-      padding: "3rem",
-      paddingBottom: "6rem",
-    },
-    settings: {
-      position: "absolute",
-      zIndex: "22000",
-      boxSizing: "border-box",
-      bottom: ".4rem",
-      left: ".4rem",
-      cursor: "pointer",
-    },
-    settingsIcon: {
-      fontSize: "54px",
-      color: "white",
-    },
-    settingsClose: {
-      position: "absolute",
-      zIndex: "23000",
-      boxSizing: "border-box",
-      top: ".4rem",
-      right: ".4rem",
-      cursor: "pointer",
-    },
-    settingsCloseIcon: {
-      fontSize: "54px",
-      color: "white",
-    },
-    radioContainer: {
-      display: "flex",
-      marginBottom: "1rem",
-    },
-  });
-
-  return styles;
-};
-
-//------------------------------------------------------------------
-// getRawStyles()
-//------------------------------------------------------------------
-const getRawStyles = () /*: Object */ => {
-  rawStyles({
-    output: {
-      display: "block",
-      float: "left",
-      fontSize: "1rem",
-      padding: "0.2rem",
-      color: "white",
-      fontWeight: "bold",
-      textShadow: "2px 2px 2px grey",
-    },
-    label: {
-      display: "block",
-      fontSize: "1rem",
-      padding: "0.2rem",
-      color: "white",
-      fontWeight: "bold",
-      textShadow: "2px 2px 2px grey",
-    },
-    ["input[type=range]"]: {},
-    fieldset: {
-      display: "block",
-      height: "100%",
-      boxSizing: "border-box",
-      overflow: "auto",
-    },
-  });
-
-  return rawStyles;
 };

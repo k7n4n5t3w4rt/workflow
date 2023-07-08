@@ -2,26 +2,26 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
-import gState from "../js/workflow/actions/gState.js";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import globalState from "../js/workflow/actions/globalState.js";
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import populateSteps from "../js/workflow/actions/populateSteps.js";
-import newClickCube from "../js/workflow/actions/newClickCube.js";
+import populateSteps from "./populateSteps.js";
+import newClickCube from "./newClickCube.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import countExpeditedFlwItems from "../js/workflow/actions/countExpeditedFlwItems.js";
+import countExpeditedFlwItems from "./countExpeditedFlwItems.js";
 //------------------------------------------------------------------
 // TEST: countExpeditedFlwItemsInOneStep()
 //------------------------------------------------------------------
@@ -42,15 +42,16 @@ const fixture = () /*: void */ => {
   globalState();
   // Needed for populateSteps()
   gState().set("clckCbGroup", newClickCube());
+  // Just in case some expedited items would otherwise be set
+  gSttngs().set("expdtQueueLength", 0);
   populateSteps();
 };
 
 test("Counts the correct number of expedited flwItems.", () /*: void */ => {
   fixture();
-  // gState().set("expdtCount", 0);
-  // gSttngs().set("expdtQueueLength", 3);
+  gState().set("expdtCount", 1);
+  gSttngs().set("expdtQueueLength", 3);
   gState().get("flwMap")["0"][0].dExpedite = true;
-  // It doesn't return anything, but it does set gState().get("expdtCount")
   const expdtCount = countExpeditedFlwItems(gState().get("flwMap")["0"]);
   should(expdtCount).be.exactly(1);
 });

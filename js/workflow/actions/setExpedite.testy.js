@@ -2,27 +2,27 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
-import gState from "../js/workflow/actions/gState.js";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import globalState from "../js/workflow/actions/globalState.js";
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newClickCube from "../js/workflow/actions/newClickCube.js";
-import newFlwItem from "../js/workflow/actions/newFlwItem.js";
-import getFlwMpSteps from "../js/workflow/actions/getFlwMpSteps.js";
+import newClickCube from "./newClickCube.js";
+import newFlwItem from "./newFlwItem.js";
+import getFlwMpSteps from "./getFlwMpSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import setExpedite from "../js/workflow/actions/setExpedite.js";
+import setExpedite from "./setExpedite.js";
 //------------------------------------------------------------------
 // TEST: setExpedite()
 //------------------------------------------------------------------

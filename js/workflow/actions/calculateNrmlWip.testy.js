@@ -2,24 +2,24 @@
 //------------------------------------------------------------------------------
 // TESTY
 //------------------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import gSttngs from "../js/workflow/actions/gSttngs.js";
-import globalState from "../js/workflow/actions/globalState.js";
-import gState from "../js/workflow/actions/gState.js";
+import globalSettings from "./globalSettings.js";
+import gSttngs from "./gSttngs.js";
+import globalState from "./globalState.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import newClickCube from "../js/workflow/actions/newClickCube.js";
-import populateSteps from "../js/workflow/actions/populateSteps.js";
-import newFlwItem from "../js/workflow/actions/newFlwItem.js";
+import newClickCube from "./newClickCube.js";
+import populateSteps from "./populateSteps.js";
+import newFlwItem from "./newFlwItem.js";
 //------------------------------------------------------------------------------
 // IMPORT: The function under test
 //------------------------------------------------------------------------------
-import calculateNrmlWip from "../js/workflow/actions/calculateNrmlWip.js";
+import calculateNrmlWip from "./calculateNrmlWip.js";
 //------------------------------------------------------------------------------
 // FIXTURES
 //------------------------------------------------------------------------------

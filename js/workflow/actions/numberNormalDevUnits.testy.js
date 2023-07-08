@@ -2,23 +2,23 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
+import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import globalState from "../js/workflow/actions/globalState.js";
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import { numberNormalDevUnits } from "../js/workflow/actions/numberDevUnits.js";
+import { numberNormalDevUnits } from "./numberDevUnits.js";
 //------------------------------------------------------------------
 // TEST: dragFunction
 //------------------------------------------------------------------

@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
+import { test, testPromise, should } from "../../../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import skipForWip from "../js/workflow/actions/skipForWip.js";
+import skipForWip from "./skipForWip.js";
 //------------------------------------------------------------------
 // TEST: skipForWip()
 //------------------------------------------------------------------
