@@ -42,27 +42,27 @@ function gModel() /*: void */ {
   // set()
   //------------------------------------------------------------------------------
   this.set = (key /*: string */, value /*: any  */) /*: () => void */ => {
+    // Set the gSttngs()/gState() object
     this.keyValuePairs[key] = value;
-    if (
-      key !== "vQueue" &&
-      key !== "flwTmQueue" &&
-      key !== "thrPtQueue" &&
-      key !== "wipQueue" &&
-      key !== "flwTmExpQueue" &&
-      key !== "thrPtExpQueue" &&
-      key !== "wipExpdtQueue"
-    ) {
+    // Set localStorage and easyStorage cache
+    // For easyStorage, we're ignoring gState() for now
+    if (this.sid !== "workflowState") {
+      // Because localStorage and easyStoryage can only store strings,
+      // we need to stringify. But we don't want to stringify strings.
+      if (typeof value !== "string") {
+        value = JSON.stringify(value);
+      }
+      // Add the timestamp so we can tell later which is newer
+      value += "___" + Date.now().toString();
       try {
-        if (typeof value !== "string") {
-          value = JSON.stringify(value);
-        }
-        // Add the timestamp for localStorage and easyStorage
-        value += "___" + Date.now().toString();
+        // Set localStorage
         localStorage.setItem(key, value);
-        easyStorage.set(this.sid, key, value);
       } catch (e) {
         // console.error(e);
+        // console.error("localStorage.setItem() failed for key: " + key);
       }
+      // Set easyStorage
+      easyStorage.set(this.sid, key, value);
     }
     return this;
   };
@@ -77,68 +77,93 @@ function gModel() /*: void */ {
     value /*: any  */,
   ) /*: () => void */ => {
     this.keyValuePairs[key] = value;
-    // ----------------------------------------------------
-    // localStorage
-    // ----------------------------------------------------
-    if (
-      key !== "vQueue" &&
-      key !== "flwTmQueue" &&
-      key !== "thrPtQueue" &&
-      key !== "wipQueue" &&
-      key !== "flwTmExpQueue" &&
-      key !== "thrPtExpQueue" &&
-      key !== "wipExpdtQueue"
-    ) {
+    if (this.sid !== "workflowState") {
+      // So that we can tell, in the functions below, which is newer
+      let lSTimestampNumber /*: number */ = 0;
+      let eSTimestampNumber /*: number */ = 0;
+      // ----------------------------------------------------
+      // localStorage
+      // ----------------------------------------------------
       try {
         // Check if it already exists in localStorage
         const lSValueTimestamp /*: string | null | typeof undefined */ =
           localStorage.getItem(key);
+        // First, check that we got something out of localStorage
         if (lSValueTimestamp !== null && lSValueTimestamp !== undefined) {
+          // Split the string into value and timestamp
           let lSValue /*: string */ = lSValueTimestamp.split("___")[0];
           let lSTimestamp /*: string */ = lSValueTimestamp.split("___")[1];
-          // Strings don't need to be parsed - and will throw an error
           if (lSValue !== undefined && lSTimestamp !== undefined) {
-            if (isParsable(lSValue)) {
+            // Strings don't need to be parsed - and some will throw an error
+            if (isParsable(lSValue) && isParsable(lSTimestamp)) {
               lSValue = JSON.parse(lSValue);
+              lSTimestampNumber = parseInt(lSTimestamp, 10);
             }
             // Use the value from localStorage
             this.keyValuePairs[key] = lSValue;
           }
         } else {
           // It doesn't exist in localStorage, so set it
-          localStorage.setItem(
-            key,
-            JSON.stringify(value) + "___" + Date.now().toString(),
-          );
+          if (typeof value !== "string") {
+            value = JSON.stringify(value);
+          }
+          localStorage.setItem(key, value + "___" + Date.now().toString());
         }
       } catch (e) {
         // console.error(e);
       }
+      // ----------------------------------------------------
+      // easyStorage
+      // ----------------------------------------------------
+      try {
+        easyStorage
+          .get(this.sid, key)
+          .then((valueObj /*: {[string]:string} */) /*: void */ => {
+            // First, check that we got something out of easyStorage
+            if (valueObj !== undefined && valueObj[key] !== undefined) {
+              const eSValueTimestamp = valueObj[key];
+              // Split the string into value and timestamp
+              let eSValue /*: string */ = eSValueTimestamp.split("___")[0];
+              let eSTimestamp /*: string */ = eSValueTimestamp.split("___")[1];
+              // Check that we got a value and a timestamp
+              if (eSValue !== undefined && eSTimestamp !== undefined) {
+                // Strings don't need to be parsed - and some will throw an error
+                if (isParsable(eSValue) && isParsable(eSTimestamp)) {
+                  eSTimestampNumber = parseInt(eSTimestamp, 10);
+                  eSValue = JSON.parse(eSValue);
+                }
+                // Use the value from Easy if the timestamp is newer
+                if (eSTimestampNumber > lSTimestampNumber) {
+                  this.keyValuePairs[key] = eSValue;
+                  // And set localStorage
+                  try {
+                    localStorage.setItem(key, eSValue);
+                  } catch (e) {
+                    // console.error(e);
+                  }
+                }
+              }
+            } else {
+              // It doesn't exist in easyStorage, so set it
+              if (typeof value !== "string") {
+                value = JSON.stringify(value);
+              }
+              // lSTimestampNumber will either be Date.now() or the timestamp
+              // from localStorage
+              if (lSTimestampNumber === 0) {
+                lSTimestampNumber = Date.now();
+              }
+              easyStorage.set(
+                this.sid,
+                key,
+                value + "___" + lSTimestampNumber.toString(),
+              );
+            }
+          });
+      } catch (e) {
+        // console.error(e);
+      }
     }
-    // ----------------------------------------------------
-    // easyStorage
-    // ----------------------------------------------------
-    // try {
-    //   easyStorage
-    //     .get(this.sid, key)
-    //     .then((valueObj /*: {[string]:string} */) /*: void */ => {
-    //       if (
-    //         valueObj[key] !== undefined &&
-    //         valueObj[key] !== this.keyValuePairs[key]
-    //       ) {
-    //         if (isParsable(valueObj[key])) {
-    //           this.keyValuePairs[key] = JSON.parse(valueObj[key]);
-    //         }
-    //       } else {
-    //         if (typeof value !== "string") {
-    //           value = JSON.stringify(value);
-    //         }
-    //         easyStorage.set(this.sid, key, value);
-    //       }
-    //     });
-    // } catch (e) {
-    //   console.error(e);
-    // }
     return this;
   };
 }

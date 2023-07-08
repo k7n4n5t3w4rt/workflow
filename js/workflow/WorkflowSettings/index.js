@@ -103,37 +103,7 @@ export default (props /*: Props */) /*: string */ => {
   const [teamInstability, setTeamInstability] = useState(0);
   setStateFunctions["teamInstability"] = setTeamInstability;
 
-  useEffect(() => {
-    //----------------------------------------
-    // Boolean
-    //----------------------------------------
-    setAutoMode(gSttngs().get("autoMode"));
-    // Not implimented yet
-    setShowMetrics(gSttngs().get("showMetrics"));
-    setDebug(gSttngs().get("debug"));
-    setDfntnOfReady(gSttngs().get("dfntnOfReady"));
-    //----------------------------------------
-    // Sliders
-    //----------------------------------------
-    setArrivalNumber(gSttngs().get("arrivalNumber"));
-    setFlwItmSizeMin(gSttngs().get("flwItmSizeMin"));
-    setFlwItmSizeMax(gSttngs().get("flwItmSizeMax"));
-    setDevUnits(gSttngs().get("devUnits"));
-    setDevCapacityAvailable(gSttngs().get("devCapacityAvailable"));
-    setDrag(gSttngs().get("drag"));
-    setTimeBox(gSttngs().get("timeBox"));
-    setDeath(gSttngs().get("death"));
-    setBacklogDeath(gSttngs().get("backlogDeath"));
-    setFlwItmSizeFactor(gSttngs().get("flwItmSizeFactor"));
-    setFps(gSttngs().get("fps"));
-    setExpdtQueueLength(gSttngs().get("expdtQueueLength"));
-    setWipLimitEachStep(gSttngs().get("wipLimitEachStep"));
-    setExpdtDvUnitsFactor(gSttngs().get("expdtDvUnitsFactor"));
-    setScaleCm(gSttngs().get("scaleCm"));
-    // Not implimented yet
-    setSpecialisation(gSttngs().get("specialisation"));
-    setTeamInstability(gSttngs().get("teamInstability"));
-  }, []);
+  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
 
   useEffect(hideOrShowSettingsDivs(paramToggle), [paramToggle]);
 
@@ -311,6 +281,44 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
+const updateLocalStateFromGlobalState =
+  (setStateFunctions /*: {[string]: function} */) /*: () => void */ =>
+  () /*: void */ => {
+    setTimeout(updateLocalStateFromGlobalState(setStateFunctions), 1000);
+    //----------------------------------------
+    // Boolean
+    //----------------------------------------
+    setStateFunctions["autoMode"](gSttngs().get("autoMode"));
+    // Not implimented yet
+    setStateFunctions["showMetrics"](gSttngs().get("showMetrics"));
+    setStateFunctions["debug"](gSttngs().get("debug"));
+    setStateFunctions["dfntnOfReady"](gSttngs().get("dfntnOfReady"));
+    //----------------------------------------
+    // Sliders
+    //----------------------------------------
+    setStateFunctions["arrivalNumber"](gSttngs().get("arrivalNumber"));
+    setStateFunctions["flwItmSizeMin"](gSttngs().get("flwItmSizeMin"));
+    setStateFunctions["flwItmSizeMax"](gSttngs().get("flwItmSizeMax"));
+    setStateFunctions["devUnits"](gSttngs().get("devUnits"));
+    setStateFunctions["devCapacityAvailable"](
+      gSttngs().get("devCapacityAvailable"),
+    );
+    setStateFunctions["drag"](gSttngs().get("drag"));
+    setStateFunctions["timeBox"](gSttngs().get("timeBox"));
+    setStateFunctions["death"](gSttngs().get("death"));
+    setStateFunctions["backlogDeath"](gSttngs().get("backlogDeath"));
+    setStateFunctions["flwItmSizeFactor"](gSttngs().get("flwItmSizeFactor"));
+    setStateFunctions["fps"](gSttngs().get("fps"));
+    setStateFunctions["expdtQueueLength"](gSttngs().get("expdtQueueLength"));
+    setStateFunctions["wipLimitEachStep"](gSttngs().get("wipLimitEachStep"));
+    setStateFunctions["expdtDvUnitsFactor"](
+      gSttngs().get("expdtDvUnitsFactor"),
+    );
+    setStateFunctions["scaleCm"](gSttngs().get("scaleCm"));
+    // Not implimented yet
+    setStateFunctions["specialisation"](gSttngs().get("specialisation"));
+    setStateFunctions["teamInstability"](gSttngs().get("teamInstability"));
+  };
 //------------------------------------------------------------------
 // hideOrShowSettingsDiv()
 //------------------------------------------------------------------

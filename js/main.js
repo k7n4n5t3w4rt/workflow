@@ -17,5 +17,5 @@ import { html } from "../web_modules/htm/preact.js";
 
 globalSettings();
 globalState();
-// getSttngsFromEasyStorage();
+setInterval(getSttngsFromEasyStorage, 1000);
 render(html` <${App} /> `, document.getElementById("goodthing"));

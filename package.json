@@ -54,7 +54,7 @@
     "start:in-background": "nohup node server/index.js &",
     "start:wait-on": "npm start & wait-on http://localhost:4000",
     "test": "npm run testy && npm run cypress:run",
-    "testy": "node --no-warnings server/testyrunner.js | faucet"
+    "testy": "export RUN_CONTEXT='testy'; node --no-warnings server/testyrunner.js | faucet"
   },
   "type": "module"
 }

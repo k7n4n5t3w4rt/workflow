@@ -37,7 +37,7 @@ const execFactory = async (e /*: Error */, testies /*: Array<string> */) => {
     });
 };
 
-glob("**/*.testy.js", execFactory);
+glob("**/testies/*.testy.js", execFactory);
 
 //------------------------------------------------------------------
 // cleanInt()
