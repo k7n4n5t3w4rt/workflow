@@ -43,7 +43,7 @@
     "fixpack": "fixpack",
     "flow": "flow check",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "generate": "node --no-warnings server/static_generate_run.js",
+    "generate": "node --no-warnings server/static_generate_run.js && rm -f public/js/workflow/calculations/*.testy.js && rm -f public/js/workflow/actions/*.testy.js",
     "generate:clear": "node --no-warnings server/static_clear.js",
     "generate:run": "npm run generate && npm run browsersync",
     "github-pages": "mv docs/CNAME ./ && rm -rf docs && mv public docs && mkdir public && mv CNAME docs/",

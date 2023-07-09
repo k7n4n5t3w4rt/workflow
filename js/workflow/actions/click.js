@@ -11,7 +11,6 @@ import filterDoneItems from "./filterDoneItems.js";
 import updateExpdtWip from "./updateExpdtWip.js";
 import updateNrmlWip from "./updateNrmlWip.js";
 import setExpedite from "./setExpedite.js";
-import pullFlwItems from "./pullFlwItems.js";
 import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
 import updateAge from "./updateAge.js";
@@ -20,6 +19,7 @@ import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getSttngsFromEasyStorage from "./getSttngsFromEasyStorage.js";
 import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
+import recursivelyPullFlwItems from "./recursivelyPullFlwItems.js";
 //------------------------------------------------------------------
 // FUNCTION: click()
 //------------------------------------------------------------------
@@ -43,14 +43,9 @@ export const onClickComplete = () /*: void */ => {
   resizeVSphere();
   updateAge();
   updateDays();
-  // pullFlwItems() calls itself recursively until there are no more
-  // items left to pull.
-  gState().set("flwItmsPulledCount", 0);
-  pullFlwItems();
-  // Update the WIPs when everything has been pulled but not yet worked on
+  recursivelyPullFlwItems();
   updateExpdtWip();
   updateNrmlWip();
-  // For testing, we need to pass in removeDoneFlwItmsFromFlwMap
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   click();
 };
