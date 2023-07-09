@@ -68,6 +68,15 @@ export default (
   const [scaleCm, setScaleCm] = useState(10);
   setStateFunctions["scaleCm"] = setScaleCm;
   lState["scaleCm"] = scaleCm;
+  const [rangeMax, setRangeMax] = useState(1);
+  setStateFunctions["rangeMax"] = setRangeMax;
+  lState["rangeMax"] = rangeMax;
+  const [rangeIncreaseRate, setRangeIncreaseRate] = useState(1);
+  setStateFunctions["rangeIncreaseRate"] = setRangeIncreaseRate;
+  lState["rangeIncreaseRate"] = rangeIncreaseRate;
+  const [rangeMidpoint, setRangeMidpoint] = useState(1);
+  setStateFunctions["rangeMidpoint"] = setRangeMidpoint;
+  lState["rangeMidpoint"] = rangeMidpoint;
   // Not implemented yet
   const [specialisation, setSpecialisation] = useState(0);
   setStateFunctions["specialisation"] = setSpecialisation;

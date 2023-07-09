@@ -37,7 +37,7 @@ type GlobalSettings = {
     flwItmSizeFactor: 1,
     steps: Array<FlwStep>,
     fps: number,
-    rangeDecreaseRate: number,
+    rangeMidpoint: number,
     rangeIncreaseRate: number,
     rangeMax: number,
     scale: number,

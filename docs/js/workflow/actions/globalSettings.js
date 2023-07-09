@@ -72,21 +72,17 @@ export default () => {
   gSttngs().setIfNotCached("expdtQueueLength", 0);
   // 1 is 100% of the available devUnits.
   gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
+  // Q: How many new items arrive in your backlog each day?
+  gSttngs().setIfNotCached("arrivalRate", 1);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
-  // Q: How many new items arrive in your backlog each day?
-  gSttngs().setIfNotCached("arrivalRate", 1);
-  // PARAM: Relative to flwItmSize
   // Format: A number between 0 and 1
   gSttngs().setIfNotCached("flwItmSizeFactor", 1);
   // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
   // effective flwItmSize is reduced by this factor
   // Format: True or False
   gSttngs().setIfNotCached("dfntnOfReady", false);
-  //------------------------------------------------------------------
-  // Not yet used - things that contribute to "dragFactor"
-  //------------------------------------------------------------------
   // Q: How much drag is caused by silos, dependencies and handoffs?
   // Consider:
   // To what extent are people, as individuals, specialists (i.e. they only do
@@ -111,8 +107,6 @@ export default () => {
   gSttngs().setIfNotCached("colorGreen", "00ff00");
   gSttngs().setIfNotCached("fps", 0.1);
   gSttngs().setIfNotCached("scaleCm", 7);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 1.15);
-  gSttngs().setIfNotCached("rangeDecreaseRate", 0.95);
   gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
   gSttngs().set("x", gSttngs().get("scale"));
@@ -120,5 +114,8 @@ export default () => {
   gSttngs().set("z", gSttngs().get("scale"));
   gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
-  gSttngs().set("rangeMax", round2Places(gSttngs().get("yOffset") * 0.3));
+  // Temporarily making these editable in the UI
+  gSttngs().setIfNotCached("rangeMax", 0.5);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 7);
+  gSttngs().setIfNotCached("rangeMidpoint", 0.03);
 };

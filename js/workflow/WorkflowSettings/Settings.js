@@ -30,6 +30,9 @@ import Fps from "./Fps.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import ScaleCm from "./ScaleCm.js";
+import RangeMax from "./RangeMax.js";
+import rangeIncreaseRate from "./RangeIncreaseRate.js";
+import rangeMidpoint from "./RangeMidpoint.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -40,6 +43,8 @@ import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
+import RangeIncreaseRate from "./RangeIncreaseRate.js";
+import RangeMidpoint from "./RangeMidpoint.js";
 
 /*::
 type Props = {
@@ -166,33 +171,6 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("timeBox", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
-        <!-- Death -->
-        <!-------------------------------------------------------------------->
-        <!--
-        <${Death} death=${lState.death} changeSetting=${changeSetting(
-          "death",
-          setStateFunctions,
-        )} />
-        -->
-        <!-------------------------------------------------------------------->
-        <!-- BacklogDeath -->
-        <!-------------------------------------------------------------------->
-        <!--
-        <${BacklogDeath}
-          backlogDeath=${lState.backlogDeath}
-          changeSetting=${changeSetting("backlogDeath", setStateFunctions)}
-        />
-        -->
-        <!-------------------------------------------------------------------->
-        <!-- flwItmSizeFactor -->
-        <!-------------------------------------------------------------------->
-        <!--
-        <${FlwItmSizeFactor}
-          flwItmSizeFactor=${lState.flwItmSizeFactor}
-          changeSetting=${changeSetting("flwItmSizeFactor", setStateFunctions)}
-        />
-        -->
-        <!-------------------------------------------------------------------->
         <!-- fps -->
         <!-------------------------------------------------------------------->
         <${Fps}
@@ -224,11 +202,59 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("scaleCm", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
+        <!-- Range Max. -->
+        <!-------------------------------------------------------------------->
+        <${RangeMax}
+          rangeMax=${lState.rangeMax}
+          changeSetting=${changeSetting("rangeMax", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- Range Increase Rate -->
+        <!-------------------------------------------------------------------->
+        <${RangeIncreaseRate}
+          rangeIncreaseRate=${lState.rangeIncreaseRate}
+          changeSetting=${changeSetting("rangeIncreaseRate", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- Range Decrease Rate -->
+        <!-------------------------------------------------------------------->
+        <${RangeMidpoint}
+          rangeMidpoint=${lState.rangeMidpoint}
+          changeSetting=${changeSetting("rangeMidpoint", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
         <!-- specialisation -->
         <!-------------------------------------------------------------------->
         <!-------------------------------------------------------------------->
         <!-- teamInstability -->
         <!-------------------------------------------------------------------->
+        <!-------------------------------------------------------------------->
+        <!-- Death -->
+        <!-------------------------------------------------------------------->
+        <!--
+        <${Death} death=${lState.death} changeSetting=${changeSetting(
+          "death",
+          setStateFunctions,
+        )} />
+        -->
+        <!-------------------------------------------------------------------->
+        <!-- BacklogDeath -->
+        <!-------------------------------------------------------------------->
+        <!--
+        <${BacklogDeath}
+          backlogDeath=${lState.backlogDeath}
+          changeSetting=${changeSetting("backlogDeath", setStateFunctions)}
+        />
+        -->
+        <!-------------------------------------------------------------------->
+        <!-- flwItmSizeFactor -->
+        <!-------------------------------------------------------------------->
+        <!--
+        <${FlwItmSizeFactor}
+          flwItmSizeFactor=${lState.flwItmSizeFactor}
+          changeSetting=${changeSetting("flwItmSizeFactor", setStateFunctions)}
+        />
+        -->
       </fieldset>
     </div>
     <div

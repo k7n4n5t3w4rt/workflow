@@ -40,6 +40,9 @@ const updateLocalStateFromGlobalState =
       gSttngs().get("expdtDvUnitsFactor"),
     );
     setStateFunctions["scaleCm"](gSttngs().get("scaleCm"));
+    setStateFunctions["rangeMax"](gSttngs().get("rangeMax"));
+    setStateFunctions["rangeIncreaseRate"](gSttngs().get("rangeIncreaseRate"));
+    setStateFunctions["rangeMidpoint"](gSttngs().get("rangeMidpoint"));
     // Not implimented yet
     setStateFunctions["specialisation"](gSttngs().get("specialisation"));
     setStateFunctions["teamInstability"](gSttngs().get("teamInstability"));
