@@ -51,14 +51,13 @@ test("------- pullFlowItem.js -------", () /*: void */ => {
 const fixture = () /*: void */ => {
   globalSettings();
   gSttngs().set("steps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 2 },
-    { name: "Ready", status: "wait", limit: 0, preload: 2 },
-    { name: "Doing", status: "touch", limit: 0, preload: 2 },
-    { name: "Ready for Test", status: "wait", limit: 0, preload: 2 },
-    { name: "In Test", status: "touch", limit: 0, preload: 1 },
+    { name: "Open", status: "backlog", limit: 2, preload: 2 },
+    { name: "Ready", status: "wait", limit: 2, preload: 2 },
+    { name: "Doing", status: "touch", limit: 2, preload: 2 },
+    { name: "Ready for Test", status: "wait", limit: 2, preload: 2 },
+    { name: "In Test", status: "touch", limit: 2, preload: 1 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  gSttngs().set("wipLimitEachStep", 2);
   gSttngs().set("expdtQueueLength", 0);
   globalState();
   // Needed for populateSteps()

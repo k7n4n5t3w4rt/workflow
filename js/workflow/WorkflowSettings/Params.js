@@ -30,7 +30,6 @@ import DfntnOfReady from "./DfntnOfReady.js";
 import Fps from "./Fps.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
-import WipLimiitEachStep from "./WipLimitEachStep.js";
 import ScaleCm from "./ScaleCm.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS

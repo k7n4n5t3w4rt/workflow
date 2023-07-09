@@ -47,7 +47,6 @@ type GlobalSettings = {
     teamInstability: number,
     timeBox: number,
     touchSteps: number,
-    wipLimitEachStep: number,
     x: number,
     y: number,
     yOffset: number,

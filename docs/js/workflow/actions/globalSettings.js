@@ -44,7 +44,7 @@ export default () => {
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
-  gSttngs().set("steps", [
+  gSttngs().setIfNotCached("steps", [
     { name: "Open", status: "backlog", limit: 16, preload: 0 },
     { name: "Ready", status: "wait", limit: 0, preload: 0 },
     { name: "In Progress", status: "touch", limit: 0, preload: 0 },
@@ -70,8 +70,6 @@ export default () => {
   gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
   gSttngs().setIfNotCached("expdtQueueLength", 0);
-  // PARAM: Wip limit for wait and touch steps that don't have one set
-  gSttngs().setIfNotCached("wipLimitEachStep", 0);
   // 1 is 100% of the available devUnits.
   gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
   //------------------------------------------------------------------

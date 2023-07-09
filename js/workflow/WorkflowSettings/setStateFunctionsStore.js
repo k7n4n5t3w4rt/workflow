@@ -65,9 +65,6 @@ export default (
   const [expdtDvUnitsFactor, setExpdtDvUnitsFactor] = useState(1);
   setStateFunctions["expdtDvUnitsFactor"] = setExpdtDvUnitsFactor;
   lState["expdtDvUnitsFactor"] = expdtDvUnitsFactor;
-  const [wipLimitEachStep, setWipLimitEachStep] = useState(0);
-  setStateFunctions["wipLimitEachStep"] = setWipLimitEachStep;
-  lState["wipLimitEachStep"] = wipLimitEachStep;
   const [scaleCm, setScaleCm] = useState(10);
   setStateFunctions["scaleCm"] = setScaleCm;
   lState["scaleCm"] = scaleCm;

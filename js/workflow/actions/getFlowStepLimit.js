@@ -8,18 +8,14 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 export default (flwMpStpKeyNumber /*: number */) /*: number */ => {
   let flwStpLimit = gSttngs().get("steps")[flwMpStpKeyNumber].limit;
-  if (flwStpLimit === 0) {
-    // Check if `limit` is set in the global steps settings
-    if (
-      // If we're not on the first or last step
-      flwMpStpKeyNumber !== 0 &&
-      flwMpStpKeyNumber !== gSttngs().get("steps").length - 1 &&
-      // And if the global wipLimitEachStep is not 0
-      gSttngs().get("wipLimitEachStep") !== 0
-    ) {
-      // Use the global wipLimitEachStep
-      flwStpLimit = gSttngs().get("wipLimitEachStep");
-    }
+  if (
+    // If we're on the last step
+    flwMpStpKeyNumber ===
+    gSttngs().get("steps").length - 1
+  ) {
+    // Maybe a limit was set accidentally on the Done step, but it
+    // should be 0
+    flwStpLimit = 0;
   }
   return flwStpLimit;
 };

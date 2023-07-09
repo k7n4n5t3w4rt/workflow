@@ -54,9 +54,6 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(hideOrShowMetricsDivs(metricToggle), []);
 
   useEffect(() => {
-    // setFps(gSttngs().get("fps"));
-    // setWipLimit(gSttngs().get("wipLimitEachStep"));
-    // setupMobileDebug();
     updateMetricsOnClickInterval(
       setFlowTime,
       flowTime,

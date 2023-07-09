@@ -29,7 +29,6 @@ import DfntnOfReady from "./DfntnOfReady.js";
 import Fps from "./Fps.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
-import WipLimiitEachStep from "./WipLimitEachStep.js";
 import ScaleCm from "./ScaleCm.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -216,13 +215,6 @@ export default (props /*: Props */) /*: string */ => {
             "expdtDvUnitsFactor",
             setStateFunctions,
           )}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- wipLimitEachStep -->
-        <!-------------------------------------------------------------------->
-        <${WipLimiitEachStep}
-          wipLimitEachStep=${lState.wipLimitEachStep}
-          changeSetting=${changeSetting("wipLimitEachStep", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- ScaleCm -->

@@ -36,7 +36,6 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["flwItmSizeFactor"](gSttngs().get("flwItmSizeFactor"));
     setStateFunctions["fps"](gSttngs().get("fps"));
     setStateFunctions["expdtQueueLength"](gSttngs().get("expdtQueueLength"));
-    setStateFunctions["wipLimitEachStep"](gSttngs().get("wipLimitEachStep"));
     setStateFunctions["expdtDvUnitsFactor"](
       gSttngs().get("expdtDvUnitsFactor"),
     );

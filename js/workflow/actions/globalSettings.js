@@ -70,8 +70,6 @@ export default () => {
   gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
   gSttngs().setIfNotCached("expdtQueueLength", 0);
-  // PARAM: Wip limit for wait and touch steps that don't have one set
-  gSttngs().setIfNotCached("wipLimitEachStep", 0);
   // 1 is 100% of the available devUnits.
   gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
   //------------------------------------------------------------------

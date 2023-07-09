@@ -29,6 +29,13 @@ export default () /*: Object */ => {
       boxSizing: "border-box",
       overflow: "auto",
     },
+    input: {
+      fontSize: "1rem",
+      padding: "0.2rem",
+      color: "white",
+      fontWeight: "bold",
+      textShadow: "2px 2px 2px grey",
+    },
   });
 
   return rawStyles;
