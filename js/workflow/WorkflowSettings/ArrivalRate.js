@@ -24,29 +24,26 @@ import {
 
 /*::
 type Props = {
-	arrivalNumber: number,
+	arrivalRate: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="arrivalNumber">Arrival Number:</label>
-      <output
-        id="arrivalNumberOutput"
-        name="arrivalNumberOutput"
-        for="arrivalNumber"
-        >${props.arrivalNumber.toString()}</output
+      <label for="arrivalRate">Arrival Rate:</label>
+      <output id="arrivalRateOutput" name="arrivalRateOutput" for="arrivalRate"
+        >${props.arrivalRate.toString()}</output
       >
       <input
         type="range"
-        id="arrivalNumber"
-        name="arrivalNumber"
+        id="arrivalRate"
+        name="arrivalRate"
         min="0"
-        max="50"
-        step="1"
+        max="5"
+        step=".25"
         onChange=${props.changeSetting}
-        value="${props.arrivalNumber.toString()}"
+        value="${props.arrivalRate.toString()}"
       />
     </div>
   `;

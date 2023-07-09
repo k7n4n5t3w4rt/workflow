@@ -22,7 +22,7 @@ export default () /*: number */ => {
         (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch" ||
           gSttngs().get("steps")[flwItem.dStpIndex].status === "wait")
       ) {
-        return ++_;
+        return (_ += 1);
       } else {
         return _;
       }

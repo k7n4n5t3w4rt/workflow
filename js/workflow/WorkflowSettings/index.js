@@ -12,7 +12,7 @@ import {
   useReducer,
 } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
-import ArrivalNumber from "./ArrivalNumber.js";
+import ArrivalRate from "./ArrivalRate.js";
 import FlwItmSizeMin from "./FlwItmSizeMin.js";
 import FlwItmSizeMax from "./FlwItmSizeMax.js";
 import DevUnits from "./DevUnits.js";
@@ -113,11 +113,11 @@ export default (props /*: Props */) /*: string */ => {
         />
         -->
         <!-------------------------------------------------------------------->
-        <!-- ArrivalNumber -->
+        <!-- ArrivalRate -->
         <!-------------------------------------------------------------------->
-        <${ArrivalNumber}
-          arrivalNumber=${lState.arrivalNumber}
-          changeSetting=${changeSetting("arrivalNumber", setStateFunctions)}
+        <${ArrivalRate}
+          arrivalRate=${lState.arrivalRate}
+          changeSetting=${changeSetting("arrivalRate", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->

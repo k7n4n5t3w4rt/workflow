@@ -77,11 +77,8 @@ export default () => {
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
-  // Q: How many days can elapse between arrivals of new work items? i.e. how many
-  // new items arrive in your backlog each day?
-  gSttngs().setIfNotCached("arrivalFrequency", 1);
-  // Q: When work does arrive, how many items arrive at once?
-  gSttngs().setIfNotCached("arrivalNumber", 1);
+  // Q: How many new items arrive in your backlog each day?
+  gSttngs().setIfNotCached("arrivalRate", 1);
   // PARAM: Relative to flwItmSize
   // Format: A number between 0 and 1
   gSttngs().setIfNotCached("flwItmSizeFactor", 1);

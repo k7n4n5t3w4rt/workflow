@@ -7,7 +7,6 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newFlwItem from "./newFlwItem.js";
 import filterDoneItems from "./filterDoneItems.js";
 import updateExpdtWip from "./updateExpdtWip.js";
 import updateNrmlWip from "./updateNrmlWip.js";
@@ -20,9 +19,18 @@ import updateDays from "./updateDays.js";
 import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getSttngsFromEasyStorage from "./getSttngsFromEasyStorage.js";
-
-const click = () /*: void */ => {
-  gState().set("clicks"), gState().get("clicks") + 1;
+import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
+//------------------------------------------------------------------
+// FUNCTION: click()
+//------------------------------------------------------------------
+export const click = () /*: void */ => {
+  // First time through, gState().get("clicks") will be 0, as set in
+  // globalState.js
+  if (gState().get("clicks") < gSttngs().get("timeBox")) {
+    gState().set("clicks", gState().get("clicks") + 1);
+  } else {
+    gState().set("clicks", 1);
+  }
   animateClickCube();
 };
 //------------------------------------------------------------------
@@ -33,11 +41,8 @@ export const onClickComplete = () /*: void */ => {
   addNewFlowItemsAtArrivalRate();
   setExpedite();
   resizeVSphere();
-  // Skip the first time through
-  if (gState().get("clicks") !== 1) {
-    updateAge();
-    updateDays();
-  }
+  updateAge();
+  updateDays();
   // pullFlwItems() calls itself recursively until there are no more
   // items left to pull.
   gState().set("flwItmsPulledCount", 0);
@@ -48,18 +53,5 @@ export const onClickComplete = () /*: void */ => {
   // For testing, we need to pass in removeDoneFlwItmsFromFlwMap
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
   click();
-};
-//------------------------------------------------------------------
-// addNewFlowItemsAtArrivalRate()
-//------------------------------------------------------------------
-const addNewFlowItemsAtArrivalRate = () /*: void */ => {
-  if (
-    gState().get("flwMap")["0"].length < gSttngs().get("steps")["0"].limit ||
-    gSttngs().get("steps")["0"].limit === 0
-  ) {
-    for (let i = 1; i <= gSttngs().get("arrivalNumber"); i++) {
-      newFlwItem();
-    }
-  }
 };
 export default click;

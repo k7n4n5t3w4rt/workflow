@@ -18,8 +18,7 @@ type GlobalSettings = {
   setSid: (sid: string) => Object,
   getSid: () => string,
   keyValuePairs: {
-    arrivalNumber: number,
-    arrivalFrequency: number,
+    arrivalRate: number,
     autoMode: boolean,
     backlogDeath: number,
     colorGrey: string,
@@ -76,6 +75,7 @@ type GlobalState = {
     // -----------------------
     // Data:
     // -----------------------
+    arrivalNumber: number,
     clicks: number,
     expdtCount: number,
     vSphere: VSphere,

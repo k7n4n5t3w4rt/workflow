@@ -11,6 +11,7 @@ export default () => {
   //------------------------------------------------------------------
   // Empty objects and sensible defaults
   //------------------------------------------------------------------
+  gState().set("arrivalNumber", gSttngs().get("arrivalRate"));
   gState().set("clckCbGroup", {});
   gState().set("clckCube", {});
   gState().set("clicks", 0);
