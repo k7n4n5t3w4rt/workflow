@@ -3,6 +3,7 @@
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gState from "../actions/gState.js";
+import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -41,6 +42,7 @@ import cssStyles from "./cssStylesParams.js";
 import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
+import isParsable from "../actions/isParsable.js";
 
 /*::
 type Props = {
@@ -52,6 +54,7 @@ export default (props /*: Props */) /*: string */ => {
   rawStyles(getRawStyles());
   // A toggle to show or hide the settings
   const [paramsToggle, setParamsToggle] = useState(false);
+  const [steps, setSteps] = useState([]);
   // Hide or show the settings divs when the toggle changes
   useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
   // The function that toggles the settings by setting the toggle
@@ -63,6 +66,24 @@ export default (props /*: Props */) /*: string */ => {
   const [lState, setStateFunctions] = setStateFunctionsStore(useState);
   // Once, on load, update the local state from the global state
   useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
+  useEffect(updateStepsStateFromGlobalState(setSteps), []);
+
+  const changeStepLimit =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.limit = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
 
   return html`
     <div
@@ -73,7 +94,36 @@ export default (props /*: Props */) /*: string */ => {
       <span className="material-icons ${styles.paramsIcon}"> close </span>
     </div>
     <div id="params-container" className="${styles.paramsContainer}">
-      <fieldset></fieldset>
+      <fieldset>
+        <!------------------------------------------------------------------>
+        <!-- Steps -->
+        <!------------------------------------------------------------------>
+        ${steps.map(
+          (
+            step /*: { 
+            name: string,
+            status: string,
+            limit: number,
+            preload: number,
+          } */,
+            index /*: number */,
+          ) /*: void */ => {
+            if (step.status === "done") return html``;
+            return html` <div>
+              <label for="step${index}Limit"
+                >Step ${index} (“${step.name}”) Limit</label
+              >
+              <input
+                type="number"
+                id="step${index}Limit"
+                name="step${index}Limit"
+                value="${step.limit}"
+                onChange=${changeStepLimit(setSteps, index)}
+              />
+            </div>`;
+          },
+        )}
+      </fieldset>
     </div>
     <div
       id="params-icon"
@@ -84,3 +134,9 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
+
+const updateStepsStateFromGlobalState =
+  (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
+    setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
+    setSteps(gSttngs().get("steps"));
+  };

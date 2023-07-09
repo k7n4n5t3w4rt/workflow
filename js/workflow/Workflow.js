@@ -24,7 +24,7 @@ import { html } from "../../web_modules/htm/preact.js";
 // COMPONENTS
 //------------------------------------------------------------------
 import Metrics from "./WorkflowMetrics.js";
-import Settings from "./WorkflowSettings/index.js";
+import Settings from "./WorkflowSettings/Settings.js";
 import Params from "./WorkflowSettings/Params.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -57,19 +57,6 @@ export default (props /*: Props */) /*: string */ => {
     let stats = createStats();
     init();
   }, []);
-  // // Metrics
-  // const [flowTime /*: number */, setFlowTime /*: function */] = useState(0);
-  // const [throughPut /*: number */, setThroughPut /*: function */] = useState(0);
-  // const [wip /*: number */, setWip /*: function */] = useState(0);
-  // const [flowTimeExp /*: number */, setFlowTimeExp /*: function */] =
-  //   useState(0);
-  // const [throughPutExp /*: number */, setThroughPutExp /*: function */] =
-  //   useState(0);
-  // const [wipExp /*: number */, setWipExp /*: function */] = useState(0);
-  // const [value /*: number */, setValue /*: function */] = useState(0);
-  // Params
-  // const [fps, setFps] = useState(1);
-  // const [wipLimitEachStep, setWipLimit] = useState(0);
 
   return html`
     <div id="flw" className="${styles.flw}">
