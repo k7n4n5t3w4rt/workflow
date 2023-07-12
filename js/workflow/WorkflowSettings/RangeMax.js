@@ -39,9 +39,9 @@ export default (props /*: Props */) /*: string */ => {
         type="range"
         id="rangeMax"
         name="rangeMax"
-        min="1"
-        max="10"
-        step="1"
+        min="0.05"
+        max=".5"
+        step="0.05"
         onChange=${props.changeSetting}
         value="${props.rangeMax.toString()}"
       />

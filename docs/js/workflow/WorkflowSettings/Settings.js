@@ -16,7 +16,7 @@ import ArrivalRate from "./ArrivalRate.js";
 import FlwItmSizeMin from "./FlwItmSizeMin.js";
 import FlwItmSizeMax from "./FlwItmSizeMax.js";
 import DevUnits from "./DevUnits.js";
-import DevCapacityAvailable from "./DevCapacityAvailable.js";
+import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
 import AutoMode from "./AutoMode.js";
 import ShowMetrics from "./ShowMetrics.js";
@@ -140,20 +140,21 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- Dev Units -->
         <!-------------------------------------------------------------------->
+        <!--
         <${DevUnits}
           devUnits=${lState.devUnits}
           changeSetting=${changeSetting("devUnits", setStateFunctions)}
         />
+        -->
         <!-------------------------------------------------------------------->
-        <!-- Dev Capacity Available -->
+        <!-- Dev Capacity -->
         <!-------------------------------------------------------------------->
-        <${DevCapacityAvailable}
-          devCapacityAvailable=${lState.devCapacityAvailable}
-          changeSetting=${changeSetting(
-            "devCapacityAvailable",
-            setStateFunctions,
-          )}
+        <!--
+        <${DevCapacity}
+          devCapacity=${lState.devCapacity}
+          changeSetting=${changeSetting("devCapacity", setStateFunctions)}
         />
+        -->
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->

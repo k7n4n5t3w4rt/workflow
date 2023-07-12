@@ -26,9 +26,7 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["flwItmSizeMin"](gSttngs().get("flwItmSizeMin"));
     setStateFunctions["flwItmSizeMax"](gSttngs().get("flwItmSizeMax"));
     setStateFunctions["devUnits"](gSttngs().get("devUnits"));
-    setStateFunctions["devCapacityAvailable"](
-      gSttngs().get("devCapacityAvailable"),
-    );
+    setStateFunctions["devCapacity"](gSttngs().get("devCapacity"));
     setStateFunctions["drag"](gSttngs().get("drag"));
     setStateFunctions["timeBox"](gSttngs().get("timeBox"));
     setStateFunctions["death"](gSttngs().get("death"));

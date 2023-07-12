@@ -29,5 +29,5 @@ export default (flwItems /*: FlwItem[]*/) /*: void */ => {
   // normalFlwItems.forEach((flwItem /*: FlwItem */) => {
   //   flwItem.dSkipForWip = skipForWip(nmNrmlDvUnits, flwItems.length);
   // });
-  applyAdjustedReduction(stepWip)(normalFlwItems, nmNrmlDvUnits);
+  applyAdjustedReduction(stepWip)(normalFlwItems, false);
 };

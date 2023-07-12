@@ -15,5 +15,5 @@ export default (flwItems /*: FlwItem[] */) /*: void */ => {
     },
   );
   const nmExpdtDvUnits = numberExpiditedDevUnits();
-  applyAdjustedReduction(stepWip)(expdtFlwItems, nmExpdtDvUnits);
+  applyAdjustedReduction(stepWip)(expdtFlwItems, true);
 };

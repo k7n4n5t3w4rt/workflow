@@ -25,8 +25,8 @@ export default (props /*: Props */) /*: string */ => {
         id="drag"
         name="drag"
         min="0"
-        max="1"
-        step="0.05"
+        max="2"
+        step="0.25"
         onChange=${props.changeSetting}
         value="${props.drag.toString()}"
       />

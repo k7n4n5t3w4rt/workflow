@@ -26,10 +26,11 @@ type GlobalSettings = {
     colorGreen: string,
     death: number,
     debug: boolean,
-    devCapacityAvailable: number,
+    devCapacity: number,
     devUnits: number,
     dfntnOfReady: number,
     drag: number,
+    dragMidpoint: number,
     expdtQueueLength: number,
     expdtDvUnitsFactor: number,
     flwItmSizeMin: number,
@@ -58,6 +59,8 @@ type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
   limit: number,
+  devCapacity: number,
+  devUnits: number,
   preload: number,
 };
 

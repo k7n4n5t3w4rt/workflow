@@ -42,9 +42,9 @@ export default (props /*: Props */) /*: string */ => {
         type="range"
         id="rangeMidpoint"
         name="rangeMidpoint"
-        min="1"
-        max="10"
-        step="1"
+        min="0.05"
+        max="0.5"
+        step="0.05"
         onChange=${props.changeSetting}
         value="${props.rangeMidpoint.toString()}"
       />

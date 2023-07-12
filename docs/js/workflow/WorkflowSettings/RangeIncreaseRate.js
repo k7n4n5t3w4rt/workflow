@@ -42,9 +42,9 @@ export default (props /*: Props */) /*: string */ => {
         type="range"
         id="rangeIncreaseRate"
         name="rangeIncreaseRate"
-        min="0.1"
-        max="1"
-        step="0.1"
+        min="0.25"
+        max="2"
+        step="0.25"
         onChange=${props.changeSetting}
         value="${props.rangeIncreaseRate.toString()}"
       />

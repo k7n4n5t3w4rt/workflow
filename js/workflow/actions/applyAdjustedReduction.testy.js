@@ -56,7 +56,7 @@ test("Applies the right reduction to remaining days - normal.", () /*: void */ =
   const stepWip = (stpKey /*: string */, expediteFlag /*: boolean */) => {
     return 3;
   };
-  gSttngs().set("devCapacityAvailable", 1);
+  gSttngs().set("devCapacity", 1);
   gSttngs().set("drag", 0.5);
   const flwItems = gState().get("flwMap")["2"];
   const dvUnits = 2;
@@ -66,7 +66,7 @@ test("Applies the right reduction to remaining days - normal.", () /*: void */ =
   flwItems[1].dExpedite = false;
   flwItems[2].dDysRmnngThisStep = 12;
   flwItems[2].dExpedite = false;
-  applyAdjustedReduction(stepWip)(flwItems, dvUnits);
+  applyAdjustedReduction(stepWip)(flwItems, false);
   should(flwItems[0].dDysRmnngThisStep).be.exactly(2.67);
   should(flwItems[1].dDysRmnngThisStep).be.exactly(5.67);
   should(flwItems[2].dDysRmnngThisStep).be.exactly(11.67);

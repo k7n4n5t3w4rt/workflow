@@ -38,9 +38,9 @@ export default (
   const [devUnits, setDevUnits] = useState(1);
   setStateFunctions["devUnits"] = setDevUnits;
   lState["devUnits"] = devUnits;
-  const [devCapacityAvailable, setDevCapacityAvailable] = useState(1);
-  setStateFunctions["devCapacityAvailable"] = setDevCapacityAvailable;
-  lState["devCapacityAvailable"] = devCapacityAvailable;
+  const [devCapacity, setDevCapacity] = useState(1);
+  setStateFunctions["devCapacity"] = setDevCapacity;
+  lState["devCapacity"] = devCapacity;
   const [drag, setDrag] = useState(0);
   setStateFunctions["drag"] = setDrag;
   lState["drag"] = drag;

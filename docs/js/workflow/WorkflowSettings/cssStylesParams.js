@@ -13,15 +13,29 @@ export default () /*: Object */ => {
   setSeed(seedString("flwparams"));
 
   const [styles] = createStyles({
+    inputHeading: {
+      fontSize: "1rem",
+      color: "white",
+      fontWeight: "bold",
+      textShadow: "2px 2px 2px grey",
+      padding: "0.2rem",
+      paddingTop: "0.5rem",
+      paddingBottom: "0.5rem",
+      marginTop: "1rem",
+      marginBottom: "1rem",
+      borderTop: "10px solid white",
+      borderBottom: "10px solid white",
+    },
     paramsContainer: {
       position: "absolute",
       zIndex: "31000",
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
-      padding: "1rem",
       paddingTop: "3rem",
       backgroundColor: "rgba(0, 0, 0, 0.4)",
+      padding: "3rem",
+      paddingBottom: "6rem",
     },
     params: {
       position: "absolute",

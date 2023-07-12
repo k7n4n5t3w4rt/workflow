@@ -9,29 +9,26 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	devCapacityAvailable: number,
+	devCapacity: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="devCapacityAvailable">Dev. Power:</label>
-      <output
-        id="devCapacityAvailableOutput"
-        name="devCapacityAvailableOutput"
-        for="devCapacityAvailable"
-        >${props.devCapacityAvailable.toString()}</output
+      <label for="devCapacity">Dev. Power:</label>
+      <output id="devCapacityOutput" name="devCapacityOutput" for="devCapacity"
+        >${props.devCapacity.toString()}</output
       >
       <input
         type="range"
-        id="devCapacityAvailable"
-        name="devCapacityAvailable"
+        id="devCapacity"
+        name="devCapacity"
         min="0"
         max="1"
         step="0.05"
         onChange=${props.changeSetting}
-        value="${props.devCapacityAvailable.toString()}"
+        value="${props.devCapacity.toString()}"
       />
     </div>
   `;

@@ -57,7 +57,7 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the name to the uuid so we can find it later - Three.js "needs" a name property
   flwItem.name = flwItem.uuid;
   // Set the team number (there is only one for now)
-  flwItem.dTmNumber = rndmBetween(1, gSttngs().get("devUnits"));
+  flwItem.dTmNumber = rndmBetween(1, 1);
   // Expedite is false by default
   flwItem.dExpedite = false;
   // Skip is false by default

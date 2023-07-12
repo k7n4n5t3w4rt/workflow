@@ -33,8 +33,9 @@ export default () => {
   // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
   // defensive programming, lack of documentation, lack of knowledge sharing
   gSttngs().setIfNotCached("drag", 0);
+  gSttngs().setIfNotCached("dragMidpoint", 0.5);
   // Minimum of 1
-  gSttngs().setIfNotCached("devCapacityAvailable", 1);
+  gSttngs().setIfNotCached("devCapacity", 1);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
@@ -45,12 +46,54 @@ export default () => {
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
   gSttngs().setIfNotCached("steps", [
-    { name: "Open", status: "backlog", limit: 16, preload: 0 },
-    { name: "Ready", status: "wait", limit: 0, preload: 0 },
-    { name: "In Progress", status: "touch", limit: 0, preload: 0 },
-    { name: "Ready for Test", status: "wait", limit: 0, preload: 0 },
-    { name: "In Test", status: "touch", limit: 0, preload: 0 },
-    { name: "Done", status: "done", limit: 0 },
+    {
+      name: "Open",
+      status: "backlog",
+      limit: 0,
+      devUnits: 0,
+      devCapacity: 1,
+      preload: 0,
+    },
+    {
+      name: "Ready",
+      status: "wait",
+      limit: 0,
+      devUnits: 0,
+      devCapacity: 1,
+      preload: 0,
+    },
+    {
+      name: "In Progress",
+      status: "touch",
+      limit: 0,
+      devUnits: 0,
+      devCapacity: 1,
+      preload: 0,
+    },
+    {
+      name: "Ready for Test",
+      status: "wait",
+      limit: 0,
+      devUnits: 0,
+      devCapacity: 1,
+      preload: 0,
+    },
+    {
+      name: "In Test",
+      status: "touch",
+      limit: 0,
+      devUnits: 0,
+      devCapacity: 1,
+      preload: 0,
+    },
+    {
+      name: "Done",
+      status: "done",
+      limit: 0,
+      devUnits: 0,
+      devCapacity: 0,
+      preload: 0,
+    },
   ]);
   // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
@@ -115,7 +158,7 @@ export default () => {
   gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   // Temporarily making these editable in the UI
-  gSttngs().setIfNotCached("rangeMax", 0.5);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 7);
-  gSttngs().setIfNotCached("rangeMidpoint", 0.03);
+  gSttngs().setIfNotCached("rangeMax", 0.25);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 1);
+  gSttngs().setIfNotCached("rangeMidpoint", 0.1);
 };

@@ -17,7 +17,7 @@ import ArrivalRate from "./ArrivalRate.js";
 import FlwItmSizeMin from "./FlwItmSizeMin.js";
 import FlwItmSizeMax from "./FlwItmSizeMax.js";
 import DevUnits from "./DevUnits.js";
-import DevCapacityAvailable from "./DevCapacityAvailable.js";
+import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
 import AutoMode from "./AutoMode.js";
 import ShowMetrics from "./ShowMetrics.js";
@@ -84,6 +84,40 @@ export default (props /*: Props */) /*: string */ => {
       setSteps(steps);
     };
 
+  const changeStepDevUnits =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.devUnits = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
+
+  const changeStepDevCapacity =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.devCapacity = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
+
   return html`
     <div
       id="params-close-icon"
@@ -103,23 +137,75 @@ export default (props /*: Props */) /*: string */ => {
             name: string,
             status: string,
             limit: number,
+            devUnits: number,
+            devCapacity: number,
             preload: number,
           } */,
             index /*: number */,
           ) /*: void */ => {
             if (step.status === "done") return html``;
-            return html` <div>
-              <label for="step${index}Limit"
-                >Step ${index} (“${step.name}”) Limit</label
-              >
-              <input
-                type="number"
-                id="step${index}Limit"
-                name="step${index}Limit"
-                value="${step.limit}"
-                onChange=${changeStepLimit(setSteps, index)}
-              />
-            </div>`;
+            return html`
+              <div>
+                <div className="${styles.inputHeading}">
+                  Step ${index}: ${step.name}
+                </div>
+                <label for="step${index}Limit">Limit</label>
+                <output
+                  id="step${index}LimitOutput"
+                  name="step${index}LimitOutput"
+                  for="step${index}LimitOutput"
+                  >${step.limit.toString()}</output
+                >
+                <input
+                  type="range"
+                  id="step${index}Limit"
+                  name="step${index}Limit"
+                  min="0"
+                  max="100"
+                  step="1"
+                  onChange=${changeStepLimit(setSteps, index)}
+                  value="${step.limit.toString()}"
+                />
+              </div>
+              <div>
+                <label for="step${index}DevUnits">Dev Units</label>
+                <output
+                  id="step${index}DevUnitsOutput"
+                  name="step${index}DevUnitsOutput"
+                  for="step${index}DevUnitsOutput"
+                  >${step.devUnits.toString()}</output
+                >
+                <input
+                  type="range"
+                  id="step${index}DevUnits"
+                  name="step${index}DevUnits"
+                  min="0"
+                  max="100"
+                  step="1"
+                  onChange=${changeStepDevUnits(setSteps, index)}
+                  value="${step.devUnits.toString()}"
+                />
+              </div>
+              <div>
+                <label for="step${index}DevCapacity">Dev Capacity</label>
+                <output
+                  id="step${index}DevCapacityOutput"
+                  name="step${index}DevCapacityOutput"
+                  for="step${index}DevCapacityOutput"
+                  >${step.devCapacity.toString()}</output
+                >
+                <input
+                  type="range"
+                  id="step${index}DevCapacity"
+                  name="step${index}DevCapacity"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  onChange=${changeStepDevCapacity(setSteps, index)}
+                  value="${step.devCapacity.toString()}"
+                />
+              </div>
+            `;
           },
         )}
       </fieldset>
