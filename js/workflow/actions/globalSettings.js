@@ -21,6 +21,8 @@ export default () => {
   gSttngs().setIfNotCached("debug", false);
   // Starts the simulation automatically
   gSttngs().setIfNotCached("autoMode", true);
+  // Toggle Easy storage
+  gSttngs().setIfNotCached("easyStorage", true);
   // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
   // We shoud think about 3 kinds of drag, each one contributing to the total.
   // [1] The first kind of drag is are all the human reasons why things take
@@ -32,8 +34,8 @@ export default () => {
   // [3] The third kind of drag is technical - technical debt, legacy code, lack
   // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
   // defensive programming, lack of documentation, lack of knowledge sharing
-  gSttngs().setIfNotCached("drag", 0);
-  gSttngs().setIfNotCached("dragMidpoint", 0.5);
+  // gSttngs().setIfNotCached("drag", 0);
+  // gSttngs().setIfNotCached("dragMidpoint", 0.5);
   // Minimum of 1. Not used right now so setting it to 1
   gSttngs().set("devCapacity", 1);
   //------------------------------------------------------------------
@@ -50,39 +52,19 @@ export default () => {
       name: "Open",
       status: "backlog",
       limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
       preload: 0,
     },
     {
       name: "Ready",
       status: "wait",
       limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
       preload: 0,
     },
     {
       name: "In Progress",
       status: "touch",
-      limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
-      preload: 0,
-    },
-    {
-      name: "Ready for Test",
-      status: "wait",
-      limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
-      preload: 0,
-    },
-    {
-      name: "In Test",
-      status: "touch",
-      limit: 0,
-      devUnits: 0,
+      limit: 2,
+      devUnits: 1,
       devCapacity: 1,
       preload: 0,
     },
@@ -90,11 +72,42 @@ export default () => {
       name: "Done",
       status: "done",
       limit: 0,
-      devUnits: 0,
-      devCapacity: 0,
       preload: 0,
     },
   ]);
+  gSttngs().setIfNotCached("strtAvrgThrPut", 3);
+  gSttngs().setIfNotCached("strtAvrgFlwTime", 10);
+  gSttngs().setIfNotCached("strtAvrgWip", 30);
+  gSttngs().set(
+    "devUnits",
+    gSttngs()
+      .get("steps")
+      .reduce((_ /*: number*/, step /*: Object*/) => {
+        if (step.status === "touch") {
+          return _ + step.devUnits;
+        } else {
+          return _;
+        }
+      }, 0),
+  );
+  gSttngs().set(
+    "touchSteps",
+    gSttngs()
+      .get("steps")
+      .reduce((_ /*: number*/, step /*: Object*/) => {
+        if (step.status === "touch") {
+          return _ + 1;
+        } else {
+          return _;
+        }
+      }, 0),
+  );
+  gSttngs().set(
+    "avrgDevPowerPerClickPerStepPerDevUnit",
+    gSttngs().get("strtAvrgFlwTime") /
+      gSttngs().get("touchSteps") /
+      gSttngs().get("devUnits"),
+  );
   // Q: In "ideal developer days", how many days does each flow item use up?
   // i.e. if everything was perfect and things always went smoothly, and if one
   // person or sub-team could do everything, how long would things take? We want a
@@ -109,8 +122,6 @@ export default () => {
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs().setIfNotCached("death", 0);
   gSttngs().setIfNotCached("backlogDeath", 0);
-  // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
   gSttngs().setIfNotCached("expdtQueueLength", 0);
   // 1 is 100% of the available devUnits.
@@ -159,6 +170,6 @@ export default () => {
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   // Temporarily making these editable in the UI
   gSttngs().setIfNotCached("rangeMax", 0.25);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 1);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
   gSttngs().setIfNotCached("rangeMidpoint", 0.1);
 };

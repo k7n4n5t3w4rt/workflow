@@ -19,8 +19,12 @@ const getSttngsFromEasyStorage = () => {
     try {
       easyStorage
         .get(gSttngs().getSid(), key)
-        .then((valueObj /*: { [string]: string } */) => {
-          if (valueObj !== undefined && valueObj[key] !== undefined) {
+        .then((valueObj /*: { [string]: string } | null */) => {
+          if (
+            valueObj !== null &&
+            valueObj !== undefined &&
+            valueObj[key] !== undefined
+          ) {
             try {
               // Check if it already exists in localStorage
               const lSValueTimestamp /*: string | null | typeof undefined */ =

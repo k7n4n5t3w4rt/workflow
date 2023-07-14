@@ -37,12 +37,46 @@ const fixture = () /*: void */ => {
   globalSettings();
   gSttngs().set("expdtQueueLength", 0);
   gSttngs().set("steps", [
-    { name: "Open", status: "backlog", limit: 0, preload: 3 },
-    { name: "Ready", status: "wait", limit: 3, preload: 3 },
-    { name: "Doing", status: "touch", limit: 3, preload: 3 },
-    { name: "Ready for Test", status: "wait", limit: 3, preload: 3 },
-    { name: "In Test", status: "touch", limit: 3, preload: 3 },
-    { name: "Done", status: "done", limit: 0 },
+    {
+      name: "Open",
+      status: "backlog",
+      limit: 3,
+      preload: 3,
+    },
+    {
+      name: "Ready",
+      status: "wait",
+      limit: 3,
+      preload: 3,
+    },
+    {
+      name: "In Progress",
+      status: "touch",
+      limit: 3,
+      devUnits: 3,
+      devCapacity: 1,
+      preload: 3,
+    },
+    {
+      name: "Ready for Test",
+      status: "wait",
+      limit: 3,
+      preload: 3,
+    },
+    {
+      name: "In Test",
+      status: "touch",
+      limit: 3,
+      devUnits: 3,
+      devCapacity: 1,
+      preload: 3,
+    },
+    {
+      name: "Done",
+      status: "done",
+      limit: 0,
+      preload: 0,
+    },
   ]);
   globalState();
   // Needed for populateSteps()
@@ -57,9 +91,8 @@ test("Applies the right reduction to remaining days - normal.", () /*: void */ =
     return 3;
   };
   gSttngs().set("devCapacity", 1);
-  gSttngs().set("drag", 0.5);
+  gSttngs().set("drag", 0);
   const flwItems = gState().get("flwMap")["2"];
-  const dvUnits = 2;
   flwItems[0].dDysRmnngThisStep = 3;
   flwItems[0].dExpedite = false;
   flwItems[1].dDysRmnngThisStep = 6;
@@ -67,7 +100,7 @@ test("Applies the right reduction to remaining days - normal.", () /*: void */ =
   flwItems[2].dDysRmnngThisStep = 12;
   flwItems[2].dExpedite = false;
   applyAdjustedReduction(stepWip)(flwItems, false);
-  should(flwItems[0].dDysRmnngThisStep).be.exactly(2.67);
-  should(flwItems[1].dDysRmnngThisStep).be.exactly(5.67);
-  should(flwItems[2].dDysRmnngThisStep).be.exactly(11.67);
+  should(flwItems[0].dDysRmnngThisStep).be.exactly(2);
+  should(flwItems[1].dDysRmnngThisStep).be.exactly(5);
+  should(flwItems[2].dDysRmnngThisStep).be.exactly(11);
 });

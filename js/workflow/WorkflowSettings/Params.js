@@ -167,44 +167,47 @@ export default (props /*: Props */) /*: string */ => {
                   value="${step.limit.toString()}"
                 />
               </div>
-              <div>
-                <label for="step${index}DevUnits">Dev Units</label>
-                <output
-                  id="step${index}DevUnitsOutput"
-                  name="step${index}DevUnitsOutput"
-                  for="step${index}DevUnitsOutput"
-                  >${step.devUnits.toString()}</output
-                >
-                <input
-                  type="range"
-                  id="step${index}DevUnits"
-                  name="step${index}DevUnits"
-                  min="0"
-                  max="100"
-                  step="1"
-                  onChange=${changeStepDevUnits(setSteps, index)}
-                  value="${step.devUnits.toString()}"
-                />
-              </div>
-              <div>
-                <label for="step${index}DevCapacity">Dev Capacity</label>
-                <output
-                  id="step${index}DevCapacityOutput"
-                  name="step${index}DevCapacityOutput"
-                  for="step${index}DevCapacityOutput"
-                  >${step.devCapacity.toString()}</output
-                >
-                <input
-                  type="range"
-                  id="step${index}DevCapacity"
-                  name="step${index}DevCapacity"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  onChange=${changeStepDevCapacity(setSteps, index)}
-                  value="${step.devCapacity.toString()}"
-                />
-              </div>
+              ${step.status === "touch" &&
+              html`
+                <div>
+                  <label for="step${index}DevUnits">Dev Units</label>
+                  <output
+                    id="step${index}DevUnitsOutput"
+                    name="step${index}DevUnitsOutput"
+                    for="step${index}DevUnitsOutput"
+                    >${step.devUnits.toString()}</output
+                  >
+                  <input
+                    type="range"
+                    id="step${index}DevUnits"
+                    name="step${index}DevUnits"
+                    min="0"
+                    max="100"
+                    step="1"
+                    onChange=${changeStepDevUnits(setSteps, index)}
+                    value="${step.devUnits.toString()}"
+                  />
+                </div>
+                <div>
+                  <label for="step${index}DevCapacity">Dev Capacity</label>
+                  <output
+                    id="step${index}DevCapacityOutput"
+                    name="step${index}DevCapacityOutput"
+                    for="step${index}DevCapacityOutput"
+                    >${step.devCapacity.toString()}</output
+                  >
+                  <input
+                    type="range"
+                    id="step${index}DevCapacity"
+                    name="step${index}DevCapacity"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    onChange=${changeStepDevCapacity(setSteps, index)}
+                    value="${step.devCapacity.toString()}"
+                  />
+                </div>
+              `}
             `;
           },
         )}

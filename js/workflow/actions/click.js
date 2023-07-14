@@ -40,6 +40,11 @@ export const onClickComplete = () /*: void */ => {
   // NOTE: The order of these function calls is important
   addNewFlowItemsAtArrivalRate();
   setExpedite();
+  if (gState().get("clicks") === gSttngs().get("timeBox")) {
+    console.log("----------------------------------");
+    console.log("Timebox.");
+    console.log("----------------------------------");
+  }
   resizeVSphere();
   updateAge();
   updateDays();

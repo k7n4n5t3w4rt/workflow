@@ -13,6 +13,9 @@ export default (
   const [autoMode, setAutoMode] = useState(false);
   setStateFunctions["autoMode"] = setAutoMode;
   lState["autoMode"] = autoMode;
+  const [easyStorage, setEasyStorage] = useState(false);
+  setStateFunctions["easyStorage"] = setEasyStorage;
+  lState["easyStorage"] = easyStorage;
   // Not implemented yet
   const [showMetrics, setShowMetrics] = useState(true);
   setStateFunctions["showMetrics"] = setShowMetrics;

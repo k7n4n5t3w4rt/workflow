@@ -19,6 +19,7 @@ import DevUnits from "./DevUnits.js";
 import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
 import AutoMode from "./AutoMode.js";
+import EasyStorage from "./EasyStorage.js";
 import ShowMetrics from "./ShowMetrics.js";
 import Debug from "./Debug.js";
 import TimeBox from "./TimeBox.js";
@@ -85,6 +86,14 @@ export default (props /*: Props */) /*: string */ => {
           autoMode=${lState.autoMode}
           styles=${styles}
           changeSetting=${changeSetting("autoMode", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- Easy Storage -->
+        <!-------------------------------------------------------------------->
+        <${EasyStorage}
+          easyStorage=${lState.easyStorage}
+          styles=${styles}
+          changeSetting=${changeSetting("easyStorage", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- showMetrics -->
@@ -159,10 +168,10 @@ export default (props /*: Props */) /*: string */ => {
         <!-- Drag -->
         <!-------------------------------------------------------------------->
         <!--
-        <${Drag} drag=${lState.drag} changeSetting=${changeSetting(
-          "drag",
-          setStateFunctions,
-        )} />
+        <${Drag}
+          drag=${lState.drag}
+          changeSetting=${changeSetting("drag", setStateFunctions)}
+        />
         -->
         <!-------------------------------------------------------------------->
         <!-- timeBox -->

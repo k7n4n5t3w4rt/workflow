@@ -8,7 +8,7 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 import expdtIsOn from "./expdtIsOn.js";
 //------------------------------------------------------------------
-// updateDaysRemaining()
+// applyAdjustedReduction()
 //------------------------------------------------------------------
 export default (
     stepWip /*: (stpKey: string, expediteFlag: boolean ) => number */,
@@ -22,7 +22,7 @@ export default (
       }
       const devCapacity = gSttngs().get("steps")[flwItem.dStpIndex].devCapacity;
       // If there are no dev units, or no flow items, we're done.
-      if (devUnits <= 0 || flwItems.length === 0) {
+      if (devUnits <= 0 || devCapacity <= 0) {
         return;
       }
       // First, work out how many flow items are in the step.
