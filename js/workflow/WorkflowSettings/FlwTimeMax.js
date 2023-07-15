@@ -9,26 +9,26 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	timeBox: number,
+	flwTimeMax: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="timeBox">TimeBox:</label>
-      <output id="timeBoxOutput" name="timeBoxOutput" for="timeBox"
-        >${props.timeBox.toString()}</output
+      <label for="flwTimeMax">Flow Time Max.:</label>
+      <output id="flwTimeMaxOutput" name="flwTimeMaxOutput" for="flwTimeMax"
+        >${props.flwTimeMax.toString()}</output
       >
       <input
         type="range"
-        id="timeBox"
-        name="timeBox"
-        min="5"
-        max="60"
-        step="5"
+        id="flwTimeMax"
+        name="flwTimeMax"
+        min="1"
+        max="400"
+        step="1"
         onChange=${props.changeSetting}
-        value="${props.timeBox.toString()}"
+        value="${props.flwTimeMax.toString()}"
       />
     </div>
   `;

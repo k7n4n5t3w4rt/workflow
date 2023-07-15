@@ -13,8 +13,9 @@ import {
 } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
-import FlwItmSizeMin from "./FlwItmSizeMin.js";
-import FlwItmSizeMax from "./FlwItmSizeMax.js";
+import FlwTimeMin from "./FlwTimeMin.js";
+import FlwTimeMax from "./FlwTimeMax.js";
+import StrtAvrgFlwTime from "./StrtAvrgFlwTime.js";
 import DevUnits from "./DevUnits.js";
 import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
@@ -133,18 +134,25 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("arrivalRate", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
-        <!-- Flow Item Size Min -->
+        <!-- Start Average Flow Time -->
         <!-------------------------------------------------------------------->
-        <${FlwItmSizeMin}
-          flwItmSizeMin=${lState.flwItmSizeMin}
-          changeSetting=${changeSetting("flwItmSizeMin", setStateFunctions)}
+        <${StrtAvrgFlwTime}
+          strtAvrgFlwTime=${lState.strtAvrgFlwTime}
+          changeSetting=${changeSetting("strtAvrgFlwTime", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Max -->
         <!-------------------------------------------------------------------->
-        <${FlwItmSizeMax}
-          flwItmSizeMax=${lState.flwItmSizeMax}
-          changeSetting=${changeSetting("flwItmSizeMax", setStateFunctions)}
+        <${FlwTimeMax}
+          flwTimeMax=${lState.flwTimeMax}
+          changeSetting=${changeSetting("flwTimeMax", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- Flow Item Size Min -->
+        <!-------------------------------------------------------------------->
+        <${FlwTimeMin}
+          flwTimeMin=${lState.flwTimeMin}
+          changeSetting=${changeSetting("flwTimeMin", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Dev Units -->

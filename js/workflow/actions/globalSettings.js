@@ -8,6 +8,10 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 import cleanInt from "../calculations/cleanInt.js";
 import round2Places from "../calculations/round2Places.js";
+import calculateDevPower from "./calculateDevPower.js";
+import touchStepsCount from "./touchStepsCount.js";
+import calculateDevUnits from "./calculateDevUnits.js";
+import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 
 //------------------------------------------------------------------
 // globalSettings()
@@ -20,9 +24,9 @@ export default () => {
   // Turns on some expensive debug features
   gSttngs().setIfNotCached("debug", false);
   // Starts the simulation automatically
-  gSttngs().setIfNotCached("autoMode", true);
+  gSttngs().setIfNotCached("autoMode", false);
   // Toggle Easy storage
-  gSttngs().setIfNotCached("easyStorage", true);
+  gSttngs().setIfNotCached("easyStorage", false);
   // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
   // We shoud think about 3 kinds of drag, each one contributing to the total.
   // [1] The first kind of drag is are all the human reasons why things take
@@ -41,7 +45,10 @@ export default () => {
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
-  // PARAM: flowSteps[n].limit
+  //------------------------------------------------------------------
+  // A lot of things depend on this setting
+  gSttngs().setIfNotCached("strtAvrgFlwTime", 10);
+  //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
@@ -58,15 +65,15 @@ export default () => {
       name: "Ready",
       status: "wait",
       limit: 0,
-      preload: 0,
+      preload: 2,
     },
     {
       name: "In Progress",
       status: "touch",
-      limit: 2,
-      devUnits: 1,
+      limit: 0,
+      devUnits: 4,
       devCapacity: 1,
-      preload: 0,
+      preload: 8,
     },
     {
       name: "Done",
@@ -75,46 +82,14 @@ export default () => {
       preload: 0,
     },
   ]);
-  gSttngs().setIfNotCached("strtAvrgThrPut", 3);
-  gSttngs().setIfNotCached("strtAvrgFlwTime", 10);
-  gSttngs().setIfNotCached("strtAvrgWip", 30);
-  gSttngs().set(
-    "devUnits",
-    gSttngs()
-      .get("steps")
-      .reduce((_ /*: number*/, step /*: Object*/) => {
-        if (step.status === "touch") {
-          return _ + step.devUnits;
-        } else {
-          return _;
-        }
-      }, 0),
-  );
-  gSttngs().set(
-    "touchSteps",
-    gSttngs()
-      .get("steps")
-      .reduce((_ /*: number*/, step /*: Object*/) => {
-        if (step.status === "touch") {
-          return _ + 1;
-        } else {
-          return _;
-        }
-      }, 0),
-  );
-  gSttngs().set(
-    "avrgDevPowerPerClickPerStepPerDevUnit",
-    gSttngs().get("strtAvrgFlwTime") /
-      gSttngs().get("touchSteps") /
-      gSttngs().get("devUnits"),
-  );
-  // Q: In "ideal developer days", how many days does each flow item use up?
-  // i.e. if everything was perfect and things always went smoothly, and if one
-  // person or sub-team could do everything, how long would things take? We want a
-  // "min" and a "max" range to cover the different types of work that might be
-  // done.
-  gSttngs().setIfNotCached("flwItmSizeMin", 1);
-  gSttngs().setIfNotCached("flwItmSizeMax", 1);
+  gSttngs().set("devUnits", calculateDevUnits());
+  gSttngs().set("touchSteps", touchStepsCount());
+  gSttngs().set("avrgDevPowerPerClickPerStepPerDevUnit", calculateDevPower());
+  // Q: What is the shortest flow time?
+  gSttngs().setIfNotCached("flwTimeMin", 1);
+  // Assume a normal distribution for now, and calculate
+  // the longest flow time
+  gSttngs().set("flwTimeMax", calculateFlwTimeMax());
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -159,7 +134,7 @@ export default () => {
   gSttngs().setIfNotCached("colorGold", "ffd700");
   gSttngs().setIfNotCached("colorGrey", "808080");
   gSttngs().setIfNotCached("colorGreen", "00ff00");
-  gSttngs().setIfNotCached("fps", 0.1);
+  gSttngs().setIfNotCached("fps", 1);
   gSttngs().setIfNotCached("scaleCm", 7);
   gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);

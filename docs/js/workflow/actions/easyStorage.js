@@ -1,3 +1,8 @@
+// @flow
+//------------------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------------------
+import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------------------
 // EASY
 //------------------------------------------------------------------------------
@@ -6,8 +11,11 @@ const easyStorage = {
     sid /*: string */,
     dKey /*: string */,
     dValue /*: string */,
-  ) /*: Promise<{ [string]: string }> */ => {
-    if (typeof process === "undefined" || process.env.RUN_CONTEXT !== "testy") {
+  ) /*: Promise<{ [string]: string }> | Promise<null> */ => {
+    if (
+      (typeof process === "undefined" || process.env.RUN_CONTEXT !== "testy") &&
+      gSttngs().get("easyStorage") === "true"
+    ) {
       return fetch(
         `https://easy-oe3ejk3kya-ts.a.run.app/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
         // `http://localhost:5000/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
@@ -35,13 +43,18 @@ const easyStorage = {
           // TODO: This seems to be throwing on CORS requests.
           console.error(e);
         });
+    } else {
+      return Promise.resolve(null);
     }
   },
   get: (
     sid /*: string */,
     dKey /*: string */,
-  ) /*: Promise<{ [string]: string }> */ => {
-    if (typeof process === "undefined" || process.env.RUN_CONTEXT !== "testy") {
+  ) /*: Promise<{ [string]: string }> | Promise<null> */ => {
+    if (
+      (typeof process === "undefined" || process.env.RUN_CONTEXT !== "testy") &&
+      gSttngs().get("easyStorage") === "true"
+    ) {
       return fetch(
         `https://easy-oe3ejk3kya-ts.a.run.app/get?sid=${sid}&dkey=${dKey}`,
         // `http://localhost:5000/get?sid=${sid}&dkey=${dKey}`,
@@ -69,6 +82,8 @@ const easyStorage = {
           // TODO: This seems to be throwing on CORS requests.
           console.error(e);
         });
+    } else {
+      return Promise.resolve(null);
     }
   },
 };

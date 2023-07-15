@@ -8,6 +8,10 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 import cleanInt from "../calculations/cleanInt.js";
 import round2Places from "../calculations/round2Places.js";
+import calculateDevPower from "./calculateDevPower.js";
+import touchStepsCount from "./touchStepsCount.js";
+import calculateDevUnits from "./calculateDevUnits.js";
+import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 
 //------------------------------------------------------------------
 // globalSettings()
@@ -20,7 +24,9 @@ export default () => {
   // Turns on some expensive debug features
   gSttngs().setIfNotCached("debug", false);
   // Starts the simulation automatically
-  gSttngs().setIfNotCached("autoMode", true);
+  gSttngs().setIfNotCached("autoMode", false);
+  // Toggle Easy storage
+  gSttngs().setIfNotCached("easyStorage", false);
   // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
   // We shoud think about 3 kinds of drag, each one contributing to the total.
   // [1] The first kind of drag is are all the human reasons why things take
@@ -32,14 +38,17 @@ export default () => {
   // [3] The third kind of drag is technical - technical debt, legacy code, lack
   // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
   // defensive programming, lack of documentation, lack of knowledge sharing
-  gSttngs().setIfNotCached("drag", 0);
-  gSttngs().setIfNotCached("dragMidpoint", 0.5);
-  // Minimum of 1
-  gSttngs().setIfNotCached("devCapacity", 1);
+  // gSttngs().setIfNotCached("drag", 0);
+  // gSttngs().setIfNotCached("dragMidpoint", 0.5);
+  // Minimum of 1. Not used right now so setting it to 1
+  gSttngs().set("devCapacity", 1);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
-  // PARAM: flowSteps[n].limit
+  //------------------------------------------------------------------
+  // A lot of things depend on this setting
+  gSttngs().setIfNotCached("strtAvrgFlwTime", 10);
+  //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
@@ -50,58 +59,37 @@ export default () => {
       name: "Open",
       status: "backlog",
       limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
       preload: 0,
     },
     {
       name: "Ready",
       status: "wait",
       limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
-      preload: 0,
+      preload: 2,
     },
     {
       name: "In Progress",
       status: "touch",
       limit: 0,
-      devUnits: 0,
+      devUnits: 4,
       devCapacity: 1,
-      preload: 0,
-    },
-    {
-      name: "Ready for Test",
-      status: "wait",
-      limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
-      preload: 0,
-    },
-    {
-      name: "In Test",
-      status: "touch",
-      limit: 0,
-      devUnits: 0,
-      devCapacity: 1,
-      preload: 0,
+      preload: 8,
     },
     {
       name: "Done",
       status: "done",
       limit: 0,
-      devUnits: 0,
-      devCapacity: 0,
       preload: 0,
     },
   ]);
-  // Q: In "ideal developer days", how many days does each flow item use up?
-  // i.e. if everything was perfect and things always went smoothly, and if one
-  // person or sub-team could do everything, how long would things take? We want a
-  // "min" and a "max" range to cover the different types of work that might be
-  // done.
-  gSttngs().setIfNotCached("flwItmSizeMin", 1);
-  gSttngs().setIfNotCached("flwItmSizeMax", 1);
+  gSttngs().set("devUnits", calculateDevUnits());
+  gSttngs().set("touchSteps", touchStepsCount());
+  gSttngs().set("avrgDevPowerPerClickPerStepPerDevUnit", calculateDevPower());
+  // Q: What is the shortest flow time?
+  gSttngs().setIfNotCached("flwTimeMin", 1);
+  // Assume a normal distribution for now, and calculate
+  // the longest flow time
+  gSttngs().set("flwTimeMax", calculateFlwTimeMax());
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -109,8 +97,6 @@ export default () => {
   // to see if they still want the thing we're working on, and reset the priority?
   gSttngs().setIfNotCached("death", 0);
   gSttngs().setIfNotCached("backlogDeath", 0);
-  // Q: How many people are in your whole team - or how many sub-teams do you have?
-  gSttngs().setIfNotCached("devUnits", 1);
   // PARAM: How many things do we expedite each timebox?
   gSttngs().setIfNotCached("expdtQueueLength", 0);
   // 1 is 100% of the available devUnits.
@@ -148,7 +134,7 @@ export default () => {
   gSttngs().setIfNotCached("colorGold", "ffd700");
   gSttngs().setIfNotCached("colorGrey", "808080");
   gSttngs().setIfNotCached("colorGreen", "00ff00");
-  gSttngs().setIfNotCached("fps", 0.1);
+  gSttngs().setIfNotCached("fps", 1);
   gSttngs().setIfNotCached("scaleCm", 7);
   gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
@@ -159,6 +145,6 @@ export default () => {
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   // Temporarily making these editable in the UI
   gSttngs().setIfNotCached("rangeMax", 0.25);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 1);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
   gSttngs().setIfNotCached("rangeMidpoint", 0.1);
 };

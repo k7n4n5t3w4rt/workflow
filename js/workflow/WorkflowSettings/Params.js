@@ -14,8 +14,8 @@ import {
 } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
-import FlwItmSizeMin from "./FlwItmSizeMin.js";
-import FlwItmSizeMax from "./FlwItmSizeMax.js";
+import FlwTimeMin from "./FlwTimeMin.js";
+import FlwTimeMax from "./FlwTimeMax.js";
 import DevUnits from "./DevUnits.js";
 import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
@@ -66,6 +66,23 @@ export default (props /*: Props */) /*: string */ => {
   // Once, on load, update the local state from the global state
   useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
+
+  const changeStepPreload =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.preload = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
 
   const changeStepLimit =
     (
@@ -161,7 +178,7 @@ export default (props /*: Props */) /*: string */ => {
                   id="step${index}Limit"
                   name="step${index}Limit"
                   min="0"
-                  max="100"
+                  max="200"
                   step="1"
                   onChange=${changeStepLimit(setSteps, index)}
                   value="${step.limit.toString()}"
@@ -169,6 +186,25 @@ export default (props /*: Props */) /*: string */ => {
               </div>
               ${step.status === "touch" &&
               html`
+                <div>
+                  <label for="step${index}Preload">Preload</label>
+                  <output
+                    id="step${index}PreloadOutput"
+                    name="step${index}PreloadOutput"
+                    for="step${index}PreloadOutput"
+                    >${step.preload.toString()}</output
+                  >
+                  <input
+                    type="range"
+                    id="step${index}Preload"
+                    name="step${index}Preload"
+                    min="0"
+                    max="200"
+                    step="1"
+                    onChange=${changeStepPreload(setSteps, index)}
+                    value="${step.preload.toString()}"
+                  />
+                </div>
                 <div>
                   <label for="step${index}DevUnits">Dev Units</label>
                   <output
@@ -181,7 +217,7 @@ export default (props /*: Props */) /*: string */ => {
                     type="range"
                     id="step${index}DevUnits"
                     name="step${index}DevUnits"
-                    min="0"
+                    min="1"
                     max="100"
                     step="1"
                     onChange=${changeStepDevUnits(setSteps, index)}

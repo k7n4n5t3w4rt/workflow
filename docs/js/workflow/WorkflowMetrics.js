@@ -135,7 +135,7 @@ const updateMetricsOnClickInterval = (
         setThroughPutExp(gState().get("thrPtExpQueue").dailyMean());
       if (gState().get("wipExpdtQueue").dailyMean() !== wip)
         setWipExp(gState().get("wipExpdtQueue").dailyMean());
-      if (gState().get("vQueue").total !== value)
+      if (gState().get("vQueue").total() !== value)
         setValue(gState().get("vQueue").total());
     }
   }, 1000);

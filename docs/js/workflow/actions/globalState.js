@@ -15,7 +15,6 @@ export default () => {
   gState().set("clckCbGroup", {});
   gState().set("clckCube", {});
   gState().set("clicks", 0);
-  gState().set("drag", 0);
   gState().set("endPosition", {});
   gState().set("expdtCount", gSttngs().get("expdtQueueLength"));
   gState().set("flwItems", []);

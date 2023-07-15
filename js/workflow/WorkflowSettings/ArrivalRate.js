@@ -40,8 +40,8 @@ export default (props /*: Props */) /*: string */ => {
         id="arrivalRate"
         name="arrivalRate"
         min="0"
-        max="10"
-        step=".25"
+        max="20"
+        step="1"
         onChange=${props.changeSetting}
         value="${props.arrivalRate.toString()}"
       />

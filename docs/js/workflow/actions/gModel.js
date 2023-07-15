@@ -118,9 +118,13 @@ function gModel() /*: void */ {
       try {
         easyStorage
           .get(this.sid, key)
-          .then((valueObj /*: {[string]:string} */) /*: void */ => {
+          .then((valueObj /*: {[string]:string} | null */) /*: void */ => {
             // First, check that we got something out of easyStorage
-            if (valueObj !== undefined && valueObj[key] !== undefined) {
+            if (
+              valueObj !== null &&
+              valueObj !== undefined &&
+              valueObj[key] !== undefined
+            ) {
               const eSValueTimestamp = valueObj[key];
               // Split the string into value and timestamp
               let eSValue /*: string */ = eSValueTimestamp.split("___")[0];

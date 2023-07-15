@@ -96,7 +96,7 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
-  const daysMax = gSttngs().get("flwItmSizeMax");
+  const daysMax = gSttngs().get("flwTimeMax");
   const daysTotal = flwItem.dDysTotal;
 
   // const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
@@ -126,20 +126,29 @@ const setAge = (
   flwItem.dBacklogAge = 0;
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
-  // if (stepIndex > 0 && gSttngs().get("death") > 0) {
-  //   flwItem.dAge = rndmBetween(0, gSttngs().get("death"));
-  // }
+  if (stepIndex > 0) {
+    flwItem.dAge = rndmBetween(0, gSttngs().get("strtAvrgFlwTime"));
+  }
 };
 //------------------------------------------------------------------
 // setDays()
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dDysTotal = rndmBetween(
-    gSttngs().get("flwItmSizeMin"),
-    gSttngs().get("flwItmSizeMax"),
+    gSttngs().get("flwTimeMin"),
+    gSttngs().get("flwTimeMax"),
   );
-  flwItem.dDysRmnngThisStep = flwItem.dDysTotal / touchStepsCount();
-  flwItem.dDysEachTouchStep = flwItem.dDysRmnngThisStep;
+  flwItem.dDysEachTouchStep = flwItem.dDysTotal / touchStepsCount();
+  flwItem.dDysRmnngThisStep = 0;
+  if (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch") {
+    flwItem.dDysRmnngThisStep =
+      flwItem.dDysEachTouchStep -
+      ((gSttngs().get("avrgDevPowerPerClickPerStepPerDevUnit") *
+        gSttngs().get("steps")[flwItem.dStpIndex].devUnits) /
+        gSttngs().get("steps")[flwItem.dStpIndex].limit) *
+        flwItem.dAge;
+    if (flwItem.dDysRmnngThisStep < 0) flwItem.dDysRmnngThisStep = 0;
+  }
 };
 
 //------------------------------------------------------------------

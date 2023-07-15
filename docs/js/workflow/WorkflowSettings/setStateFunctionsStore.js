@@ -13,6 +13,9 @@ export default (
   const [autoMode, setAutoMode] = useState(false);
   setStateFunctions["autoMode"] = setAutoMode;
   lState["autoMode"] = autoMode;
+  const [easyStorage, setEasyStorage] = useState(false);
+  setStateFunctions["easyStorage"] = setEasyStorage;
+  lState["easyStorage"] = easyStorage;
   // Not implemented yet
   const [showMetrics, setShowMetrics] = useState(true);
   setStateFunctions["showMetrics"] = setShowMetrics;
@@ -29,12 +32,15 @@ export default (
   const [arrivalRate, setArrivalRate] = useState(0);
   setStateFunctions["arrivalRate"] = setArrivalRate;
   lState["arrivalRate"] = arrivalRate;
-  const [flwItmSizeMin, setFlwItmSizeMin] = useState(1);
-  setStateFunctions["flwItmSizeMin"] = setFlwItmSizeMin;
-  lState["flwItmSizeMin"] = flwItmSizeMin;
-  const [flwItmSizeMax, setFlwItmSizeMax] = useState(1);
-  setStateFunctions["flwItmSizeMax"] = setFlwItmSizeMax;
-  lState["flwItmSizeMax"] = flwItmSizeMax;
+  const [strtAvrgFlwTime, setStrtAvrgFlwTime] = useState(1);
+  setStateFunctions["strtAvrgFlwTime"] = setStrtAvrgFlwTime;
+  lState["strtAvrgFlwTime"] = strtAvrgFlwTime;
+  const [flwTimeMin, setFlwTimeMin] = useState(1);
+  setStateFunctions["flwTimeMin"] = setFlwTimeMin;
+  lState["flwTimeMin"] = flwTimeMin;
+  const [flwTimeMax, setFlwTimeMax] = useState(1);
+  setStateFunctions["flwTimeMax"] = setFlwTimeMax;
+  lState["flwTimeMax"] = flwTimeMax;
   const [devUnits, setDevUnits] = useState(1);
   setStateFunctions["devUnits"] = setDevUnits;
   lState["devUnits"] = devUnits;

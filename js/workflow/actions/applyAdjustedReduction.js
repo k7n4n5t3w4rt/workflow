@@ -21,7 +21,7 @@ export default (
         devUnits = devUnits * gSttngs().get("expdtDvUnitsFactor");
       }
       const devCapacity = gSttngs().get("steps")[flwItem.dStpIndex].devCapacity;
-      // If there are no dev units, or no flow items, we're done.
+      // If there are no dev units, or no dev capacity, we're done.
       if (devUnits <= 0 || devCapacity <= 0) {
         return;
       }
@@ -35,7 +35,11 @@ export default (
       //  - `devUnits`: the number of dev units
       //  - `devCapacity`: the power of each dev unit
       //  - `wipThisStep`: the number of flow items in the step
-      const devDays = (devUnits * devCapacity) / wipThisStep;
+      const devDays =
+        (devUnits *
+          devCapacity *
+          gSttngs().get("avrgDevPowerPerClickPerStepPerDevUnit")) /
+        wipThisStep;
       // Reduce the days remaining by the number of days calculated above.
       flwItem.dDysRmnngThisStep -= devDays;
       // Round the days remaining to 2 decimal places.

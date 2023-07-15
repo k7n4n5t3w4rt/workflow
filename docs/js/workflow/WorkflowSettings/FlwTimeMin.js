@@ -24,29 +24,26 @@ import {
 
 /*::
 type Props = {
-	flwItmSizeMin: number,
+	flwTimeMin: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="flwItmSizeMin">Flow Item Size Min.:</label>
-      <output
-        id="flwItmSizeMinOutput"
-        name="flwItmSizeMinOutput"
-        for="flwItmSizeMin"
-        >${props.flwItmSizeMin.toString()}</output
+      <label for="flwTimeMin">Flow Time Min.:</label>
+      <output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin"
+        >${props.flwTimeMin.toString()}</output
       >
       <input
         type="range"
-        id="flwItmSizeMin"
-        name="flwItmSizeMin"
+        id="flwTimeMin"
+        name="flwTimeMin"
         min="1"
-        max="50"
+        max="200"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.flwItmSizeMin.toString()}"
+        value="${props.flwTimeMin.toString()}"
       />
     </div>
   `;

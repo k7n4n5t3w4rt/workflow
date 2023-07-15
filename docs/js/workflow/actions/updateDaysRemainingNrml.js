@@ -9,6 +9,8 @@ import gSttngs from "./gSttngs.js";
 import { numberNormalDevUnits } from "./numberDevUnits.js";
 import applyAdjustedReduction from "./applyAdjustedReduction.js";
 import stepWip from "./stepWip.js";
+import skipForWip from "./skipForWip.js";
+import expdtIsOn from "./expdtIsOn.js";
 //------------------------------------------------------------------------------
 // updateDaysRemainingNrml()
 //------------------------------------------------------------------------------
@@ -18,16 +20,12 @@ export default (flwItems /*: FlwItem[]*/) /*: void */ => {
       // We only want to exclude expedited items if the expedite limit is set.
       // There might be expedited items left in the flwMap if the limit
       // was set and then removed.
-      if (gSttngs().get("expdtQueueLength") > 0) {
+      if (expdtIsOn() === true) {
         return flwItem.dExpedite === false;
       } else {
         return true;
       }
     },
   );
-  const nmNrmlDvUnits = numberNormalDevUnits();
-  // normalFlwItems.forEach((flwItem /*: FlwItem */) => {
-  //   flwItem.dSkipForWip = skipForWip(nmNrmlDvUnits, flwItems.length);
-  // });
   applyAdjustedReduction(stepWip)(normalFlwItems, false);
 };
