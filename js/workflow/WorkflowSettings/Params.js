@@ -17,7 +17,6 @@ import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
 import FlwTimeMax from "./FlwTimeMax.js";
 import DevUnits from "./DevUnits.js";
-import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
 import AutoMode from "./AutoMode.js";
 import ShowMetrics from "./ShowMetrics.js";
@@ -118,23 +117,6 @@ export default (props /*: Props */) /*: string */ => {
       setSteps(steps);
     };
 
-  const changeStepDevCapacity =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.devCapacity = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
-
   return html`
     <div
       id="params-close-icon"
@@ -155,7 +137,7 @@ export default (props /*: Props */) /*: string */ => {
             status: string,
             limit: number,
             devUnits: number,
-            devCapacity: number,
+            devPowerFactor: number,
             preload: number,
           } */,
             index /*: number */,
@@ -222,25 +204,6 @@ export default (props /*: Props */) /*: string */ => {
                     step="1"
                     onChange=${changeStepDevUnits(setSteps, index)}
                     value="${step.devUnits.toString()}"
-                  />
-                </div>
-                <div>
-                  <label for="step${index}DevCapacity">Dev Capacity</label>
-                  <output
-                    id="step${index}DevCapacityOutput"
-                    name="step${index}DevCapacityOutput"
-                    for="step${index}DevCapacityOutput"
-                    >${step.devCapacity.toString()}</output
-                  >
-                  <input
-                    type="range"
-                    id="step${index}DevCapacity"
-                    name="step${index}DevCapacity"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                    onChange=${changeStepDevCapacity(setSteps, index)}
-                    value="${step.devCapacity.toString()}"
                   />
                 </div>
               `}

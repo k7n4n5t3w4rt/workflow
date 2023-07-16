@@ -17,7 +17,6 @@ import FlwTimeMin from "./FlwTimeMin.js";
 import FlwTimeMax from "./FlwTimeMax.js";
 import StrtAvrgFlwTime from "./StrtAvrgFlwTime.js";
 import DevUnits from "./DevUnits.js";
-import DevCapacity from "./DevCapacity.js";
 import Drag from "./Drag.js";
 import AutoMode from "./AutoMode.js";
 import EasyStorage from "./EasyStorage.js";
@@ -161,15 +160,6 @@ export default (props /*: Props */) /*: string */ => {
         <${DevUnits}
           devUnits=${lState.devUnits}
           changeSetting=${changeSetting("devUnits", setStateFunctions)}
-        />
-        -->
-        <!-------------------------------------------------------------------->
-        <!-- Dev Capacity -->
-        <!-------------------------------------------------------------------->
-        <!--
-        <${DevCapacity}
-          devCapacity=${lState.devCapacity}
-          changeSetting=${changeSetting("devCapacity", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->

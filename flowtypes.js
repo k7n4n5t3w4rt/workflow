@@ -27,7 +27,7 @@ type GlobalSettings = {
     colorGreen: string,
     death: number,
     debug: boolean,
-    devCapacity: number,
+    devPowerFactor: number,
     strtAvrgFlwTime: number,
     devUnits: number,
     touchSteps: number,
@@ -63,7 +63,7 @@ type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
   limit: number,
-  devCapacity: number,
+  devPowerFactor: number,
   devUnits: number,
   preload: number,
 };

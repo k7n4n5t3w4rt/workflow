@@ -12,7 +12,6 @@ import calculateDevPower from "./calculateDevPower.js";
 import touchStepsCount from "./touchStepsCount.js";
 import calculateDevUnits from "./calculateDevUnits.js";
 import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
-
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
@@ -27,21 +26,6 @@ export default () => {
   gSttngs().setIfNotCached("autoMode", false);
   // Toggle Easy storage
   gSttngs().setIfNotCached("easyStorage", false);
-  // A drag of 0 is no drag. A drag of 1 is 100% drag for this factor.
-  // We shoud think about 3 kinds of drag, each one contributing to the total.
-  // [1] The first kind of drag is are all the human reasons why things take
-  // longer when there is more WIP: context switching, communication,
-  // loss of motivation, etc.
-  // [2] The second kind of drag is structural and procedural - specialisations,
-  // handoffs, dependencies across teams, component/platform/service teams,
-  // signoffs, governance overhead, compliance
-  // [3] The third kind of drag is technical - technical debt, legacy code, lack
-  // of automation, lack of test coverage, lack of CI/CD, lack of monitoring
-  // defensive programming, lack of documentation, lack of knowledge sharing
-  // gSttngs().setIfNotCached("drag", 0);
-  // gSttngs().setIfNotCached("dragMidpoint", 0.5);
-  // Minimum of 1. Not used right now so setting it to 1
-  gSttngs().set("devCapacity", 1);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
@@ -72,7 +56,6 @@ export default () => {
       status: "touch",
       limit: 0,
       devUnits: 4,
-      devCapacity: 1,
       preload: 8,
     },
     {
@@ -82,8 +65,6 @@ export default () => {
       preload: 0,
     },
   ]);
-  gSttngs().set("devUnits", calculateDevUnits());
-  gSttngs().set("touchSteps", touchStepsCount());
   gSttngs().set("avrgDevPowerPerClickPerStepPerDevUnit", calculateDevPower());
   // Q: What is the shortest flow time?
   gSttngs().setIfNotCached("flwTimeMin", 1);

@@ -54,7 +54,7 @@ const fixture = () /*: void */ => {
       status: "touch",
       limit: 3,
       devUnits: 3,
-      devCapacity: 1,
+      devPowerFactor: 1,
       preload: 3,
     },
     {
@@ -68,7 +68,7 @@ const fixture = () /*: void */ => {
       status: "touch",
       limit: 3,
       devUnits: 3,
-      devCapacity: 1,
+      devPowerFactor: 1,
       preload: 3,
     },
     {
@@ -90,7 +90,7 @@ test("Applies the right reduction to remaining days - normal.", () /*: void */ =
   const stepWip = (stpKey /*: string */, expediteFlag /*: boolean */) => {
     return 3;
   };
-  gSttngs().set("devCapacity", 1);
+  gSttngs().set("devPowerFactor", 1);
   gSttngs().set("drag", 0);
   const flwItems = gState().get("flwMap")["2"];
   flwItems[0].dDysRmnngThisStep = 3;
