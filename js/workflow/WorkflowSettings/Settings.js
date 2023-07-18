@@ -255,12 +255,12 @@ export default (props /*: Props */) /*: string */ => {
         />
         -->
         <!-------------------------------------------------------------------->
-        <!-- flwItmSizeFactor -->
+        <!-- flwItmSizeLimit -->
         <!-------------------------------------------------------------------->
         <!--
         <${FlwItmSizeFactor}
-          flwItmSizeFactor=${lState.flwItmSizeFactor}
-          changeSetting=${changeSetting("flwItmSizeFactor", setStateFunctions)}
+          flwItmSizeLimit=${lState.flwItmSizeLimit}
+          changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
         />
         -->
       </fieldset>

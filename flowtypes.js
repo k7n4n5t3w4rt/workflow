@@ -39,7 +39,7 @@ type GlobalSettings = {
     expdtDvUnitsFactor: number,
     flwTimeMin: number,
     flwTimeMax: number,
-    flwItmSizeFactor: 1,
+    flwItmSizeLimit: 1,
     steps: Array<FlwStep>,
     fps: number,
     rangeMidpoint: number,

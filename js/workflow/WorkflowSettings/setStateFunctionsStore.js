@@ -59,9 +59,9 @@ export default (
   const [backlogDeath, setBacklogDeath] = useState(0);
   setStateFunctions["backlogDeath"] = setBacklogDeath;
   lState["backlogDeath"] = backlogDeath;
-  const [flwItmSizeFactor, setFlwItmSizeFactor] = useState(1);
-  setStateFunctions["flwItmSizeFactor"] = setFlwItmSizeFactor;
-  lState["flwItmSizeFactor"] = flwItmSizeFactor;
+  const [flwItmSizeLimit, setFlwItmSizeFactor] = useState(1);
+  setStateFunctions["flwItmSizeLimit"] = setFlwItmSizeFactor;
+  lState["flwItmSizeLimit"] = flwItmSizeLimit;
   const [fps, setFps] = useState(1);
   setStateFunctions["fps"] = setFps;
   lState["fps"] = fps;
