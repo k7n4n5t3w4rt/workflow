@@ -16,7 +16,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="flwItmSizeLimit">Flow Item Size Factor:</label>
+      <label for="flwItmSizeLimit">Flow Item Size Limit:</label>
       <output
         id="flwItmSizeLimitOutput"
         name="flwItmSizeLimitOutput"
@@ -27,9 +27,9 @@ export default (props /*: Props */) /*: string */ => {
         type="range"
         id="flwItmSizeLimit"
         name="flwItmSizeLimit"
-        min="0"
+        min="0.2"
         max="1"
-        step="0.05"
+        step="0.1"
         onChange=${props.changeSetting}
         value="${props.flwItmSizeLimit.toString()}"
       />

@@ -88,7 +88,7 @@ export default () => {
   // Not yet used...
   //------------------------------------------------------------------
   // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("flwItmSizeFactor", 1);
+  gSttngs().setIfNotCached("flwItmSizeLimit", 1);
   // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
   // effective flwItmSize is reduced by this factor
   // Format: True or False

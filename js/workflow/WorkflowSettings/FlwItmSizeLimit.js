@@ -9,29 +9,29 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	flwItmSizeFactor: number,
+	flwItmSizeLimit: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="flwItmSizeFactor">Flow Item Size Factor:</label>
+      <label for="flwItmSizeLimit">Flow Item Size Limit:</label>
       <output
-        id="flwItmSizeFactorOutput"
-        name="flwItmSizeFactorOutput"
-        for="flwItmSizeFactor"
-        >${props.flwItmSizeFactor.toString()}</output
+        id="flwItmSizeLimitOutput"
+        name="flwItmSizeLimitOutput"
+        for="flwItmSizeLimit"
+        >${props.flwItmSizeLimit.toString()}</output
       >
       <input
         type="range"
-        id="flwItmSizeFactor"
-        name="flwItmSizeFactor"
-        min="0"
+        id="flwItmSizeLimit"
+        name="flwItmSizeLimit"
+        min="0.2"
         max="1"
-        step="0.05"
+        step="0.1"
         onChange=${props.changeSetting}
-        value="${props.flwItmSizeFactor.toString()}"
+        value="${props.flwItmSizeLimit.toString()}"
       />
     </div>
   `;

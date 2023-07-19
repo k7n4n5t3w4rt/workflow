@@ -25,7 +25,7 @@ import Debug from "./Debug.js";
 import TimeBox from "./TimeBox.js";
 import Death from "./Death.js";
 import BacklogDeath from "./BacklogDeath.js";
-import FlwItmSizeFactor from "./FlwItmSizeFactor.js";
+import FlwItmSizeLimit from "./FlwItmSizeLimit.js";
 import DfntnOfReady from "./DfntnOfReady.js";
 import Fps from "./Fps.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
@@ -255,14 +255,12 @@ export default (props /*: Props */) /*: string */ => {
         />
         -->
         <!-------------------------------------------------------------------->
-        <!-- flwItmSizeFactor -->
+        <!-- flwItmSizeLimit -->
         <!-------------------------------------------------------------------->
-        <!--
-        <${FlwItmSizeFactor}
-          flwItmSizeFactor=${lState.flwItmSizeFactor}
-          changeSetting=${changeSetting("flwItmSizeFactor", setStateFunctions)}
+        <${FlwItmSizeLimit}
+          flwItmSizeLimit=${lState.flwItmSizeLimit}
+          changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
         />
-        -->
       </fieldset>
     </div>
     <div

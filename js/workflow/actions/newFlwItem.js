@@ -26,9 +26,9 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   setColor(flwItem);
   setAge(flwItem, stepIndex);
   gState().get("flwItmTracker")[flwItem.name] = [];
-  setDays(flwItem);
   setScaleAndValue(flwItem);
   setVolume(flwItem);
+  setDays(flwItem);
   setPosition(flwItem, stepIndex);
   gState().get("clckCbGroup").add(flwItem);
   return flwItem;
@@ -99,6 +99,10 @@ const mapIt = (
 const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
   const daysMax = gSttngs().get("flwTimeMax");
+  flwItem.dDysTotal = rndmBetween(
+    gSttngs().get("flwTimeMin"),
+    gSttngs().get("flwTimeMax"),
+  );
   const daysTotal = flwItem.dDysTotal;
   // This will be the scale and value if the flwItmSizeLimit is not set
   let scale = daysTotal / daysMax;
@@ -114,6 +118,7 @@ const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
       scale,
       gSttngs().get("flwItmSizeLimit"),
     );
+    flwItem.dDysTotal = gSttngs().get("flwItmSizeLimit") * daysMax;
     scale = gSttngs().get("flwItmSizeLimit");
   }
   // Set the scale and store the scale value
@@ -154,10 +159,6 @@ const setAge = (
 // setDays()
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
-  flwItem.dDysTotal = rndmBetween(
-    gSttngs().get("flwTimeMin"),
-    gSttngs().get("flwTimeMax"),
-  );
   flwItem.dDysEachTouchStep = flwItem.dDysTotal / touchStepsCount();
   flwItem.dDysRmnngThisStep = 0;
   if (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch") {

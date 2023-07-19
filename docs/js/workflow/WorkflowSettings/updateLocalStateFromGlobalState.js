@@ -41,7 +41,7 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["rangeMidpoint"](gSttngs().get("rangeMidpoint"));
     setStateFunctions["drag"](gSttngs().get("drag"));
     // Not implimented yet
-    setStateFunctions["flwItmSizeFactor"](gSttngs().get("flwItmSizeFactor"));
+    setStateFunctions["flwItmSizeLimit"](gSttngs().get("flwItmSizeLimit"));
     setStateFunctions["backlogDeath"](gSttngs().get("backlogDeath"));
     setStateFunctions["death"](gSttngs().get("death"));
     setStateFunctions["specialisation"](gSttngs().get("specialisation"));

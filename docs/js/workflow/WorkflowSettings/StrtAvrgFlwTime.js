@@ -27,9 +27,9 @@ export default (props /*: Props */) /*: string */ => {
         type="range"
         id="strtAvrgFlwTime"
         name="strtAvrgFlwTime"
-        min="10"
-        max="200"
-        step="10"
+        min="1"
+        max="150"
+        step="1"
         onChange=${props.changeSetting}
         value="${props.strtAvrgFlwTime.toString()}"
       />

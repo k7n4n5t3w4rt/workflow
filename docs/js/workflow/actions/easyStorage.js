@@ -14,7 +14,7 @@ const easyStorage = {
   ) /*: Promise<{ [string]: string }> | Promise<null> */ => {
     if (
       (typeof process === "undefined" || process.env.RUN_CONTEXT !== "testy") &&
-      gSttngs().get("easyStorage") === "true"
+      gSttngs().get("easyStorage") === true
     ) {
       return fetch(
         `https://easy-oe3ejk3kya-ts.a.run.app/set?sid=${sid}&dkey=${dKey}&dvalue=${dValue}`,
@@ -53,7 +53,7 @@ const easyStorage = {
   ) /*: Promise<{ [string]: string }> | Promise<null> */ => {
     if (
       (typeof process === "undefined" || process.env.RUN_CONTEXT !== "testy") &&
-      gSttngs().get("easyStorage") === "true"
+      gSttngs().get("easyStorage") === true
     ) {
       return fetch(
         `https://easy-oe3ejk3kya-ts.a.run.app/get?sid=${sid}&dkey=${dKey}`,

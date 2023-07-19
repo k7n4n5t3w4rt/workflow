@@ -31,7 +31,7 @@ export const animatePosition = () => {
   // ...but only if the offset is not a multiple of 3
   if (Math.floor(offset / gSttngs().get("step")) % 10) {
     gState().get("vSphere").dPosition.z =
-      gState().get("endPosition").z - offset;
+      gState().get("endPosition").z - offset * gSttngs().get("step");
   }
 
   anime({

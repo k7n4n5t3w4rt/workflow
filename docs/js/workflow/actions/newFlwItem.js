@@ -16,6 +16,7 @@ import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
 import calculateRange from "./calculateRange.js";
 import touchStepsCount from "./touchStepsCount.js";
+import calculateValueForScale from "./calculateValueForScale.js";
 
 export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
@@ -25,8 +26,9 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   setColor(flwItem);
   setAge(flwItem, stepIndex);
   gState().get("flwItmTracker")[flwItem.name] = [];
+  setScaleAndValue(flwItem);
+  setVolume(flwItem);
   setDays(flwItem);
-  setScaleAndVolume(flwItem);
   setPosition(flwItem, stepIndex);
   gState().get("clckCbGroup").add(flwItem);
   return flwItem;
@@ -92,28 +94,51 @@ const mapIt = (
 };
 
 //------------------------------------------------------------------
-// setScaleAndVolume()
+// setScaleAndValue()
 //------------------------------------------------------------------
-const setScaleAndVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
   const daysMax = gSttngs().get("flwTimeMax");
+  flwItem.dDysTotal = rndmBetween(
+    gSttngs().get("flwTimeMin"),
+    gSttngs().get("flwTimeMax"),
+  );
   const daysTotal = flwItem.dDysTotal;
-
-  // const scale = Math.round((daysTotal / daysMax) * 1000) / 1000;
-  const scale = daysTotal / daysMax;
-
+  // This will be the scale and value if the flwItmSizeLimit is not set
+  let scale = daysTotal / daysMax;
+  flwItem.dValue = scale;
+  // If the flwItmSizeLimit is set, use it to reduce the scale
+  // and increase the relative value
+  if (
+    gSttngs().get("flwItmSizeLimit") >= 0.2 &&
+    gSttngs().get("flwItmSizeLimit") < 1 &&
+    scale >= gSttngs().get("flwItmSizeLimit")
+  ) {
+    flwItem.dValue = calculateValueForScale(
+      scale,
+      gSttngs().get("flwItmSizeLimit"),
+    );
+    flwItem.dDysTotal = gSttngs().get("flwItmSizeLimit") * daysMax;
+    scale = gSttngs().get("flwItmSizeLimit");
+  }
+  // Set the scale and store the scale value
   flwItem.scale.set(scale, scale, scale);
   flwItem.dScale = scale;
+  return flwItem;
+};
+//------------------------------------------------------------------
+// setVolume()
+//------------------------------------------------------------------
+const setVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+  const scale = flwItem.dScale;
   flwItem.dVolume =
     gSttngs().get("x") *
     scale *
     (gSttngs().get("y") * scale) *
     (gSttngs().get("z") * scale);
-  // flwItem.dValue = flwItem.dVolume * 1000 * 3;
-  flwItem.dValue = scale;
+  // Account for a 0 value edge case
   return flwItem;
 };
-
 //------------------------------------------------------------------
 // setAge()
 //------------------------------------------------------------------
@@ -134,10 +159,6 @@ const setAge = (
 // setDays()
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
-  flwItem.dDysTotal = rndmBetween(
-    gSttngs().get("flwTimeMin"),
-    gSttngs().get("flwTimeMax"),
-  );
   flwItem.dDysEachTouchStep = flwItem.dDysTotal / touchStepsCount();
   flwItem.dDysRmnngThisStep = 0;
   if (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch") {
