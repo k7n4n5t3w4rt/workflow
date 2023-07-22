@@ -111,9 +111,7 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   if (nextStatus === "done") {
     newPosition.x = gState().get("vSphere").dPosition.x;
     newPosition.y = gState().get("vSphere").dPosition.y;
-    newPosition.z =
-      gState().get("vSphere").dPosition.z +
-      gSttngs().get("step") * flwItem.scale.z;
+    newPosition.z = gState().get("vSphere").dPosition.z + gSttngs().get("step");
 
     animateScaleToZero(flwItem);
   } else {

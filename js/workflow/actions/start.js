@@ -85,6 +85,14 @@ const orientEverythingToTheClickCube = () /*: void */ => {
         gState().get("scnData").reticleStuff.reticle.matrix,
       );
   }
+  // --------------------------------------------------------------
+  // AUTOMODE
+  // --------------------------------------------------------------
+  if (gSttngs().get("autoMode")) {
+    gState()
+      .get("clckCbGroup")
+      .rotateY(90 * (Math.PI / 180));
+  }
 };
 //------------------------------------------------------------------
 // setStartPosition()
@@ -105,12 +113,17 @@ const setEndPosition = () /*: void */ => {
   gState().set("endPosition", gState().get("strtPosition").clone());
   gState().get("endPosition").z +=
     gSttngs().get("step") * (gSttngs().get("steps").length + 2) * -1;
+  gSttngs().set("vSphereX", gState().get("endPosition").x);
+  gSttngs().set("vSphereY", gState().get("endPosition").y);
+  gSttngs().set("vSphereZ", gState().get("endPosition").z);
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------
   if (gSttngs().get("autoMode")) {
-    gState().get("endPosition").z -=
-      gSttngs().get("step") * gSttngs().get("steps").length + 2;
+    gState().get("clckCbGroup").position.x += 15.3;
+    gState().get("clckCbGroup").position.z -= 4;
+    // gState().get("endPosition").z -=
+    //   gSttngs().get("step") * gSttngs().get("steps").length + 2;
   }
 };
 //------------------------------------------------------------------

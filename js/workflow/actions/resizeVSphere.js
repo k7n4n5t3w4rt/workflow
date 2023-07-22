@@ -28,10 +28,9 @@ export const animatePosition = () => {
     Math.floor(
       (gState().get("vSphere").dRadius / gSttngs().get("step")) * 100,
     ) / 100;
-  // ...but only if the offset is not a multiple of 3
+  // ...but only if the offset is not a multiple of 10
   if (Math.floor(offset / gSttngs().get("step")) % 10) {
-    gState().get("vSphere").dPosition.z =
-      gState().get("endPosition").z - offset * gSttngs().get("step");
+    gState().get("vSphere").dPosition.z -= offset * gSttngs().get("step");
   }
 
   anime({
@@ -43,6 +42,7 @@ export const animatePosition = () => {
     complete: (anim) => {
       gState().get("vSphere").dMoving = false;
       gState().get("vSphere").visible = true;
+      gState().get("endPosition").z = gState().get("vSphere").dPosition.z;
     },
   });
 };

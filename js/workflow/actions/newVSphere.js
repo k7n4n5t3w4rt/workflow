@@ -10,6 +10,9 @@ import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 
 export default () /*: Object */ => {
+  // Create a texture loader
+  // const loader = new THREE.TextureLoader();
+
   // spheres in a group can be rotated / scaled etc as a group
   // const clicksphereGroup = new THREE.Group();
   const geometry = new THREE.SphereGeometry(1, 32, 32);

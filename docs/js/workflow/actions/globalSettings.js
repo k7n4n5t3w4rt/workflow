@@ -21,11 +21,11 @@ export default () => {
   // Development
   //------------------------------------------------------------------
   // Turns on some expensive debug features
-  gSttngs().setIfNotCached("debug", false);
+  gSttngs().setNoCache("debug", false);
   // Starts the simulation automatically
-  gSttngs().setIfNotCached("autoMode", false);
+  gSttngs().setNoCache("autoMode", false);
   // Toggle Easy storage
-  gSttngs().setIfNotCached("easyStorage", false);
+  gSttngs().setNoCache("easyStorage", true);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
@@ -112,9 +112,6 @@ export default () => {
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  gSttngs().setIfNotCached("colorGold", "ffd700");
-  gSttngs().setIfNotCached("colorGrey", "808080");
-  gSttngs().setIfNotCached("colorGreen", "00ff00");
   gSttngs().setIfNotCached("fps", 1);
   gSttngs().setIfNotCached("scaleCm", 7);
   gSttngs().setIfNotCached("showMetrics", true);
@@ -128,4 +125,7 @@ export default () => {
   gSttngs().setIfNotCached("rangeMax", 0.25);
   gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
   gSttngs().setIfNotCached("rangeMidpoint", 0.1);
+  gSttngs().set("colorGold", "ffd700");
+  gSttngs().set("colorGrey", "808080");
+  gSttngs().set("colorGreen", "00ff00");
 };

@@ -14,7 +14,7 @@ function gModel() /*: void */ {
   //---------------------------------------------------------------------------
   // setSid()
   //---------------------------------------------------------------------------
-  this.setSid = (sid /*: string */) /*: () => void */ => {
+  this.setSid = (sid /*: string */) /*: () => Object */ => {
     this.sid = sid;
     return this;
   };
@@ -41,7 +41,7 @@ function gModel() /*: void */ {
   //------------------------------------------------------------------------------
   // set()
   //------------------------------------------------------------------------------
-  this.set = (key /*: string */, value /*: any  */) /*: () => void */ => {
+  this.set = (key /*: string */, value /*: any  */) /*: () => Object */ => {
     // Set the gSttngs()/gState() object
     this.keyValuePairs[key] = value;
     // Set localStorage and easyStorage cache
@@ -75,7 +75,7 @@ function gModel() /*: void */ {
   this.setIfNotCached = (
     key /*: string */,
     value /*: any  */,
-  ) /*: () => void */ => {
+  ) /*: () => Object */ => {
     this.keyValuePairs[key] = value;
     if (this.sid !== "workflowState") {
       // So that we can tell, in the functions below, which is newer
@@ -164,6 +164,52 @@ function gModel() /*: void */ {
               );
             }
           });
+      } catch (e) {
+        // console.error(e);
+      }
+    }
+    return this;
+  };
+  //---------------------------------------------------------------------------
+  // setNoCache()
+  //---------------------------------------------------------------------------
+  this.setNoCache = (
+    key /*: string */,
+    value /*: any  */,
+  ) /*: () => Object */ => {
+    this.keyValuePairs[key] = value;
+    if (this.sid !== "workflowState") {
+      // So that we can tell, in the functions below, which is newer
+      let lSTimestampNumber /*: number */ = 0;
+      let eSTimestampNumber /*: number */ = 0;
+      // ----------------------------------------------------
+      // localStorage
+      // ----------------------------------------------------
+      try {
+        // Check if it already exists in localStorage
+        const lSValueTimestamp /*: string | null | typeof undefined */ =
+          localStorage.getItem(key);
+        // First, check that we got something out of localStorage
+        if (lSValueTimestamp !== null && lSValueTimestamp !== undefined) {
+          // Split the string into value and timestamp
+          let lSValue /*: string */ = lSValueTimestamp.split("___")[0];
+          let lSTimestamp /*: string */ = lSValueTimestamp.split("___")[1];
+          if (lSValue !== undefined && lSTimestamp !== undefined) {
+            // Strings don't need to be parsed - and some will throw an error
+            if (isParsable(lSValue) && isParsable(lSTimestamp)) {
+              lSValue = JSON.parse(lSValue);
+              lSTimestampNumber = parseInt(lSTimestamp, 10);
+            }
+            // Use the value from localStorage
+            this.keyValuePairs[key] = lSValue;
+          }
+        } else {
+          // It doesn't exist in localStorage, so set it
+          if (typeof value !== "string") {
+            value = JSON.stringify(value);
+          }
+          localStorage.setItem(key, value + "___" + Date.now().toString());
+        }
       } catch (e) {
         // console.error(e);
       }

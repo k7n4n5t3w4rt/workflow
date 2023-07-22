@@ -32,8 +32,8 @@ import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import ScaleCm from "./ScaleCm.js";
 import RangeMax from "./RangeMax.js";
-import rangeIncreaseRate from "./RangeIncreaseRate.js";
-import rangeMidpoint from "./RangeMidpoint.js";
+import RangeIncreaseRate from "./RangeIncreaseRate.js";
+import RangeMidpoint from "./RangeMidpoint.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -44,8 +44,6 @@ import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
-import RangeIncreaseRate from "./RangeIncreaseRate.js";
-import RangeMidpoint from "./RangeMidpoint.js";
 
 /*::
 type Props = {
