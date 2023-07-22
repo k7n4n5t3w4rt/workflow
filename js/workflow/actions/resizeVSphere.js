@@ -28,9 +28,11 @@ export const animatePosition = () => {
     Math.floor(
       (gState().get("vSphere").dRadius / gSttngs().get("step")) * 100,
     ) / 100;
-  // ...but only if the offset is not a multiple of 10
+  // ...but only if the offset is not a multiple of 10?
   if (Math.floor(offset / gSttngs().get("step")) % 10) {
-    gState().get("vSphere").dPosition.z -= offset * gSttngs().get("step");
+    gState().get("vSphere").dPosition.z =
+      gSttngs().get("step") * (gSttngs().get("steps").length + 2) * -1 -
+      offset * gSttngs().get("step");
   }
 
   anime({
