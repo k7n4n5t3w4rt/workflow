@@ -45,8 +45,10 @@ const threeJsCube = () /*: FlwItem */ => {
     gSttngs().get("z"),
   );
   const color = "#" + gSttngs().get("colorGold"); // gold
-  const material = new THREE.MeshBasicMaterial({ color });
+  const material = new THREE.MeshLambertMaterial({ color });
   const flwItem = new THREE.Mesh(geometry, material);
+  flwItem.receiveShadow = true;
+  flwItem.castShadow = true;
   // Set the color for changing it later
   flwItem.dColor = color;
   return flwItem;

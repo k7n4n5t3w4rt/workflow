@@ -9,17 +9,65 @@ import * as THREE from "../../../web_modules/three.js";
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 
-export default () /*: Object */ => {
+export default async () /*: Object */ => {
   // Create a texture loader
-  // const loader = new THREE.TextureLoader();
+  // How to use it
+  const textureMap = await new THREE.TextureLoader()
+    .loadAsync("../../../assets/textures/gold_7.jpg")
+    .catch((err) => {
+      console.log(err);
+    });
+  // const normalMap = await new THREE.TextureLoader()
+  //   .loadAsync(
+  //     "../../../assets/textures/gold/MetalGoldPaint002_NRM_2K_METALNESS.png",
+  //   )
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // const displacementMap = await new THREE.TextureLoader()
+  //   .loadAsync(
+  //     "../../../assets/textures/gold/MetalGoldPaint002_DISP_2K_METALNESS.png",
+  //   )
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // // env map
 
-  // spheres in a group can be rotated / scaled etc as a group
-  // const clicksphereGroup = new THREE.Group();
-  const geometry = new THREE.SphereGeometry(1, 32, 32);
-  const material = new THREE.MeshBasicMaterial({
-    color: `rgb(218,165,32)`,
+  // const path = "https://threejs.org/examples/textures/cube/SwedishRoyalCastle/";
+  // const format = ".jpg";
+  // const urls = [
+  //   path + "px" + format,
+  //   path + "nx" + format,
+  //   path + "py" + format,
+  //   path + "ny" + format,
+  //   path + "pz" + format,
+  //   path + "nz" + format,
+  // ];
+
+  // const reflectionCube = new THREE.CubeTextureLoader().load(
+  //   urls,
+  //   undefined,
+  //   (error) => console.error(error),
+  // );
+  const material = new THREE.MeshLambertMaterial({
+    // color: 0xc1c1c1,
+    map: textureMap,
+    // roughness: 0.06,
+    // metalness: 1,
+    // // normalMap: normalMap,
+    // // normalScale: new THREE.Vector2(1, -1), // why does the normal map require negation in this case?
+    // // aoMap: aoMap,
+    // // aoMapIntensity: 1,
+    // displacementMap: displacementMap,
+    // displacementScale: 2.43614,
+    // displacementBias: -0.428408, // from original model
+    // envMap: reflectionCube,
+    // envMapIntensity: 7,
+    side: THREE.FrontSide,
   });
+  const geometry = new THREE.SphereGeometry(1, 32, 32);
   const sphere = new THREE.Mesh(geometry, material);
+  sphere.receiveShadow = true;
   sphere.castShadow = true;
   sphere.visible = false;
   sphere.dPosition = sphere.position.clone();

@@ -25,10 +25,12 @@ export default () /*: void */ => {
   // The AR container is where the AR scene will be rendered
   const ARContainer = addArContainerToDom();
   // Make the scene, camera, geometry, etc.
-  const light = lightSetup();
   const camera = cameraSetup();
   const scene /*: Object */ = new THREE.Scene();
-  scene.add(light);
+  // const directionalLightHelper = new THREE.DirectionalLightHelper(
+  //   directionalLight,
+  // );
+  // scene.add(directionalLightHelper);
   const renderer = rendererSetup();
   // Not appearing for some reason. I think it is hidden
   const stats = createStats();
@@ -66,7 +68,13 @@ export default () /*: void */ => {
   // A fix for when the phone is rotated, etc
   window.addEventListener("resize", onWindowResize(camera, renderer, window));
   // Populate the global state, for posterity
-  gState().set("scnData", { stats, scene, camera, reticleStuff, renderer });
+  gState().set("scnData", {
+    stats,
+    scene,
+    camera,
+    reticleStuff,
+    renderer,
+  });
 };
 //------------------------------------------------------------------
 // startButtonSetup()
@@ -94,21 +102,11 @@ const rendererSetup = () /*: Object */ => {
     antialias: true,
     alpha: true,
   });
+  renderer.shadowMap.enabled = true;
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true;
   return renderer;
-};
-//------------------------------------------------------------------
-// lightSetup()
-//------------------------------------------------------------------
-const lightSetup = () /*: Object */ => {
-  // https://threejs.org/docs/#api/en/lights/HemisphereLight
-  const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-  light.position.set(0.5, 1, 0.25);
-  //   const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-  //   scene.add(ambientLight);
-  return light;
 };
 //------------------------------------------------------------------
 // addArContainerToDom()

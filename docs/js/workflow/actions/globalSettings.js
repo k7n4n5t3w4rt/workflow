@@ -125,7 +125,7 @@ export default () => {
   gSttngs().setIfNotCached("rangeMax", 0.25);
   gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
   gSttngs().setIfNotCached("rangeMidpoint", 0.1);
-  gSttngs().set("colorGold", "ffd700");
+  gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
 };

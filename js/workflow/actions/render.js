@@ -62,6 +62,13 @@ export default () /*: () => Promise<any>  */ => {
 
       // if (cubes.active === true) {
       // }
+      if (scnData.pointLights !== undefined) {
+        scnData.pointLights.pointLight1.position.x =
+          2500 * Math.cos(scnData.pointLights.r);
+        scnData.pointLights.pointLight1.position.z =
+          2500 * Math.sin(scnData.pointLights.r);
+        scnData.pointLights.r += 0.01;
+      }
       scnData.stats.update();
       scnData.renderer.render(scnData.scene, scnData.camera);
     }

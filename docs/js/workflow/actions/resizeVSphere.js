@@ -30,6 +30,9 @@ export const animatePosition = () => {
     ) / 100;
   // ...but only if the offset is not a multiple of 10?
   if (Math.floor(offset / gSttngs().get("step")) % 10) {
+    // The `z` inded of theoriginal endpoint is two steps on from the
+    // last step. It is negative so it comes towards the camera:
+    //  gSttngs().get("step") * (gSttngs().get("steps").length + 2) * -1
     gState().get("vSphere").dPosition.z =
       gSttngs().get("step") * (gSttngs().get("steps").length + 2) * -1 -
       offset * gSttngs().get("step");
