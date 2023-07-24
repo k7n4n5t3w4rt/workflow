@@ -12,7 +12,9 @@ import gState from "./gState.js";
 // calculateRange()
 //------------------------------------------------------------------
 export default (x /*: number */) /*: number */ => {
-  const max = gSttngs().get("rangeMax"); // the maximum value that y approaches
+  const max =
+    gSttngs().get("rangeMax") *
+    (gSttngs().get("scale") * gSttngs().get("flwItmSizeLimit")); // the maximum value that y approaches
   const x0 = gSttngs().get("rangeMidpoint"); // the x-value of the sigmoid's midpoint
   const k = gSttngs().get("rangeIncreaseRate"); // the logistic growth rate or steepness of the curve
 

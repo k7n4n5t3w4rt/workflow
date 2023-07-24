@@ -128,4 +128,5 @@ export default () => {
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
+  gSttngs().set("colorBlue", "1d2570");
 };

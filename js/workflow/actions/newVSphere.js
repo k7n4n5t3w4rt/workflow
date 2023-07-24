@@ -70,6 +70,10 @@ export default async () /*: Object */ => {
   sphere.receiveShadow = true;
   sphere.castShadow = true;
   sphere.visible = false;
+  sphere.position.x = gState().get("endPosition").x;
+  sphere.position.y = gState().get("endPosition").y;
+  sphere.position.z = gState().get("endPosition").z;
   sphere.dPosition = sphere.position.clone();
+  sphere.material.opacity = 0.9;
   return sphere;
 };
