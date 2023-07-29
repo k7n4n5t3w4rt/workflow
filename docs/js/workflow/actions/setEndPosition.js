@@ -10,7 +10,7 @@ import gState from "./gState.js";
 export const setEndPosition = () => {
   gState().set("endPosition", gState().get("strtPosition").clone());
   gState().get("endPosition").z +=
-    gSttngs().get("step") * (gSttngs().get("steps").length + 2) * -1;
+    gSttngs().get("step") * (gSttngs().get("steps").length + 0.5) * -1;
   gSttngs().set("vSphereX", gState().get("endPosition").x);
   gSttngs().set("vSphereY", gState().get("endPosition").y);
   gSttngs().set("vSphereZ", gState().get("endPosition").z);

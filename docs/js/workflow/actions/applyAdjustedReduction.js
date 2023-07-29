@@ -16,8 +16,6 @@ export default (
     stepWip /*: (stpKey: string, expediteFlag: boolean ) => number */,
   ) /*: (flwItems: FlwItem[], expediteFlag: boolean ) => void */ =>
   (flwItems /*: FlwItem[] */, expediteFlag /*: boolean */) /*: void */ => {
-    // The average dev power per click per step per dev unit across the workflow.
-    const avrgDevPowerPerClickPerStepPerDevUnit = calculateDevPower();
     // Apply the adjusted reduction to each flow item.
     flwItems.forEach((flwItem /*: FlwItem */) => {
       // Just the number of dev units for this step.
@@ -34,12 +32,12 @@ export default (
       if (devUnits <= 0 || wipThisStep <= 0) {
         return;
       }
+      const devPower = calculateDevPower();
       // The `devPowerFactor` is 1.2 for a 1:1 ratio, and 0.8 for a 10:1 ratio.
       const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
+      // const devPowerFactor = 1; // The simple, linear version.
       // Finally, work out how many days to reduce the `dDysRmnngThisStep` by
-      const devDays =
-        (devUnits * avrgDevPowerPerClickPerStepPerDevUnit * devPowerFactor) /
-        wipThisStep;
+      const devDays = (devUnits * devPower * devPowerFactor) / wipThisStep;
       // Reduce the days remaining by the number of days calculated above.
       flwItem.dDysRmnngThisStep -= devDays;
       // Round the days remaining to 2 decimal places.

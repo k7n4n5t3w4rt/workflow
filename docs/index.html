@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>v0.8.0</title>
+	<title>v0.9.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="manifest" href="site.webmanifest">
@@ -94,19 +94,29 @@
 					</div>
 				</div>
 				<div>
+					<label for="devPowerFix">Dev Power Fix:</label>
+					<output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix">0</output>
+					<input type="range" id="devPowerFix" name="devPowerFix" min="0" max="2" step="0.05" value="0" />
+				</div>
+				<div>
 					<label for="arrivalRate">Arrival Rate:</label>
 					<output id="arrivalRateOutput" name="arrivalRateOutput" for="arrivalRate">0</output>
 					<input type="range" id="arrivalRate" name="arrivalRate" min="0" max="10" step=".25" value="0" />
 				</div>
 				<div>
-					<label for="flwItmSizeMin">Flow Item Size Min.:</label>
-					<output id="flwItmSizeMinOutput" name="flwItmSizeMinOutput" for="flwItmSizeMin">1</output>
-					<input type="range" id="flwItmSizeMin" name="flwItmSizeMin" min="1" max="60" step="1" value="1" />
+					<label for="strtAvrgFlwTime">Start Av. Flow Time.:</label>
+					<output id="strtAvrgFlwTimeOutput" name="strtAvrgFlwTimeOutput" for="strtAvrgFlwTime">1</output>
+					<input type="range" id="strtAvrgFlwTime" name="strtAvrgFlwTime" min="1" max="200" step="1" value="1" />
 				</div>
 				<div>
-					<label for="flwItmSizeMax">Flow Item Size Max.:</label>
-					<output id="flwItmSizeMaxOutput" name="flwItmSizeMaxOutput" for="flwItmSizeMax">1</output>
-					<input type="range" id="flwItmSizeMax" name="flwItmSizeMax" min="1" max="60" step="1" value="1" />
+					<label for="flwTimeMax">Flow Time Max.:</label>
+					<output id="flwTimeMaxOutput" name="flwTimeMaxOutput" for="flwTimeMax">1</output>
+					<input type="range" id="flwTimeMax" name="flwTimeMax" min="1" max="400" step="1" value="1" />
+				</div>
+				<div>
+					<label for="flwTimeMin">Flow Time Min.:</label>
+					<output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin">1</output>
+					<input type="range" id="flwTimeMin" name="flwTimeMin" min="1" max="200" step="1" value="1" />
 				</div>
 				<div>
 					<label for="timeBox">TimeBox:</label>
@@ -136,7 +146,7 @@
 				<div>
 					<label for="rangeMax">Range Max:</label>
 					<output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax">1</output>
-					<input type="range" id="rangeMax" name="rangeMax" min="0.05" max=".5" step="0.05" value="1" />
+					<input type="range" id="rangeMax" name="rangeMax" min="1" max="10" step="1" value="1" />
 				</div>
 				<div>
 					<label for="rangeIncreaseRate">Range Increase Rate:</label>
@@ -147,6 +157,11 @@
 					<label for="rangeMidpoint">Range Midpoint:</label>
 					<output id="rangeMidpointOutput" name="rangeMidpointOutput" for="rangeMidpoint">1</output>
 					<input type="range" id="rangeMidpoint" name="rangeMidpoint" min="0.05" max="0.5" step="0.05" value="1" />
+				</div>
+				<div>
+					<label for="flwItmSizeLimit">Flow Item Size Limit:</label>
+					<output id="flwItmSizeLimitOutput" name="flwItmSizeLimitOutput" for="flwItmSizeLimit">1</output>
+					<input type="range" id="flwItmSizeLimit" name="flwItmSizeLimit" min="0.2" max="1" step="0.1" value="1" />
 				</div>
 			</fieldset>
 		</div>

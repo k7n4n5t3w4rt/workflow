@@ -4,11 +4,16 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
-// calculateFlwTimeMax()
+// touchStepsCount()
 //------------------------------------------------------------------
 export default () /*: number */ => {
-  return (
-    gSttngs().get("avrgFlwTimeAtStart") +
-    (gSttngs().get("avrgFlwTimeAtStart") - gSttngs().get("flwTimeMin"))
-  );
+  return gSttngs()
+    .get("steps")
+    .reduce((_ /*: number*/, step /*: Object*/) => {
+      if (step.status === "wait") {
+        return _ + 1;
+      } else {
+        return _;
+      }
+    }, 0);
 };

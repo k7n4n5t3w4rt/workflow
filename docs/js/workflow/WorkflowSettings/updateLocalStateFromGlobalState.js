@@ -24,7 +24,9 @@ const updateLocalStateFromGlobalState =
     // Sliders
     //----------------------------------------
     setStateFunctions["arrivalRate"](gSttngs().get("arrivalRate"));
-    setStateFunctions["strtAvrgFlwTime"](gSttngs().get("strtAvrgFlwTime"));
+    setStateFunctions["avrgFlwTimeAtStart"](
+      gSttngs().get("avrgFlwTimeAtStart"),
+    );
     setStateFunctions["flwTimeMin"](gSttngs().get("flwTimeMin"));
     setStateFunctions["flwTimeMax"](gSttngs().get("flwTimeMax"));
     setStateFunctions["devUnits"](gSttngs().get("devUnits"));
@@ -39,7 +41,7 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["rangeMax"](gSttngs().get("rangeMax"));
     setStateFunctions["rangeIncreaseRate"](gSttngs().get("rangeIncreaseRate"));
     setStateFunctions["rangeMidpoint"](gSttngs().get("rangeMidpoint"));
-    setStateFunctions["drag"](gSttngs().get("drag"));
+    setStateFunctions["devPowerFix"](gSttngs().get("devPowerFix"));
     // Not implimented yet
     setStateFunctions["flwItmSizeLimit"](gSttngs().get("flwItmSizeLimit"));
     setStateFunctions["backlogDeath"](gSttngs().get("backlogDeath"));

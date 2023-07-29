@@ -11,10 +11,13 @@ export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
     flwItem.dBacklogAge++;
   } else {
     flwItem.dAge++;
-    if (gSttngs().get("death") > 0) {
-      flwItem.material.opacity = 1 - flwItem.dAge / gSttngs().get("death");
-      flwItem.material.needsUpdate = true;
+    // if (gSttngs().get("death") > 0) {
+    const opacity = 1 - flwItem.dAge / gSttngs().get("flwTimeMax") / 3;
+    if (opacity < flwItem.material.opacity) {
+      flwItem.material.opacity = opacity;
     }
+    flwItem.material.needsUpdate = true;
+    // }
   }
   return flwItem;
 };

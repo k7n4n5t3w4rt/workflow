@@ -12,6 +12,8 @@ import calculateDevPower from "./calculateDevPower.js";
 import touchStepsCount from "./touchStepsCount.js";
 import calculateDevUnits from "./calculateDevUnits.js";
 import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
+import calculateTotalWipLimits from "./calculateTotalWipLimits.js";
+import calculateTouchWipLimits from "./calculateTouchWipLimits.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
@@ -26,12 +28,6 @@ export default () => {
   gSttngs().setNoCache("autoMode", false);
   // Toggle Easy storage
   gSttngs().setNoCache("easyStorage", true);
-  //------------------------------------------------------------------
-  // Workflow
-  //------------------------------------------------------------------
-  //------------------------------------------------------------------
-  // A lot of things depend on this setting
-  gSttngs().setIfNotCached("strtAvrgFlwTime", 10);
   //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
@@ -49,15 +45,28 @@ export default () => {
       name: "Ready",
       status: "wait",
       limit: 0,
-      preload: 2,
+      preload: 0,
     },
     {
       name: "In Progress",
       status: "touch",
       limit: 0,
-      devUnits: 4,
-      preload: 8,
+      devUnits: 0,
+      preload: 0,
     },
+    // {
+    //   name: "Ready for Test",
+    //   status: "wait",
+    //   limit: 0,
+    //   preload: 0,
+    // },
+    // {
+    //   name: "In Test",
+    //   status: "touch",
+    //   limit: 0,
+    //   devUnits: 0,
+    //   preload: 0,
+    // },
     {
       name: "Done",
       status: "done",
@@ -65,7 +74,16 @@ export default () => {
       preload: 0,
     },
   ]);
-  gSttngs().set("avrgDevPowerPerClickPerStepPerDevUnit", calculateDevPower());
+  //------------------------------------------------------------------
+  // Workflow
+  //------------------------------------------------------------------
+  //------------------------------------------------------------------
+  // A lot of things depend on this setting
+  gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
+  gSttngs().set("totalWipAtStart", calculateTotalWipLimits());
+  gSttngs().set("touchWipAtStart", calculateTouchWipLimits());
+  // A fix to get the flow time correct
+  gSttngs().setIfNotCached("devPowerFix", 1);
   // Q: What is the shortest flow time?
   gSttngs().setIfNotCached("flwTimeMin", 1);
   // Assume a normal distribution for now, and calculate
@@ -128,4 +146,5 @@ export default () => {
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
+  gSttngs().set("colorBlue", "1d2570");
 };

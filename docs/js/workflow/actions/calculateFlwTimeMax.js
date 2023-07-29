@@ -8,7 +8,7 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 export default () /*: number */ => {
   return (
-    gSttngs().get("strtAvrgFlwTime") +
-    (gSttngs().get("strtAvrgFlwTime") - gSttngs().get("flwTimeMin"))
+    gSttngs().get("avrgFlwTimeAtStart") +
+    (gSttngs().get("avrgFlwTimeAtStart") - gSttngs().get("flwTimeMin"))
   );
 };

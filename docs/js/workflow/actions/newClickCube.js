@@ -19,7 +19,7 @@ export default () /*: Object */ => {
     gSttngs().get("z"),
   );
 
-  const material = new THREE.MeshBasicMaterial({
+  const material = new THREE.MeshLambertMaterial({
     color: `rgb(135,206,235)`,
   });
   const cube = new THREE.Mesh(geometry, material);
@@ -27,6 +27,7 @@ export default () /*: Object */ => {
   cube.position.y = gSttngs().get("y");
   cube.castShadow = true;
   cube.receiveShadow = true;
+  cube.material.opacity = 0.9;
   // Add the cube to the group (and the THREE.js scene)
   clckCbGroup.add(cube);
   // ..also add the cube to the group object so we can access it later

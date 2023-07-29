@@ -4,8 +4,8 @@
 //------------------------------------------------------------------
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
-import globalSettings from "./actions/globalSettings.js";
-import globalState from "./actions/globalState.js";
+// import globalSettings from "./actions/globalSettings.js";
+// import globalState from "./actions/globalState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -24,6 +24,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
+import calculateTotalWipLimits from "./actions/calculateTotalWipLimits.js";
 
 /*::
 type Props = {
@@ -122,21 +123,30 @@ const updateMetricsOnClickInterval = (
       gState().get("thrPtExpQueue") !== undefined &&
       gState().get("wipExpdtQueue") !== undefined
     ) {
-      // Only updated them if they have changed. Not sure it makes a difference.jkkk:w
-      if (gState().get("flwTmQueue").flwItemMean() !== flowTime)
-        setFlowTime(gState().get("flwTmQueue").flwItemMean());
-      if (gState().get("thrPtQueue").dailyMean() !== throughPut)
-        setThroughPut(gState().get("thrPtQueue").dailyMean());
-      if (gState().get("wipQueue").dailyMean() !== wip)
-        setWip(gState().get("wipQueue").dailyMean());
-      if (gState().get("flwTmExpQueue").dailyMean() !== flowTimeExp)
-        setFlowTimeExp(gState().get("flwTmExpQueue").dailyMean());
-      if (gState().get("thrPtExpQueue").dailyMean() !== throughPutExp)
-        setThroughPutExp(gState().get("thrPtExpQueue").dailyMean());
-      if (gState().get("wipExpdtQueue").dailyMean() !== wip)
-        setWipExp(gState().get("wipExpdtQueue").dailyMean());
-      if (gState().get("vQueue").total() !== value)
-        setValue(gState().get("vQueue").total());
+      // Only updated them if they have changed. Not sure it makes a difference.
+      setFlowTime(gState().get("flwTmQueue").flwItemMean());
+      setThroughPut(gState().get("thrPtQueue").dailyMean());
+      setWip(gState().get("wipQueue").dailyMean());
+      setFlowTimeExp(gState().get("flwTmExpQueue").dailyMean());
+      setThroughPutExp(gState().get("thrPtExpQueue").dailyMean());
+      setWipExp(gState().get("wipExpdtQueue").dailyMean());
+      // Caclulate the value as a percentage of the ideal throughput:
+      // Little's Law = ThruPut = WIP/FlowTime
+      const totalValue = gState().get("vQueue").total();
+      // Before any adjustments based on flwSizeLimit, value is the same as scale
+      // There is, currently, an even distribution of value across all items
+      // there is a direct mapping of value to the flow time This will need to change,
+      //  [a] when we have a more realistic distribution of value across items, and
+      //  [b] when we have a more realistic system of assigning value to items.
+      const avrgFlwTimeAtStart = gSttngs().get("avrgFlwTimeAtStart");
+      const flwTimeMax = gSttngs().get("flwTimeMax");
+      const avrgValuePerItem = avrgFlwTimeAtStart / flwTimeMax;
+      const totalWipAtStart = gSttngs().get("totalWipAtStart");
+      const timeBox = gSttngs().get("timeBox");
+      const totalThruPut = (totalWipAtStart / avrgFlwTimeAtStart) * timeBox;
+      const displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+      // Format the display value as a percentage
+      setValue((Math.round(displayValue * 100) / 100).toString() + "%");
     }
   }, 1000);
 };

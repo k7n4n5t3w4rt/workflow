@@ -9,29 +9,26 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	strtAvrgFlwTime: number,
+	devPowerFix: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="strtAvrgFlwTime">Start Av. Flow Time.:</label>
-      <output
-        id="strtAvrgFlwTimeOutput"
-        name="strtAvrgFlwTimeOutput"
-        for="strtAvrgFlwTime"
-        >${props.strtAvrgFlwTime.toString()}</output
+      <label for="devPowerFix">Dev Power Fix:</label>
+      <output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix"
+        >${props.devPowerFix.toString()}</output
       >
       <input
         type="range"
-        id="strtAvrgFlwTime"
-        name="strtAvrgFlwTime"
-        min="1"
-        max="150"
-        step="1"
+        id="devPowerFix"
+        name="devPowerFix"
+        min="0"
+        max="2"
+        step="0.01"
         onChange=${props.changeSetting}
-        value="${props.strtAvrgFlwTime.toString()}"
+        value="${props.devPowerFix.toString()}"
       />
     </div>
   `;

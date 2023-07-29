@@ -9,26 +9,29 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	drag: number,
+	avrgFlwTimeAtStart: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="drag">Drag:</label>
-      <output id="dragOutput" name="dragOutput" for="drag"
-        >${props.drag.toString()}</output
+      <label for="avrgFlwTimeAtStart">Start Av. Flow Time.:</label>
+      <output
+        id="avrgFlwTimeAtStartOutput"
+        name="avrgFlwTimeAtStartOutput"
+        for="avrgFlwTimeAtStart"
+        >${props.avrgFlwTimeAtStart.toString()}</output
       >
       <input
         type="range"
-        id="drag"
-        name="drag"
-        min="0"
-        max="10"
-        step="0.1"
+        id="avrgFlwTimeAtStart"
+        name="avrgFlwTimeAtStart"
+        min="1"
+        max="200"
+        step="1"
         onChange=${props.changeSetting}
-        value="${props.drag.toString()}"
+        value="${props.avrgFlwTimeAtStart.toString()}"
       />
     </div>
   `;

@@ -15,9 +15,9 @@ import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
 import FlwTimeMax from "./FlwTimeMax.js";
-import StrtAvrgFlwTime from "./StrtAvrgFlwTime.js";
+import AvrgFlwTimeAtStart from "./AvrgFlwTimeAtStart.js";
 import DevUnits from "./DevUnits.js";
-import Drag from "./Drag.js";
+import DevPowerFix from "./DevPowerFix.js";
 import AutoMode from "./AutoMode.js";
 import EasyStorage from "./EasyStorage.js";
 import ShowMetrics from "./ShowMetrics.js";
@@ -124,6 +124,13 @@ export default (props /*: Props */) /*: string */ => {
         />
         -->
         <!-------------------------------------------------------------------->
+        <!-- DevPowerFix -->
+        <!-------------------------------------------------------------------->
+        <${DevPowerFix}
+          devPowerFix=${lState.devPowerFix}
+          changeSetting=${changeSetting("devPowerFix", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
         <!-- ArrivalRate -->
         <!-------------------------------------------------------------------->
         <${ArrivalRate}
@@ -133,9 +140,12 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- Start Average Flow Time -->
         <!-------------------------------------------------------------------->
-        <${StrtAvrgFlwTime}
-          strtAvrgFlwTime=${lState.strtAvrgFlwTime}
-          changeSetting=${changeSetting("strtAvrgFlwTime", setStateFunctions)}
+        <${AvrgFlwTimeAtStart}
+          avrgFlwTimeAtStart=${lState.avrgFlwTimeAtStart}
+          changeSetting=${changeSetting(
+            "avrgFlwTimeAtStart",
+            setStateFunctions,
+          )}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Max -->
@@ -158,15 +168,6 @@ export default (props /*: Props */) /*: string */ => {
         <${DevUnits}
           devUnits=${lState.devUnits}
           changeSetting=${changeSetting("devUnits", setStateFunctions)}
-        />
-        -->
-        <!-------------------------------------------------------------------->
-        <!-- Drag -->
-        <!-------------------------------------------------------------------->
-        <!--
-        <${Drag}
-          drag=${lState.drag}
-          changeSetting=${changeSetting("drag", setStateFunctions)}
         />
         -->
         <!-------------------------------------------------------------------->

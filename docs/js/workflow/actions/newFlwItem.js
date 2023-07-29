@@ -15,15 +15,15 @@ import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import flwItmTracker from "./flwItmTracker.js";
 import calculateRange from "./calculateRange.js";
-import touchStepsCount from "./touchStepsCount.js";
+import calculateTouchSteps from "./calculateTouchSteps.js";
+import calculateWaitSteps from "./calculateWaitSteps.js";
 import calculateValueForScale from "./calculateValueForScale.js";
 
 export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
-  const flwItem = threeJsCube();
+  const flwItem = threeJsCube(stepIndex);
   setDProps(flwItem);
   mapIt(flwItem, stepIndex);
-  setColor(flwItem);
   setAge(flwItem, stepIndex);
   gState().get("flwItmTracker")[flwItem.name] = [];
   setScaleAndValue(flwItem);
@@ -37,20 +37,29 @@ export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
 //------------------------------------------------------------------
 // threeJsCube()
 //------------------------------------------------------------------
-const threeJsCube = () /*: FlwItem */ => {
+const threeJsCube = (stepIndex /*: number */) /*: FlwItem */ => {
   // Basic Three.js geometry and material
   const geometry = new THREE.BoxGeometry(
     gSttngs().get("x"),
     gSttngs().get("y"),
     gSttngs().get("z"),
   );
-  const color = "#" + gSttngs().get("colorGold"); // gold
-  const material = new THREE.MeshLambertMaterial({ color });
+  const stpStatus = gSttngs().get("steps")[stepIndex].status;
+  // Gold, for touch is the default
+  let colorCode;
+  if (stpStatus === "backlog") {
+    colorCode = "#" + gSttngs().get("colorBlue");
+  } else if (stpStatus === "wait") {
+    colorCode = "#" + gSttngs().get("colorGrey");
+  } else if (stpStatus === "touch") {
+    colorCode = "#" + gSttngs().get("colorGold");
+  }
+  const material = new THREE.MeshLambertMaterial({ color: colorCode });
   const flwItem = new THREE.Mesh(geometry, material);
   flwItem.receiveShadow = true;
   flwItem.castShadow = true;
   // Set the color for changing it later
-  flwItem.dColor = color;
+  flwItem.dColor = colorCode;
   return flwItem;
 };
 
@@ -69,19 +78,6 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   return flwItem;
 };
 
-//------------------------------------------------------------------
-// setColor(flwItem)
-//------------------------------------------------------------------
-const setColor = (flwItem /*: FlwItem */) /*: FlwItem */ => {
-  const stpStatus = gSttngs().get("steps")[flwItem.dStpIndex].status;
-  // If this flwItem is in the backlog, don't update it
-  if (stpStatus !== "touch") {
-    let color = new THREE.Color(gSttngs().get("colorGrey"));
-    flwItem.material.color.copy(color);
-    flwItem.material.needsUpdate = true;
-  }
-  return flwItem;
-};
 //------------------------------------------------------------------
 // mapIt(flwItem)
 //------------------------------------------------------------------
@@ -154,23 +150,21 @@ const setAge = (
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
   if (stepIndex > 0) {
-    flwItem.dAge = rndmBetween(0, gSttngs().get("strtAvrgFlwTime"));
+    flwItem.dAge = rndmBetween(
+      0,
+      gSttngs().get("avrgFlwTimeAtStart") / calculateTouchSteps(),
+    );
   }
 };
 //------------------------------------------------------------------
 // setDays()
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
-  flwItem.dDysEachTouchStep = flwItem.dDysTotal / touchStepsCount();
+  flwItem.dDysEachTouchStep = flwItem.dDysTotal / calculateTouchSteps();
   flwItem.dDysRmnngThisStep = 0;
+  // This will only be the case for prepopulated items
   if (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch") {
-    flwItem.dDysRmnngThisStep =
-      flwItem.dDysEachTouchStep -
-      ((gSttngs().get("avrgDevPowerPerClickPerStepPerDevUnit") *
-        gSttngs().get("steps")[flwItem.dStpIndex].devUnits) /
-        gSttngs().get("steps")[flwItem.dStpIndex].limit) *
-        flwItem.dAge;
-    if (flwItem.dDysRmnngThisStep < 0) flwItem.dDysRmnngThisStep = 0;
+    flwItem.dDysRmnngThisStep = rndmBetween(0, flwItem.dDysEachTouchStep);
   }
 };
 
@@ -209,6 +203,6 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   newPosition.y =
     gState().get("strtPosition").y +
     (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
-  newPosition.z -= gSttngs().get("step");
+  newPosition.z -= gSttngs().get("step") * flwItem.dStpIndex;
   return newPosition;
 };

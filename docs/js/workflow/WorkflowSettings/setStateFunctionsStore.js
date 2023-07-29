@@ -32,9 +32,9 @@ export default (
   const [arrivalRate, setArrivalRate] = useState(0);
   setStateFunctions["arrivalRate"] = setArrivalRate;
   lState["arrivalRate"] = arrivalRate;
-  const [strtAvrgFlwTime, setStrtAvrgFlwTime] = useState(1);
-  setStateFunctions["strtAvrgFlwTime"] = setStrtAvrgFlwTime;
-  lState["strtAvrgFlwTime"] = strtAvrgFlwTime;
+  const [avrgFlwTimeAtStart, setAvrgFlwTimeAtStart] = useState(1);
+  setStateFunctions["avrgFlwTimeAtStart"] = setAvrgFlwTimeAtStart;
+  lState["avrgFlwTimeAtStart"] = avrgFlwTimeAtStart;
   const [flwTimeMin, setFlwTimeMin] = useState(1);
   setStateFunctions["flwTimeMin"] = setFlwTimeMin;
   lState["flwTimeMin"] = flwTimeMin;
@@ -47,9 +47,9 @@ export default (
   const [devPowerFactor, setDevPowerFactor] = useState(1);
   setStateFunctions["devPowerFactor"] = setDevPowerFactor;
   lState["devPowerFactor"] = devPowerFactor;
-  const [drag, setDrag] = useState(0);
-  setStateFunctions["drag"] = setDrag;
-  lState["drag"] = drag;
+  const [devPowerFix, setDevPowerFix] = useState(0);
+  setStateFunctions["devPowerFix"] = setDevPowerFix;
+  lState["devPowerFix"] = devPowerFix;
   const [timeBox, setTimeBox] = useState(10);
   setStateFunctions["timeBox"] = setTimeBox;
   lState["timeBox"] = timeBox;

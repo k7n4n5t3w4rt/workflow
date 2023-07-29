@@ -4,11 +4,16 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
-// calculateFlwTimeMax()
+// calculateTouchWipLimits()
 //------------------------------------------------------------------
 export default () /*: number */ => {
-  return (
-    gSttngs().get("avrgFlwTimeAtStart") +
-    (gSttngs().get("avrgFlwTimeAtStart") - gSttngs().get("flwTimeMin"))
-  );
+  return gSttngs()
+    .get("steps")
+    .reduce((_ /*: number*/, step /*: Object*/) => {
+      if (step.status === "touch") {
+        return _ + step.limit;
+      } else {
+        return _;
+      }
+    }, 0);
 };

@@ -17,7 +17,7 @@ import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
 import FlwTimeMax from "./FlwTimeMax.js";
 import DevUnits from "./DevUnits.js";
-import Drag from "./Drag.js";
+import DevPowerFix from "./DevPowerFix.js";
 import AutoMode from "./AutoMode.js";
 import ShowMetrics from "./ShowMetrics.js";
 import Debug from "./Debug.js";

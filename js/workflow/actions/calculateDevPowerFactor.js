@@ -20,7 +20,7 @@ const calculateDevPowerFactor = (
   wip /*: number */,
   devUnits /*: number */,
 ) /*: number */ => {
-  if (devUnits > wip) {
+  if (devUnits >= wip) {
     return 1;
   }
   const x = wip / devUnits;

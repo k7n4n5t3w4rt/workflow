@@ -17,7 +17,7 @@ import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
 import FlwTimeMax from "./FlwTimeMax.js";
 import DevUnits from "./DevUnits.js";
-import Drag from "./Drag.js";
+import DevPowerFix from "./DevPowerFix.js";
 import AutoMode from "./AutoMode.js";
 import ShowMetrics from "./ShowMetrics.js";
 import Debug from "./Debug.js";
@@ -166,27 +166,27 @@ export default (props /*: Props */) /*: string */ => {
                   value="${step.limit.toString()}"
                 />
               </div>
+              <div>
+                <label for="step${index}Preload">Preload</label>
+                <output
+                  id="step${index}PreloadOutput"
+                  name="step${index}PreloadOutput"
+                  for="step${index}PreloadOutput"
+                  >${step.preload.toString()}</output
+                >
+                <input
+                  type="range"
+                  id="step${index}Preload"
+                  name="step${index}Preload"
+                  min="0"
+                  max="200"
+                  step="1"
+                  onChange=${changeStepPreload(setSteps, index)}
+                  value="${step.preload.toString()}"
+                />
+              </div>
               ${step.status === "touch" &&
               html`
-                <div>
-                  <label for="step${index}Preload">Preload</label>
-                  <output
-                    id="step${index}PreloadOutput"
-                    name="step${index}PreloadOutput"
-                    for="step${index}PreloadOutput"
-                    >${step.preload.toString()}</output
-                  >
-                  <input
-                    type="range"
-                    id="step${index}Preload"
-                    name="step${index}Preload"
-                    min="0"
-                    max="200"
-                    step="1"
-                    onChange=${changeStepPreload(setSteps, index)}
-                    value="${step.preload.toString()}"
-                  />
-                </div>
                 <div>
                   <label for="step${index}DevUnits">Dev Units</label>
                   <output
