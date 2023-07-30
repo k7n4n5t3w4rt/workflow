@@ -18,6 +18,7 @@ import rndmPosOrNeg from "./rndmPosOrNeg.js";
 import animateScaleToZero from "./animateScaleToZero.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import removeFlowItem from "./removeFlowItem.js";
+import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
   // gState().get("flwItmTracker")[flwItem.name].unshift(`Moving`);
@@ -111,7 +112,7 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   if (nextStatus === "done") {
     newPosition.x = gState().get("vSphere").dPosition.x;
     newPosition.y = gState().get("vSphere").dPosition.y;
-    newPosition.z = gState().get("vSphere").dPosition.z + gSttngs().get("step");
+    newPosition.z = gState().get("endPosition").z;
 
     animateScaleToZero(flwItem);
   } else {
@@ -122,7 +123,7 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
     newPosition.y =
       gState().get("strtPosition").y +
       (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
+    newPosition.z = calculateZPosFromStep(flwItem.dStpIndex + 1);
   }
-  newPosition.z -= gSttngs().get("step");
   return newPosition;
 };

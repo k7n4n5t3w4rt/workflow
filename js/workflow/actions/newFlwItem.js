@@ -18,6 +18,7 @@ import calculateRange from "./calculateRange.js";
 import calculateTouchSteps from "./calculateTouchSteps.js";
 import calculateWaitSteps from "./calculateWaitSteps.js";
 import calculateValueForScale from "./calculateValueForScale.js";
+import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
 export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
@@ -177,8 +178,7 @@ const setPosition = (
 ) /*: void */ => {
   flwItem.position.x = gState().get("strtPosition").x;
   flwItem.position.y = gState().get("strtPosition").y;
-  flwItem.position.z =
-    gState().get("strtPosition").z - gSttngs().get("step") * flwMapIndex;
+  flwItem.position.z = calculateZPosFromStep(flwMapIndex);
   // Set the dPosition because refineNewPosition() needs it
   flwItem.dPosition = { ...flwItem.position };
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
@@ -203,6 +203,5 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
   newPosition.y =
     gState().get("strtPosition").y +
     (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
-  newPosition.z -= gSttngs().get("step") * flwItem.dStpIndex;
   return newPosition;
 };

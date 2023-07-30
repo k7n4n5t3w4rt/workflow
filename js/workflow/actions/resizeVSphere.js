@@ -8,6 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 import anime from "../../../web_modules/animejs.js";
 import findRadius from "../calculations/findRadius.js";
+import calculateEndPositionZ from "./calculateEndPositionZ.js";
 //------------------------------------------------------------------
 // resizeVSphere()
 //------------------------------------------------------------------
@@ -35,10 +36,7 @@ export const animatePosition = () => {
   // The `z` inded of theoriginal endpoint is two steps on from the
   // last step. It is negative so it comes towards the camera:
   //  gSttngs().get("step") * (gSttngs().get("steps").length + 2) * -1
-  gState().get("vSphere").dPosition.z =
-    gState().get("strtPosition").z -
-    gSttngs().get("step") * (gSttngs().get("steps").length + 1) -
-    offset;
+  gState().get("vSphere").dPosition.z = calculateEndPositionZ() - offset;
   // }
 
   anime({
@@ -50,7 +48,7 @@ export const animatePosition = () => {
     complete: (anim) => {
       gState().get("vSphere").dMoving = false;
       gState().get("vSphere").visible = true;
-      gState().get("endPosition").z = gState().get("vSphere").dPosition.z;
+      gState().get("endPosition").z = calculateEndPositionZ() - offset;
     },
   });
 };

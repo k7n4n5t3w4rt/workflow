@@ -13,20 +13,20 @@ export default async () /*: Object */ => {
   // Create a texture loader
   // How to use it
   const textureMap = await new THREE.TextureLoader()
-    .loadAsync("../../../assets/textures/gold_7.jpg")
+    .loadAsync("../../../img/assets/textures/gold_7.jpg")
     .catch((err) => {
       console.log(err);
     });
   // const normalMap = await new THREE.TextureLoader()
   //   .loadAsync(
-  //     "../../../assets/textures/gold/MetalGoldPaint002_NRM_2K_METALNESS.png",
+  //     "../../../img/assets/textures/gold/MetalGoldPaint002_NRM_2K_METALNESS.png",
   //   )
   //   .catch((err) => {
   //     console.log(err);
   //   });
   // const displacementMap = await new THREE.TextureLoader()
   //   .loadAsync(
-  //     "../../../assets/textures/gold/MetalGoldPaint002_DISP_2K_METALNESS.png",
+  //     "../../../img/assets/textures/gold/MetalGoldPaint002_DISP_2K_METALNESS.png",
   //   )
   //   .catch((err) => {
   //     console.log(err);
