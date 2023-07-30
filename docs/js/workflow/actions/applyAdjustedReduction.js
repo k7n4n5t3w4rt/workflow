@@ -34,8 +34,8 @@ export default (
       }
       const devPower = calculateDevPower();
       // The `devPowerFactor` is 1.2 for a 1:1 ratio, and 0.8 for a 10:1 ratio.
-      const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
-      // const devPowerFactor = 1; // The simple, linear version.
+      // const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
+      const devPowerFactor = 1; // The simple, linear version.
       // Finally, work out how many days to reduce the `dDysRmnngThisStep` by
       const devDays = (devUnits * devPower * devPowerFactor) / wipThisStep;
       // Reduce the days remaining by the number of days calculated above.

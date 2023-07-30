@@ -58,7 +58,8 @@ export const animatePosition = () => {
 export const animateScale = () => {
   // Create an object with a scale property that can be animated.
   let scaleObject = { scale: gState().get("vSphere").dRadius };
-  const newRadius = gState().get("vQueue").total() / 100;
+  const valueScaled = gState().get("vQueue").total() / 100;
+  const newRadius = valueScaled / 1.5;
   // The radius used to be based on volume:
   // const newRadius = findRadius(gState().get("vQueue").total() / 1000 / 3);
   gState().get("vSphere").dRadius = newRadius;

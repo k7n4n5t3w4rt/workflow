@@ -123,6 +123,9 @@ const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the scale and store the scale value
   flwItem.scale.set(scale, scale, scale);
   flwItem.dScale = scale;
+  console.log("//--------------------------------------------------");
+  console.log(" flwItem.dDysTotal: " + flwItem.dDysTotal);
+  console.log("//--------------------------------------------------");
   return flwItem;
 };
 //------------------------------------------------------------------
@@ -151,10 +154,7 @@ const setAge = (
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
   if (stepIndex > 0) {
-    flwItem.dAge = rndmBetween(
-      0,
-      gSttngs().get("avrgFlwTimeAtStart") / calculateTouchSteps(),
-    );
+    flwItem.dAge = rndmBetween(0, gSttngs().get("flwTimeMax"));
   }
 };
 //------------------------------------------------------------------

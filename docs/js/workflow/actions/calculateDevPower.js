@@ -18,17 +18,16 @@ import calculateWaitSteps from "./calculateWaitSteps.js";
 // calculateDevPower()
 //------------------------------------------------------------------
 export default () /*: number */ => {
-  const avrgFlwTimePerItem = gSttngs().get("avrgFlwTimeAtStart");
+  // const avrgFlwTimePerItem = gSttngs().get("avrgFlwTimeAtStart");
   const touchSteps = calculateTouchSteps();
-  const flwTimePerItemPerTouchStep = avrgFlwTimePerItem / touchSteps;
+  //const flwTimePerItemPerTouchStep = avrgFlwTimePerItem / touchSteps;
   const devUnits = calculateDevUnits();
   const devUnitsPerTouchStep = devUnits / touchSteps;
   const touchWipAtStart = gSttngs().get("touchWipAtStart");
   const wipPerTouchStep = touchWipAtStart / touchSteps;
-  // const devPowerPerDevUnitPerTouchStep =
-  //   devUnitsPerTouchStep / wipPerTouchStep / flwTimePerItemPerTouchStep;
-  const devPowerPerDevUnitPerTouchStep = devUnitsPerTouchStep / wipPerTouchStep;
+  const devPowerPerDevUnitPerFlwItemPerTouchStep =
+    wipPerTouchStep / devUnitsPerTouchStep;
   const devPower =
-    devPowerPerDevUnitPerTouchStep * gSttngs().get("devPowerFix");
+    devPowerPerDevUnitPerFlwItemPerTouchStep * gSttngs().get("devPowerFix");
   return devPower;
 };
