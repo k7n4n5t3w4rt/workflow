@@ -14,10 +14,6 @@ import calculateEndPositionZ from "./calculateEndPositionZ.js";
 export const setEndPosition = () => {
   gState().set("endPosition", gState().get("strtPosition").clone());
   gState().get("endPosition").z = calculateEndPositionZ();
-  // What is this doing in here?
-  gSttngs().set("vSphereX", gState().get("endPosition").x);
-  gSttngs().set("vSphereY", gState().get("endPosition").y);
-  gSttngs().set("vSphereZ", gState().get("endPosition").z);
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------

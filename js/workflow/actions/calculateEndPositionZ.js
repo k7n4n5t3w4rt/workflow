@@ -14,8 +14,7 @@ import gState from "./gState.js";
 export const calculateEndPositionZ = () /*: number */ => {
   return (
     gState().get("strtPosition").z -
-    gSttngs().get("step") *
-      (gSttngs().get("steps").length + gSttngs().get("steps").length * 0.5)
+    gSttngs().get("step") * (gSttngs().get("steps").length * 0.8)
   );
 };
 export default calculateEndPositionZ;
