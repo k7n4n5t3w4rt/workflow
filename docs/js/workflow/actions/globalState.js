@@ -33,7 +33,7 @@ export default () => {
   gState().set("wipQueue", new xQueue());
   gState().set("flwTmExpQueue", new xQueue());
   gState().set("thrPtExpQueue", new xQueue());
-  gState().set("wipExpdtQueue", new xQueue());
+  gState().set("wipExpQueue", new xQueue());
   setUpFlwMap(gState().get("flwMap"), gSttngs().get("steps"));
 };
 //------------------------------------------------------------------

@@ -101,7 +101,7 @@ type GlobalState = {
     wipQueue: WipQueue,
     flwTmQueue: FlwTmQueue,
     thrPtExpQueue: ThrPtQueue,
-    wipExpdtQueue: WipQueue,
+    wipExpQueue: WipQueue,
     flwTmExpQueue: FlwTmQueue,
     started: boolean,
   },

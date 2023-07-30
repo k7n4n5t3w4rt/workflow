@@ -28,26 +28,22 @@ import calculateTotalWipLimits from "./actions/calculateTotalWipLimits.js";
 
 /*::
 type Props = {
-	flowTime: number,
-	throughPut: number,
-	wip: number,
-	flowTimeExp: number,
-	throughPutExp: number,
-	wipExp: number,
-	value: number,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   // Metrics
   const [flowTime /*: number */, setFlowTime /*: function */] = useState(0);
-  const [throughPut /*: number */, setThroughPut /*: function */] = useState(0);
+  const [thruPut /*: number */, setThruPut /*: function */] = useState(0);
+  const [thruPutPerDay /*: number */, setThruPutPerDay /*: function */] =
+    useState(0);
+  const [thruPutExpPerDay /*: number */, setThruPutExpPerDay /*: function */] =
+    useState(0);
   const [wip /*: number */, setWip /*: function */] = useState(0);
   const [flowTimeExp /*: number */, setFlowTimeExp /*: function */] =
     useState(0);
-  const [throughPutExp /*: number */, setThroughPutExp /*: function */] =
-    useState(0);
   const [wipExp /*: number */, setWipExp /*: function */] = useState(0);
   const [value /*: number */, setValue /*: function */] = useState(0);
+  const [tmBox /*: number */, setTmBox /*: function */] = useState(0);
   const [metricToggle, setMetricToggle] = useState(true);
   const styles = cssStyles();
   rawStyles(getRawStyles());
@@ -58,36 +54,42 @@ export default (props /*: Props */) /*: string */ => {
     updateMetricsOnClickInterval(
       setFlowTime,
       flowTime,
-      setThroughPut,
-      throughPut,
+      setThruPut,
+      thruPut,
+      setThruPutPerDay,
+      thruPutPerDay,
+      setThruPutExpPerDay,
+      thruPutExpPerDay,
       setWip,
       wip,
       setFlowTimeExp,
       flowTimeExp,
-      setThroughPutExp,
-      throughPutExp,
       setWipExp,
       wipExp,
       setValue,
       value,
+      setTmBox,
+      tmBox,
     );
   }, []);
 
   return html`
     <div id="metrics-container" className="${styles.metricsContainer}">
       <div className="${styles.metricsDivs}">
+        <span className="${styles.metricsSpans}">TmBox: ${tmBox}</span>
         <span className="${styles.metricsSpans}">Value: ${value}</span>
+        <span className="${styles.metricsSpans}">ThruPut: ${thruPut}</span>
       </div>
       <div className="${styles.metricsDivs}">
         <span className="${styles.metricsSpans}">FlwTm: ${flowTime}</span>
-        <span className="${styles.metricsSpans}">ThrPt: ${throughPut}</span>
+        <span className="${styles.metricsSpans}">ThrPt: ${thruPutPerDay}</span>
         <span className="${styles.metricsSpans}">Wip: ${wip}</span>
       </div>
       ${gSttngs().get("expdtQueueLength") > 0 &&
       html` <div className="${styles.metricsDivs}">
         <span className="${styles.metricsSpans}">FlwTmExp: ${flowTimeExp}</span>
         <span className="${styles.metricsSpans}"
-          >ThrPtExp: ${throughPutExp}</span
+          >ThrPtExp: ${thruPutExpPerDay}</span
         >
         <span className="${styles.metricsSpans}">WipExp: ${wipExp}</span>
       </div>`}
@@ -100,18 +102,22 @@ export default (props /*: Props */) /*: string */ => {
 const updateMetricsOnClickInterval = (
   setFlowTime /*: function */,
   flowTime /*: number */,
-  setThroughPut /*: function */,
-  throughPut /*: number */,
+  setThruPut /*: function */,
+  thruPut /*: number */,
+  setThruPutPerDay /*: function */,
+  throughPutPerDay /*: number */,
+  setThruPutExpPerDay /*: function */,
+  throughPutExpPerDay /*: number */,
   setWip /*: function */,
   wip /*: number */,
   setFlowTimeExp /*: function */,
   flowTimeExp /*: number */,
-  setThroughPutExp /*: function */,
-  throughPutExp /*: number */,
   setWipExp /*: function */,
   wipExp /*: number */,
   setValue /*: function */,
   value /*: number */,
+  setTimeBox /*: function */,
+  tmBox /*: number */,
 ) /*: void */ => {
   setInterval(() => {
     if (
@@ -121,32 +127,43 @@ const updateMetricsOnClickInterval = (
       gState().get("wipQueue") !== undefined &&
       gState().get("flwTmExpQueue") !== undefined &&
       gState().get("thrPtExpQueue") !== undefined &&
-      gState().get("wipExpdtQueue") !== undefined
+      gState().get("wipExpQueue") !== undefined &&
+      gSttngs().get("timeBox") !== undefined
     ) {
-      // Only updated them if they have changed. Not sure it makes a difference.
-      setFlowTime(gState().get("flwTmQueue").flwItemMean());
-      setThroughPut(gState().get("thrPtQueue").dailyMean());
-      setWip(gState().get("wipQueue").dailyMean());
-      setFlowTimeExp(gState().get("flwTmExpQueue").dailyMean());
-      setThroughPutExp(gState().get("thrPtExpQueue").dailyMean());
-      setWipExp(gState().get("wipExpdtQueue").dailyMean());
+      // Some shorter names
+      const tmBox = gSttngs().get("timeBox");
+      const thrPutPerDay = gState().get("thrPtQueue").dailyMean();
+      const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
+      const thrPut = thrPutExpPerDay * tmBox + thrPutPerDay * tmBox;
+      const avrgFlwTimeAtStart = gSttngs().get("avrgFlwTimeAtStart");
+      const flwTimeMax = gSttngs().get("flwTimeMax");
+      const totalWipAtStart = gSttngs().get("totalWipAtStart");
+      const flwTime = gState().get("flwTmQueue").flwItemMean();
+      const flwTmExp = gState().get("flwTmExpQueue").flwItemMean();
+      const wip = gState().get("wipQueue").dailyMean();
+      const wipExp = gState().get("wipExpQueue").dailyMean();
+      // Update the metrics
+      setFlowTime(flwTime);
+      setThruPut(thrPut);
+      setThruPutPerDay(thrPutPerDay);
+      setWip(wip);
+      setFlowTimeExp(flwTmExp);
+      setThruPutExpPerDay(thrPutExpPerDay);
+      setWipExp(wipExp);
+      setTimeBox((tmBox / 5).toString() + " wks");
       // Caclulate the value as a percentage of the ideal throughput:
       // Little's Law = ThruPut = WIP/FlowTime
       const totalValue = gState().get("vQueue").total();
       // Before any adjustments based on flwSizeLimit, value is the same as scale
+      const avrgValuePerItem = avrgFlwTimeAtStart / flwTimeMax;
       // There is, currently, an even distribution of value across all items
       // there is a direct mapping of value to the flow time This will need to change,
       //  [a] when we have a more realistic distribution of value across items, and
       //  [b] when we have a more realistic system of assigning value to items.
-      const avrgFlwTimeAtStart = gSttngs().get("avrgFlwTimeAtStart");
-      const flwTimeMax = gSttngs().get("flwTimeMax");
-      const avrgValuePerItem = avrgFlwTimeAtStart / flwTimeMax;
-      const totalWipAtStart = gSttngs().get("totalWipAtStart");
-      const timeBox = gSttngs().get("timeBox");
-      const totalThruPut = (totalWipAtStart / avrgFlwTimeAtStart) * timeBox;
+      const totalThruPut = (totalWipAtStart / avrgFlwTimeAtStart) * tmBox;
       const displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
       // Format the display value as a percentage
-      setValue((Math.round(displayValue * 100) / 100).toString() + "%");
+      setValue(Math.floor(displayValue).toString() + "%");
     }
   }, 1000);
 };

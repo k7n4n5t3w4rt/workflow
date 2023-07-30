@@ -20,8 +20,8 @@ export default () /*: void */ => {
 // updateWIPExpQueue()
 //------------------------------------------------------------------
 const updateWIPExpdtQueue = (wipExpdt /*: number */) /*: void */ => {
-  if (gState().get("wipExpdtQueue").length() >= gSttngs().get("timeBox")) {
-    gState().get("wipExpdtQueue").dequeue();
+  if (gState().get("wipExpQueue").length() >= gSttngs().get("timeBox")) {
+    gState().get("wipExpQueue").dequeue();
   }
-  gState().get("wipExpdtQueue").enqueue([wipExpdt]);
+  gState().get("wipExpQueue").enqueue([wipExpdt]);
 };

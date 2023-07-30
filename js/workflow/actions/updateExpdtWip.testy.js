@@ -48,10 +48,10 @@ const tearDown = () /*: void */ => {};
 test("------- updateExpdtWip.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
-test("The wipExpdtQueue is correct when nothing is expedite", () /*: void */ => {
+test("The wipExpQueue is correct when nothing is expedite", () /*: void */ => {
   fixture();
   updateExpdtWip();
-  should(gState().get("wipExpdtQueue").dailyMean()).be.exactly(0);
+  should(gState().get("wipExpQueue").dailyMean()).be.exactly(0);
 });
 test("Returns the correct wip when one flwItem is expedite", () /*: void */ => {
   fixture();
@@ -61,7 +61,7 @@ test("Returns the correct wip when one flwItem is expedite", () /*: void */ => {
   // Expedite 1 item
   gState().get("flwMap")["2"][0].dExpedite = true;
   updateExpdtWip();
-  should(gState().get("wipExpdtQueue").dailyMean()).be.exactly(1);
+  should(gState().get("wipExpQueue").dailyMean()).be.exactly(1);
 });
 test("Correct when one flwItem is expedite but expdtQueueLength is 0", () /*: void */ => {
   fixture();
@@ -71,7 +71,7 @@ test("Correct when one flwItem is expedite but expdtQueueLength is 0", () /*: vo
   // Expedite 1 item
   gState().get("flwMap")["2"][0].dExpedite = true;
   updateExpdtWip();
-  should(gState().get("wipExpdtQueue").dailyMean()).be.exactly(0);
+  should(gState().get("wipExpQueue").dailyMean()).be.exactly(0);
 });
 test("Correct over 3 days", () /*: void */ => {
   fixture();
@@ -99,6 +99,6 @@ test("Correct over 3 days", () /*: void */ => {
   // Day 3
   updateExpdtWip();
   // The mean will be (12 + 11 + 11) / 3, rounded to 2 decimal places
-  should(gState().get("wipExpdtQueue").dailyMean()).be.exactly(2);
-  should(gState().get("wipExpdtQueue").length()).be.exactly(3);
+  should(gState().get("wipExpQueue").dailyMean()).be.exactly(2);
+  should(gState().get("wipExpQueue").length()).be.exactly(3);
 });
