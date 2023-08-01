@@ -41,6 +41,7 @@ import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
 import isParsable from "../actions/isParsable.js";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {
@@ -155,6 +156,10 @@ export default (props /*: Props */) /*: string */ => {
               max="200"
               step="1"
               onChange=${changeStepLimit(setSteps, index)}
+              onTouchStart=${setUpdtngCnfg(true)}
+              onTouchEnd=${setUpdtngCnfg(false)}
+              onMouseDown=${setUpdtngCnfg(true)}
+              onMouseUp=${setUpdtngCnfg(false)}
               value="${step.limit.toString()}"
             />
           </div>
@@ -174,6 +179,10 @@ export default (props /*: Props */) /*: string */ => {
               max="200"
               step="1"
               onChange=${changeStepPreload(setSteps, index)}
+              onTouchStart=${setUpdtngCnfg(true)}
+              onTouchEnd=${setUpdtngCnfg(false)}
+              onMouseDown=${setUpdtngCnfg(true)}
+              onMouseUp=${setUpdtngCnfg(false)}
               value="${step.preload.toString()}"
             />
           </div>
@@ -195,6 +204,10 @@ export default (props /*: Props */) /*: string */ => {
                 max="100"
                 step="1"
                 onChange=${changeStepDevUnits(setSteps, index)}
+                onTouchStart=${setUpdtngCnfg(true)}
+                onTouchEnd=${setUpdtngCnfg(false)}
+                onMouseDown=${setUpdtngCnfg(true)}
+                onMouseUp=${setUpdtngCnfg(false)}
                 value="${step.devUnits.toString()}"
               />
             </div>
@@ -210,5 +223,8 @@ export default (props /*: Props */) /*: string */ => {
 const updateStepsStateFromGlobalState =
   (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
     setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
-    setSteps(gSttngs().get("steps"));
+    const isUpdtngCnfg = gState().get("isUpdtngCnfg");
+    if (isUpdtngCnfg !== true) {
+      setSteps(gSttngs().get("steps"));
+    }
   };

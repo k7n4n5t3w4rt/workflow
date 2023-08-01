@@ -24,6 +24,7 @@ export default () => {
   gState().set("scnData", {});
   gState().set("strtPosition", {});
   gState().set("vSphere", {});
+  gState().set("isUpdtngCnfg", false);
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------

@@ -79,6 +79,7 @@ type GlobalState = {
   setSid: (sid: string) => Object,
   getSid: () => string,
   keyValuePairs: {
+    isUpdtngCnfg: false,
     // -----------------------
     // Data:
     // -----------------------

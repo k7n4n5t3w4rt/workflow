@@ -39,6 +39,7 @@ import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
 import isParsable from "../actions/isParsable.js";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {
@@ -118,6 +119,10 @@ export default (props /*: Props */) /*: string */ => {
                   max="200"
                   step="1"
                   onChange=${changeStepMovingLimit(setSteps, index)}
+                  onTouchStart=${setUpdtngCnfg(true)}
+                  onTouchEnd=${setUpdtngCnfg(false)}
+                  onMouseDown=${setUpdtngCnfg(true)}
+                  onMouseUp=${setUpdtngCnfg(false)}
                   value="${step.movingLimit.toString()}"
                 />
               </div>
@@ -132,5 +137,8 @@ export default (props /*: Props */) /*: string */ => {
 const updateStepsStateFromGlobalState =
   (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
     setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
-    setSteps(gSttngs().get("steps"));
+    const isUpdtngCnfg = gState().get("isUpdtngCnfg");
+    if (isUpdtngCnfg !== true) {
+      setSteps(gSttngs().get("steps"));
+    }
   };
