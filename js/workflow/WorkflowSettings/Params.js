@@ -84,7 +84,7 @@ export default (props /*: Props */) /*: string */ => {
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
         <!------------------------------------------------------------------>
-        <!-- Steps -->
+        <!-- Params -->
         <!------------------------------------------------------------------>
         ${steps.map(
           (

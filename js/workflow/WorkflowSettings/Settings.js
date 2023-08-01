@@ -34,6 +34,7 @@ import ScaleCm from "./ScaleCm.js";
 import RangeMax from "./RangeMax.js";
 import RangeIncreaseRate from "./RangeIncreaseRate.js";
 import RangeMidpoint from "./RangeMidpoint.js";
+import Steps from "./Steps.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -253,6 +254,7 @@ export default (props /*: Props */) /*: string */ => {
           flwItmSizeLimit=${lState.flwItmSizeLimit}
           changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
         />
+        <${Steps} />
       </fieldset>
     </div>
   `;

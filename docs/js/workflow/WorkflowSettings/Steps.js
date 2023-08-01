@@ -117,94 +117,94 @@ export default (props /*: Props */) /*: string */ => {
       setSteps(steps);
     };
 
+  // <div id="params-container" className="${styles.paramsContainer}">
+  //   <fieldset>
   return html`
-    <div id="params-container" className="${styles.paramsContainer}">
-      <fieldset>
-        <!------------------------------------------------------------------>
-        <!-- Steps -->
-        <!------------------------------------------------------------------>
-        ${steps.map(
-          (
-            step /*: { 
+    <!------------------------------------------------------------------>
+    <!-- Steps -->
+    <!------------------------------------------------------------------>
+    ${steps.map(
+      (
+        step /*: { 
             name: string,
             status: string,
             limit: number,
             devUnits: number,
             preload: number,
           } */,
-            index /*: number */,
-          ) /*: void */ => {
-            if (step.status === "done") return html``;
-            return html`
-              <div>
-                <div className="${styles.inputHeading}">
-                  Step ${index}: ${step.name}
-                </div>
-                <label for="step${index}Limit">Limit</label>
-                <output
-                  id="step${index}LimitOutput"
-                  name="step${index}LimitOutput"
-                  for="step${index}LimitOutput"
-                  >${step.limit.toString()}</output
-                >
-                <input
-                  type="range"
-                  id="step${index}Limit"
-                  name="step${index}Limit"
-                  min="0"
-                  max="200"
-                  step="1"
-                  onChange=${changeStepLimit(setSteps, index)}
-                  value="${step.limit.toString()}"
-                />
-              </div>
-              <div>
-                <label for="step${index}Preload">Preload</label>
-                <output
-                  id="step${index}PreloadOutput"
-                  name="step${index}PreloadOutput"
-                  for="step${index}PreloadOutput"
-                  >${step.preload.toString()}</output
-                >
-                <input
-                  type="range"
-                  id="step${index}Preload"
-                  name="step${index}Preload"
-                  min="0"
-                  max="200"
-                  step="1"
-                  onChange=${changeStepPreload(setSteps, index)}
-                  value="${step.preload.toString()}"
-                />
-              </div>
-              ${step.status === "touch" &&
-              html`
-                <div>
-                  <label for="step${index}DevUnits">Dev Units</label>
-                  <output
-                    id="step${index}DevUnitsOutput"
-                    name="step${index}DevUnitsOutput"
-                    for="step${index}DevUnitsOutput"
-                    >${step.devUnits.toString()}</output
-                  >
-                  <input
-                    type="range"
-                    id="step${index}DevUnits"
-                    name="step${index}DevUnits"
-                    min="1"
-                    max="100"
-                    step="1"
-                    onChange=${changeStepDevUnits(setSteps, index)}
-                    value="${step.devUnits.toString()}"
-                  />
-                </div>
-              `}
-            `;
-          },
-        )}
-      </fieldset>
-    </div>
+        index /*: number */,
+      ) /*: void */ => {
+        if (step.status === "done") return html``;
+        return html`
+          <div>
+            <div className="${styles.inputHeading}">
+              Step ${index}: ${step.name}
+            </div>
+            <label for="step${index}Limit">Limit</label>
+            <output
+              id="step${index}LimitOutput"
+              name="step${index}LimitOutput"
+              for="step${index}LimitOutput"
+              >${step.limit.toString()}</output
+            >
+            <input
+              type="range"
+              id="step${index}Limit"
+              name="step${index}Limit"
+              min="0"
+              max="200"
+              step="1"
+              onChange=${changeStepLimit(setSteps, index)}
+              value="${step.limit.toString()}"
+            />
+          </div>
+          <div>
+            <label for="step${index}Preload">Preload</label>
+            <output
+              id="step${index}PreloadOutput"
+              name="step${index}PreloadOutput"
+              for="step${index}PreloadOutput"
+              >${step.preload.toString()}</output
+            >
+            <input
+              type="range"
+              id="step${index}Preload"
+              name="step${index}Preload"
+              min="0"
+              max="200"
+              step="1"
+              onChange=${changeStepPreload(setSteps, index)}
+              value="${step.preload.toString()}"
+            />
+          </div>
+          ${step.status === "touch" &&
+          html`
+            <div>
+              <label for="step${index}DevUnits">Dev Units</label>
+              <output
+                id="step${index}DevUnitsOutput"
+                name="step${index}DevUnitsOutput"
+                for="step${index}DevUnitsOutput"
+                >${step.devUnits.toString()}</output
+              >
+              <input
+                type="range"
+                id="step${index}DevUnits"
+                name="step${index}DevUnits"
+                min="1"
+                max="100"
+                step="1"
+                onChange=${changeStepDevUnits(setSteps, index)}
+                value="${step.devUnits.toString()}"
+              />
+            </div>
+          `}
+        `;
+      },
+    )}
   `;
+  //   </fieldset>
+  // </div>
 };
 
 const updateStepsStateFromGlobalState =
