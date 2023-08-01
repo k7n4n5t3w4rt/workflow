@@ -56,7 +56,7 @@ export default (props /*: Props */) /*: string */ => {
   // A toggle to show or hide the settings
   const [settingsToggle, setSettingsToggle] = useState(false);
   // Hide or show the settings divs when the toggle changes
-  useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
+  // useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
   // The function that toggles the settings by setting the toggle
   // to whatever it isn't
   const toggleSettings = () => {
@@ -68,13 +68,6 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
 
   return html`
-    <div
-      id="settings-close-icon"
-      className="${styles.settingsClose}"
-      onClick="${toggleSettings}"
-    >
-      <span className="material-icons ${styles.settingsIcon}"> close </span>
-    </div>
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
@@ -261,13 +254,6 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
         />
       </fieldset>
-    </div>
-    <div
-      id="settings-icon"
-      className="${styles.settings}"
-      onClick="${toggleSettings}"
-    >
-      <span className="material-icons ${styles.settingsIcon}"> settings </span>
     </div>
   `;
 };

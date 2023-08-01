@@ -63,8 +63,6 @@ export default (props /*: Props */) /*: string */ => {
       <div id="dom-overlay">
         <div id="console-ui"></div>
         <${Metrics} />
-        <${Settings} />
-        <${Params} />
       </div>
     </div>
   `;

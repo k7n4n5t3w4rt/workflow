@@ -63,6 +63,7 @@ type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
   limit: number,
+  movingLimit: number,
   devPowerFactor: number,
   devUnits: number,
   preload: number,

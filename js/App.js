@@ -4,6 +4,9 @@ import Router from "../web_modules/preact-router.js";
 import { html } from "../web_modules/htm/preact.js";
 import { AppProvider } from "./AppContext.js";
 import Wrkflw from "./workflow/Workflow.js";
+import Settings from "./workflow/WorkflowSettings/Settings.js";
+import Steps from "./workflow/WorkflowSettings/Steps.js";
+import Params from "./workflow/WorkflowSettings/Params.js";
 // import registerServiceWorker from "./registerServiceWorker.js";
 const finishCounter = {
   ALGORITHMS: [],
@@ -20,6 +23,9 @@ const App /*: function */ = (props /*: Props */) => {
     <${AppProvider} >
       <${Router} url="${props.url}">
       	<${Wrkflw} path="/" />
+      	<${Settings} path="/settings" />
+      	<${Params} path="/params" />
+      	<${Steps} path="/steps" />
       </${Router}>
     </${AppProvider} >
   `;
