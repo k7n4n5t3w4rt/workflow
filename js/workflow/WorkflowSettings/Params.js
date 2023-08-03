@@ -93,6 +93,7 @@ export default (props /*: Props */) /*: string */ => {
             name: string,
             status: string,
             limit: number,
+            movingLimit: number,
             devUnits: number,
             preload: number,
           } */,

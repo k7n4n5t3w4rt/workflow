@@ -87,7 +87,7 @@ test("Correct over 3 days", () /*: void */ => {
     { name: "In Test", status: "touch", limit: 3, preload: 3 },
     { name: "Done", status: "done", limit: 0 },
   ]);
-  setUpFlwMap(gState().get("flwMap"), gSttngs().get("steps"));
+  setUpFlwMap(gState().get("flwMap"));
   // Needed for newFlwItem(5) and populateSteps()
   gState().set("clckCbGroup", newClickCube());
   populateSteps();

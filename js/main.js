@@ -15,7 +15,9 @@ import { h, hydrate, render } from "../web_modules/preact.js";
 import App from "./App.js";
 import { html } from "../web_modules/htm/preact.js";
 
-globalSettings();
-globalState();
-setInterval(getSttngsFromEasyStorage, 1000);
+globalSettings().then(() => {
+  globalState();
+});
+//setInterval(getSttngsFromEasyStorage, 1000);
+// getSttngsFromEasyStorage();
 render(html` <${App} /> `, document.getElementById("goodthing"));

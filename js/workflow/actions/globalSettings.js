@@ -17,7 +17,7 @@ import calculateTouchWipLimits from "./calculateTouchWipLimits.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
-export default () => {
+export default async () /*: Promise<void> */ => {
   gSttngs().setSid("workflowSttngs");
   //------------------------------------------------------------------
   // Development
@@ -34,7 +34,7 @@ export default () => {
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
-  gSttngs().setIfNotCached("steps", [
+  await gSttngs().setIfNotCached("steps", [
     {
       name: "Open",
       status: "backlog",
@@ -83,38 +83,38 @@ export default () => {
   //------------------------------------------------------------------
   //------------------------------------------------------------------
   // A lot of things depend on this setting
-  gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
+  await gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
   gSttngs().set("totalWipAtStart", calculateTotalWipLimits());
   gSttngs().set("touchWipAtStart", calculateTouchWipLimits());
   // A fix to get the flow time correct
-  gSttngs().setIfNotCached("devPowerFix", 1);
+  await gSttngs().setIfNotCached("devPowerFix", 1);
   // Q: What is the shortest flow time?
-  gSttngs().setIfNotCached("flwTimeMin", 1);
+  await gSttngs().setIfNotCached("flwTimeMin", 1);
   // Assume a normal distribution for now, and calculate
   // the longest flow time
   gSttngs().set("flwTimeMax", calculateFlwTimeMax());
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs().setIfNotCached("timeBox", 10);
+  await gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  gSttngs().setIfNotCached("death", 0);
-  gSttngs().setIfNotCached("backlogDeath", 0);
+  await gSttngs().setIfNotCached("death", 0);
+  await gSttngs().setIfNotCached("backlogDeath", 0);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs().setIfNotCached("expdtQueueLength", 0);
+  await gSttngs().setIfNotCached("expdtQueueLength", 0);
   // 1 is 100% of the available devUnits.
-  gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
+  await gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
   // Q: How many new items arrive in your backlog each day?
-  gSttngs().setIfNotCached("arrivalRate", 1);
+  await gSttngs().setIfNotCached("arrivalRate", 1);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
   // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("flwItmSizeLimit", 1);
+  await gSttngs().setIfNotCached("flwItmSizeLimit", 1);
   // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
   // effective flwItmSize is reduced by this factor
   // Format: True or False
-  gSttngs().setIfNotCached("dfntnOfReady", false);
+  await gSttngs().setIfNotCached("dfntnOfReady", false);
   // Q: How much drag is caused by silos, dependencies and handoffs?
   // Consider:
   // To what extent are people, as individuals, specialists (i.e. they only do
@@ -122,21 +122,21 @@ export default () => {
   // are "component teams" (i.e. teams that work on a single component of the
   // whole product)?
   // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("specialisation", 0);
+  await gSttngs().setIfNotCached("specialisation", 0);
   // Q: How much drag is caused by changes in the team structure?
   // Consider:
   // How often are people moved between teams? Do people or sub-teams come and go?
   // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("teamInstability", 0);
+  await gSttngs().setIfNotCached("teamInstability", 0);
   //------------------------------------------------------------------
   // Calculated values:
   //------------------------------------------------------------------
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  gSttngs().setIfNotCached("fps", 1);
-  gSttngs().setIfNotCached("scaleCm", 7);
-  gSttngs().setIfNotCached("showMetrics", true);
+  await gSttngs().setIfNotCached("fps", 1);
+  await gSttngs().setIfNotCached("scaleCm", 7);
+  await gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
   gSttngs().set("x", gSttngs().get("scale"));
   gSttngs().set("y", gSttngs().get("scale"));
@@ -144,9 +144,9 @@ export default () => {
   gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   // Temporarily making these editable in the UI
-  gSttngs().setIfNotCached("rangeMax", 0.25);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
-  gSttngs().setIfNotCached("rangeMidpoint", 0.1);
+  await gSttngs().setIfNotCached("rangeMax", 0.25);
+  await gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
+  await gSttngs().setIfNotCached("rangeMidpoint", 0.1);
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
