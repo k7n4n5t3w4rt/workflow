@@ -10,31 +10,25 @@ import cleanInt from "../calculations/cleanInt.js";
 import round2Places from "../calculations/round2Places.js";
 import calculateDevPower from "./calculateDevPower.js";
 import touchStepsCount from "./touchStepsCount.js";
-import calculateDevUnits from "./calculateDevUnits.js";
-import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
-import calculateTotalWipLimits from "./calculateTotalWipLimits.js";
-import calculateTouchWipLimits from "./calculateTouchWipLimits.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
-export default async () /*: Promise<void> */ => {
+export default () /*: void */ => {
   gSttngs().setSid("workflowSttngs");
   //------------------------------------------------------------------
   // Development
   //------------------------------------------------------------------
-  // Turns on some expensive debug features
-  gSttngs().setNoCache("debug", false);
   // Starts the simulation automatically
-  gSttngs().setNoCache("autoMode", false);
+  gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("autoMode", false);
   // Toggle Easy storage
-  gSttngs().setNoCache("easyStorage", true);
+  gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("easyStorage", true);
   //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
-  await gSttngs().setIfNotCached("steps", [
+  gSttngs().setIfNotCached("steps", [
     {
       name: "Open",
       status: "backlog",
@@ -57,19 +51,6 @@ export default async () /*: Promise<void> */ => {
       devUnits: 0,
       preload: 0,
     },
-    // {
-    //   name: "Ready for Test",
-    //   status: "wait",
-    //   limit: 0,
-    //   preload: 0,
-    // },
-    // {
-    //   name: "In Test",
-    //   status: "touch",
-    //   limit: 0,
-    //   devUnits: 0,
-    //   preload: 0,
-    // },
     {
       name: "Done",
       status: "done",
@@ -83,60 +64,32 @@ export default async () /*: Promise<void> */ => {
   //------------------------------------------------------------------
   //------------------------------------------------------------------
   // A lot of things depend on this setting
-  await gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
-  gSttngs().set("totalWipAtStart", calculateTotalWipLimits());
-  gSttngs().set("touchWipAtStart", calculateTouchWipLimits());
+  gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
   // A fix to get the flow time correct
-  await gSttngs().setIfNotCached("devPowerFix", 1);
+  gSttngs().setIfNotCached("devPowerFix", 1);
   // Q: What is the shortest flow time?
-  await gSttngs().setIfNotCached("flwTimeMin", 1);
-  // Assume a normal distribution for now, and calculate
-  // the longest flow time
-  gSttngs().set("flwTimeMax", calculateFlwTimeMax());
+  gSttngs().setIfNotCached("flwTimeMin", 1);
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  await gSttngs().setIfNotCached("timeBox", 10);
+  gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  await gSttngs().setIfNotCached("death", 0);
-  await gSttngs().setIfNotCached("backlogDeath", 0);
+  gSttngs().setIfNotCached("death", 0);
+  gSttngs().setIfNotCached("backlogDeath", 0);
   // PARAM: How many things do we expedite each timebox?
-  await gSttngs().setIfNotCached("expdtQueueLength", 0);
+  gSttngs().setIfNotCached("expdtQueueLength", 0);
   // 1 is 100% of the available devUnits.
-  await gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
+  gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
   // Q: How many new items arrive in your backlog each day?
-  await gSttngs().setIfNotCached("arrivalRate", 1);
-  //------------------------------------------------------------------
-  // Not yet used...
-  //------------------------------------------------------------------
+  gSttngs().setIfNotCached("arrivalRate", 1);
   // Format: A number between 0 and 1
-  await gSttngs().setIfNotCached("flwItmSizeLimit", 1);
-  // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
-  // effective flwItmSize is reduced by this factor
-  // Format: True or False
-  await gSttngs().setIfNotCached("dfntnOfReady", false);
-  // Q: How much drag is caused by silos, dependencies and handoffs?
-  // Consider:
-  // To what extent are people, as individuals, specialists (i.e. they only do
-  // one thing)? What percentage of the total number of teams (including this one)
-  // are "component teams" (i.e. teams that work on a single component of the
-  // whole product)?
-  // Format: A number between 0 and 1
-  await gSttngs().setIfNotCached("specialisation", 0);
-  // Q: How much drag is caused by changes in the team structure?
-  // Consider:
-  // How often are people moved between teams? Do people or sub-teams come and go?
-  // Format: A number between 0 and 1
-  await gSttngs().setIfNotCached("teamInstability", 0);
-  //------------------------------------------------------------------
-  // Calculated values:
-  //------------------------------------------------------------------
+  gSttngs().setIfNotCached("flwItmSizeLimit", 1);
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  await gSttngs().setIfNotCached("fps", 1);
-  await gSttngs().setIfNotCached("scaleCm", 7);
-  await gSttngs().setIfNotCached("showMetrics", true);
+  gSttngs().setIfNotCached("fps", 1);
+  gSttngs().setIfNotCached("scaleCm", 7);
+  gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
   gSttngs().set("x", gSttngs().get("scale"));
   gSttngs().set("y", gSttngs().get("scale"));
@@ -144,11 +97,32 @@ export default async () /*: Promise<void> */ => {
   gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   // Temporarily making these editable in the UI
-  await gSttngs().setIfNotCached("rangeMax", 0.25);
-  await gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
-  await gSttngs().setIfNotCached("rangeMidpoint", 0.1);
+  gSttngs().setIfNotCached("rangeMax", 0.25);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
+  gSttngs().setIfNotCached("rangeMidpoint", 0.1);
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
   gSttngs().set("colorBlue", "1d2570");
+  return;
 };
+//------------------------------------------------------------------
+// Not yet used...
+//------------------------------------------------------------------
+// PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
+// effective flwItmSize is reduced by this factor
+// Format: True or False
+// gSttngs().setIfNotCached("dfntnOfReady", false);
+// Q: How much drag is caused by silos, dependencies and handoffs?
+// Consider:
+// To what extent are people, as individuals, specialists (i.e. they only do
+// one thing)? What percentage of the total number of teams (including this one)
+// are "component teams" (i.e. teams that work on a single component of the
+// whole product)?
+// Format: A number between 0 and 1
+// gSttngs().setIfNotCached("specialisation", 0);
+// Q: How much drag is caused by changes in the team structure?
+// Consider:
+// How often are people moved between teams? Do people or sub-teams come and go?
+// Format: A number between 0 and 1
+// gSttngs().setIfNotCached("teamInstability", 0);

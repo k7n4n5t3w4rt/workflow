@@ -24,10 +24,14 @@ export default (
     if (isParsable(value)) {
       value = JSON.parse(value);
     }
-    gSttngs().set(setting, value);
+    if (setting === "easyStorage" || setting === "autoMode") {
+      gSttngs().setNoCache(setting, value);
+    } else {
+      gSttngs().set(setting, value);
+    }
     setStateFunctions[setting](value);
-    calculateFlwTimeMax();
-    touchStepsCount();
-    calculateDevUnits();
-    calculateDevPower();
+    // calculateFlwTimeMax();
+    // touchStepsCount();
+    // calculateDevUnits();
+    // calculateDevPower();
   };

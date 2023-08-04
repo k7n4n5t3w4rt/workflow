@@ -6,7 +6,7 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // calculateTouchWipLimits()
 //------------------------------------------------------------------
-export const calculateTouchWipLimits = () /*: number | void */ => {
+export const calculateTouchWipLimits = () /*: number */ => {
   const steps = gSttngs().get("steps");
   if (steps !== undefined) {
     return steps.reduce((_ /*: number*/, step /*: Object*/) => {
@@ -18,6 +18,7 @@ export const calculateTouchWipLimits = () /*: number | void */ => {
     }, 0);
   } else {
     setTimeout(calculateTouchWipLimits, 1000);
+    return 0;
   }
 };
 export default calculateTouchWipLimits;

@@ -2,6 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
+import gSttngs from "./workflow/actions/gSttngs.js";
+import gState from "./workflow/actions/gState.js";
 import globalSettings from "./workflow/actions/globalSettings.js";
 import globalState from "./workflow/actions/globalState.js";
 //------------------------------------------------------------------
@@ -14,10 +16,15 @@ import getSttngsFromEasyStorage from "./workflow/actions/getSttngsFromEasyStorag
 import { h, hydrate, render } from "../web_modules/preact.js";
 import App from "./App.js";
 import { html } from "../web_modules/htm/preact.js";
-
-globalSettings().then(() => {
-  globalState();
-});
-//setInterval(getSttngsFromEasyStorage, 1000);
-// getSttngsFromEasyStorage();
+//------------------------------------------------------------------
+// MAIN
+//------------------------------------------------------------------
+// First, load the global settings and state. Note that `globalSettings()`
+// is an async funnction. The value of `gSttngs()` properties will be
+// updated after they are first set with the defaults, based on
+// calls to Easy, the backend keystore.
+globalSettings();
+globalState();
+setInterval(getSttngsFromEasyStorage, 1000);
+// setTimeout(getSttngsFromEasyStorage, 1000);
 render(html` <${App} /> `, document.getElementById("goodthing"));

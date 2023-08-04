@@ -4,8 +4,6 @@
 //------------------------------------------------------------------
 import gSttngs from "./actions/gSttngs.js";
 import gState from "./actions/gState.js";
-// import globalSettings from "./actions/globalSettings.js";
-// import globalState from "./actions/globalState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -25,6 +23,7 @@ import {
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
 import calculateTotalWipLimits from "./actions/calculateTotalWipLimits.js";
+import calculateFlwTimeMax from "./actions/calculateFlwTimeMax.js";
 
 /*::
 type Props = {
@@ -136,8 +135,8 @@ const updateMetricsOnClickInterval = (
       const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
       const thrPut = thrPutExpPerDay * tmBox + thrPutPerDay * tmBox;
       const avrgFlwTimeAtStart = gSttngs().get("avrgFlwTimeAtStart");
-      const flwTimeMax = gSttngs().get("flwTimeMax");
-      const totalWipAtStart = gSttngs().get("totalWipAtStart");
+      const flwTimeMax = calculateFlwTimeMax();
+      const totalWipAtStart = calculateTotalWipLimits();
       const flwTime = gState().get("flwTmQueue").flwItemMean();
       const flwTmExp = gState().get("flwTmExpQueue").flwItemMean();
       const wip = gState().get("wipQueue").dailyMean();

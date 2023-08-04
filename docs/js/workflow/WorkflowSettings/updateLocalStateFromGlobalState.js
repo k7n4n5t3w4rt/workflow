@@ -3,6 +3,7 @@
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "../actions/gSttngs.js";
+import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // FUNCTION: updateLocalStateFromGlobalState()
 //------------------------------------------------------------------
@@ -28,7 +29,6 @@ const updateLocalStateFromGlobalState =
       gSttngs().get("avrgFlwTimeAtStart"),
     );
     setStateFunctions["flwTimeMin"](gSttngs().get("flwTimeMin"));
-    setStateFunctions["flwTimeMax"](gSttngs().get("flwTimeMax"));
     setStateFunctions["devUnits"](gSttngs().get("devUnits"));
     setStateFunctions["devPowerFactor"](gSttngs().get("devPowerFactor"));
     setStateFunctions["timeBox"](gSttngs().get("timeBox"));

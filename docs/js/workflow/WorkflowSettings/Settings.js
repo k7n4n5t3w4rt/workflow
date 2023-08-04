@@ -14,7 +14,6 @@ import {
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
-import FlwTimeMax from "./FlwTimeMax.js";
 import AvrgFlwTimeAtStart from "./AvrgFlwTimeAtStart.js";
 import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
@@ -140,13 +139,6 @@ export default (props /*: Props */) /*: string */ => {
             "avrgFlwTimeAtStart",
             setStateFunctions,
           )}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Flow Item Size Max -->
-        <!-------------------------------------------------------------------->
-        <${FlwTimeMax}
-          flwTimeMax=${lState.flwTimeMax}
-          changeSetting=${changeSetting("flwTimeMax", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->

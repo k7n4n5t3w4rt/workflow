@@ -19,6 +19,7 @@ import calculateTouchSteps from "./calculateTouchSteps.js";
 import calculateWaitSteps from "./calculateWaitSteps.js";
 import calculateValueForScale from "./calculateValueForScale.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
+import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 
 export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
@@ -55,6 +56,9 @@ const threeJsCube = (stepIndex /*: number */) /*: FlwItem */ => {
   } else if (stpStatus === "touch") {
     colorCode = "#" + gSttngs().get("colorGold");
   }
+  console.log("/------------");
+  console.log(colorCode);
+  console.log("/------------");
   const material = new THREE.MeshLambertMaterial({ color: colorCode });
   const flwItem = new THREE.Mesh(geometry, material);
   flwItem.receiveShadow = true;
@@ -97,10 +101,10 @@ const mapIt = (
 //------------------------------------------------------------------
 const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Some shorthand
-  const daysMax = gSttngs().get("flwTimeMax");
+  const daysMax = calculateFlwTimeMax();
   flwItem.dDysTotal = rndmBetween(
     gSttngs().get("flwTimeMin"),
-    gSttngs().get("flwTimeMax"),
+    calculateFlwTimeMax(),
   );
   const daysTotal = flwItem.dDysTotal;
   // This will be the scale and value if the flwItmSizeLimit is not set
@@ -123,9 +127,6 @@ const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   // Set the scale and store the scale value
   flwItem.scale.set(scale, scale, scale);
   flwItem.dScale = scale;
-  console.log("//--------------------------------------------------");
-  console.log(" flwItem.dDysTotal: " + flwItem.dDysTotal);
-  console.log("//--------------------------------------------------");
   return flwItem;
 };
 //------------------------------------------------------------------
@@ -154,7 +155,7 @@ const setAge = (
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
   if (stepIndex > 0) {
-    flwItem.dAge = rndmBetween(0, gSttngs().get("flwTimeMax"));
+    flwItem.dAge = rndmBetween(0, calculateFlwTimeMax());
   }
 };
 //------------------------------------------------------------------

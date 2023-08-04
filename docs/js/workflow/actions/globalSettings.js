@@ -10,24 +10,18 @@ import cleanInt from "../calculations/cleanInt.js";
 import round2Places from "../calculations/round2Places.js";
 import calculateDevPower from "./calculateDevPower.js";
 import touchStepsCount from "./touchStepsCount.js";
-import calculateDevUnits from "./calculateDevUnits.js";
-import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
-import calculateTotalWipLimits from "./calculateTotalWipLimits.js";
-import calculateTouchWipLimits from "./calculateTouchWipLimits.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
-export default () => {
+export default () /*: void */ => {
   gSttngs().setSid("workflowSttngs");
   //------------------------------------------------------------------
   // Development
   //------------------------------------------------------------------
-  // Turns on some expensive debug features
-  gSttngs().setNoCache("debug", false);
   // Starts the simulation automatically
-  gSttngs().setNoCache("autoMode", false);
+  gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("autoMode", false);
   // Toggle Easy storage
-  gSttngs().setNoCache("easyStorage", true);
+  gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("easyStorage", true);
   //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
@@ -57,19 +51,6 @@ export default () => {
       devUnits: 0,
       preload: 0,
     },
-    // {
-    //   name: "Ready for Test",
-    //   status: "wait",
-    //   limit: 0,
-    //   preload: 0,
-    // },
-    // {
-    //   name: "In Test",
-    //   status: "touch",
-    //   limit: 0,
-    //   devUnits: 0,
-    //   preload: 0,
-    // },
     {
       name: "Done",
       status: "done",
@@ -84,15 +65,10 @@ export default () => {
   //------------------------------------------------------------------
   // A lot of things depend on this setting
   gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
-  gSttngs().set("totalWipAtStart", calculateTotalWipLimits());
-  gSttngs().set("touchWipAtStart", calculateTouchWipLimits());
   // A fix to get the flow time correct
   gSttngs().setIfNotCached("devPowerFix", 1);
   // Q: What is the shortest flow time?
   gSttngs().setIfNotCached("flwTimeMin", 1);
-  // Assume a normal distribution for now, and calculate
-  // the longest flow time
-  gSttngs().set("flwTimeMax", calculateFlwTimeMax());
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -106,31 +82,8 @@ export default () => {
   gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
   // Q: How many new items arrive in your backlog each day?
   gSttngs().setIfNotCached("arrivalRate", 1);
-  //------------------------------------------------------------------
-  // Not yet used...
-  //------------------------------------------------------------------
   // Format: A number between 0 and 1
   gSttngs().setIfNotCached("flwItmSizeLimit", 1);
-  // PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
-  // effective flwItmSize is reduced by this factor
-  // Format: True or False
-  gSttngs().setIfNotCached("dfntnOfReady", false);
-  // Q: How much drag is caused by silos, dependencies and handoffs?
-  // Consider:
-  // To what extent are people, as individuals, specialists (i.e. they only do
-  // one thing)? What percentage of the total number of teams (including this one)
-  // are "component teams" (i.e. teams that work on a single component of the
-  // whole product)?
-  // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("specialisation", 0);
-  // Q: How much drag is caused by changes in the team structure?
-  // Consider:
-  // How often are people moved between teams? Do people or sub-teams come and go?
-  // Format: A number between 0 and 1
-  gSttngs().setIfNotCached("teamInstability", 0);
-  //------------------------------------------------------------------
-  // Calculated values:
-  //------------------------------------------------------------------
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
@@ -151,4 +104,25 @@ export default () => {
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
   gSttngs().set("colorBlue", "1d2570");
+  return;
 };
+//------------------------------------------------------------------
+// Not yet used...
+//------------------------------------------------------------------
+// PARAM: Inversely affects flwItmSize, i.e. if there is a value > 0, then the
+// effective flwItmSize is reduced by this factor
+// Format: True or False
+// gSttngs().setIfNotCached("dfntnOfReady", false);
+// Q: How much drag is caused by silos, dependencies and handoffs?
+// Consider:
+// To what extent are people, as individuals, specialists (i.e. they only do
+// one thing)? What percentage of the total number of teams (including this one)
+// are "component teams" (i.e. teams that work on a single component of the
+// whole product)?
+// Format: A number between 0 and 1
+// gSttngs().setIfNotCached("specialisation", 0);
+// Q: How much drag is caused by changes in the team structure?
+// Consider:
+// How often are people moved between teams? Do people or sub-teams come and go?
+// Format: A number between 0 and 1
+// gSttngs().setIfNotCached("teamInstability", 0);

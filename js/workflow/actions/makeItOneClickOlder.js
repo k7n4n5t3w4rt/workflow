@@ -4,6 +4,10 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
+//------------------------------------------------------------------
 // makeItOneClickOlder()
 //------------------------------------------------------------------
 export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
@@ -12,7 +16,7 @@ export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
   } else {
     flwItem.dAge++;
     // if (gSttngs().get("death") > 0) {
-    const opacity = 1 - flwItem.dAge / gSttngs().get("flwTimeMax") / 3;
+    const opacity = 1 - flwItem.dAge / calculateFlwTimeMax() / 3;
     if (opacity < flwItem.material.opacity) {
       flwItem.material.opacity = opacity;
     }
