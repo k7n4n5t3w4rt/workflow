@@ -17,8 +17,11 @@ import expediteNewFlwItems from "./expediteNewFlwItems.js";
 export default () /*: void */ => {
   const flwMpSteps = getFlwMpSteps();
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
-    for (let i = 0; i <= gSttngs().get("steps")[index].preload - 1; i++) {
-      newFlwItem(index);
+    for (let i = 1; i <= gSttngs().get("steps")[index].limit; i++) {
+      if (gSttngs().get("steps")[index].status !== "done") {
+        newFlwItem(index);
+      }
     }
   });
+  console.log("Preload done.");
 };

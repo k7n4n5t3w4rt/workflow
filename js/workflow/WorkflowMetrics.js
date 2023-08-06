@@ -24,6 +24,7 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import calculateTotalWipLimits from "./actions/calculateTotalWipLimits.js";
 import calculateFlwTimeMax from "./actions/calculateFlwTimeMax.js";
+import calculateFlwTimeAtStart from "./actions/calculateFlwTimeAtStart.js";
 
 /*::
 type Props = {
@@ -134,7 +135,7 @@ const updateMetricsOnClickInterval = (
       const thrPutPerDay = gState().get("thrPtQueue").dailyMean();
       const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
       const thrPut = thrPutExpPerDay * tmBox + thrPutPerDay * tmBox;
-      const avrgFlwTimeAtStart = gSttngs().get("avrgFlwTimeAtStart");
+      const flwTimeAtStart = calculateFlwTimeAtStart();
       const flwTimeMax = calculateFlwTimeMax();
       const totalWipAtStart = calculateTotalWipLimits();
       const flwTime = gState().get("flwTmQueue").flwItemMean();
@@ -154,12 +155,12 @@ const updateMetricsOnClickInterval = (
       // Little's Law = ThruPut = WIP/FlowTime
       const totalValue = gState().get("vQueue").total();
       // Before any adjustments based on flwSizeLimit, value is the same as scale
-      const avrgValuePerItem = avrgFlwTimeAtStart / flwTimeMax;
+      const avrgValuePerItem = flwTimeAtStart / flwTimeMax;
       // There is, currently, an even distribution of value across all items
       // there is a direct mapping of value to the flow time This will need to change,
       //  [a] when we have a more realistic distribution of value across items, and
       //  [b] when we have a more realistic system of assigning value to items.
-      const totalThruPut = (totalWipAtStart / avrgFlwTimeAtStart) * tmBox;
+      const totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
       const displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
       // Format the display value as a percentage
       setValue(Math.floor(displayValue).toString() + "%");

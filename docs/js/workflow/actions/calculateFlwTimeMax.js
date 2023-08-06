@@ -4,12 +4,15 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
+//------------------------------------------------------------------
 // calculateFlwTimeMax()
 //------------------------------------------------------------------
 export const calculateFlwTimeMax = () /*: number */ => {
-  return (
-    gSttngs().get("avrgFlwTimeAtStart") +
-    (gSttngs().get("avrgFlwTimeAtStart") - gSttngs().get("flwTimeMin"))
-  );
+  const flwTimeAtStart = calculateFlwTimeAtStart();
+  const flwTimeMin = gSttngs().get("flwTimeMin");
+  return flwTimeAtStart + (flwTimeAtStart - flwTimeMin);
 };
 export default calculateFlwTimeMax;

@@ -70,7 +70,7 @@ type FlwStep = {
   movingLimit: number,
   devPowerFactor: number,
   devUnits: number,
-  preload: number,
+  flwTimeAtStart: number,
 };
 
 //------------------------------------------------------------------

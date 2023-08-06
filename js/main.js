@@ -5,6 +5,7 @@
 import gSttngs from "./workflow/actions/gSttngs.js";
 import gState from "./workflow/actions/gState.js";
 import globalSettings from "./workflow/actions/globalSettings.js";
+import globalStepSettings from "./workflow/actions/globalStepSettings.js";
 import globalState from "./workflow/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -24,7 +25,7 @@ import { html } from "../web_modules/htm/preact.js";
 // updated after they are first set with the defaults, based on
 // calls to Easy, the backend keystore.
 globalSettings();
+globalStepSettings();
 globalState();
 setInterval(getSttngsFromEasyStorage, 1000);
-// setTimeout(getSttngsFromEasyStorage, 1000);
 render(html` <${App} /> `, document.getElementById("goodthing"));

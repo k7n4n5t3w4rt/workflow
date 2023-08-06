@@ -23,52 +23,15 @@ export default () /*: void */ => {
   // Toggle Easy storage
   gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("easyStorage", true);
   //------------------------------------------------------------------
-  // Q: What steps do we have in our workflow?
-  // Q: What WIP limits, if any, do we have for each step?
-  // NOTE: We need to start with a "backlog" step, and end with a "done" step,
-  // both of which have a limit of 0, which means "no limit".
-  // Q: How many items are currently, or typically, or often in each step?
-  gSttngs().setIfNotCached("steps", [
-    {
-      name: "Open",
-      status: "backlog",
-      limit: 0,
-      movingLimit: 0,
-      preload: 0,
-    },
-    {
-      name: "Ready",
-      status: "wait",
-      limit: 0,
-      movingLimit: 0,
-      preload: 0,
-    },
-    {
-      name: "In Progress",
-      status: "touch",
-      limit: 0,
-      movingLimit: 0,
-      devUnits: 0,
-      preload: 0,
-    },
-    {
-      name: "Done",
-      status: "done",
-      limit: 0,
-      movingLimit: 0,
-      preload: 0,
-    },
-  ]);
-  //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------
   //------------------------------------------------------------------
   // A lot of things depend on this setting
-  gSttngs().setIfNotCached("avrgFlwTimeAtStart", 1);
+  gSttngs().setIfNotCached("avrgFlwTimeAtStart", 10);
   // A fix to get the flow time correct
   gSttngs().setIfNotCached("devPowerFix", 1);
   // Q: What is the shortest flow time?
-  gSttngs().setIfNotCached("flwTimeMin", 1);
+  gSttngs().setIfNotCached("flwTimeMin", 10); // Max. flow time is dynamic
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
@@ -81,8 +44,8 @@ export default () /*: void */ => {
   // 1 is 100% of the available devUnits.
   gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
   // Q: How many new items arrive in your backlog each day?
-  gSttngs().setIfNotCached("arrivalRate", 1);
-  // Format: A number between 0 and 1
+  gSttngs().setIfNotCached("arrivalRate", 5);
+  // Format: A number between 0 and and 1
   gSttngs().setIfNotCached("flwItmSizeLimit", 1);
   //------------------------------------------------------------------
   // Display
@@ -97,8 +60,8 @@ export default () /*: void */ => {
   gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
   gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
   // Temporarily making these editable in the UI
-  gSttngs().setIfNotCached("rangeMax", 0.25);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 1.25);
+  gSttngs().setIfNotCached("rangeMax", 7);
+  gSttngs().setIfNotCached("rangeIncreaseRate", 0.25);
   gSttngs().setIfNotCached("rangeMidpoint", 0.1);
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");

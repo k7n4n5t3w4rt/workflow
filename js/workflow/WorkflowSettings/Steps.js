@@ -67,23 +67,6 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
 
-  const changeStepPreload =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.preload = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
-
   const changeStepLimit =
     (
       setSteps /*: (any) => void */,
@@ -118,6 +101,22 @@ export default (props /*: Props */) /*: string */ => {
       setSteps(steps);
     };
 
+  const changeStepFlwTimeAtStart =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.flwTimeAtStart = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
   // <div id="params-container" className="${styles.paramsContainer}">
   //   <fieldset>
   return html`
@@ -131,7 +130,7 @@ export default (props /*: Props */) /*: string */ => {
             status: string,
             limit: number,
             devUnits: number,
-            preload: number,
+            flwTimeAtStart: number
           } */,
         index /*: number */,
       ) /*: void */ => {
@@ -163,29 +162,6 @@ export default (props /*: Props */) /*: string */ => {
               value="${step.limit.toString()}"
             />
           </div>
-          <div>
-            <label for="step${index}Preload">Preload</label>
-            <output
-              id="step${index}PreloadOutput"
-              name="step${index}PreloadOutput"
-              for="step${index}PreloadOutput"
-              >${step.preload.toString()}</output
-            >
-            <input
-              type="range"
-              id="step${index}Preload"
-              name="step${index}Preload"
-              min="0"
-              max="200"
-              step="1"
-              onChange=${changeStepPreload(setSteps, index)}
-              onTouchStart=${setUpdtngCnfg(true)}
-              onTouchEnd=${setUpdtngCnfg(false)}
-              onMouseDown=${setUpdtngCnfg(true)}
-              onMouseUp=${setUpdtngCnfg(false)}
-              value="${step.preload.toString()}"
-            />
-          </div>
           ${step.status === "touch" &&
           html`
             <div>
@@ -209,6 +185,31 @@ export default (props /*: Props */) /*: string */ => {
                 onMouseDown=${setUpdtngCnfg(true)}
                 onMouseUp=${setUpdtngCnfg(false)}
                 value="${step.devUnits.toString()}"
+              />
+            </div>
+            <div>
+              <label for="step${index}FlwTimeAtStart"
+                >Av. Flow Time at Start</label
+              >
+              <output
+                id="step${index}FlwTimeAtStartOutput"
+                name="step${index}FlwTimeAtStartOutput"
+                for="step${index}FlwTimeAtStartOutput"
+                >${step.flwTimeAtStart.toString()}</output
+              >
+              <input
+                type="range"
+                id="step${index}FlwTimeAtStart"
+                name="step${index}FlwTimeAtStart"
+                min="0.5"
+                max="100"
+                step="0.5"
+                onChange=${changeStepFlwTimeAtStart(setSteps, index)}
+                onTouchStart=${setUpdtngCnfg(true)}
+                onTouchEnd=${setUpdtngCnfg(false)}
+                onMouseDown=${setUpdtngCnfg(true)}
+                onMouseUp=${setUpdtngCnfg(false)}
+                value="${step.flwTimeAtStart.toString()}"
               />
             </div>
           `}

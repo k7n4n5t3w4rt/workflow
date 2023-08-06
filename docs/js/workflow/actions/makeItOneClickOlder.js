@@ -16,7 +16,7 @@ export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
   } else {
     flwItem.dAge++;
     // if (gSttngs().get("death") > 0) {
-    const opacity = 1 - flwItem.dAge / calculateFlwTimeMax() / 3;
+    const opacity = 1 - flwItem.dAge / calculateFlwTimeMax() / 20;
     if (opacity < flwItem.material.opacity) {
       flwItem.material.opacity = opacity;
     }

@@ -180,6 +180,9 @@ const setPosition = (
   flwItem.position.x = gState().get("strtPosition").x;
   flwItem.position.y = gState().get("strtPosition").y;
   flwItem.position.z = calculateZPosFromStep(flwMapIndex);
+  console.log("//------------------");
+  console.log("flowMapIndex: " + flwMapIndex);
+  console.log("flwItem.position.z: " + flwItem.position.z);
   // Set the dPosition because refineNewPosition() needs it
   flwItem.dPosition = { ...flwItem.position };
   flwItem.dPosition = { ...refineNewPosition(flwItem) };

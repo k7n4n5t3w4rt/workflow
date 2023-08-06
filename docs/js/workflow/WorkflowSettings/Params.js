@@ -95,7 +95,6 @@ export default (props /*: Props */) /*: string */ => {
             limit: number,
             movingLimit: number,
             devUnits: number,
-            preload: number,
           } */,
             index /*: number */,
           ) /*: void */ => {
