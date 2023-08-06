@@ -4,32 +4,32 @@
 //------------------------------------------------------------------
 import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
-// IMPORT: HELPERS
+// ParetoPoint
 //------------------------------------------------------------------
-
 /*::
 type Props = {
-	devPowerFix: number,
+	paretoPoint: number,
   changeSetting: () => void,
 }
 */
-export default (props /*: Props */) /*: string */ => {
+export const ParetoPoint = (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="devPowerFix">Dev Power Fix:</label>
-      <output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix"
-        >${props.devPowerFix.toString()}</output
+      <label for="paretoPoint">ParetoPoint:</label>
+      <output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint"
+        >${props.paretoPoint.toString()}</output
       >
       <input
         type="range"
-        id="devPowerFix"
-        name="devPowerFix"
-        min="0"
-        max="5"
-        step="0.01"
+        id="paretoPoint"
+        name="paretoPoint"
+        min="0.2"
+        max="1"
+        step="0.1"
         onChange=${props.changeSetting}
-        value="${props.devPowerFix.toString()}"
+        value="${props.paretoPoint.toString()}"
       />
     </div>
   `;
 };
+export default ParetoPoint;

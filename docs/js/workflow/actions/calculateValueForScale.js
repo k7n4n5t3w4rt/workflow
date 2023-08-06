@@ -22,10 +22,11 @@ const calculateValueForScale = (
   //   |_ _ _ _ __ _ _ __ _ _ _
   //     x20     x      x100
   // const xLimit = xMax * xLimitFactor;
-  const k = 0.1386;
-  // const scaledX = xLimit / xMax; // Scale the x value to the range [0, 1]
-  // const y = Math.pow(scaledX, k);
-  // return y * (xMax / xLimit); // Scale the y value to the same range as x
+  const paretoPoint = gSttngs().get("paretoPoint");
+  // If the paretoPoint is 0.2, y will be 0.8 when x is 0.2, i.e.:
+  //  k = log(0.8) / log(0.2) = 0.1386;
+  // const k = 0.1386;
+  const k = Math.log(0.8) / Math.log(paretoPoint);
   const y = Math.round(xMax * Math.pow(xLimit / xMax, k) * 100) / 100;
   return y; // Scale the y value to the same range as x
 };

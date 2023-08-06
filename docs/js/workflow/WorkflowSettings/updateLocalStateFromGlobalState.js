@@ -31,6 +31,8 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["flwTimeMin"](gSttngs().get("flwTimeMin"));
     setStateFunctions["devUnits"](gSttngs().get("devUnits"));
     setStateFunctions["devPowerFactor"](gSttngs().get("devPowerFactor"));
+    setStateFunctions["drag"](gSttngs().get("drag"));
+    setStateFunctions["paretoPoint"](gSttngs().get("paretoPoint"));
     setStateFunctions["timeBox"](gSttngs().get("timeBox"));
     setStateFunctions["fps"](gSttngs().get("fps"));
     setStateFunctions["expdtQueueLength"](gSttngs().get("expdtQueueLength"));

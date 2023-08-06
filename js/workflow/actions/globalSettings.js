@@ -30,6 +30,8 @@ export default () /*: void */ => {
   gSttngs().setIfNotCached("avrgFlwTimeAtStart", 10);
   // A fix to get the flow time correct
   gSttngs().setIfNotCached("devPowerFix", 1);
+  // The drag that kicks in when the ratio of dev units to WIP is 1:2
+  gSttngs().setIfNotCached("drag", 0.5);
   // Q: What is the shortest flow time?
   gSttngs().setIfNotCached("flwTimeMin", 10); // Max. flow time is dynamic
   // Q: What interval do we use for timeboxing or reporting (in working days)?
@@ -47,6 +49,8 @@ export default () /*: void */ => {
   gSttngs().setIfNotCached("arrivalRate", 5);
   // Format: A number between 0 and and 1
   gSttngs().setIfNotCached("flwItmSizeLimit", 1);
+  // Q: At what flwItmSizeLimit do we get 0.8 of the value from a flow item?
+  gSttngs().setIfNotCached("paretoPoint", 0.2);
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------

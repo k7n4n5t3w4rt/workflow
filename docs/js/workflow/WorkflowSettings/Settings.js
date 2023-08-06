@@ -17,6 +17,8 @@ import FlwTimeMin from "./FlwTimeMin.js";
 import AvrgFlwTimeAtStart from "./AvrgFlwTimeAtStart.js";
 import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
+import Drag from "./Drag.js";
+import ParetoPoint from "./ParetoPoint.js";
 import AutoMode from "./AutoMode.js";
 import EasyStorage from "./EasyStorage.js";
 import ShowMetrics from "./ShowMetrics.js";
@@ -122,6 +124,20 @@ export default (props /*: Props */) /*: string */ => {
         <${DevPowerFix}
           devPowerFix=${lState.devPowerFix}
           changeSetting=${changeSetting("devPowerFix", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- Drag -->
+        <!-------------------------------------------------------------------->
+        <${Drag}
+          drag=${lState.drag}
+          changeSetting=${changeSetting("drag", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- ParetoPoint -->
+        <!-------------------------------------------------------------------->
+        <${ParetoPoint}
+          paretoPoint=${lState.paretoPoint}
+          changeSetting=${changeSetting("paretoPoint", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- ArrivalRate -->
