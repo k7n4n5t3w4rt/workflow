@@ -13,7 +13,7 @@ export default (
   (flwItem /*: FlwItem */, index /*:number */) /*: boolean */ => {
     if (
       gSttngs().get("backlogDeath") > 0 &&
-      flwItem.dBacklogAge >= gSttngs().get("backlogDeath")
+      flwItem.dStepsAges["0"] >= gSttngs().get("backlogDeath")
     ) {
       // console.log("theNonDead: Filtering out this flwItem");
       removeFlowItem(flwItem);

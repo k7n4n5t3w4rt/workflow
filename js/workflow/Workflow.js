@@ -23,7 +23,7 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // COMPONENTS
 //------------------------------------------------------------------
-import Metrics from "./WorkflowMetrics.js";
+import Metrics from "./WorkflowMetrics/Metrics.js";
 import Settings from "./WorkflowSettings/Settings.js";
 import Params from "./WorkflowSettings/Params.js";
 //------------------------------------------------------------------

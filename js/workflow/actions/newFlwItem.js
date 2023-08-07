@@ -56,9 +56,6 @@ const threeJsCube = (stepIndex /*: number */) /*: FlwItem */ => {
   } else if (stpStatus === "touch") {
     colorCode = "#" + gSttngs().get("colorGold");
   }
-  console.log("/------------");
-  console.log(colorCode);
-  console.log("/------------");
   const material = new THREE.MeshLambertMaterial({ color: colorCode });
   const flwItem = new THREE.Mesh(geometry, material);
   flwItem.receiveShadow = true;
@@ -151,11 +148,19 @@ const setAge = (
 ) /*: void */ => {
   // Set the ages to 0 by default
   flwItem.dAge = 0;
-  flwItem.dBacklogAge = 0;
+  // Set the dStepsAges object
+  flwItem.dStepsAges = {};
+  gSttngs()
+    .get("steps")
+    .forEach((step, index) => {
+      flwItem.dStepsAges[index.toString()] = 0;
+    });
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
   if (stepIndex > 0) {
     flwItem.dAge = rndmBetween(0, calculateFlwTimeMax());
+    // Bit of a hack but it will do for now
+    flwItem.dStepsAges[stepIndex.toString()] = flwItem.dAge;
   }
 };
 //------------------------------------------------------------------
@@ -180,9 +185,6 @@ const setPosition = (
   flwItem.position.x = gState().get("strtPosition").x;
   flwItem.position.y = gState().get("strtPosition").y;
   flwItem.position.z = calculateZPosFromStep(flwMapIndex);
-  console.log("//------------------");
-  console.log("flowMapIndex: " + flwMapIndex);
-  console.log("flwItem.position.z: " + flwItem.position.z);
   // Set the dPosition because refineNewPosition() needs it
   flwItem.dPosition = { ...flwItem.position };
   flwItem.dPosition = { ...refineNewPosition(flwItem) };

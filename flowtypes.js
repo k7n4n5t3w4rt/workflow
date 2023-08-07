@@ -118,7 +118,6 @@ type FlwItem = {
   // Data:
   // -----------------------
   dAge: number,
-  dBacklogAge: number,
   dColor: string,
   dDysEachTouchStep: number,
   dDysRmnngInTotal: number,
@@ -126,6 +125,7 @@ type FlwItem = {
   dDysTotal: number,
   dExpedite: boolean,
   dStpIndex: number,
+  dStepsAges: { [string]: number },
   dMoving: boolean,
   dPosition: ThrMeshPosition,
   dScale: number,
