@@ -14,7 +14,7 @@ import touchStepsCount from "./touchStepsCount.js";
 // globalSettings()
 //------------------------------------------------------------------
 export default () /*: void */ => {
-  gSttngs().setSid("workflowSttngs");
+  gSttngs().setSidIfNotInLocalStore("workflowSttngs");
   //------------------------------------------------------------------
   // Development
   //------------------------------------------------------------------

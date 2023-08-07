@@ -3,8 +3,10 @@ type GlobalModel = {
   sid: string,
   set: (key: string, value: any) => Object,
   setSid: (sid: string) => Object,
+  setSidIfNotInLocalStore: (sid: string) => Object,
   getSid: () => string,
   setIfNotCached: (key: string, value: any) => Object,
+  setSidButNotInLocalStore: (key: string, value: any) => Object,
   setNoCacheIfNotInLocalStorageAddToLocalStorage: (
     key: string,
     value: any,

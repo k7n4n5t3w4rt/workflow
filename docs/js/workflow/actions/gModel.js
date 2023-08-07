@@ -6,6 +6,7 @@ import easyStorage from "./easyStorage.js";
 import isParsable from "./isParsable.js";
 import readEasyStore from "./readEasyStore.js";
 import readLocalStore from "./readLocalStore.js";
+import readSidFromLocalStore from "./readSidFromLocalStore.js";
 //------------------------------------------------------------------------------
 // gModel() - Needs to use the `function` keyword so we can do `new gModel()`
 //------------------------------------------------------------------------------
@@ -19,6 +20,42 @@ function gModel() /*: void */ {
   //---------------------------------------------------------------------------
   this.setSid = (sid /*: string */) /*: () => GlobalModel */ => {
     this.sid = sid;
+    try {
+      localStorage.setItem("sid", sid);
+    } catch (e) {}
+    return this;
+  };
+  //---------------------------------------------------------------------------
+  // setSidButNotInLocalStore()
+  //---------------------------------------------------------------------------
+  this.setSidButNotInLocalStore = (
+    sid /*: string */,
+  ) /*: () => GlobalModel */ => {
+    this.sid = sid;
+    return this;
+  };
+  //---------------------------------------------------------------------------
+  // setSidIfNotInLocalStore()
+  //---------------------------------------------------------------------------
+  this.setSidIfNotInLocalStore = (
+    sid /*: string */,
+  ) /*: () => GlobalModel */ => {
+    let storedSid = "NOT SET";
+    try {
+      storedSid = readSidFromLocalStore();
+    } catch (e) {}
+    if (
+      storedSid !== null &&
+      storedSid !== undefined &&
+      storedSid !== "NOT SET"
+    ) {
+      this.sid = storedSid;
+    } else {
+      this.sid = sid;
+      try {
+        localStorage.setItem("sid", sid);
+      } catch (e) {}
+    }
     return this;
   };
   //---------------------------------------------------------------------------

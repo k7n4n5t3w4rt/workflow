@@ -48,7 +48,8 @@ export const updateMetricsOnClickInterval = (
       const tmBox = gSttngs().get("timeBox");
       const thrPutPerDay = gState().get("thrPtQueue").dailyMean();
       const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
-      const thrPut = thrPutExpPerDay * tmBox + thrPutPerDay * tmBox;
+      const thrPut =
+        Math.round(thrPutExpPerDay * tmBox + thrPutPerDay * tmBox * 100) / 100;
       const flwTimeAtStart = calculateFlwTimeAtStart();
       const flwTimeMax = calculateFlwTimeMax();
       const totalWipAtStart = calculateTotalWipLimits();

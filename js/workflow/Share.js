@@ -23,6 +23,12 @@ type Props = {
 */
 export const Share = (props /*: Props */) /*: string */ => {
   const [settings, setSettings] = useState(gSttngs().keyValuePairs);
+  useEffect(() => {
+    window.location.href = `/?sid=${gSttngs().sid}&share=${btoa(
+      JSON.stringify(settings),
+    )}`; // Redirects to the specified URL
+  }, []); // Empty dependency array ensures this runs once after initial render
+
   return html`HERE: ${btoa(JSON.stringify(settings))} `;
   //${settings.map((setting /*: any  */) /*: void */ => {})}
 };

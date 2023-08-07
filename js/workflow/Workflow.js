@@ -42,6 +42,7 @@ import {
 
 /*::
 type Props = {
+	sid?: string,
 	share?: string,
 }
 */
@@ -54,7 +55,7 @@ export default (props /*: Props */) /*: string */ => {
     init();
   }, []);
   useEffect(() => {
-    loadSharedSettings(props.share)();
+    loadSharedSettings(props.sid, props.share)();
   }, [props.share]);
 
   return html`
@@ -70,11 +71,16 @@ export default (props /*: Props */) /*: string */ => {
 // loadSharedSettings()
 //------------------------------------------------------------------
 const loadSharedSettings =
-  (share /*: string | typeof undefined */) /*: () => void */ =>
+  (
+    sid /*: string | typeof undefined */,
+    share /*: string | typeof undefined */,
+  ) /*: () => void */ =>
   () /*: void */ => {
-    const steps = gSttngs().get("steps");
-    if (steps !== undefined) {
-      if (share !== undefined) {
+    // This is a random asynchronous setting to check
+    const death = gSttngs().get("death");
+    if (death !== undefined) {
+      if (sid !== undefined && share !== undefined) {
+        gSttngs().setSid(sid);
         const keyValuePairs = JSON.parse(atob(share));
         Object.keys(keyValuePairs).forEach((key /*: string */) /*: void */ => {
           console.log(key, keyValuePairs[key]);
@@ -82,7 +88,7 @@ const loadSharedSettings =
         });
       }
     } else {
-      setTimeout(loadSharedSettings(share), 1000);
+      setTimeout(loadSharedSettings(sid, share), 1000);
     }
   };
 //------------------------------------------------------------------
