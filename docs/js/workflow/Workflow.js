@@ -42,11 +42,7 @@ import {
 
 /*::
 type Props = {
-	fps?: string,
-	scalecm?: string,
-	stepcm?: string,
-  devunits?: string,
-  devstreams?: string,
+	share?: string,
 }
 */
 export default (props /*: Props */) /*: string */ => {
@@ -57,6 +53,9 @@ export default (props /*: Props */) /*: string */ => {
     let stats = createStats();
     init();
   }, []);
+  useEffect(() => {
+    loadSharedSettings(props.share)();
+  }, [props.share]);
 
   return html`
     <div id="flw" className="${styles.flw}">
@@ -67,7 +66,25 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
-
+//------------------------------------------------------------------
+// loadSharedSettings()
+//------------------------------------------------------------------
+const loadSharedSettings =
+  (share /*: string | typeof undefined */) /*: () => void */ =>
+  () /*: void */ => {
+    const steps = gSttngs().get("steps");
+    if (steps !== undefined) {
+      if (share !== undefined) {
+        const keyValuePairs = JSON.parse(atob(share));
+        Object.keys(keyValuePairs).forEach((key /*: string */) /*: void */ => {
+          console.log(key, keyValuePairs[key]);
+          gSttngs().set(key, keyValuePairs[key]);
+        });
+      }
+    } else {
+      setTimeout(loadSharedSettings(share), 1000);
+    }
+  };
 //------------------------------------------------------------------
 // cssStyles()
 //------------------------------------------------------------------

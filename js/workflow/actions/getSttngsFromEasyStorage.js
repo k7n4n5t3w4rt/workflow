@@ -58,24 +58,15 @@ const getSttngsFromEasyStorage = () => {
             // Use the value from Easy if the timestamp is newer
             if (eSTimestamp > lSTimestamp) {
               gSttngs().set(key, eSValue);
-              // And set localStorage
-              if (typeof eSValue !== "string") {
-                eSValue = JSON.stringify(eSValue);
-              }
-              try {
-                localStorage.setItem(
-                  key,
-                  eSValue + "___" + eSTimestamp.toString(),
-                );
-              } catch (e) {}
             }
             // Use the value from local storage if the timestamp is the
             // same or newer
             if (lSTimestamp >= eSTimestamp) {
-              gSttngs().set(key, lSValue);
-              // And set localStorage
-              if (typeof lSValue !== "string") {
-                lSValue = JSON.stringify(lSValue);
+              if (lSTimestamp === 0) {
+                gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage(
+                  key,
+                  lSValue,
+                );
               }
             }
           });
