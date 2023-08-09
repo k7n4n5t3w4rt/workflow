@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "../actions/gState.js";
-import gSttngs from "../actions/gSttngs.js";
+import gState from "./actions/gState.js";
+import gSttngs from "./actions/gSttngs.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -11,35 +11,34 @@ import {
   useEffect,
   useState,
   useReducer,
-} from "../../../web_modules/preact/hooks.js";
-import { html } from "../../../web_modules/htm/preact.js";
-import ArrivalRate from "./ArrivalRate.js";
-import FlwTimeMin from "./FlwTimeMin.js";
-import FlwTimeMax from "./FlwTimeMax.js";
-import DevUnits from "./DevUnits.js";
-import DevPowerFix from "./DevPowerFix.js";
-import AutoMode from "./AutoMode.js";
-import ShowMetrics from "./ShowMetrics.js";
-import Debug from "./Debug.js";
-import TimeBox from "./TimeBox.js";
-import Death from "./Death.js";
-import BacklogDeath from "./BacklogDeath.js";
-import DfntnOfReady from "./DfntnOfReady.js";
-import Fps from "./Fps.js";
-import ExpdtQueueLength from "./ExpdtQueueLength.js";
-import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
-import ScaleCm from "./ScaleCm.js";
+} from "../../web_modules/preact/hooks.js";
+import { html } from "../../web_modules/htm/preact.js";
+import ArrivalRate from "./WorkflowSettings/ArrivalRate.js";
+import FlwTimeMin from "./WorkflowSettings/FlwTimeMin.js";
+import FlwTimeMax from "./WorkflowSettings/FlwTimeMax.js";
+import DevUnits from "./WorkflowSettings/DevUnits.js";
+import DevPowerFix from "./WorkflowSettings/DevPowerFix.js";
+import AutoMode from "./WorkflowSettings/AutoMode.js";
+import ShowMetrics from "./WorkflowSettings/ShowMetrics.js";
+import Debug from "./WorkflowSettings/Debug.js";
+import TimeBox from "./WorkflowSettings/TimeBox.js";
+import Death from "./WorkflowSettings/Death.js";
+import BacklogDeath from "./WorkflowSettings/BacklogDeath.js";
+import DfntnOfReady from "./WorkflowSettings/DfntnOfReady.js";
+import Fps from "./WorkflowSettings/Fps.js";
+import ExpdtQueueLength from "./WorkflowSettings/ExpdtQueueLength.js";
+import ExpdtDvUnitsFactor from "./WorkflowSettings/ExpdtDvUnitsFactor.js";
+import ScaleCm from "./WorkflowSettings/ScaleCm.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { rawStyles } from "../../../web_modules/simplestyle-js.js";
-import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
+import { rawStyles } from "../../web_modules/simplestyle-js.js";
 import cssStyles from "./cssStylesParams.js";
-import getRawStyles from "./getRawStyles.js";
-import setStateFunctionsStore from "./setStateFunctionsStore.js";
-import changeSetting from "./changeSetting.js";
-import isParsable from "../actions/isParsable.js";
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import getRawStyles from "./WorkflowSettings/getRawStyles.js";
+// import setStateFunctionsStore from "./setStateFunctionsStore.js";
+import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
+import isParsable from "./actions/isParsable.js";
+import setUpdtngCnfg from "./WorkflowSettings/setUpdtngCnfg.js";
 
 /*::
 type Props = {
@@ -49,18 +48,18 @@ export default (props /*: Props */) /*: string */ => {
   // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
-  // A toggle to show or hide the settings
+  // A toggle to show or hide the params
   const [paramsToggle, setParamsToggle] = useState(false);
   const [steps, setSteps] = useState([]);
-  // Hide or show the settings divs when the toggle changes
-  // useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
-  // The function that toggles the settings by setting the toggle
+  // Hide or show the params divs when the toggle changes
+  useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
+  // The function that toggles the params by setting the toggle
   // to whatever it isn't
   const toggleParams = () => {
     setParamsToggle(!paramsToggle);
   };
-  // A local state to hold the settings
-  const [lState, setStateFunctions] = setStateFunctionsStore(useState);
+  // A local state to hold the params
+  // const [lState, setStateFunctions] = setStateFunctionsStore(useState);
   // Once, on load, update the local state from the global state
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
 
@@ -82,6 +81,14 @@ export default (props /*: Props */) /*: string */ => {
     };
 
   return html`
+    <div
+      id="params-close-icon"
+      className="${styles.paramsClose}"
+      onClick="${toggleParams}"
+    >
+      <span className="material-icons ${styles.paramsIcon}"> close </span>
+    </div>
+
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
         <!------------------------------------------------------------------>
@@ -130,6 +137,13 @@ export default (props /*: Props */) /*: string */ => {
           },
         )}
       </fieldset>
+    </div>
+    <div
+      id="params-icon"
+      className="${styles.params}"
+      onClick="${toggleParams}"
+    >
+      <span className="material-icons ${styles.paramsIcon}"> settings </span>
     </div>
   `;
 };

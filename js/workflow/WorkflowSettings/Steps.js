@@ -35,8 +35,8 @@ import ScaleCm from "./ScaleCm.js";
 //------------------------------------------------------------------
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
 import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
-import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
-import cssStyles from "./cssStylesParams.js";
+// import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
+import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
@@ -55,7 +55,7 @@ export default (props /*: Props */) /*: string */ => {
   const [paramsToggle, setParamsToggle] = useState(false);
   const [steps, setSteps] = useState([]);
   // Hide or show the settings divs when the toggle changes
-  useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
+  // useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
   // The function that toggles the settings by setting the toggle
   // to whatever it isn't
   const toggleParams = () => {

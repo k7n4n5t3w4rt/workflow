@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import seedString from "../../simple_css_seed.js";
-import { createStyles, setSeed } from "../../../web_modules/simplestyle-js.js";
+import seedString from "../simple_css_seed.js";
+import { createStyles, setSeed } from "../../web_modules/simplestyle-js.js";
 
 //------------------------------------------------------------------
 // FUNCTION: cssStylesSettings()

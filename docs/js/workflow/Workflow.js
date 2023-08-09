@@ -25,6 +25,7 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 import Metrics from "./WorkflowMetrics/Metrics.js";
 import Share from "./Share.js";
+import Params from "./Params.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -63,6 +64,7 @@ export default (props /*: Props */) /*: string */ => {
         <div id="console-ui"></div>
         <${Metrics} />
         <${Share} />
+        <${Params} />
       </div>
     </div>
   `;
