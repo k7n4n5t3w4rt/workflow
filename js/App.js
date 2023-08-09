@@ -6,7 +6,6 @@ import { AppProvider } from "./AppContext.js";
 import Wrkflw from "./workflow/Workflow.js";
 import Settings from "./workflow/WorkflowSettings/Settings.js";
 import Params from "./workflow/WorkflowSettings/Params.js";
-import Share from "./workflow/Share.js";
 // import registerServiceWorker from "./registerServiceWorker.js";
 const finishCounter = {
   ALGORITHMS: [],
@@ -26,7 +25,6 @@ const App /*: function */ = (props /*: Props */) => {
       	<${Wrkflw} path="/" />
       	<${Settings} path="/settings" />
       	<${Params} path="/params" />
-      	<${Share} path="/share" />
       </${Router}>
     </${AppProvider} >
   `;

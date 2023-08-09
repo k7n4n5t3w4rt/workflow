@@ -126,20 +126,14 @@ function gModel() /*: void */ {
     let eSTimestamp /*: number */ = 0;
     let lSValue /*: any */ = "NOT SET";
     let lSTimestamp /*: number */ = 0;
-    ({ eSTimestamp, eSValue } = await readEasyStore(
-      this.sid,
-      eSTimestamp,
-      eSValue,
-      key,
-    ));
+    const eSTmStmpVl = await readEasyStore(this.sid, eSTimestamp, eSValue, key);
+    eSTimestamp = eSTmStmpVl.eSTimestamp;
+    eSValue = eSTmStmpVl.eSValue;
     ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
     // The value of eSTimestamp and lSTimestamp will be 0 if they don't
     // exist in either of the caches.
     // Use the value from Easy if the timestamp is newer
     if (eSTimestamp > lSTimestamp) {
-      if (key === "autoMode") {
-        console.log("eSTimestamp is > lSTimestamp");
-      }
       this.keyValuePairs[key] = eSValue;
       // And set localStorage
       if (typeof eSValue !== "string") {
@@ -151,15 +145,17 @@ function gModel() /*: void */ {
     }
     // Use the value from local storage if the timestamp is newer
     if (lSTimestamp > eSTimestamp) {
-      if (key === "arrivalRate") {
-        console.log("lSTimestamp is > eSTimestamp");
-      }
       this.keyValuePairs[key] = lSValue;
+      value = lSValue;
       // And set localStorage
-      if (typeof lSValue !== "string") {
-        value = JSON.stringify(lSValue);
+      if (typeof value !== "string") {
+        value = JSON.stringify(value);
       }
       easyStorage.set(this.sid, key, value + "___" + lSTimestamp.toString());
+    }
+    // Use the local store value if the timestamps are the same
+    if (lSTimestamp === eSTimestamp) {
+      this.keyValuePairs[key] = lSValue;
     }
     // If nothing was cached, use the value provided and set both caches
     if (lSTimestamp === 0 && eSTimestamp === 0) {

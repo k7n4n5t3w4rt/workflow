@@ -62,12 +62,10 @@ const getSttngsFromEasyStorage = () => {
             // Use the value from local storage if the timestamp is the
             // same or newer
             if (lSTimestamp >= eSTimestamp) {
-              if (lSTimestamp === 0) {
-                gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage(
-                  key,
-                  lSValue,
-                );
-              }
+              gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage(
+                key,
+                lSValue,
+              );
             }
           });
           //------------------------------------------------------------------
