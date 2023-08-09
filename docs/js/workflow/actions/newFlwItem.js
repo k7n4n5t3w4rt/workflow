@@ -20,6 +20,7 @@ import calculateWaitSteps from "./calculateWaitSteps.js";
 import calculateValueForScale from "./calculateValueForScale.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
 
 export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
@@ -97,12 +98,17 @@ const mapIt = (
 // setScaleAndValue()
 //------------------------------------------------------------------
 const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
-  // Some shorthand
+  const flwTimeAtStart = calculateFlwTimeAtStart();
   const daysMax = calculateFlwTimeMax();
-  flwItem.dDysTotal = rndmBetween(
-    gSttngs().get("flwTimeMin"),
-    calculateFlwTimeMax(),
-  );
+  let daysMin = gSttngs().get("flwTimeMin");
+  if (daysMin > flwTimeAtStart) {
+    // A safety check in case the user has set flwTimeMin to a value that is
+    // higher than flwTimeAtStart as it is calculated based on the flwTime
+    // settings for each step.
+    // NOTE: In this case, daysMax will also be flwTimeAtStart
+    daysMin = flwTimeAtStart;
+  }
+  flwItem.dDysTotal = rndmBetween(daysMin, daysMax);
   const daysTotal = flwItem.dDysTotal;
   // This will be the scale and value if the flwItmSizeLimit is not set
   let scale = daysTotal / daysMax;
