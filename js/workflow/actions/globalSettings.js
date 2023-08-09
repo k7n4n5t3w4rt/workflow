@@ -33,7 +33,7 @@ export default () /*: void */ => {
   // The drag that kicks in when the ratio of dev units to WIP is 1:2
   gSttngs().setIfNotCached("drag", 0.5);
   // Q: What is the shortest flow time?
-  gSttngs().setIfNotCached("flwTimeMin", 10); // Max. flow time is dynamic
+  gSttngs().setIfNotCached("flwTimeMin", 1); // Max. flow time is dynamic
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have

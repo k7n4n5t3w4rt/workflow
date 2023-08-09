@@ -37,7 +37,7 @@ export default (
       const stepFlwTime =
         gSttngs().get("steps")[flwItem.dStpIndex].flwTimeAtStart;
       const totalFlwTime = calculateFlwTimeAtStart();
-      const flwTimeRatio = 1 - stepFlwTime / totalFlwTime;
+      const flwTimeRatio = stepFlwTime / totalFlwTime;
       const devPower = calculateDevPower() * flwTimeRatio;
       // The `devPowerFactor` is 1.2 for a 1:1 ratio, and 0.8 for a 10:1 ratio.
       const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
