@@ -30,8 +30,4 @@ export default (
       gSttngs().set(setting, value);
     }
     setStateFunctions[setting](value);
-    // calculateFlwTimeMax();
-    // touchStepsCount();
-    // calculateDevUnits();
-    // calculateDevPower();
   };

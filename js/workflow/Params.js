@@ -13,44 +13,39 @@ import {
   useReducer,
 } from "../../web_modules/preact/hooks.js";
 import { html } from "../../web_modules/htm/preact.js";
-import ArrivalRate from "./WorkflowSettings/ArrivalRate.js";
-import FlwTimeMin from "./WorkflowSettings/FlwTimeMin.js";
-import FlwTimeMax from "./WorkflowSettings/FlwTimeMax.js";
-import DevUnits from "./WorkflowSettings/DevUnits.js";
-import DevPowerFix from "./WorkflowSettings/DevPowerFix.js";
 import AutoMode from "./WorkflowSettings/AutoMode.js";
-import ShowMetrics from "./WorkflowSettings/ShowMetrics.js";
-import Debug from "./WorkflowSettings/Debug.js";
-import TimeBox from "./WorkflowSettings/TimeBox.js";
-import Death from "./WorkflowSettings/Death.js";
-import BacklogDeath from "./WorkflowSettings/BacklogDeath.js";
-import DfntnOfReady from "./WorkflowSettings/DfntnOfReady.js";
 import Fps from "./WorkflowSettings/Fps.js";
-import ExpdtQueueLength from "./WorkflowSettings/ExpdtQueueLength.js";
-import ExpdtDvUnitsFactor from "./WorkflowSettings/ExpdtDvUnitsFactor.js";
 import ScaleCm from "./WorkflowSettings/ScaleCm.js";
+import Sid from "./WorkflowSettings/Sid.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "../../web_modules/simplestyle-js.js";
-import cssStyles from "./cssStylesParams.js";
+import cssStyles from "./WorkflowSettings/cssStylesParams.js";
 import getRawStyles from "./WorkflowSettings/getRawStyles.js";
-// import setStateFunctionsStore from "./setStateFunctionsStore.js";
-import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
+import setStateParamsFunctionsStore from "./WorkflowSettings/setStateParamsFunctionsStore.js";
+import hideOrShowParamsDivs from "./WorkflowSettings/hideOrShowParamsDivs.js";
 import isParsable from "./actions/isParsable.js";
 import setUpdtngCnfg from "./WorkflowSettings/setUpdtngCnfg.js";
-
+import changeSetting from "./WorkflowSettings/changeSetting.js";
+import changeSid from "./WorkflowSettings/changeSid.js";
+import updateLocalStateFromGlobalState from "./WorkflowSettings/updateLocalParamsStateFromGlobalState.js";
+//------------------------------------------------------------------
+// Params
+//------------------------------------------------------------------
 /*::
 type Props = {
 }
 */
-export default (props /*: Props */) /*: string */ => {
+export const Params = (props /*: Props */) /*: string */ => {
   // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
   // A toggle to show or hide the params
   const [paramsToggle, setParamsToggle] = useState(false);
+  // A local state to hold the params
   const [steps, setSteps] = useState([]);
+  const [lState, setStateFunctions] = setStateParamsFunctionsStore(useState);
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
   // The function that toggles the params by setting the toggle
@@ -58,27 +53,9 @@ export default (props /*: Props */) /*: string */ => {
   const toggleParams = () => {
     setParamsToggle(!paramsToggle);
   };
-  // A local state to hold the params
-  // const [lState, setStateFunctions] = setStateFunctionsStore(useState);
   // Once, on load, update the local state from the global state
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
-
-  const changeStepMovingLimit =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.movingLimit = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
+  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
 
   return html`
     <div
@@ -91,6 +68,23 @@ export default (props /*: Props */) /*: string */ => {
 
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
+        <!-------------------------------------------------------------------->
+        <!-- Auto Mode -->
+        <!-------------------------------------------------------------------->
+        <${AutoMode}
+          autoMode=${lState.autoMode}
+          styles=${styles}
+          changeSetting=${changeSetting("autoMode", setStateFunctions)}
+        />
+        <!------------------------------------------------------------------>
+        <!-- SID -->
+        <!------------------------------------------------------------------>
+        <${Sid}
+          sid=${lState.sid}
+          styles=${styles}
+          changeSid=${changeSid(setStateFunctions)}
+        />
+
         <!------------------------------------------------------------------>
         <!-- Params -->
         <!------------------------------------------------------------------>
@@ -147,7 +141,29 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
-
+export default Params;
+//------------------------------------------------------------------
+// changeStepMovingLimit()
+//------------------------------------------------------------------
+const changeStepMovingLimit =
+  (
+    setSteps /*: (any) => void */,
+    index /*: number */,
+  ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+  (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+    let value = e.target.value;
+    if (isParsable(value)) {
+      value = JSON.parse(value);
+    }
+    const steps = [...gSttngs().get("steps")];
+    const step = steps[index];
+    step.movingLimit = value;
+    gSttngs().set("steps", steps);
+    setSteps(steps);
+  };
+//------------------------------------------------------------------
+// updateStepsStateFromGlobalState()
+//------------------------------------------------------------------
 const updateStepsStateFromGlobalState =
   (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
     setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
