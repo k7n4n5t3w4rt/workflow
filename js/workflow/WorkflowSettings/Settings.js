@@ -36,6 +36,7 @@ import RangeMax from "./RangeMax.js";
 import RangeIncreaseRate from "./RangeIncreaseRate.js";
 import RangeMidpoint from "./RangeMidpoint.js";
 import Steps from "./Steps.js";
+import NumberOfSteps from "./NumberOfSteps.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -262,7 +263,14 @@ export default (props /*: Props */) /*: string */ => {
           flwItmSizeLimit=${lState.flwItmSizeLimit}
           changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
         />
-        <${Steps} />
+        <!-------------------------------------------------------------------->
+        <!-- NumberOfSteps -->
+        <!-------------------------------------------------------------------->
+        <${NumberOfSteps}
+          numberOfSteps=${lState.numberOfSteps}
+          changeSetting=${changeSetting("numberOfSteps", setStateFunctions)}
+        />
+        <${Steps} numberOfSteps=${lState.numberOfSteps} />
       </fieldset>
     </div>
   `;

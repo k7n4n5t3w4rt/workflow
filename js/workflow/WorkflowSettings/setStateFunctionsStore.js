@@ -56,6 +56,9 @@ export default (
   const [paretoPoint, setParetoPoint] = useState(0);
   setStateFunctions["paretoPoint"] = setParetoPoint;
   lState["paretoPoint"] = paretoPoint;
+  const [numberOfSteps, setNumberOfSteps] = useState(4);
+  setStateFunctions["numberOfSteps"] = setNumberOfSteps;
+  lState["numberOfSteps"] = numberOfSteps;
   const [timeBox, setTimeBox] = useState(10);
   setStateFunctions["timeBox"] = setTimeBox;
   lState["timeBox"] = timeBox;

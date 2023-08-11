@@ -18,7 +18,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="death">Death:</label>
       <output id="deathOutput" name="deathOutput" for="death"
-        >${props.death.toString()}</output
+        >${(props.death || 0).toString()}</output
       >
       <input
         type="range"
@@ -28,7 +28,7 @@ export default (props /*: Props */) /*: string */ => {
         max="500"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.death.toString()}"
+        value="${(props.death || 0).toString()}"
       />
     </div>
   `;

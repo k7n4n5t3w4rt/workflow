@@ -23,7 +23,7 @@ export default (props /*: Props */) /*: string */ => {
         id="sid"
         name="sid"
         onInput=${props.changeSid}
-        value="${props.sid.toString()}"
+        value="${(props.sid || 0).toString()}"
         onFocus=${setUpdtngCnfg(true)}
         onBlur=${setUpdtngCnfg(false)}
       />

@@ -12,13 +12,15 @@ import calculateEndPositionZ from "./calculateEndPositionZ.js";
 //------------------------------------------------------------------
 // resizeVSphere()
 //------------------------------------------------------------------
-export default () => {
-  if (gState().get("vQueue").total === 0) {
+export const resizeVSphere = () => {
+  const total = gState().get("vQueue").total();
+  if (total === 0) {
     return;
   }
   animateScale();
   animatePosition();
 };
+export default resizeVSphere;
 //------------------------------------------------------------------
 // aniatePosition()
 //------------------------------------------------------------------
@@ -56,15 +58,18 @@ export const animatePosition = () => {
 // aniateScale()
 //------------------------------------------------------------------
 export const animateScale = () => {
+  const scale = gSttngs().get("scale") || 0.07;
+  const dRadius = gState().get("vSphere").dRadius || scale;
+  const total = gState().get("vQueue").total();
   // Create an object with a scale property that can be animated.
-  let scaleObject = { scale: gState().get("vSphere").dRadius };
-  const valueScaled = gState().get("vQueue").total() / 100;
+  let scaleObject = { scale: dRadius };
+  const valueScaled = (total * scale) / 10;
   const newRadius = valueScaled / 1.5;
   // The radius used to be based on volume:
-  // const newRadius = findRadius(gState().get("vQueue").total() / 1000 / 3);
   gState().get("vSphere").dRadius = newRadius;
 
-  if (!gState().get("vSphere").dMoving) {
+  const dMoving = gState().get("vSphere").dMoving;
+  if (dMoving === false) {
     gState().get("vSphere").dMoving = true;
 
     // Create an animation that transitions the scale from 1.0 to 2.0 over 2 seconds.

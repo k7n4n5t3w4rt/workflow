@@ -12,13 +12,10 @@ import gState from "./gState.js";
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group
   const clckCbGroup = new THREE.Group();
-
-  const geometry = new THREE.BoxGeometry(
-    gSttngs().get("x"),
-    gSttngs().get("y"),
-    gSttngs().get("z"),
-  );
-
+  const x = gSttngs().get("x");
+  const y = gSttngs().get("y");
+  const z = gSttngs().get("z");
+  const geometry = new THREE.BoxGeometry(x, y, z);
   const material = new THREE.MeshLambertMaterial({
     color: `rgb(135,206,235)`,
   });
@@ -32,6 +29,5 @@ export default () /*: Object */ => {
   clckCbGroup.add(cube);
   // ..also add the cube to the group object so we can access it later
   clckCbGroup.clckCube = cube;
-
   return clckCbGroup;
 };

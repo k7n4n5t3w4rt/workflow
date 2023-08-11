@@ -21,7 +21,7 @@ export default (props /*: Props */) /*: string */ => {
         id="expdtQueueLengthOutput"
         name="expdtQueueLengthOutput"
         for="expdtQueueLength"
-        >${props.expdtQueueLength.toString()}</output
+        >${(props.expdtQueueLength || 0).toString()}</output
       >
       <input
         type="range"
@@ -31,7 +31,7 @@ export default (props /*: Props */) /*: string */ => {
         max="20"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.expdtQueueLength.toString()}"
+        value="${(props.expdtQueueLength || 0).toString()}"
       />
     </div>
   `;

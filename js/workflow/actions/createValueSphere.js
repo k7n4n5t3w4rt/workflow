@@ -11,13 +11,9 @@ import newVSphere from "./newVSphere.js";
 //------------------------------------------------------------------
 // createValueSphere()
 //------------------------------------------------------------------
-export const createValueSphere = async () => {
+export const createValueSphere = async () /*: Promise<void> */ => {
   // Create the valueSphere
   gState().set("vSphere", await newVSphere());
-  // What is this doing in here?
-  // gSttngs().set("vSphereX", gState().get("endPosition").x);
-  // gSttngs().set("vSphereY", gState().get("endPosition").y);
-  // gSttngs().set("vSphereZ", gState().get("endPosition").z);
   gState().get("vSphere").dRllngTtlVolume = 0;
   gState().get("vSphere").dRadius = gSttngs().get("scale");
   gState().get("vSphere").position.x = gState().get("endPosition").x;

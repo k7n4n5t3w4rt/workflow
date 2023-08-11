@@ -21,7 +21,7 @@ export default (props /*: Props */) /*: string */ => {
         id="flwItmSizeLimitOutput"
         name="flwItmSizeLimitOutput"
         for="flwItmSizeLimit"
-        >${props.flwItmSizeLimit.toString()}</output
+        >${(props.flwItmSizeLimit || 0).toString()}</output
       >
       <input
         type="range"
@@ -31,7 +31,7 @@ export default (props /*: Props */) /*: string */ => {
         max="1"
         step="0.1"
         onChange=${props.changeSetting}
-        value="${props.flwItmSizeLimit.toString()}"
+        value="${(props.flwItmSizeLimit || 0).toString()}"
       />
     </div>
   `;

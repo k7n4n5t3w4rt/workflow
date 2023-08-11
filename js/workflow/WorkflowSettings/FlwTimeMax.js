@@ -18,7 +18,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="flwTimeMax">Flow Time Max.:</label>
       <output id="flwTimeMaxOutput" name="flwTimeMaxOutput" for="flwTimeMax"
-        >${props.flwTimeMax.toString()}</output
+        >${(props.flwTimeMax || 0).toString()}</output
       >
       <input
         type="range"
@@ -28,7 +28,7 @@ export default (props /*: Props */) /*: string */ => {
         max="400"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.flwTimeMax.toString()}"
+        value="${(props.flwTimeMax || 0).toString()}"
       />
     </div>
   `;

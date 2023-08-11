@@ -33,7 +33,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="arrivalRate">Arrival Rate:</label>
       <output id="arrivalRateOutput" name="arrivalRateOutput" for="arrivalRate"
-        >${props.arrivalRate.toString()}</output
+        >${(props.arrivalRate || 0).toString()}</output
       >
       <input
         type="range"
@@ -43,7 +43,7 @@ export default (props /*: Props */) /*: string */ => {
         max="100"
         step=".25"
         onChange=${props.changeSetting}
-        value="${props.arrivalRate.toString()}"
+        value="${(props.arrivalRate || 0).toString()}"
       />
     </div>
   `;

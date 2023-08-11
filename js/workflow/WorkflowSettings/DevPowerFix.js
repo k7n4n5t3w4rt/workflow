@@ -18,7 +18,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="devPowerFix">Dev Power Fix:</label>
       <output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix"
-        >${props.devPowerFix.toString()}</output
+        >${(props.devPowerFix || 1).toString()}</output
       >
       <input
         type="range"
@@ -28,7 +28,7 @@ export default (props /*: Props */) /*: string */ => {
         max="5"
         step="0.01"
         onChange=${props.changeSetting}
-        value="${props.devPowerFix.toString()}"
+        value="${(props.devPowerFix || 1).toString()}"
       />
     </div>
   `;

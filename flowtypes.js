@@ -47,6 +47,7 @@ type GlobalSettings = {
     flwTimeMax: number,
     flwItmSizeLimit: 1,
     steps: Array<FlwStep>,
+    numberOfSteps: number,
     fps: number,
     rangeMidpoint: number,
     rangeIncreaseRate: number,
@@ -69,10 +70,9 @@ type FlwStep = {
   name: string,
   status: "open" | "wait" | "touch" | "external" | "done",
   limit: number,
-  movingLimit: number,
-  devPowerFactor: number,
-  devUnits: number,
-  flwTimeAtStart: number,
+  movingLimit: number | typeof undefined,
+  devUnits: number | typeof undefined,
+  flwTimeAtStart: number | typeof undefined,
 };
 
 //------------------------------------------------------------------

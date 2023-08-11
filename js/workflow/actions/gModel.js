@@ -40,14 +40,14 @@ function gModel() /*: void */ {
   this.setSidIfNotInLocalStore = (
     sid /*: string */,
   ) /*: () => GlobalModel */ => {
-    let storedSid = "NOT SET";
+    let storedSid = "NOT SET 3";
     try {
       storedSid = readSidFromLocalStore();
     } catch (e) {}
     if (
       storedSid !== null &&
       storedSid !== undefined &&
-      storedSid !== "NOT SET"
+      storedSid !== "NOT SET 3"
     ) {
       this.sid = storedSid;
     } else {
@@ -81,31 +81,29 @@ function gModel() /*: void */ {
   //------------------------------------------------------------------------------
   // set()
   //------------------------------------------------------------------------------
-  this.set = (
-    key /*: string */,
-    value /*: any  */,
-  ) /*: () => GlobalModel */ => {
+  this.set = (key /*: string */, value /*: any  */) /*: any */ => {
     // Set the gSttngs()/gState() object
     this.keyValuePairs[key] = value;
     // Set localStorage and easyStorage cache
     // For easyStorage, we're ignoring gState() for now
     if (this.sid === "workflowState") {
-      return this;
+      return value;
     }
     // Because localStorage and easyStoryage can only store strings,
     // we need to stringify. But we don't want to stringify strings.
+    const valueValue = value;
     if (typeof value !== "string") {
       value = JSON.stringify(value);
     }
     // Add the timestamp so we can tell later which is newer
-    value += "___" + Date.now().toString();
+    const valueWithTimestamp = value + "___" + Date.now().toString();
     try {
       // Set localStorage
-      localStorage.setItem(key, value);
+      localStorage.setItem(key, valueWithTimestamp);
     } catch (e) {}
     // Set easyStorage
-    easyStorage.set(this.sid, key, value);
-    return this;
+    easyStorage.set(this.sid, key, valueWithTimestamp);
+    return valueValue;
   };
   //---------------------------------------------------------------------------
   // setIfNotCached()
@@ -114,17 +112,15 @@ function gModel() /*: void */ {
   this.setIfNotCached = async (
     key /*: string */,
     value /*: any  */,
-  ) /*: Promise<GlobalModel> */ => {
-    // First, set a value. This will be overwritten if it is in the cache.
-    this.keyValuePairs[key] = value;
+  ) /*: Promise<any> */ => {
     // Ignore gState() - in case this function is called from `globalState()`
     if (this.sid === "workflowState") {
-      return this;
+      return value;
     }
     // So that we can tell, in the functions below, which is newer
-    let eSValue /*: any */ = "NOT SET";
+    let eSValue /*: any */ = "NOT SET 4";
     let eSTimestamp /*: number */ = 0;
-    let lSValue /*: any */ = "NOT SET";
+    let lSValue /*: any */ = "NOT SET 5";
     let lSTimestamp /*: number */ = 0;
     const eSTmStmpVl = await readEasyStore(this.sid, eSTimestamp, eSValue, key);
     eSTimestamp = eSTmStmpVl.eSTimestamp;
@@ -133,6 +129,9 @@ function gModel() /*: void */ {
     // The value of eSTimestamp and lSTimestamp will be 0 if they don't
     // exist in either of the caches.
     // Use the value from Easy if the timestamp is newer
+    if (key === "steps") {
+      console.log("eSTimestamp", eSTimestamp);
+    }
     if (eSTimestamp > lSTimestamp) {
       this.keyValuePairs[key] = eSValue;
       // And set localStorage
@@ -142,6 +141,10 @@ function gModel() /*: void */ {
       try {
         localStorage.setItem(key, value + "___" + eSTimestamp.toString());
       } catch (e) {}
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      return value;
     }
     // Use the value from local storage if the timestamp is newer
     if (lSTimestamp > eSTimestamp) {
@@ -152,10 +155,18 @@ function gModel() /*: void */ {
         value = JSON.stringify(value);
       }
       easyStorage.set(this.sid, key, value + "___" + lSTimestamp.toString());
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      return value;
     }
     // Use the local store value if the timestamps are the same
-    if (lSTimestamp === eSTimestamp) {
+    if (eSTimestamp > 0 && lSTimestamp > 0 && lSTimestamp === eSTimestamp) {
       this.keyValuePairs[key] = lSValue;
+      if (isParsable(lSValue)) {
+        lSValue = JSON.parse(lSValue);
+      }
+      return lSValue;
     }
     // If nothing was cached, use the value provided and set both caches
     if (lSTimestamp === 0 && eSTimestamp === 0) {
@@ -171,22 +182,26 @@ function gModel() /*: void */ {
       try {
         localStorage.setItem(key, value + "___" + timestamp);
       } catch (e) {}
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      return value;
     }
-    return this;
+    if (isParsable(value)) {
+      value = JSON.parse(value);
+    }
+    return value;
   };
   //---------------------------------------------------------------------------
   // setNoCache()
   //---------------------------------------------------------------------------
-  this.setNoCache = (
-    key /*: string */,
-    value /*: any  */,
-  ) /*: () => GlobalModel */ => {
+  this.setNoCache = (key /*: string */, value /*: any  */) /*: any */ => {
     this.keyValuePairs[key] = value;
     // Ignore gState() - in case this function is called from `globalState()`
     if (this.sid === "workflowState") {
-      return this;
+      return value;
     }
-    let lSValue /*: any */ = "NOT SET";
+    let lSValue /*: any */ = "NOT SET 1";
     let lSTimestamp /*: number */ = 0;
     ({ lSTimestamp, lSValue } = readLocalStore(
       lSValue,
@@ -200,7 +215,10 @@ function gModel() /*: void */ {
     try {
       localStorage.setItem(key, value + "___" + Date.now().toString());
     } catch (e) {}
-    return this;
+    if (isParsable(value)) {
+      value = JSON.parse(value);
+    }
+    return value;
   };
   //---------------------------------------------------------------------------
   // setNoCacheIfNotInLocalStorageAddToLocalStorage()
@@ -208,16 +226,16 @@ function gModel() /*: void */ {
   this.setNoCacheIfNotInLocalStorageAddToLocalStorage = (
     key /*: string */,
     value /*: any  */,
-  ) /*: () => GlobalModel */ => {
+  ) /*:  any */ => {
     this.keyValuePairs[key] = value;
     // Ignore gState() - in case this function is called from `globalState()`
     if (this.sid === "workflowState") {
-      return this;
+      return value;
     }
-    let lSValue /*: any */ = "NOT SET";
+    let lSValue /*: any */ = "NOT SET 2";
     let lSTimestamp /*: number */ = 0;
     ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
-    if (lSValue === "NOT SET") {
+    if (lSValue === "NOT SET 2") {
       // No Easy storage cache, but we still set localStorage
       if (typeof value !== "string") {
         value = JSON.stringify(value);
@@ -226,7 +244,10 @@ function gModel() /*: void */ {
         localStorage.setItem(key, value + "___" + Date.now().toString());
       } catch (e) {}
     }
-    return this;
+    if (isParsable(value)) {
+      value = JSON.parse(value);
+    }
+    return value;
   };
 }
 export default gModel;

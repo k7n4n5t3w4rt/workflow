@@ -18,7 +18,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="devUnits">Dev Units:</label>
       <output id="devUnitsOutput" name="devUnitsOutput" for="devUnits"
-        >${props.devUnits.toString()}</output
+        >${(props.devUnits || 0).toString()}</output
       >
       <input
         type="range"
@@ -28,7 +28,7 @@ export default (props /*: Props */) /*: string */ => {
         max="50"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.devUnits.toString()}"
+        value="${(props.devUnits || 0).toString()}"
       />
     </div>
   `;

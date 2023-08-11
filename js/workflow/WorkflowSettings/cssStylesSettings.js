@@ -20,6 +20,17 @@ export default () /*: Object */ => {
       fontWeight: "bold",
       textShadow: "2px 2px 2px grey",
     },
+    stepHeading: {
+      fontSize: "1rem",
+      padding: "0.2rem",
+      color: "white",
+      fontWeight: "bold",
+      textShadow: "2px 2px 2px grey",
+      borderTop: "10px solid white",
+      borderBottom: "10px solid white",
+      marginTop: "1rem",
+      marginBottom: "1rem",
+    },
     settingsContainer: {
       position: "absolute",
       zIndex: "21000",
