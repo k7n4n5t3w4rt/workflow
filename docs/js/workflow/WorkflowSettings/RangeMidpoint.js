@@ -36,7 +36,7 @@ export default (props /*: Props */) /*: string */ => {
         id="rangeMidpointOutput"
         name="rangeMidpointOutput"
         for="rangeMidpoint"
-        >${props.rangeMidpoint.toString()}</output
+        >${(props.rangeMidpoint || 0).toString()}</output
       >
       <input
         type="range"
@@ -46,7 +46,7 @@ export default (props /*: Props */) /*: string */ => {
         max="0.5"
         step="0.05"
         onChange=${props.changeSetting}
-        value="${props.rangeMidpoint.toString()}"
+        value="${(props.rangeMidpoint || 0).toString()}"
       />
     </div>
   `;

@@ -44,12 +44,14 @@ export const Steps = (props /*: Props */) /*: string */ => {
   // Once, on load, update the local state from the global state
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
 
+  console.log("/WorkflowMetrics/Steps.js: steps:", steps);
+
   return html`
     <!------------------------------------------------------------------>
     <!-- Steps -->
     <!------------------------------------------------------------------>
     <div className="${styles.metricsDivs}">
-      ${steps.map(
+      ${(steps || []).map(
         (
           step /*: { 
             name: string,
@@ -67,10 +69,10 @@ export const Steps = (props /*: Props */) /*: string */ => {
             <div className="${styles.metricsSpans}">
               <div className="${styles.stepName}">${step.name}</div>
               <div className="${styles.stepMetrics}">
-                Limit: ${step.movingLimit.toString()}<br />
-                Av.Ag: ${step.avAge.toString()}<br />
+                Limit: ${(step.movingLimit || 0).toString()}<br />
+                Av.Ag: ${(step.avAge || 0).toString()}<br />
                 ${step.status === "touch" &&
-                html`DvUnts: ${step.devUnits.toString()}`}<br />
+                html`DvUnts: ${(step.devUnits || 0).toString()}`}<br />
               </div>
             </div>
           `;

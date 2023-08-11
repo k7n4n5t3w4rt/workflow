@@ -21,7 +21,7 @@ export default (props /*: Props */) /*: string */ => {
         id="backlogDeathOutput"
         name="backlogDeathOutput"
         for="backlogDeath"
-        >${props.backlogDeath.toString()}</output
+        >${(props.backlogDeath || 0).toString()}</output
       >
       <input
         type="range"
@@ -31,7 +31,7 @@ export default (props /*: Props */) /*: string */ => {
         max="500"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.backlogDeath.toString()}"
+        value="${(props.backlogDeath || 0).toString()}"
       />
     </div>
   `;

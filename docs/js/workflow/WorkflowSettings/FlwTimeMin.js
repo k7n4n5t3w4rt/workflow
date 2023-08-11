@@ -33,7 +33,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="flwTimeMin">Flow Time Min.:</label>
       <output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin"
-        >${props.flwTimeMin.toString()}</output
+        >${(props.flwTimeMin || 0).toString()}</output
       >
       <input
         type="range"
@@ -43,7 +43,7 @@ export default (props /*: Props */) /*: string */ => {
         max="200"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.flwTimeMin.toString()}"
+        value="${(props.flwTimeMin || 0).toString()}"
       />
     </div>
   `;

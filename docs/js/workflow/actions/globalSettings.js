@@ -13,7 +13,7 @@ import touchStepsCount from "./touchStepsCount.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
-export default () /*: void */ => {
+export default async () /*: Promise<void> */ => {
   gSttngs().setSidIfNotInLocalStore("workflowSttngs");
   //------------------------------------------------------------------
   // Development
@@ -51,26 +51,27 @@ export default () /*: void */ => {
   gSttngs().setIfNotCached("flwItmSizeLimit", 1);
   // Q: At what flwItmSizeLimit do we get 0.8 of the value from a flow item?
   gSttngs().setIfNotCached("paretoPoint", 0.2);
+  gSttngs().setIfNotCached("numberOfSteps", 5);
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  gSttngs().setIfNotCached("fps", 1);
-  gSttngs().setIfNotCached("scaleCm", 7);
-  gSttngs().setIfNotCached("showMetrics", true);
-  gSttngs().set("scale", gSttngs().get("scaleCm") / 100);
-  gSttngs().set("x", gSttngs().get("scale"));
-  gSttngs().set("y", gSttngs().get("scale"));
-  gSttngs().set("z", gSttngs().get("scale"));
-  gSttngs().set("step", round2Places(gSttngs().get("scale") * 5));
-  gSttngs().set("yOffset", round2Places(gSttngs().get("scale") * 10));
-  // Temporarily making these editable in the UI
   gSttngs().setIfNotCached("rangeMax", 7);
   gSttngs().setIfNotCached("rangeIncreaseRate", 0.25);
   gSttngs().setIfNotCached("rangeMidpoint", 0.1);
+  gSttngs().setIfNotCached("fps", 1);
+  gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
   gSttngs().set("colorBlue", "1d2570");
+  // We'll await scaleCM one because it is required for setting some other values
+  const scaleCm = await gSttngs().setIfNotCached("scaleCm", 7);
+  const scale = gSttngs().set("scale", scaleCm / 100);
+  gSttngs().set("x", scale);
+  gSttngs().set("y", scale);
+  gSttngs().set("z", scale);
+  gSttngs().set("step", round2Places(scale * 5));
+  gSttngs().set("yOffset", round2Places(scale * 10));
   return;
 };
 //------------------------------------------------------------------

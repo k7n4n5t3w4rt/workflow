@@ -21,7 +21,7 @@ export default (props /*: Props */) /*: string */ => {
         id="expdtDvUnitsFactorOutput"
         name="expdtDvUnitsFactorOutput"
         for="expdtDvUnitsFactor"
-        >${props.expdtDvUnitsFactor.toString()}</output
+        >${(props.expdtDvUnitsFactor || 0).toString()}</output
       >
       <input
         type="range"
@@ -31,7 +31,7 @@ export default (props /*: Props */) /*: string */ => {
         max="1"
         step="0.25"
         onChange=${props.changeSetting}
-        value="${props.expdtDvUnitsFactor.toString()}"
+        value="${(props.expdtDvUnitsFactor || 0).toString()}"
       />
     </div>
   `;

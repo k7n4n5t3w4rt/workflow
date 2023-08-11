@@ -16,7 +16,7 @@ export const createClickCube = () => {
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------
-  if (gSttngs().get("autoMode")) {
+  if (gSttngs().get("autoMode") == true) {
     gState().get("clckCbGroup").clckCube.position.z +=
       gSttngs().get("step") * gSttngs().get("steps").length + 15;
     gState().get("clckCbGroup").position.y -= gSttngs().get("yOffset");

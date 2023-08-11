@@ -30,6 +30,8 @@ import Fps from "./Fps.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import ScaleCm from "./ScaleCm.js";
+import Status from "./Status.js";
+import StepName from "./StepName.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -45,6 +47,7 @@ import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {
+  numberOfSteps: number,
 }
 */
 export default (props /*: Props */) /*: string */ => {
@@ -64,8 +67,78 @@ export default (props /*: Props */) /*: string */ => {
   // A local state to hold the settings
   const [lState, setStateFunctions] = setStateFunctionsStore(useState);
   // Once, on load, update the local state from the global state
+  useEffect(
+    () /*: void */ => {
+      if (
+        props.numberOfSteps === undefined ||
+        steps.length === undefined ||
+        props.numberOfSteps === 0 ||
+        steps.length === 0
+      ) {
+        return;
+      }
+      if (props.numberOfSteps < steps.length) {
+        while (props.numberOfSteps < steps.length) {
+          steps.pop();
+        }
+      } else if (props.numberOfSteps > steps.length) {
+        // The last step, if it exists, is always done
+        if (steps.length > 0) steps[steps.length - 1].status = "wait";
+        while (props.numberOfSteps > steps.length) {
+          steps.push({
+            name: "Step " + (steps.length + 1),
+            status: "wait",
+            limit: 0,
+            movingLimit: 0,
+            devUnits: 0,
+            flwTimeAtStart: 1,
+          });
+        }
+      }
+      // The first step is always backlog
+      steps[0].status = "backlog";
+      // The last step is always done
+      steps[steps.length - 1].status = "done";
+      steps.forEach((step /*: FlwStep */, index /*: number */) /*: void */ => {
+        step.limit = step.limit || 0;
+        step.movingLimit = step.movingLimit || 0;
+        if (step.status !== "touch") {
+          delete step.devUnits;
+          delete step.flwTimeAtStart;
+        }
+        if (step.status === "touch") {
+          step.devUnits = step.devUnits || 0;
+          step.flwTimeAtStart = step.flwTimeAtStart || 1;
+        }
+        if (step.status === "done") {
+          step.limit = 0;
+          delete step.movingLimit;
+        }
+      });
+      setSteps(steps);
+      gSttngs().set("steps", steps);
+    },
+    [props.numberOfSteps],
+  );
   useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
+
+  const changeStepName =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.name = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
 
   const changeStepLimit =
     (
@@ -101,6 +174,23 @@ export default (props /*: Props */) /*: string */ => {
       setSteps(steps);
     };
 
+  const changeStepStatus =
+    (
+      setSteps /*: (any) => void */,
+      index /*: number */,
+    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
+    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
+      let value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+      const steps = [...gSttngs().get("steps")];
+      const step = steps[index];
+      step.status = value;
+      gSttngs().set("steps", steps);
+      setSteps(steps);
+    };
+
   const changeStepFlwTimeAtStart =
     (
       setSteps /*: (any) => void */,
@@ -123,7 +213,7 @@ export default (props /*: Props */) /*: string */ => {
     <!------------------------------------------------------------------>
     <!-- Steps -->
     <!------------------------------------------------------------------>
-    ${steps.map(
+    ${(steps || []).map(
       (
         step /*: { 
             name: string,
@@ -134,13 +224,20 @@ export default (props /*: Props */) /*: string */ => {
           } */,
         index /*: number */,
       ) /*: void */ => {
-        if (step.status === "done") return html``;
         return html`
           <div>
-            <div className="${styles.inputHeading}">
-              Step ${index}: ${step.name}
-            </div>
-            <label for="step${index}Limit">Limit</label>
+            <div className="${styles.stepHeading}">Step ${index}</div>
+            <${StepName}
+              index=${index}
+              name=${step.name}
+              changeStepName=${changeStepName(setSteps, index)}
+            />
+            <${Status}
+              index=${index}
+              status=${step.status}
+              changeStepStatus=${changeStepStatus(setSteps, index)}
+            />
+            <label for="step${index}Limit">Limit:</label>
             <output
               id="step${index}LimitOutput"
               name="step${index}LimitOutput"
@@ -170,7 +267,7 @@ export default (props /*: Props */) /*: string */ => {
                 id="step${index}DevUnitsOutput"
                 name="step${index}DevUnitsOutput"
                 for="step${index}DevUnitsOutput"
-                >${step.devUnits.toString()}</output
+                >${(step.devUnits || 0).toString()}</output
               >
               <input
                 type="range"
@@ -184,18 +281,18 @@ export default (props /*: Props */) /*: string */ => {
                 onTouchEnd=${setUpdtngCnfg(false)}
                 onMouseDown=${setUpdtngCnfg(true)}
                 onMouseUp=${setUpdtngCnfg(false)}
-                value="${step.devUnits.toString()}"
+                value="${(step.devUnits || 0).toString()}"
               />
             </div>
             <div>
               <label for="step${index}FlwTimeAtStart"
-                >Av. Flow Time at Start</label
+                >Av. Flow Time at Start:</label
               >
               <output
                 id="step${index}FlwTimeAtStartOutput"
                 name="step${index}FlwTimeAtStartOutput"
                 for="step${index}FlwTimeAtStartOutput"
-                >${step.flwTimeAtStart.toString()}</output
+                >${(step.flwTimeAtStart || 0).toString()}</output
               >
               <input
                 type="range"
@@ -209,7 +306,7 @@ export default (props /*: Props */) /*: string */ => {
                 onTouchEnd=${setUpdtngCnfg(false)}
                 onMouseDown=${setUpdtngCnfg(true)}
                 onMouseUp=${setUpdtngCnfg(false)}
-                value="${step.flwTimeAtStart.toString()}"
+                value="${(step.flwTimeAtStart || 0).toString()}"
               />
             </div>
           `}

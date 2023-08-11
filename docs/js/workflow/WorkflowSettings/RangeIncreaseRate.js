@@ -36,7 +36,7 @@ export default (props /*: Props */) /*: string */ => {
         id="rangeIncreaseRateOutput"
         name="rangeIncreaseRateOutput"
         for="rangeIncreaseRate"
-        >${props.rangeIncreaseRate.toString()}</output
+        >${(props.rangeIncreaseRate || 0).toString()}</output
       >
       <input
         type="range"
@@ -46,7 +46,7 @@ export default (props /*: Props */) /*: string */ => {
         max="2"
         step="0.25"
         onChange=${props.changeSetting}
-        value="${props.rangeIncreaseRate.toString()}"
+        value="${(props.rangeIncreaseRate || 0).toString()}"
       />
     </div>
   `;

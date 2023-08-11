@@ -17,7 +17,7 @@ export const ParetoPoint = (props /*: Props */) /*: string */ => {
     <div>
       <label for="paretoPoint">ParetoPoint:</label>
       <output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint"
-        >${props.paretoPoint.toString()}</output
+        >${(props.paretoPoint || 0).toString()}</output
       >
       <input
         type="range"
@@ -27,7 +27,7 @@ export const ParetoPoint = (props /*: Props */) /*: string */ => {
         max="1"
         step="0.1"
         onChange=${props.changeSetting}
-        value="${props.paretoPoint.toString()}"
+        value="${(props.paretoPoint || 0).toString()}"
       />
     </div>
   `;

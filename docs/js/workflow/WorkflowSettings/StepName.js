@@ -6,29 +6,27 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {
-	timeBox: number,
-  changeSetting: () => void,
+  index: number,
+	name: string,
+  changeStepName: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="timeBox">TimeBox:</label>
-      <output id="timeBoxOutput" name="timeBoxOutput" for="timeBox"
-        >${(props.timeBox || 0).toString()}</output
-      >
+      <label for="step${props.index}Name">Name:</label>
       <input
-        type="range"
-        id="timeBox"
-        name="timeBox"
-        min="5"
-        max="60"
-        step="5"
-        onChange=${props.changeSetting}
-        value="${(props.timeBox || 0).toString()}"
+        type="text"
+        id="step${props.index}Name"
+        name="step${props.index}Name"
+        onInput=${props.changeStepName}
+        value="${props.name}"
+        onFocus=${setUpdtngCnfg(true)}
+        onBlur=${setUpdtngCnfg(false)}
       />
     </div>
   `;

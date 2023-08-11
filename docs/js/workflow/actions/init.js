@@ -21,7 +21,14 @@ import render from "./render.js";
 //------------------------------------------------------------------
 // init()
 //------------------------------------------------------------------
-export default () /*: void */ => {
+export const init = () /*: void */ => {
+  const x = gSttngs().get("x");
+  const y = gSttngs().get("y");
+  const z = gSttngs().get("z");
+  if (x === undefined || y === undefined || z === undefined) {
+    setTimeout(init, 1000);
+    return;
+  }
   // The AR container is where the AR scene will be rendered
   const ARContainer = addArContainerToDom();
   // Make the scene, camera, geometry, etc.
@@ -76,6 +83,7 @@ export default () /*: void */ => {
     renderer,
   });
 };
+export default init;
 //------------------------------------------------------------------
 // startButtonSetup()
 //------------------------------------------------------------------

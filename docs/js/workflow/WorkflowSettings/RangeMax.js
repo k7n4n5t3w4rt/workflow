@@ -33,7 +33,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="rangeMax">Range Max:</label>
       <output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax"
-        >${props.rangeMax.toString()}</output
+        >${(props.rangeMax || 0).toString()}</output
       >
       <input
         type="range"
@@ -43,7 +43,7 @@ export default (props /*: Props */) /*: string */ => {
         max="10"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.rangeMax.toString()}"
+        value="${(props.rangeMax || 0).toString()}"
       />
     </div>
   `;

@@ -21,7 +21,7 @@ export default (props /*: Props */) /*: string */ => {
         id="avrgFlwTimeAtStartOutput"
         name="avrgFlwTimeAtStartOutput"
         for="avrgFlwTimeAtStart"
-        >${props.avrgFlwTimeAtStart.toString()}</output
+        >${(props.avrgFlwTimeAtStart || 0).toString()}</output
       >
       <input
         type="range"
@@ -31,7 +31,7 @@ export default (props /*: Props */) /*: string */ => {
         max="200"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.avrgFlwTimeAtStart.toString()}"
+        value="${(props.avrgFlwTimeAtStart || 0).toString()}"
       />
     </div>
   `;

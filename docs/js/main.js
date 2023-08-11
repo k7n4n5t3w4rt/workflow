@@ -24,8 +24,9 @@ import { html } from "../web_modules/htm/preact.js";
 // is an async funnction. The value of `gSttngs()` properties will be
 // updated after they are first set with the defaults, based on
 // calls to Easy, the backend keystore.
-globalSettings();
-globalStepSettings();
-globalState();
+globalSettings().then(() => {
+  globalStepSettings();
+  globalState();
+});
 setInterval(getSttngsFromEasyStorage, 1000);
 render(html` <${App} /> `, document.getElementById("goodthing"));

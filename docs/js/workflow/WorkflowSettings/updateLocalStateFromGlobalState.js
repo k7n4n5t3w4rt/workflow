@@ -34,6 +34,7 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["drag"](gSttngs().get("drag"));
     setStateFunctions["paretoPoint"](gSttngs().get("paretoPoint"));
     setStateFunctions["timeBox"](gSttngs().get("timeBox"));
+    setStateFunctions["numberOfSteps"](gSttngs().get("numberOfSteps"));
     setStateFunctions["fps"](gSttngs().get("fps"));
     setStateFunctions["expdtQueueLength"](gSttngs().get("expdtQueueLength"));
     setStateFunctions["expdtDvUnitsFactor"](

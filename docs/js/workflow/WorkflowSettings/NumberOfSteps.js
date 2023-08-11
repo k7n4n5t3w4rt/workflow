@@ -9,26 +9,29 @@ import { html } from "../../../web_modules/htm/preact.js";
 
 /*::
 type Props = {
-	timeBox: number,
+	numberOfSteps: number,
   changeSetting: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="timeBox">TimeBox:</label>
-      <output id="timeBoxOutput" name="timeBoxOutput" for="timeBox"
-        >${(props.timeBox || 0).toString()}</output
+      <label for="numberOfSteps">No. of Steps:</label>
+      <output
+        id="numberOfStepsOutput"
+        name="numberOfStepsOutput"
+        for="numberOfSteps"
+        >${(props.numberOfSteps || 0).toString()}</output
       >
       <input
         type="range"
-        id="timeBox"
-        name="timeBox"
-        min="5"
-        max="60"
-        step="5"
+        id="numberOfSteps"
+        name="numberOfSteps"
+        min="1"
+        max="12"
+        step="1"
         onChange=${props.changeSetting}
-        value="${(props.timeBox || 0).toString()}"
+        value="${(props.numberOfSteps || 0).toString()}"
       />
     </div>
   `;

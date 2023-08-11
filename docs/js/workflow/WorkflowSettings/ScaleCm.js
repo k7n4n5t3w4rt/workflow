@@ -18,7 +18,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="scaleCm">Scale (cm):</label>
       <output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm"
-        >${props.scaleCm.toString()}</output
+        >${(props.scaleCm || 0).toString()}</output
       >
       <input
         type="range"
@@ -28,7 +28,7 @@ export default (props /*: Props */) /*: string */ => {
         max="100"
         step="1"
         onChange=${props.changeSetting}
-        value="${props.scaleCm.toString()}"
+        value="${(props.scaleCm || 0).toString()}"
       />
     </div>
   `;

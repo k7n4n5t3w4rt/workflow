@@ -17,7 +17,7 @@ export const Drag = (props /*: Props */) /*: string */ => {
     <div>
       <label for="drag">Drag:</label>
       <output id="dragOutput" name="dragOutput" for="drag"
-        >${props.drag.toString()}</output
+        >${(props.drag || 0).toString()}</output
       >
       <input
         type="range"
@@ -27,7 +27,7 @@ export const Drag = (props /*: Props */) /*: string */ => {
         max="1"
         step="0.1"
         onChange=${props.changeSetting}
-        value="${props.drag.toString()}"
+        value="${(props.drag || 0).toString()}"
       />
     </div>
   `;

@@ -18,7 +18,7 @@ export default (props /*: Props */) /*: string */ => {
     <div>
       <label for="fps">FPS:</label>
       <output id="fpsOutput" name="fpsOutput" for="fps"
-        >${props.fps.toString()}</output
+        >${(props.fps || 0).toString()}</output
       >
       <input
         type="range"
@@ -28,7 +28,7 @@ export default (props /*: Props */) /*: string */ => {
         max="10"
         step="0.25"
         onChange=${props.changeSetting}
-        value="${props.fps.toString()}"
+        value="${(props.fps || 0).toString()}"
       />
     </div>
   `;
