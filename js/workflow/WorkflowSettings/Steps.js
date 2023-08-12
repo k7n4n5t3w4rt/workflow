@@ -48,6 +48,7 @@ import changeStepLimit from "./changeStepLimit.js";
 import changeStepDevUnits from "./changeStepDevUnits.js";
 import changeStepStatus from "./changeStepStatus.js";
 import changeStepFlwTimeAtStart from "./changeStepFlwTimeAtStart.js";
+import changeStepActualFlwTime from "./changeStepActualFlwTime.js";
 //------------------------------------------------------------------
 // FUNCTION: Steps
 //------------------------------------------------------------------
@@ -90,7 +91,8 @@ export const Steps = (props /*: Props */) /*: string */ => {
             status: string,
             limit: number,
             devUnits: number,
-            flwTimeAtStart: number
+            flwTimeAtStart: number,
+            actualFlwTime: number
           } */,
         index /*: number */,
       ) /*: void */ => {
@@ -177,6 +179,31 @@ export const Steps = (props /*: Props */) /*: string */ => {
                 onMouseDown=${setUpdtngCnfg(true)}
                 onMouseUp=${setUpdtngCnfg(false)}
                 value="${(step.flwTimeAtStart || 0).toString()}"
+              />
+            </div>
+            <div>
+              <label for="step${index}ActualFlwTime"
+                >Actual Av. Flow Time:</label
+              >
+              <output
+                id="step${index}ActualFlwTimeOutput"
+                name="step${index}ActualFlwTimeOutput"
+                for="step${index}ActualFlwTimeOutput"
+                >${(step.actualFlwTime || 0).toString()}</output
+              >
+              <input
+                type="range"
+                id="step${index}ActualFlwTime"
+                name="step${index}ActualFlwTime"
+                min="0.5"
+                max="200"
+                step="0.5"
+                onChange=${changeStepActualFlwTime(setSteps, index)}
+                onTouchStart=${setUpdtngCnfg(true)}
+                onTouchEnd=${setUpdtngCnfg(false)}
+                onMouseDown=${setUpdtngCnfg(true)}
+                onMouseUp=${setUpdtngCnfg(false)}
+                value="${(step.actualFlwTime || 0).toString()}"
               />
             </div>
           `}

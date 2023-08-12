@@ -43,6 +43,7 @@ export const populateSteps =
           devUnits: 0,
           movingDevUnits: 0,
           flwTimeAtStart: 1,
+          actualFlwTime: 1,
         });
       }
     }
@@ -57,11 +58,13 @@ export const populateSteps =
         delete step.devUnits;
         delete step.devUnits;
         delete step.flwTimeAtStart;
+        delete step.actualFlwTime;
       }
       if (step.status === "touch") {
         step.devUnits = step.devUnits || 0;
         step.devUnits = step.devUnits;
         step.flwTimeAtStart = step.flwTimeAtStart || 1;
+        step.actualFlwTime = step.actualFlwTime || 1;
       }
       if (step.status === "done") {
         step.limit = 0;

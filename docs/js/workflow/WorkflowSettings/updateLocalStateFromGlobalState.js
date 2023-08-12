@@ -25,9 +25,6 @@ const updateLocalStateFromGlobalState =
     // Sliders
     //----------------------------------------
     setStateFunctions["arrivalRate"](gSttngs().get("arrivalRate"));
-    setStateFunctions["avrgFlwTimeAtStart"](
-      gSttngs().get("avrgFlwTimeAtStart"),
-    );
     setStateFunctions["flwTimeMin"](gSttngs().get("flwTimeMin"));
     setStateFunctions["devUnits"](gSttngs().get("devUnits"));
     setStateFunctions["devPowerFactor"](gSttngs().get("devPowerFactor"));

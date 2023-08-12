@@ -10,6 +10,7 @@ import expdtIsOn from "./expdtIsOn.js";
 import calculateDevPower from "./calculateDevPower.js";
 import calculateDevPowerFactor from "./calculateDevPowerFactor.js";
 import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
+import calculateTouchSteps from "./calculateTouchSteps.js";
 //------------------------------------------------------------------
 // applyAdjustedReduction()
 //------------------------------------------------------------------
@@ -34,11 +35,14 @@ export default (
         return;
       }
       // The ratio of flow time at start for this step to the total flow time at start.
-      const stepFlwTime =
+      const idealStepFlwTime =
         gSttngs().get("steps")[flwItem.dStpIndex].flwTimeAtStart;
+      const actualStepFlwTime =
+        gSttngs().get("steps")[flwItem.dStpIndex].actualFlwTime;
       const totalFlwTime = calculateFlwTimeAtStart();
-      const flwTimeRatio = 1 - stepFlwTime / totalFlwTime;
-      const devPower = calculateDevPower() * flwTimeRatio;
+      const avrgFlwTimePerStep = totalFlwTime / calculateTouchSteps();
+      const flwTimeRatio = actualStepFlwTime / idealStepFlwTime;
+      const devPower = calculateDevPower() / flwTimeRatio;
       // The `devPowerFactor` is 1.2 for a 1:1 ratio, and 0.8 for a 10:1 ratio.
       const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
       // const devPowerFactor = 1; // The simple, linear version.

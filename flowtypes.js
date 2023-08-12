@@ -35,7 +35,6 @@ type GlobalSettings = {
     death: number,
     debug: boolean,
     devPowerFactor: number,
-    avrgFlwTimeAtStart: number,
     devUnits: number,
     touchSteps: number,
     dfntnOfReady: number,
@@ -75,6 +74,7 @@ type FlwStep = {
   devUnits: number | typeof undefined,
   movingDevUnits: number | typeof undefined,
   flwTimeAtStart: number | typeof undefined,
+  actualFlwTime: number | typeof undefined,
 };
 
 //------------------------------------------------------------------

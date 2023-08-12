@@ -14,7 +14,6 @@ import calculateTouchSteps from "./calculateTouchSteps.js";
 // calculateDevPower()
 //------------------------------------------------------------------
 export const calculateDevPower = () /*: number */ => {
-  // const avrgFlwTimePerItem = gSttngs().get("avrgFlwTimeAtStart");
   const touchSteps = calculateTouchSteps();
   //const flwTimePerItemPerTouchStep = avrgFlwTimePerItem / touchSteps;
   const devUnits = calculateMovingDevUnits();

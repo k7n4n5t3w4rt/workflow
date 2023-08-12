@@ -56,6 +56,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
             limit: number,
             devUnits: number,
             flwTimeAtStart: number,
+            actaulFlwTime: number,
             movingLimit: number,
             avAge: number,
           } */,

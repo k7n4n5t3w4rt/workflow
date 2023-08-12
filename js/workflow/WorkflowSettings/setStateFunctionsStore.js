@@ -32,9 +32,6 @@ export default (
   const [arrivalRate, setArrivalRate] = useState(0);
   setStateFunctions["arrivalRate"] = setArrivalRate;
   lState["arrivalRate"] = arrivalRate;
-  const [avrgFlwTimeAtStart, setAvrgFlwTimeAtStart] = useState(1);
-  setStateFunctions["avrgFlwTimeAtStart"] = setAvrgFlwTimeAtStart;
-  lState["avrgFlwTimeAtStart"] = avrgFlwTimeAtStart;
   const [flwTimeMin, setFlwTimeMin] = useState(1);
   setStateFunctions["flwTimeMin"] = setFlwTimeMin;
   lState["flwTimeMin"] = flwTimeMin;

@@ -14,7 +14,6 @@ import {
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
-import AvrgFlwTimeAtStart from "./AvrgFlwTimeAtStart.js";
 import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
 import Drag from "./Drag.js";
@@ -84,11 +83,13 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- Easy Storage -->
         <!-------------------------------------------------------------------->
+        <!--
         <${EasyStorage}
           easyStorage=${lState.easyStorage}
           styles=${styles}
           changeSetting=${changeSetting("easyStorage", setStateFunctions)}
         />
+        -->
         <!-------------------------------------------------------------------->
         <!-- showMetrics -->
         <!-------------------------------------------------------------------->
@@ -146,16 +147,6 @@ export default (props /*: Props */) /*: string */ => {
         <${ArrivalRate}
           arrivalRate=${lState.arrivalRate}
           changeSetting=${changeSetting("arrivalRate", setStateFunctions)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Start Average Flow Time -->
-        <!-------------------------------------------------------------------->
-        <${AvrgFlwTimeAtStart}
-          avrgFlwTimeAtStart=${lState.avrgFlwTimeAtStart}
-          changeSetting=${changeSetting(
-            "avrgFlwTimeAtStart",
-            setStateFunctions,
-          )}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->

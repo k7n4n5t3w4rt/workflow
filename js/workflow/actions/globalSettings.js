@@ -14,7 +14,7 @@ import touchStepsCount from "./touchStepsCount.js";
 // globalSettings()
 //------------------------------------------------------------------
 export default async () /*: Promise<void> */ => {
-  gSttngs().setSidIfNotInLocalStore("workflowSttngs");
+  gSttngs().setSidIfNotInLocalStore("START");
   //------------------------------------------------------------------
   // Development
   //------------------------------------------------------------------
@@ -26,24 +26,18 @@ export default async () /*: Promise<void> */ => {
   // Workflow
   //------------------------------------------------------------------
   //------------------------------------------------------------------
-  // A lot of things depend on this setting
-  const avrgFlwTimeAtStart = await gSttngs().setIfNotCached(
-    "avrgFlwTimeAtStart",
-    10,
-  );
   // A fix to get the flow time correct
-  const devPowerFix = await gSttngs().setIfNotCached("devPowerFix", 1);
+  const devPowerFix = await gSttngs().setIfNotCached("devPowerFix", 2.23);
   // The drag that kicks in when the ratio of dev units to WIP is 1:2
   const drag = await gSttngs().setIfNotCached("drag", 0.5);
+  // Q: At what flwItmSizeLimit do we get 0.8 of the value from a flow item?
+  const paretoPoint = await gSttngs().setIfNotCached("paretoPoint", 0.2);
+  // Q: How many new items arrive in your backlog each day?
+  const arrivalRate = await gSttngs().setIfNotCached("arrivalRate", 10);
   // Q: What is the shortest flow time?
   const flwTimeMin = await gSttngs().setIfNotCached("flwTimeMin", 1); // Max. flow time is dynamic
   // Q: What interval do we use for timeboxing or reporting (in working days)?
   const timeBox = await gSttngs().setIfNotCached("timeBox", 10);
-  // Q: Things that take too long to deliver, often lose their value. Do we have
-  // an interval (in working days) after which we check in with the customer/stakeholder
-  // to see if they still want the thing we're working on, and reset the priority?
-  const death = await gSttngs().setIfNotCached("death", 0);
-  const backlogDeath = await gSttngs().setIfNotCached("backlogDeath", 0);
   // PARAM: How many things do we expedite each timebox?
   const expdtQueueLength = await gSttngs().setIfNotCached(
     "expdtQueueLength",
@@ -54,20 +48,16 @@ export default async () /*: Promise<void> */ => {
     "expdtDvUnitsFactor",
     1,
   );
-  // Q: How many new items arrive in your backlog each day?
-  const arrivalRate = await gSttngs().setIfNotCached("arrivalRate", 5);
   // Format: A number between 0 and and 1
   const flwItmSizeLimit = await gSttngs().setIfNotCached("flwItmSizeLimit", 1);
-  // Q: At what flwItmSizeLimit do we get 0.8 of the value from a flow item?
-  const paretoPoint = await gSttngs().setIfNotCached("paretoPoint", 0.2);
-  const numberOfSteps = await gSttngs().setIfNotCached("numberOfSteps", 5);
+  const numberOfSteps = await gSttngs().setIfNotCached("numberOfSteps", 6);
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  const rangeMax = await gSttngs().setIfNotCached("rangeMax", 7);
+  const rangeMax = await gSttngs().setIfNotCached("rangeMax", 10);
   const rangeIncreaseRate = await gSttngs().setIfNotCached(
     "rangeIncreaseRate",
-    0.25,
+    0.1,
   );
   const rangeMidpoint = await gSttngs().setIfNotCached("rangeMidpoint", 0.1);
   const fps = await gSttngs().setIfNotCached("fps", 1);
@@ -78,13 +68,21 @@ export default async () /*: Promise<void> */ => {
   gSttngs().set("colorBlue", "1d2570");
   gSttngs().set("paramsMaxWip", 20);
   // We'll await scaleCM one because it is required for setting some other values
-  const scaleCm = await gSttngs().setIfNotCached("scaleCm", 7);
+  const scaleCm = await gSttngs().setIfNotCached("scaleCm", 2);
   const scale = gSttngs().set("scale", scaleCm / 100);
   gSttngs().set("x", scale);
   gSttngs().set("y", scale);
   gSttngs().set("z", scale);
   gSttngs().set("step", round2Places(scale * 5));
   gSttngs().set("yOffset", round2Places(scale * 10));
+  //------------------------------------------------------------------
+  // Not yet used...
+  //------------------------------------------------------------------
+  // Q: Things that take too long to deliver, often lose their value. Do we have
+  // an interval (in working days) after which we check in with the customer/stakeholder
+  // to see if they still want the thing we're working on, and reset the priority?
+  const death = await gSttngs().setIfNotCached("death", 0);
+  const backlogDeath = await gSttngs().setIfNotCached("backlogDeath", 0);
   return;
 };
 //------------------------------------------------------------------
