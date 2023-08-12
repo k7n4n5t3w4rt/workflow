@@ -26,7 +26,7 @@ export default (props /*: Props */) /*: string */ => {
         name="scaleCm"
         min="1"
         max="100"
-        step="1"
+        step="0.5"
         onChange=${props.changeSetting}
         value="${(props.scaleCm || 0).toString()}"
       />

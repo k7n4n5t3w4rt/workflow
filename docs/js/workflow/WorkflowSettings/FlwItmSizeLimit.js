@@ -16,12 +16,12 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="flwItmSizeLimit">Flow Item Size Limit:</label>
+      <label for="flwItmSizeLimit">Size Limit:</label>
       <output
         id="flwItmSizeLimitOutput"
         name="flwItmSizeLimitOutput"
         for="flwItmSizeLimit"
-        >${(props.flwItmSizeLimit || 0).toString()}</output
+        >${((props.flwItmSizeLimit || 0) * 100).toString() + "%"}</output
       >
       <input
         type="range"

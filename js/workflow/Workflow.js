@@ -104,11 +104,12 @@ const cssStyles = () /*: Object */ => {
     flw: {
       width: "100%",
       height: "100%",
-      backgroundImage: "url(/img/bg1.png)",
+      backgroundImage: "url(/img/bg2.png)",
       backgroundClip: "border-box",
       backgroundSize: "cover",
       backgroundRepeat: "none",
       position: "absolute",
+      backgroundPosition: "center",
     },
   });
   return styles;

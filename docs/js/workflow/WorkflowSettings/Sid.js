@@ -7,7 +7,6 @@ import { html } from "../../../web_modules/htm/preact.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import setUpdtngCnfg from "./setUpdtngCnfg.js";
-import rndmBetweenIntegers from "../actions/rndmBetweenIntegers.js";
 //------------------------------------------------------------------
 // FUNCTION: Sid()
 //------------------------------------------------------------------
@@ -19,7 +18,6 @@ type Props = {
 }
 */
 export const Sid = (props /*: Props */) /*: string */ => {
-  //rndmBetweenIntegers(0, 1000000)
   return html`
     <div>
       <label for="sid">ID:</label>

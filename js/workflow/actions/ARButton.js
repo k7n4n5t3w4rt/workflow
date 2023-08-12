@@ -36,7 +36,7 @@ const createButton = (
           start();
         }
 
-        button.textContent = "RESET";
+        button.textContent = "RELOAD";
         button.style.display = "";
 
         currentSession = session;
@@ -56,7 +56,8 @@ const createButton = (
     button.style.cursor = "pointer";
     button.style.left = "calc(50% - 50px)";
     button.style.width = "100px";
-    button.textContent = "LEVEL 1";
+    button.textContent =
+      gSttngs().sid.split("___")[0] || gSttngs().sid || "START";
 
     button.onmouseenter = function () {
       button.style.opacity = "1.0";

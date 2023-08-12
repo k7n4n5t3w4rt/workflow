@@ -15,6 +15,7 @@ import AutoMode from "./WorkflowSettings/AutoMode.js";
 import Fps from "./WorkflowSettings/Fps.js";
 import ScaleCm from "./WorkflowSettings/ScaleCm.js";
 import Sid from "./WorkflowSettings/Sid.js";
+import FlwItmSizeLimit from "./WorkflowSettings/FlwItmSizeLimit.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -163,6 +164,16 @@ export const Params = (props /*: Props */) /*: string */ => {
             `;
           },
         )}
+        <!-------------------------------------------------------------------->
+        <!-- flwItmSizeLimit -->
+        <!-------------------------------------------------------------------->
+        <div className="${styles.inputHeading}">
+          Size Limit for Flow Items (% of current max. size)
+        </div>
+        <${FlwItmSizeLimit}
+          flwItmSizeLimit=${lState.flwItmSizeLimit}
+          changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
+        />
         <!------------------------------------------------------------------>
         <!-- SHARING -->
         <!------------------------------------------------------------------>

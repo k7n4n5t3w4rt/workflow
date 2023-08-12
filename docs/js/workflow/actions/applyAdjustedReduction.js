@@ -20,7 +20,7 @@ export default (
     // Apply the adjusted reduction to each flow item.
     flwItems.forEach((flwItem /*: FlwItem */) => {
       // Just the number of dev units for this step.
-      let devUnits = gSttngs().get("steps")[flwItem.dStpIndex].devUnits;
+      let devUnits = gSttngs().get("steps")[flwItem.dStpIndex].movingDevUnits;
       if (expdtIsOn() === true && expediteFlag === true) {
         devUnits = devUnits * gSttngs().get("expdtDvUnitsFactor");
       }

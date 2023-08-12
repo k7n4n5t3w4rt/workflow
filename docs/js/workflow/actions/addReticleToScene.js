@@ -1,5 +1,10 @@
 // @flow
 //------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
+import gSttngs from "../actions/gSttngs.js";
+import gState from "../actions/gState.js";
+//------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "../../../web_modules/three.js";
@@ -29,6 +34,9 @@ export default (
   );
   const material = new THREE.MeshBasicMaterial();
   reticleStuff.reticle = new THREE.Mesh(geometry, material);
+  const scale = gSttngs().get("scale");
+  reticleStuff.reticle.scale.set(scale, scale, scale);
+  reticleStuff.reticle.updateMatrix();
 
   // we will calculate the position and rotation of this reticle every frame manually
   // in the render() function so matrixAutoUpdate is set to false
