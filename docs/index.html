@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>v0.17.2</title>
+	<title>v0.18.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="manifest" href="/site.webmanifest">
@@ -54,15 +54,50 @@
 		<div id="console-ui"></div>
 		<div id="metrics-container" class="metricsContainer_gbwdbdfusjdt">
 			<div class="metricsDivs_gbwdbdfusjdu">
-				<span class="metricsSpans_gbwdbdfusjdv">TmBox: 0</span>
-				<span class="metricsSpans_gbwdbdfusjdv">Value: 0</span>
-				<span class="metricsSpans_gbwdbdfusjdv">ThruPut: 0</span>
+				<div class="metricsSpans_gbwdbdfusjdv metricsSpansTopRow_gbwdbdfusjdw">TmBox: 0</div>
+				<div class="metricsSpans_gbwdbdfusjdv metricsSpansTopRow_gbwdbdfusjdw">Value: 0</div>
+				<div class="metricsSpans_gbwdbdfusjdv metricsSpansTopRow_gbwdbdfusjdw">ThruPut: 0</div>
 			</div>
 			<div class="metricsDivs_gbwdbdfusjdu">
-				<span class="metricsSpans_gbwdbdfusjdv">FlwTm: 0</span>
-				<span class="metricsSpans_gbwdbdfusjdv">ThrPt: 0</span>
-				<span class="metricsSpans_gbwdbdfusjdv">Wip: 0</span>
+				<div class="metricsSpans_gbwdbdfusjdv">FlwTm: 0</div>
+				<div class="metricsSpans_gbwdbdfusjdv">ThrPt: 0</div>
+				<div class="metricsSpans_gbwdbdfusjdv">Wip: 0</div>
 			</div>
+			<div class="metricsDivs_gbwdbdfusjdu"></div>
+		</div>
+		<div id="share-icon" class="share_gbwdbjilif">
+			<span class="material-icons shareIcon_gbwdbjilig">share</span>
+		</div>
+		<div id="params-close-icon" class="paramsClose_gbwdbgbsldcd">
+			<span class="material-icons paramsIcon_gbwdbgbsldcc"> close </span>
+		</div>
+		<div id="params-container" class="paramsContainer_gbwdbgbsldca">
+			<fieldset>
+				<div class="inputHeading_gbwdbgbsldbj">WIP Limits</div>
+				<div class="inputHeading_gbwdbgbsldbj">Devs/Teams (0/0)</div>
+				<div class="inputHeading_gbwdbgbsldbj">
+					Size Limit for Flow Items (% of current max. size)
+				</div>
+				<div>
+					<label for="flwItmSizeLimit">Size Limit:</label>
+					<output id="flwItmSizeLimitOutput" name="flwItmSizeLimitOutput" for="flwItmSizeLimit">100%</output>
+					<input type="range" id="flwItmSizeLimit" name="flwItmSizeLimit" min="0.2" max="1" step="0.1" value="1" />
+				</div>
+				<div class="inputHeading_gbwdbgbsldbj">Sharing</div>
+				<div>
+					<label for="sid">ID:</label>
+					<input type="text" id="sid" name="sid" value="workflow" />
+				</div>
+				<div class="inputHeading_gbwdbgbsldbj">Display</div>
+				<div>
+					<label for="fps">FPS:</label>
+					<output id="fpsOutput" name="fpsOutput" for="fps">1</output>
+					<input type="range" id="fps" name="fps" min="0.25" max="10" step="0.25" value="1" />
+				</div>
+			</fieldset>
+		</div>
+		<div id="params-icon" class="params_gbwdbgbsldcb">
+			<span class="material-icons paramsIcon_gbwdbgbsldcc"> settings </span>
 		</div>
 	</div>
 </div></div data-goodthing>
