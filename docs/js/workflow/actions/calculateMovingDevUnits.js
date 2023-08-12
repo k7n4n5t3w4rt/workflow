@@ -4,18 +4,18 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
-// calculateDevUnits()
+// calculateMovingDevUnits()
 //------------------------------------------------------------------
-export const calculateDevUnits = () /*: number */ => {
+export const calculateMovingDevUnits = () /*: number */ => {
   if (gSttngs().get("steps") === undefined) return 0;
   return gSttngs()
     .get("steps")
     .reduce((_ /*: number*/, step /*: Object*/) => {
       if (step.status === "touch") {
-        return _ + step.devUnits;
+        return _ + step.movingDevUnits;
       } else {
         return _;
       }
     }, 0);
 };
-export default calculateDevUnits;
+export default calculateMovingDevUnits;

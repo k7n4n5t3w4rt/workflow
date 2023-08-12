@@ -27,39 +27,51 @@ export default async () /*: Promise<void> */ => {
   //------------------------------------------------------------------
   //------------------------------------------------------------------
   // A lot of things depend on this setting
-  gSttngs().setIfNotCached("avrgFlwTimeAtStart", 10);
+  const avrgFlwTimeAtStart = await gSttngs().setIfNotCached(
+    "avrgFlwTimeAtStart",
+    10,
+  );
   // A fix to get the flow time correct
-  gSttngs().setIfNotCached("devPowerFix", 1);
+  const devPowerFix = await gSttngs().setIfNotCached("devPowerFix", 1);
   // The drag that kicks in when the ratio of dev units to WIP is 1:2
-  gSttngs().setIfNotCached("drag", 0.5);
+  const drag = await gSttngs().setIfNotCached("drag", 0.5);
   // Q: What is the shortest flow time?
-  gSttngs().setIfNotCached("flwTimeMin", 1); // Max. flow time is dynamic
+  const flwTimeMin = await gSttngs().setIfNotCached("flwTimeMin", 1); // Max. flow time is dynamic
   // Q: What interval do we use for timeboxing or reporting (in working days)?
-  gSttngs().setIfNotCached("timeBox", 10);
+  const timeBox = await gSttngs().setIfNotCached("timeBox", 10);
   // Q: Things that take too long to deliver, often lose their value. Do we have
   // an interval (in working days) after which we check in with the customer/stakeholder
   // to see if they still want the thing we're working on, and reset the priority?
-  gSttngs().setIfNotCached("death", 0);
-  gSttngs().setIfNotCached("backlogDeath", 0);
+  const death = await gSttngs().setIfNotCached("death", 0);
+  const backlogDeath = await gSttngs().setIfNotCached("backlogDeath", 0);
   // PARAM: How many things do we expedite each timebox?
-  gSttngs().setIfNotCached("expdtQueueLength", 0);
+  const expdtQueueLength = await gSttngs().setIfNotCached(
+    "expdtQueueLength",
+    0,
+  );
   // 1 is 100% of the available devUnits.
-  gSttngs().setIfNotCached("expdtDvUnitsFactor", 1);
+  const expdtDvUnitsFactor = await gSttngs().setIfNotCached(
+    "expdtDvUnitsFactor",
+    1,
+  );
   // Q: How many new items arrive in your backlog each day?
-  gSttngs().setIfNotCached("arrivalRate", 5);
+  const arrivalRate = await gSttngs().setIfNotCached("arrivalRate", 5);
   // Format: A number between 0 and and 1
-  gSttngs().setIfNotCached("flwItmSizeLimit", 1);
+  const flwItmSizeLimit = await gSttngs().setIfNotCached("flwItmSizeLimit", 1);
   // Q: At what flwItmSizeLimit do we get 0.8 of the value from a flow item?
-  gSttngs().setIfNotCached("paretoPoint", 0.2);
-  gSttngs().setIfNotCached("numberOfSteps", 5);
+  const paretoPoint = await gSttngs().setIfNotCached("paretoPoint", 0.2);
+  const numberOfSteps = await gSttngs().setIfNotCached("numberOfSteps", 5);
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------
-  gSttngs().setIfNotCached("rangeMax", 7);
-  gSttngs().setIfNotCached("rangeIncreaseRate", 0.25);
-  gSttngs().setIfNotCached("rangeMidpoint", 0.1);
-  gSttngs().setIfNotCached("fps", 1);
-  gSttngs().setIfNotCached("showMetrics", true);
+  const rangeMax = await gSttngs().setIfNotCached("rangeMax", 7);
+  const rangeIncreaseRate = await gSttngs().setIfNotCached(
+    "rangeIncreaseRate",
+    0.25,
+  );
+  const rangeMidpoint = await gSttngs().setIfNotCached("rangeMidpoint", 0.1);
+  const fps = await gSttngs().setIfNotCached("fps", 1);
+  const showMetrics = await gSttngs().setIfNotCached("showMetrics", true);
   gSttngs().set("colorGold", "f6ba00");
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");

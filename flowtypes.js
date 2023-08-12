@@ -68,10 +68,11 @@ type GlobalSettings = {
 
 type FlwStep = {
   name: string,
-  status: "open" | "wait" | "touch" | "external" | "done",
+  status: "backlog" | "wait" | "touch" | "external" | "done",
   limit: number,
   movingLimit: number | typeof undefined,
   devUnits: number | typeof undefined,
+  movingDevUnits: number | typeof undefined,
   flwTimeAtStart: number | typeof undefined,
 };
 

@@ -2,8 +2,6 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "../actions/gState.js";
-import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -42,15 +40,23 @@ import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
-import isParsable from "../actions/isParsable.js";
 import setUpdtngCnfg from "./setUpdtngCnfg.js";
-
+import populateSteps from "./populateSteps.js";
+import updateStepsStateFromGlobalState from "./updateStepsStateFromGlobalState.js";
+import changeStepName from "./changeStepName.js";
+import changeStepLimit from "./changeStepLimit.js";
+import changeStepDevUnits from "./changeStepDevUnits.js";
+import changeStepStatus from "./changeStepStatus.js";
+import changeStepFlwTimeAtStart from "./changeStepFlwTimeAtStart.js";
+//------------------------------------------------------------------
+// FUNCTION: Steps
+//------------------------------------------------------------------
 /*::
 type Props = {
   numberOfSteps: number,
 }
 */
-export default (props /*: Props */) /*: string */ => {
+export const Steps = (props /*: Props */) /*: string */ => {
   // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
@@ -67,146 +73,10 @@ export default (props /*: Props */) /*: string */ => {
   // A local state to hold the settings
   const [lState, setStateFunctions] = setStateFunctionsStore(useState);
   // Once, on load, update the local state from the global state
-  useEffect(
-    () /*: void */ => {
-      if (
-        props.numberOfSteps === undefined ||
-        steps.length === undefined ||
-        props.numberOfSteps === 0 ||
-        steps.length === 0
-      ) {
-        return;
-      }
-      if (props.numberOfSteps < steps.length) {
-        while (props.numberOfSteps < steps.length) {
-          steps.pop();
-        }
-      } else if (props.numberOfSteps > steps.length) {
-        // The last step, if it exists, is always done
-        if (steps.length > 0) steps[steps.length - 1].status = "wait";
-        while (props.numberOfSteps > steps.length) {
-          steps.push({
-            name: "Step " + (steps.length + 1),
-            status: "wait",
-            limit: 0,
-            movingLimit: 0,
-            devUnits: 0,
-            flwTimeAtStart: 1,
-          });
-        }
-      }
-      // The first step is always backlog
-      steps[0].status = "backlog";
-      // The last step is always done
-      steps[steps.length - 1].status = "done";
-      steps.forEach((step /*: FlwStep */, index /*: number */) /*: void */ => {
-        step.limit = step.limit || 0;
-        step.movingLimit = step.movingLimit || 0;
-        if (step.status !== "touch") {
-          delete step.devUnits;
-          delete step.flwTimeAtStart;
-        }
-        if (step.status === "touch") {
-          step.devUnits = step.devUnits || 0;
-          step.flwTimeAtStart = step.flwTimeAtStart || 1;
-        }
-        if (step.status === "done") {
-          step.limit = 0;
-          delete step.movingLimit;
-        }
-      });
-      setSteps(steps);
-      gSttngs().set("steps", steps);
-    },
-    [props.numberOfSteps],
-  );
+  useEffect(populateSteps(props, steps, setSteps), [props.numberOfSteps]);
   useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
 
-  const changeStepName =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.name = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
-
-  const changeStepLimit =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.limit = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
-
-  const changeStepDevUnits =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.devUnits = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
-
-  const changeStepStatus =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.status = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
-
-  const changeStepFlwTimeAtStart =
-    (
-      setSteps /*: (any) => void */,
-      index /*: number */,
-    ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-    (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-      let value = e.target.value;
-      if (isParsable(value)) {
-        value = JSON.parse(value);
-      }
-      const steps = [...gSttngs().get("steps")];
-      const step = steps[index];
-      step.flwTimeAtStart = value;
-      gSttngs().set("steps", steps);
-      setSteps(steps);
-    };
   // <div id="params-container" className="${styles.paramsContainer}">
   //   <fieldset>
   return html`
@@ -317,12 +187,4 @@ export default (props /*: Props */) /*: string */ => {
   //   </fieldset>
   // </div>
 };
-
-const updateStepsStateFromGlobalState =
-  (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
-    setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
-    const isUpdtngCnfg = gState().get("isUpdtngCnfg");
-    if (isUpdtngCnfg !== true) {
-      setSteps(gSttngs().get("steps"));
-    }
-  };
+export default Steps;

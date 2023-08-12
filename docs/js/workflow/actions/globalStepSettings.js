@@ -13,14 +13,14 @@ import touchStepsCount from "./touchStepsCount.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
-export default () /*: void */ => {
+export default async () /*: Promise<void> */ => {
   //------------------------------------------------------------------
   // Q: What steps do we have in our workflow?
   // Q: What WIP limits, if any, do we have for each step?
   // NOTE: We need to start with a "backlog" step, and end with a "done" step,
   // both of which have a limit of 0, which means "no limit".
   // Q: How many items are currently, or typically, or often in each step?
-  gSttngs().setIfNotCached("steps", [
+  const steps = await gSttngs().setIfNotCached("steps", [
     {
       name: "Open",
       status: "backlog",

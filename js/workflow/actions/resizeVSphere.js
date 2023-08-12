@@ -60,19 +60,19 @@ export const animatePosition = () => {
 export const animateScale = () => {
   const scale = gSttngs().get("scale") || 0.07;
   const dRadius = gState().get("vSphere").dRadius || scale;
-  const total = gState().get("vQueue").total();
-  // Create an object with a scale property that can be animated.
+  const total = gState().get("vQueue").total() || 1;
+  // Create an object with a scale property that can be animated
   let scaleObject = { scale: dRadius };
+  // Calculate the new radius based on the number of Done items
   const valueScaled = (total * scale) / 10;
   const newRadius = valueScaled / 1.5;
-  // The radius used to be based on volume:
+  // Store the new radius in a data property
   gState().get("vSphere").dRadius = newRadius;
-
+  // If the sphere is not moving, animate it
   const dMoving = gState().get("vSphere").dMoving;
   if (dMoving === false) {
     gState().get("vSphere").dMoving = true;
-
-    // Create an animation that transitions the scale from 1.0 to 2.0 over 2 seconds.
+    // Create an animation that transitions the scale
     anime({
       targets: [scaleObject],
       scale: newRadius,

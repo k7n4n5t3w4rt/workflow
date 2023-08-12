@@ -2,8 +2,6 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./actions/gState.js";
-import gSttngs from "./actions/gSttngs.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -25,11 +23,15 @@ import cssStyles from "./WorkflowSettings/cssStylesParams.js";
 import getRawStyles from "./WorkflowSettings/getRawStyles.js";
 import setStateParamsFunctionsStore from "./WorkflowSettings/setStateParamsFunctionsStore.js";
 import hideOrShowParamsDivs from "./WorkflowSettings/hideOrShowParamsDivs.js";
-import isParsable from "./actions/isParsable.js";
 import setUpdtngCnfg from "./WorkflowSettings/setUpdtngCnfg.js";
 import changeSetting from "./WorkflowSettings/changeSetting.js";
 import changeSid from "./WorkflowSettings/changeSid.js";
 import updateLocalStateFromGlobalState from "./WorkflowSettings/updateLocalParamsStateFromGlobalState.js";
+import changeStepMovingLimit from "./changeStepMovingLimit.js";
+import changeStepDevUnits from "./changeStepMovingDevUnits.js";
+import updateStepsStateFromGlobalState from "./updateStepsStateFromGlobalState.js";
+import calculateDevUnits from "./actions/calculateDevUnits.js";
+import calculateMovingDevUnits from "./actions/calculateMovingDevUnits.js";
 //------------------------------------------------------------------
 // Params
 //------------------------------------------------------------------
@@ -69,25 +71,9 @@ export const Params = (props /*: Props */) /*: string */ => {
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
-        <!-- Auto Mode -->
+        <!-- STEP WIP LIMIT -->
         <!-------------------------------------------------------------------->
-        <${AutoMode}
-          autoMode=${lState.autoMode}
-          styles=${styles}
-          changeSetting=${changeSetting("autoMode", setStateFunctions)}
-        />
-        <!------------------------------------------------------------------>
-        <!-- SID -->
-        <!------------------------------------------------------------------>
-        <${Sid}
-          sid=${lState.sid}
-          styles=${styles}
-          changeSid=${changeSid(setStateFunctions)}
-        />
-
-        <!------------------------------------------------------------------>
-        <!-- Params -->
-        <!------------------------------------------------------------------>
+        <div className="${styles.inputHeading}">WIP Limits</div>
         ${(steps || []).map(
           (
             step /*: { 
@@ -95,17 +81,16 @@ export const Params = (props /*: Props */) /*: string */ => {
             status: string,
             limit: number,
             movingLimit: number,
-            devUnits: number,
+            movingDevUnits: number,
           } */,
             index /*: number */,
           ) /*: void */ => {
             if (step.status === "done") return html``;
             return html`
               <div>
-                <div className="${styles.inputHeading}">
-                  Step ${index}: ${step.name}
-                </div>
-                <label for="step${index}MovingLimit">MovingLimit</label>
+                <label for="step${index}MovingLimit"
+                  >Step ${index}: ${step.name}:</label
+                >
                 <output
                   id="step${index}MovingLimitOutput"
                   name="step${index}MovingLimitOutput"
@@ -130,6 +115,77 @@ export const Params = (props /*: Props */) /*: string */ => {
             `;
           },
         )}
+        <!-------------------------------------------------------------------->
+        <!-- STEP DEV UNITS -->
+        <!-------------------------------------------------------------------->
+        <div className="${styles.inputHeading}">
+          Devs/Teams (${calculateMovingDevUnits()}/${calculateDevUnits()})
+        </div>
+        ${(steps || []).map(
+          (
+            step /*: { 
+            name: string,
+            status: string,
+            limit: number,
+            movingLimit: number,
+            movingDevUnits: number,
+            movingDevUnits: number,
+          } */,
+            index /*: number */,
+          ) /*: void */ => {
+            if (step.status !== "touch") return html``;
+            return html`
+              <div>
+                <label for="step${index}DevUnits"
+                  >Step ${index}: ${step.name}:</label
+                >s
+                <output
+                  id="step${index}DevUnitsOutput"
+                  name="step${index}DevUnitsOutput"
+                  for="step${index}DevUnitsOutput"
+                  >${(step.movingDevUnits || 0).toString()}</output
+                >
+                <input
+                  type="range"
+                  id="step${index}DevUnit"
+                  name="step${index}DevUnit"
+                  min="0"
+                  max="${calculateDevUnits()}"
+                  step="1"
+                  onChange=${changeStepDevUnits(setSteps, index)}
+                  onTouchStart=${setUpdtngCnfg(true)}
+                  onTouchEnd=${setUpdtngCnfg(false)}
+                  onMouseDown=${setUpdtngCnfg(true)}
+                  onMouseUp=${setUpdtngCnfg(false)}
+                  value="${(step.movingDevUnits || 0).toString()}"
+                />
+              </div>
+            `;
+          },
+        )}
+        <!------------------------------------------------------------------>
+        <!-- SHARING -->
+        <!------------------------------------------------------------------>
+        <div className="${styles.inputHeading}">Sharing</div>
+        <!-------------------------------------------------------------------->
+        <!-- ID -->
+        <!-------------------------------------------------------------------->
+        <${Sid}
+          sid=${lState.sid}
+          styles=${styles}
+          changeSid=${changeSid(setStateFunctions)}
+        />
+        <!------------------------------------------------------------------>
+        <!-- DISPLAY -->
+        <!------------------------------------------------------------------>
+        <div className="${styles.inputHeading}">Display</div>
+        <!-------------------------------------------------------------------->
+        <!-- fps -->
+        <!-------------------------------------------------------------------->
+        <${Fps}
+          fps=${lState.fps}
+          changeSetting=${changeSetting("fps", setStateFunctions)}
+        />
       </fieldset>
     </div>
     <div
@@ -142,33 +198,3 @@ export const Params = (props /*: Props */) /*: string */ => {
   `;
 };
 export default Params;
-//------------------------------------------------------------------
-// changeStepMovingLimit()
-//------------------------------------------------------------------
-const changeStepMovingLimit =
-  (
-    setSteps /*: (any) => void */,
-    index /*: number */,
-  ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
-  (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-    let value = e.target.value;
-    if (isParsable(value)) {
-      value = JSON.parse(value);
-    }
-    const steps = [...gSttngs().get("steps")];
-    const step = steps[index];
-    step.movingLimit = value;
-    gSttngs().set("steps", steps);
-    setSteps(steps);
-  };
-//------------------------------------------------------------------
-// updateStepsStateFromGlobalState()
-//------------------------------------------------------------------
-const updateStepsStateFromGlobalState =
-  (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
-    setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
-    const isUpdtngCnfg = gState().get("isUpdtngCnfg");
-    if (isUpdtngCnfg !== true) {
-      setSteps(gSttngs().get("steps"));
-    }
-  };

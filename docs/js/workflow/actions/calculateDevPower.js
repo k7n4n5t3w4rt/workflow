@@ -7,7 +7,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateDevUnits from "./calculateDevUnits.js";
+import calculateMovingDevUnits from "./calculateMovingDevUnits.js";
 import calculateTouchWipLimits from "./calculateTouchWipLimits.js";
 import calculateTouchSteps from "./calculateTouchSteps.js";
 //------------------------------------------------------------------
@@ -17,7 +17,7 @@ export const calculateDevPower = () /*: number */ => {
   // const avrgFlwTimePerItem = gSttngs().get("avrgFlwTimeAtStart");
   const touchSteps = calculateTouchSteps();
   //const flwTimePerItemPerTouchStep = avrgFlwTimePerItem / touchSteps;
-  const devUnits = calculateDevUnits();
+  const devUnits = calculateMovingDevUnits();
   const devUnitsPerTouchStep = devUnits / touchSteps;
   const touchWipAtStart = calculateTouchWipLimits();
   const wipPerTouchStep = touchWipAtStart / touchSteps;

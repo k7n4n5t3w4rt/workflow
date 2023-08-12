@@ -7,17 +7,22 @@ import { html } from "../../../web_modules/htm/preact.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import setUpdtngCnfg from "./setUpdtngCnfg.js";
-
+import rndmBetweenIntegers from "../actions/rndmBetweenIntegers.js";
+//------------------------------------------------------------------
+// FUNCTION: Sid()
+//------------------------------------------------------------------
 /*::
 type Props = {
 	sid: number,
+  styles: Object,
   changeSid: () => void,
 }
 */
-export default (props /*: Props */) /*: string */ => {
+export const Sid = (props /*: Props */) /*: string */ => {
+  //rndmBetweenIntegers(0, 1000000)
   return html`
     <div>
-      <label for="sid">Session ID:</label>
+      <label for="sid">ID:</label>
       <input
         type="text"
         id="sid"
@@ -30,3 +35,4 @@ export default (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
+export default Sid;

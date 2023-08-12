@@ -16,7 +16,7 @@ import expediteNewFlwItems from "./expediteNewFlwItems.js";
 //------------------------------------------------------------------
 export const populateSteps = () /*: void */ => {
   const flwMpSteps = getFlwMpSteps();
-  const steps = gSttngs().get("steps");
+  const steps = gSttngs().get("steps") || [];
   if (flwMpSteps.length === 0 || steps.length === 0) {
     setTimeout(populateSteps, 1000);
     return;

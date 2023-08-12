@@ -4,9 +4,10 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
-// touchStepsCount()
+// calculateDevUnits()
 //------------------------------------------------------------------
-export default () /*: number */ => {
+export const calculateDevUnits = () /*: number */ => {
+  if (gSttngs().get("steps") === undefined) return 0;
   return gSttngs()
     .get("steps")
     .reduce((_ /*: number*/, step /*: Object*/) => {
@@ -17,3 +18,4 @@ export default () /*: number */ => {
       }
     }, 0);
 };
+export default calculateDevUnits;
