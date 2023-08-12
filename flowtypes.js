@@ -49,6 +49,7 @@ type GlobalSettings = {
     steps: Array<FlwStep>,
     numberOfSteps: number,
     fps: number,
+    paramsMaxWip: number,
     rangeMidpoint: number,
     rangeIncreaseRate: number,
     rangeMax: number,

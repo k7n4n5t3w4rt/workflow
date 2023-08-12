@@ -73,9 +73,15 @@ export const Metrics = (props /*: Props */) /*: string */ => {
   return html`
     <div id="metrics-container" className="${styles.metricsContainer}">
       <div className="${styles.metricsDivs}">
-        <div className="${styles.metricsSpans}">TmBox: ${tmBox}</div>
-        <div className="${styles.metricsSpans}">Value: ${value}</div>
-        <div className="${styles.metricsSpans}">ThruPut: ${thruPut}</div>
+        <div className="${styles.metricsSpans} ${styles.metricsSpansTopRow}">
+          TmBox: ${tmBox}
+        </div>
+        <div className="${styles.metricsSpans} ${styles.metricsSpansTopRow}">
+          Value: ${value}
+        </div>
+        <div className="${styles.metricsSpans} ${styles.metricsSpansTopRow}">
+          ThruPut: ${thruPut}
+        </div>
       </div>
       <div className="${styles.metricsDivs}">
         <div className="${styles.metricsSpans}">FlwTm: ${flowTime}</div>

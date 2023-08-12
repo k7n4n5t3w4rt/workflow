@@ -2,6 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
+import gSttngs from "./actions/gSttngs.js";
+import gState from "./actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -103,7 +105,7 @@ export const Params = (props /*: Props */) /*: string */ => {
                   id="step${index}MovingLimit"
                   name="step${index}MovingLimit"
                   min="0"
-                  max="200"
+                  max="${gSttngs().get("paramsMaxWip")}"
                   step="1"
                   onChange=${changeStepMovingLimit(setSteps, index)}
                   onTouchStart=${setUpdtngCnfg(true)}

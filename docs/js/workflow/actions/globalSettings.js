@@ -76,6 +76,7 @@ export default async () /*: Promise<void> */ => {
   gSttngs().set("colorGrey", "808080");
   gSttngs().set("colorGreen", "00ff00");
   gSttngs().set("colorBlue", "1d2570");
+  gSttngs().set("paramsMaxWip", 20);
   // We'll await scaleCM one because it is required for setting some other values
   const scaleCm = await gSttngs().setIfNotCached("scaleCm", 7);
   const scale = gSttngs().set("scale", scaleCm / 100);

@@ -43,9 +43,6 @@ export const Steps = (props /*: Props */) /*: string */ => {
   };
   // Once, on load, update the local state from the global state
   useEffect(updateStepsStateFromGlobalState(setSteps), []);
-
-  console.log("/WorkflowMetrics/Steps.js: steps:", steps);
-
   return html`
     <!------------------------------------------------------------------>
     <!-- Steps -->
