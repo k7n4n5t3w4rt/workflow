@@ -57,7 +57,7 @@ export default async () /*: Promise<void> */ => {
       devUnits: 5,
       movingDevUnits: 5,
       flwTimeAtStart: 5,
-      actualFlwTime: 6,
+      actualFlwTime: 7.5,
     },
     {
       name: "Done",

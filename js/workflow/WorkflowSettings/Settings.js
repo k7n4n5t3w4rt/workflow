@@ -83,13 +83,11 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- Easy Storage -->
         <!-------------------------------------------------------------------->
-        <!--
         <${EasyStorage}
           easyStorage=${lState.easyStorage}
           styles=${styles}
           changeSetting=${changeSetting("easyStorage", setStateFunctions)}
         />
-        -->
         <!-------------------------------------------------------------------->
         <!-- showMetrics -->
         <!-------------------------------------------------------------------->

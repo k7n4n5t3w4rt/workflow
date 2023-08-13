@@ -65,7 +65,7 @@ export const animateScale = () => {
   let scaleObject = { scale: dRadius };
   // Calculate the new radius based on the number of Done items
   const valueScaled = (total * scale) / 10;
-  const newRadius = valueScaled / 1.5;
+  const newRadius = valueScaled / 1.0;
   // Store the new radius in a data property
   gState().get("vSphere").dRadius = newRadius;
   // If the sphere is not moving, animate it

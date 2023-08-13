@@ -19,9 +19,14 @@ export default async () /*: Promise<void> */ => {
   // Development
   //------------------------------------------------------------------
   // Starts the simulation automatically
-  gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("autoMode", false);
+  // gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("autoMode", false);
+  gSttngs().setIfNotCached("autoMode", false);
   // Toggle Easy storage
-  gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage("easyStorage", true);
+  // gSttngs().setNoCacheIfNotInLocalStorageAddToLocalStorage(
+  //   "easyStorage",
+  //   false,
+  // );
+  gSttngs().setIfNotCached("easyStorage", false);
   //------------------------------------------------------------------
   // Workflow
   //------------------------------------------------------------------

@@ -101,8 +101,10 @@ function gModel() /*: void */ {
       // Set localStorage
       localStorage.setItem(key, valueWithTimestamp);
     } catch (e) {}
-    // Set easyStorage
-    easyStorage.set(this.sid, key, valueWithTimestamp);
+    if (this.keyValuePairs.easyStorage === true) {
+      // Set easyStorage
+      easyStorage.set(this.sid, key, valueWithTimestamp);
+    }
     return valueValue;
   };
   //---------------------------------------------------------------------------
@@ -120,11 +122,18 @@ function gModel() /*: void */ {
     // So that we can tell, in the functions below, which is newer
     let eSValue /*: any */ = "NOT SET 4";
     let eSTimestamp /*: number */ = 0;
+    if (this.keyValuePairs.easyStorage === true) {
+      const eSTmStmpVl = await readEasyStore(
+        this.sid,
+        eSTimestamp,
+        eSValue,
+        key,
+      );
+      eSTimestamp = eSTmStmpVl.eSTimestamp;
+      eSValue = eSTmStmpVl.eSValue;
+    }
     let lSValue /*: any */ = "NOT SET 5";
     let lSTimestamp /*: number */ = 0;
-    const eSTmStmpVl = await readEasyStore(this.sid, eSTimestamp, eSValue, key);
-    eSTimestamp = eSTmStmpVl.eSTimestamp;
-    eSValue = eSTmStmpVl.eSValue;
     ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
     // The value of eSTimestamp and lSTimestamp will be 0 if they don't
     // exist in either of the caches.
@@ -154,7 +163,9 @@ function gModel() /*: void */ {
       if (typeof value !== "string") {
         value = JSON.stringify(value);
       }
-      easyStorage.set(this.sid, key, value + "___" + lSTimestamp.toString());
+      if (this.keyValuePairs.easyStorage === true) {
+        easyStorage.set(this.sid, key, value + "___" + lSTimestamp.toString());
+      }
       if (isParsable(value)) {
         value = JSON.parse(value);
       }
@@ -178,7 +189,9 @@ function gModel() /*: void */ {
         value = JSON.stringify(value);
       }
       const timestamp = Date.now().toString();
-      easyStorage.set(this.sid, key, value + "___" + timestamp);
+      if (this.keyValuePairs.easyStorage === true) {
+        easyStorage.set(this.sid, key, value + "___" + timestamp);
+      }
       try {
         localStorage.setItem(key, value + "___" + timestamp);
       } catch (e) {}

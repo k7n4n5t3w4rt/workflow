@@ -27,6 +27,8 @@ import { html } from "../web_modules/htm/preact.js";
 globalSettings().then(() => {
   globalStepSettings();
   globalState();
+  if (gSttngs().get("easyStorage") === true) {
+    setInterval(getSttngsFromEasyStorage, 1000);
+  }
 });
-setInterval(getSttngsFromEasyStorage, 1000);
 render(html` <${App} /> `, document.getElementById("goodthing"));
