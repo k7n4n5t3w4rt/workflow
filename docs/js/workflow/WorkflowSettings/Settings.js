@@ -36,6 +36,7 @@ import RangeIncreaseRate from "./RangeIncreaseRate.js";
 import RangeMidpoint from "./RangeMidpoint.js";
 import Steps from "./Steps.js";
 import NumberOfSteps from "./NumberOfSteps.js";
+import ParamsMaxWip from "./ParamsMaxWip.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -152,6 +153,13 @@ export default (props /*: Props */) /*: string */ => {
         <${FlwTimeMin}
           flwTimeMin=${lState.flwTimeMin}
           changeSetting=${changeSetting("flwTimeMin", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- Params Max WIP -->
+        <!-------------------------------------------------------------------->
+        <${ParamsMaxWip}
+          paramsMaxWip=${lState.paramsMaxWip}
+          changeSetting=${changeSetting("paramsMaxWip", setStateFunctions)}
         />
         <!-------------------------------------------------------------------->
         <!-- Dev Units -->

@@ -40,6 +40,7 @@ import {
   createStyles,
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
+import populateStepsGlobal from "./WorkflowSettings/populateStepsGlobal.js";
 
 /*::
 type Props = {
@@ -57,6 +58,7 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
   useEffect(() => {
     loadSharedSettings(props.sid, props.share)();
+    populateStepsGlobal();
   }, [props.share]);
 
   return html`

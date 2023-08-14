@@ -35,6 +35,9 @@ export default (
   const [flwTimeMin, setFlwTimeMin] = useState(1);
   setStateFunctions["flwTimeMin"] = setFlwTimeMin;
   lState["flwTimeMin"] = flwTimeMin;
+  const [paramsMaxWip, setParamsMaxWip] = useState(1);
+  setStateFunctions["paramsMaxWip"] = setParamsMaxWip;
+  lState["paramsMaxWip"] = paramsMaxWip;
   const [flwTimeMax, setFlwTimeMax] = useState(1);
   setStateFunctions["flwTimeMax"] = setFlwTimeMax;
   lState["flwTimeMax"] = flwTimeMax;

@@ -56,7 +56,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
             limit: number,
             devUnits: number,
             flwTimeAtStart: number,
-            actaulFlwTime: number,
+            actualFlwTime: number,
             movingLimit: number,
             avAge: number,
           } */,
@@ -95,6 +95,7 @@ const updateStepsStateFromGlobalState =
     const steps = gSttngs().get("steps");
     getFlwMpSteps().forEach(
       (flwMpStep /*: FlwItem[] */, index /*: number */) /*: void */ => {
+        if (steps[index] === undefined) return;
         steps[index].avAge = 0;
         const flwItemAges /*: Array<number> */ = [];
         flwMpStep.forEach((flwItem /*: FlwItem */) => {
