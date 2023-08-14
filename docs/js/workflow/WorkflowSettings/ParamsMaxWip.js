@@ -33,7 +33,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="paramsMaxWip">Flow Time Min.:</label>
+      <label for="paramsMaxWip">Params Max. WIP:</label>
       <output
         id="paramsMaxWipOutput"
         name="paramsMaxWipOutput"
