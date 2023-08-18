@@ -24,11 +24,16 @@ const updateLocalStateFromGlobalState =
     // Sharing
     //----------------------------------------
     setStateFunctions["sid"](gSttngs().getSid());
+    //----------------------------------------
+    // Sliders
+    //----------------------------------------
     setStateFunctions["fps"](gSttngs().get("fps"));
-    setStateFunctions["scaleCm"](gSttngs().get("scaleCm"));
-    setStateFunctions["rangeMax"](gSttngs().get("rangeMax"));
-    setStateFunctions["rangeIncreaseRate"](gSttngs().get("rangeIncreaseRate"));
-    setStateFunctions["rangeMidpoint"](gSttngs().get("rangeMidpoint"));
+    setStateFunctions["flwItmSizeLimit"](gSttngs().get("flwItmSizeLimit"));
+    setStateFunctions["paramsMaxWip"](gSttngs().get("paramsMaxWip"));
+    // setStateFunctions["scaleCm"](gSttngs().get("scaleCm"));
+    // setStateFunctions["rangeMax"](gSttngs().get("rangeMax"));
+    // setStateFunctions["rangeIncreaseRate"](gSttngs().get("rangeIncreaseRate"));
+    // setStateFunctions["rangeMidpoint"](gSttngs().get("rangeMidpoint"));
   };
 
 export default updateLocalStateFromGlobalState;

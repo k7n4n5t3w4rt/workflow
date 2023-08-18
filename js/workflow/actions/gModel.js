@@ -73,6 +73,14 @@ function gModel() /*: void */ {
   //---------------------------------------------------------------------------
   this.get = (key /*: string */) /*: any */ => {
     let value = this.keyValuePairs[key];
+    // Check localStorage in case it has been updated
+    // in another tab
+    let lSValue /*: any */ = "NOT SET 6";
+    let lSTimestamp /*: number */ = 0;
+    ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
+    if (lSValue !== "NOT SET 6") {
+      value = lSValue;
+    }
     if (isParsable(value)) {
       value = JSON.parse(value);
     }

@@ -105,7 +105,7 @@ export const Params = (props /*: Props */) /*: string */ => {
                   id="step${index}MovingLimit"
                   name="step${index}MovingLimit"
                   min="0"
-                  max="${gSttngs().get("paramsMaxWip")}"
+                  max="${lState.paramsMaxWip}"
                   step="1"
                   onChange=${changeStepMovingLimit(setSteps, index)}
                   onTouchStart=${setUpdtngCnfg(true)}
@@ -167,7 +167,7 @@ export const Params = (props /*: Props */) /*: string */ => {
           },
         )}
         <!-------------------------------------------------------------------->
-        <!-- flwItmSizeLimit -->
+        <!-- FLOW ITEMS SIZE LIMIT -->
         <!-------------------------------------------------------------------->
         <div className="${styles.inputHeading}">
           Size Limit for Flow Items (% of current max. size)
@@ -181,7 +181,7 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!------------------------------------------------------------------>
         <div className="${styles.inputHeading}">Sharing</div>
         <!-------------------------------------------------------------------->
-        <!-- ID -->
+        <!-- SHARING: SID -->
         <!-------------------------------------------------------------------->
         <${Sid}
           sid=${lState.sid}
@@ -193,7 +193,7 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!------------------------------------------------------------------>
         <div className="${styles.inputHeading}">Display</div>
         <!-------------------------------------------------------------------->
-        <!-- fps -->
+        <!-- DISPLAY: FRAMES PER SECOND -->
         <!-------------------------------------------------------------------->
         <${Fps}
           fps=${lState.fps}

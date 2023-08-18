@@ -33,6 +33,7 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["timeBox"](gSttngs().get("timeBox"));
     setStateFunctions["numberOfSteps"](gSttngs().get("numberOfSteps"));
     setStateFunctions["fps"](gSttngs().get("fps"));
+    setStateFunctions["paramsMaxWip"](gSttngs().get("paramsMaxWip"));
     setStateFunctions["expdtQueueLength"](gSttngs().get("expdtQueueLength"));
     setStateFunctions["expdtDvUnitsFactor"](
       gSttngs().get("expdtDvUnitsFactor"),
