@@ -16,7 +16,9 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="backlogDeath">Backlog Death:</label>
+      <label for="backlogDeath"
+        >Max. age for items in the backlog (0 = no limit):</label
+      >
       <output
         id="backlogDeathOutput"
         name="backlogDeathOutput"

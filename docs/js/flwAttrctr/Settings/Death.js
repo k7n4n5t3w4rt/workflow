@@ -16,7 +16,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="death">Death:</label>
+      <label for="death">Lifespan for work items (0 = no limit):</label>
       <output id="deathOutput" name="deathOutput" for="death"
         >${(props.death || 0).toString()}</output
       >

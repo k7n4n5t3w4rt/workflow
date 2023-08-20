@@ -15,7 +15,7 @@ type Props = {
 export const Drag = (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="drag">Drag:</label>
+      <label for="drag">Dev. capacity lost when there is too much WIP:</label>
       <output id="dragOutput" name="dragOutput" for="drag"
         >${(props.drag || 0).toString()}</output
       >

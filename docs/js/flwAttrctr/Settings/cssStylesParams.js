@@ -15,16 +15,13 @@ export default () /*: Object */ => {
   const [styles] = createStyles({
     inputHeading: {
       fontSize: "1rem",
+      padding: "0.2rem",
       color: "white",
       fontWeight: "bold",
       textShadow: "2px 2px 2px grey",
-      padding: "0.2rem",
-      paddingTop: "0.5rem",
-      paddingBottom: "0.5rem",
-      marginTop: "1rem",
+      backgroundColor: "#ef3735",
       marginBottom: "1rem",
-      borderTop: "10px solid white",
-      borderBottom: "10px solid white",
+      padding: "0.4rem",
     },
     paramsContainer: {
       position: "absolute",
@@ -41,8 +38,8 @@ export default () /*: Object */ => {
       position: "absolute",
       zIndex: "32000",
       boxSizing: "border-box",
-      bottom: "0rem",
-      right: ".4rem",
+      bottom: ".5rem",
+      right: ".5rem",
       cursor: "pointer",
     },
     paramsIcon: {

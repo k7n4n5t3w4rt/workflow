@@ -16,12 +16,14 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="expdtDvUnitsFactor">Expedited Dev Units Factor:</label>
+      <label for="expdtDvUnitsFactor"
+        >% of dev units focused on expedited items:</label
+      >
       <output
         id="expdtDvUnitsFactorOutput"
         name="expdtDvUnitsFactorOutput"
         for="expdtDvUnitsFactor"
-        >${(props.expdtDvUnitsFactor || 0).toString()}</output
+        >${((props.expdtDvUnitsFactor || 0) * 100).toString() + "%"}</output
       >
       <input
         type="range"

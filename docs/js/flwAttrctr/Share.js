@@ -32,8 +32,8 @@ const [styles] = createStyles({
     position: "absolute",
     zIndex: "10000",
     boxSizing: "border-box",
-    bottom: "0rem",
-    left: "0rem",
+    bottom: "0.5rem",
+    left: "0.5rem",
     cursor: "pointer",
   },
   shareIcon: {

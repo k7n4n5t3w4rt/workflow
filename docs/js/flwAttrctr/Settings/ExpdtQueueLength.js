@@ -16,7 +16,9 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="expdtQueueLength">Expedite Queue Length:</label>
+      <label for="expdtQueueLength"
+        >Number of expedited items in the system:</label
+      >
       <output
         id="expdtQueueLengthOutput"
         name="expdtQueueLengthOutput"

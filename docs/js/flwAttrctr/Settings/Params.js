@@ -76,23 +76,6 @@ export const Params = (props /*: Props */) /*: string */ => {
     <div id="params-container" className="${styles.paramsContainer}">
       <fieldset>
         <!-------------------------------------------------------------------->
-        <!-- expdtQueueLength -->
-        <!-------------------------------------------------------------------->
-        <${ExpdtQueueLength}
-          expdtQueueLength=${lState.expdtQueueLength}
-          changeSetting=${changeSetting("expdtQueueLength", setStateFunctions)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- expdtDvUnitsFactor -->
-        <!-------------------------------------------------------------------->
-        <${ExpdtDvUnitsFactor}
-          expdtDvUnitsFactor=${lState.expdtDvUnitsFactor}
-          changeSetting=${changeSetting(
-            "expdtDvUnitsFactor",
-            setStateFunctions,
-          )}
-        />
-        <!-------------------------------------------------------------------->
         <!-- STEP WIP LIMIT -->
         <!-------------------------------------------------------------------->
         <div className="${styles.inputHeading}">WIP Limits</div>
@@ -111,7 +94,7 @@ export const Params = (props /*: Props */) /*: string */ => {
             return html`
               <div>
                 <label for="step${index}MovingLimit"
-                  >Step ${index}: ${step.name}:</label
+                  >WIP limit for "${step.name}":</label
                 >
                 <output
                   id="step${index}MovingLimitOutput"
@@ -141,7 +124,7 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!-- STEP DEV UNITS -->
         <!-------------------------------------------------------------------->
         <div className="${styles.inputHeading}">
-          Devs/Teams (${calculateMovingDevUnits()}/${calculateDevUnits()})
+          Devs / Teams (${calculateMovingDevUnits()}/${calculateDevUnits()})
         </div>
         ${(steps || []).map(
           (
@@ -159,7 +142,7 @@ export const Params = (props /*: Props */) /*: string */ => {
             return html`
               <div>
                 <label for="step${index}DevUnits"
-                  >Step ${index}: ${step.name}:</label
+                  >Dev units working on "${step.name}" items:</label
                 >s
                 <output
                   id="step${index}DevUnitsOutput"
@@ -195,6 +178,31 @@ export const Params = (props /*: Props */) /*: string */ => {
           flwItmSizeLimit=${lState.flwItmSizeLimit}
           changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
         />
+        <!-------------------------------------------------------------------->
+        <!-- EXPEDITE QUEUE -->
+        <!-------------------------------------------------------------------->
+        <div className="${styles.inputHeading}">Exptedite Queue</div>
+        <!-------------------------------------------------------------------->
+        <!-- expdtQueueLength -->
+        <!-------------------------------------------------------------------->
+        <${ExpdtQueueLength}
+          expdtQueueLength=${lState.expdtQueueLength}
+          changeSetting=${changeSetting("expdtQueueLength", setStateFunctions)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- expdtDvUnitsFactor -->
+        <!-------------------------------------------------------------------->
+        <${ExpdtDvUnitsFactor}
+          expdtDvUnitsFactor=${lState.expdtDvUnitsFactor}
+          changeSetting=${changeSetting(
+            "expdtDvUnitsFactor",
+            setStateFunctions,
+          )}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- AGE -->
+        <!-------------------------------------------------------------------->
+        <div className="${styles.inputHeading}">Work Item Age</div>
         <!-------------------------------------------------------------------->
         <!-- Death -->
         <!-------------------------------------------------------------------->

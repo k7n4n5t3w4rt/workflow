@@ -16,7 +16,6 @@ import ArrivalRate from "./ArrivalRate.js";
 import AutoMode from "./AutoMode.js";
 import Debug from "./Debug.js";
 import DevPowerFix from "./DevPowerFix.js";
-import DevUnits from "./DevUnits.js";
 import DfntnOfReady from "./DfntnOfReady.js";
 import Drag from "./Drag.js";
 import EasyStorage from "./EasyStorage.js";
@@ -86,6 +85,10 @@ export default (props /*: Props */) /*: string */ => {
 
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
+        <!------------------------------------------------------------------>
+        <!-- DRAG -->
+        <!------------------------------------------------------------------>
+        <div className="${styles.inputHeading}">Drag Factor</div>
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->
@@ -93,6 +96,10 @@ export default (props /*: Props */) /*: string */ => {
           drag=${lState.drag}
           changeSetting=${changeSetting("drag", setStateFunctions)}
         />
+        <!------------------------------------------------------------------>
+        <!-- PARETO POINT -->
+        <!------------------------------------------------------------------>
+        <div className="${styles.inputHeading}">Pereto Point</div>
         <!-------------------------------------------------------------------->
         <!-- ParetoPoint -->
         <!-------------------------------------------------------------------->

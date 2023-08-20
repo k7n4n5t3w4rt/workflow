@@ -30,7 +30,7 @@ const [styles] = createStyles({
     position: "absolute",
     zIndex: "10000",
     boxSizing: "border-box",
-    bottom: ".5rem",
+    bottom: "1.2rem",
     left: "5rem",
     cursor: "pointer",
   },
