@@ -23,11 +23,11 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // COMPONENTS
 //------------------------------------------------------------------
-import Metrics from "./Metrics/_Metrics.js";
-import Share from "./_Share.js";
-import Params from "./Settings/_Params.js";
-import Sttngs from "./Settings/_Settings.js";
-import LinkedIn from "./_LinkedIn.js";
+import Metrics from "./Metrics/Metrics.js";
+import Share from "./Share.js";
+import Params from "./Settings/Params.js";
+import Sttngs from "./Settings/Settings.js";
+import LinkedIn from "./LinkedIn.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
