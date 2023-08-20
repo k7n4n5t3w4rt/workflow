@@ -6,18 +6,18 @@ import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "../js/workflow/actions/gSttngs.js";
-import gState from "../js/workflow/actions/gState.js";
+import gSttngs from "../js/flwAttrctr/actions/gSttngs.js";
+import gState from "../js/flwAttrctr/actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "../js/workflow/actions/globalSettings.js";
-import globalState from "../js/workflow/actions/globalState.js";
+import globalSettings from "../js/flwAttrctr/actions/globalSettings.js";
+import globalState from "../js/flwAttrctr/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newClickCube from "../js/workflow/actions/newClickCube.js";
-import populateSteps from "../js/workflow/actions/populateSteps.js";
+import newClickCube from "../js/flwAttrctr/actions/newClickCube.js";
+import populateSteps from "../js/flwAttrctr/actions/populateSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------

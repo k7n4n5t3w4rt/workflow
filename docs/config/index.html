@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title>v0.18.7</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="apple-touch-icon" href="icon.png">
+	<!-- Place favicon.ico in the root directory -->
+	<!--Import materialize.css-->
+	<link rel="stylesheet" href="/css/reset.css">
+	<link type="text/css" rel="stylesheet" href="/css/materialize.css"  media="screen,projection"/>
+	<!-- Google Icons used for Materialize.css and other places -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- The main body font -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+	<!-- Reset the browser defaults -->
+	<link rel="stylesheet" href="/css/normalize.css">
+	<!-- From HTML5 Boilerplate -->
+	<link rel="stylesheet" href="/css/main.css">
+	<!-- The loading spinners -->
+	<link rel="stylesheet" href="/css/spinkit.css">
+	<!-- Our local CSS -->
+	<link rel="stylesheet" href="/css/index.css">
+	<link rel="stylesheet" href="/css/WorkFlow.css">
+
+	<meta name="theme-color" content="#fafafa">
+
+	<script>
+		// ENV
+		window.NODE_ENV = "development";
+		window.REMEMBER_ME = false;
+		window.EASY_URL = "_EASY_URL_";
+	</script>
+
+	<script src="/js/vendor/modernizr-3.8.0.min.js"></script>
+	<!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script> -->
+	<script src="/js/plugins.js"></script>
+	<script src="/js/main.js" type="module"></script>
+
+	<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+	<script>
+		window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+		ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+	</script>
+	<script src="https://www.google-analytics.com/analytics.js" async></script>
+</head>
+
+<body>
+	<div id="goodthing" data-goodthing><div id="settings-container" class="settingsContainer_gbwdbjfuujbeha">
+	<fieldset>
+		<div>
+			<div class="inputHeading_gbwdbjfuujbeha">Automode:</div>
+			<div class="radioContainer_gbwdbjfuujbeha">
+				<label for="autoModeTrue">
+					<input type="radio" id="autoModeTrue" name="autoMode" value="true" />
+					<span>True</span>
+				</label>
+				<label for="autoModeFalse">
+					<input type="radio" id="autoModeFalse" name="autoMode" value="false" checked />
+					<span>false</span>
+				</label>
+			</div>
+		</div>
+		<div>
+			<div class="inputHeading_gbwdbjfuujbeha">Easy Storage:</div>
+			<div class="radioContainer_gbwdbjfuujbeha">
+				<label for="easyStorageTrue">
+					<input type="radio" id="easyStorageTrue" name="easyStorage" value="true" />
+					<span>True</span>
+				</label>
+				<label for="easyStorageFalse">
+					<input type="radio" id="easyStorageFalse" name="easyStorage" value="false" checked />
+					<span>false</span>
+				</label>
+			</div>
+		</div>
+		<div>
+			<label for="devPowerFix">Dev Power Fix:</label>
+			<output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix">1</output>
+			<input type="range" id="devPowerFix" name="devPowerFix" min="0" max="5" step="0.01" value="1" />
+		</div>
+		<div>
+			<label for="drag">Drag:</label>
+			<output id="dragOutput" name="dragOutput" for="drag">1</output>
+			<input type="range" id="drag" name="drag" min="0" max="1" step="0.1" value="1" />
+		</div>
+		<div>
+			<label for="paretoPoint">ParetoPoint:</label>
+			<output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint">0</output>
+			<input type="range" id="paretoPoint" name="paretoPoint" min="0.2" max="1" step="0.1" value="0" />
+		</div>
+		<div>
+			<label for="arrivalRate">Arrival Rate:</label>
+			<output id="arrivalRateOutput" name="arrivalRateOutput" for="arrivalRate">0</output>
+			<input type="range" id="arrivalRate" name="arrivalRate" min="0" max="100" step=".25" value="0" />
+		</div>
+		<div>
+			<label for="flwTimeMin">Flow Time Min.:</label>
+			<output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin">1</output>
+			<input type="range" id="flwTimeMin" name="flwTimeMin" min="1" max="200" step="1" value="1" />
+		</div>
+		<div>
+			<label for="paramsMaxWip">Params Max. WIP:</label>
+			<output id="paramsMaxWipOutput" name="paramsMaxWipOutput" for="paramsMaxWip">1</output>
+			<input type="range" id="paramsMaxWip" name="paramsMaxWip" min="1" max="200" step="1" value="1" />
+		</div>
+		<div>
+			<label for="timeBox">TimeBox:</label>
+			<output id="timeBoxOutput" name="timeBoxOutput" for="timeBox">10</output>
+			<input type="range" id="timeBox" name="timeBox" min="5" max="60" step="5" value="10" />
+		</div>
+		<div>
+			<label for="fps">FPS:</label>
+			<output id="fpsOutput" name="fpsOutput" for="fps">1</output>
+			<input type="range" id="fps" name="fps" min="0.25" max="10" step="0.25" value="1" />
+		</div>
+		<div>
+			<label for="expdtQueueLength">Expedite Queue Length:</label>
+			<output id="expdtQueueLengthOutput" name="expdtQueueLengthOutput" for="expdtQueueLength">0</output>
+			<input type="range" id="expdtQueueLength" name="expdtQueueLength" min="0" max="20" step="1" value="0" />
+		</div>
+		<div>
+			<label for="expdtDvUnitsFactor">Expedited Dev Units Factor:</label>
+			<output id="expdtDvUnitsFactorOutput" name="expdtDvUnitsFactorOutput" for="expdtDvUnitsFactor">1</output>
+			<input type="range" id="expdtDvUnitsFactor" name="expdtDvUnitsFactor" min="0" max="1" step="0.25" value="1" />
+		</div>
+		<div>
+			<label for="scaleCm">Scale (cm):</label>
+			<output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm">10</output>
+			<input type="range" id="scaleCm" name="scaleCm" min="1" max="100" step="0.5" value="10" />
+		</div>
+		<div>
+			<label for="rangeMax">Range Max:</label>
+			<output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax">1</output>
+			<input type="range" id="rangeMax" name="rangeMax" min="1" max="10" step="1" value="1" />
+		</div>
+		<div>
+			<label for="rangeIncreaseRate">Range Increase Rate:</label>
+			<output id="rangeIncreaseRateOutput" name="rangeIncreaseRateOutput" for="rangeIncreaseRate">1</output>
+			<input type="range" id="rangeIncreaseRate" name="rangeIncreaseRate" min="0.1" max="1" step="0.1" value="1" />
+		</div>
+		<div>
+			<label for="rangeMidpoint">Range Midpoint:</label>
+			<output id="rangeMidpointOutput" name="rangeMidpointOutput" for="rangeMidpoint">1</output>
+			<input type="range" id="rangeMidpoint" name="rangeMidpoint" min="0.05" max="0.5" step="0.05" value="1" />
+		</div>
+		<div>
+			<label for="flwItmSizeLimit">Size Limit:</label>
+			<output id="flwItmSizeLimitOutput" name="flwItmSizeLimitOutput" for="flwItmSizeLimit">100%</output>
+			<input type="range" id="flwItmSizeLimit" name="flwItmSizeLimit" min="0.2" max="1" step="0.1" value="1" />
+		</div>
+		<div>
+			<label for="numberOfSteps">No. of Steps:</label>
+			<output id="numberOfStepsOutput" name="numberOfStepsOutput" for="numberOfSteps">4</output>
+			<input type="range" id="numberOfSteps" name="numberOfSteps" min="1" max="12" step="1" value="4" />
+		</div>
+	</fieldset>
+</div></div data-goodthing>
+	<!-- <script type="text/javascript" src="/js/vendor/materialize.js"></script> -->
+</body>
+
+</html>
