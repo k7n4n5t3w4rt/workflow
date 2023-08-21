@@ -2,23 +2,23 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "../js/flwattrctr/actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import globalSettings from "../js/flwattrctr/actions/globalSettings.js";
+import globalState from "../js/flwattrctr/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import { numberNormalDevUnits } from "./numberDevUnits.js";
+import { numberNormalDevUnits } from "../js/flwattrctr/actions/numberDevUnits.js";
 //------------------------------------------------------------------
 // TEST: dragFunction
 //------------------------------------------------------------------

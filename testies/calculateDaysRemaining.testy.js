@@ -1,6 +1,6 @@
 // @flow
-import { test, testPromise, should } from "../../../server/testy.js";
-import calculateDaysRemaining from "./calculateDaysRemaining.js";
+import { test, testPromise, should } from "../server/testy.js";
+import calculateDaysRemaining from "../js/flwAttrctr/calculations/calculateDaysRemaining.js";
 
 const skip = false;
 

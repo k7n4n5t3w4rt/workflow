@@ -2,26 +2,26 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "../js/flwattrctr/actions/gSttngs.js";
+import gState from "../js/flwattrctr/actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import globalSettings from "../js/flwattrctr/actions/globalSettings.js";
+import globalState from "../js/flwattrctr/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import populateSteps from "./populateSteps.js";
+import populateSteps from "../js/flwattrctr/actions/populateSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import stepWip from "./stepWip.js";
-import newClickCube from "./newClickCube.js";
+import stepWip from "../js/flwattrctr/actions/stepWip.js";
+import newClickCube from "../js/flwattrctr/actions/newClickCube.js";
 //------------------------------------------------------------------
 // TEST: stepWip()
 //------------------------------------------------------------------

@@ -2,27 +2,27 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "../js/flwattrctr/actions/gSttngs.js";
+import gState from "../js/flwattrctr/actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
+import globalSettings from "../js/flwattrctr/actions/globalSettings.js";
+import globalState from "../js/flwattrctr/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newClickCube from "./newClickCube.js";
-import newFlwItem from "./newFlwItem.js";
-import getFlwMpSteps from "./getFlwMpSteps.js";
+import newClickCube from "../js/flwattrctr/actions/newClickCube.js";
+import newFlwItem from "../js/flwattrctr/actions/newFlwItem.js";
+import getFlwMpSteps from "../js/flwattrctr/actions/getFlwMpSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import setExpedite from "./setExpedite.js";
+import setExpedite from "../js/flwattrctr/actions/setExpedite.js";
 //------------------------------------------------------------------
 // TEST: setExpedite()
 //------------------------------------------------------------------

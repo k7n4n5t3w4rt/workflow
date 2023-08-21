@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: The functions we're testing
 //------------------------------------------------------------------
-import findRadius from "./findRadius.js";
+import findRadius from "../js/flwAttrctr/calculations/findRadius.js";
 //------------------------------------------------------------------
 // TEST: findRadius()
 //------------------------------------------------------------------

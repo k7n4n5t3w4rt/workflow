@@ -2,19 +2,19 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import touchStepsCount from "./touchStepsCount.js";
+import touchStepsCount from "../js/flwattrctr/actions/touchStepsCount.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "../js/flwattrctr/actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: SETTINGS/STATE
 //------------------------------------------------------------------
-import globalSettings from "./globalSettings.js";
+import globalSettings from "../js/flwattrctr/actions/globalSettings.js";
 
 //------------------------------------------------------------------
 // VALUES

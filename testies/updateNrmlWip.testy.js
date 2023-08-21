@@ -2,25 +2,25 @@
 //------------------------------------------------------------------------------
 // TESTY
 //------------------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import globalState from "./globalState.js";
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import globalSettings from "../js/flwattrctr/actions/globalSettings.js";
+import globalState from "../js/flwattrctr/actions/globalState.js";
+import gSttngs from "../js/flwattrctr/actions/gSttngs.js";
+import gState from "../js/flwattrctr/actions/gState.js";
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import newClickCube from "./newClickCube.js";
-import populateSteps from "./populateSteps.js";
-import newFlwItem from "./newFlwItem.js";
-import setUpFlwMap from "./setUpFlwMap.js";
+import newClickCube from "../js/flwattrctr/actions/newClickCube.js";
+import populateSteps from "../js/flwattrctr/actions/populateSteps.js";
+import newFlwItem from "../js/flwattrctr/actions/newFlwItem.js";
+import setUpFlwMap from "../js/flwattrctr/actions/setUpFlwMap.js";
 //------------------------------------------------------------------------------
 // IMPORT: The function under test
 //------------------------------------------------------------------------------
-import updateNrmlWip from "./updateNrmlWip.js";
+import updateNrmlWip from "../js/flwattrctr/actions/updateNrmlWip.js";
 //------------------------------------------------------------------------------
 // FIXTURES
 //------------------------------------------------------------------------------

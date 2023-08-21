@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import skipForWip from "./skipForWip.js";
+import skipForWip from "../js/flwattrctr/actions/skipForWip.js";
 //------------------------------------------------------------------
 // TEST: skipForWip()
 //------------------------------------------------------------------

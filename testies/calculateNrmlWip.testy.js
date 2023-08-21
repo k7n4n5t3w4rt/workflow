@@ -2,24 +2,24 @@
 //------------------------------------------------------------------------------
 // TESTY
 //------------------------------------------------------------------------------
-import { test, testPromise, should } from "../../../server/testy.js";
+import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------------------
-import globalSettings from "./globalSettings.js";
-import gSttngs from "./gSttngs.js";
-import globalState from "./globalState.js";
-import gState from "./gState.js";
+import globalSettings from "../js/flwattrctr/actions/globalSettings.js";
+import gSttngs from "../js/flwattrctr/actions/gSttngs.js";
+import globalState from "../js/flwattrctr/actions/globalState.js";
+import gState from "../js/flwattrctr/actions/gState.js";
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import newClickCube from "./newClickCube.js";
-import populateSteps from "./populateSteps.js";
-import newFlwItem from "./newFlwItem.js";
+import newClickCube from "../js/flwattrctr/actions/newClickCube.js";
+import populateSteps from "../js/flwattrctr/actions/populateSteps.js";
+import newFlwItem from "../js/flwattrctr/actions/newFlwItem.js";
 //------------------------------------------------------------------------------
 // IMPORT: The function under test
 //------------------------------------------------------------------------------
-import calculateNrmlWip from "./calculateNrmlWip.js";
+import calculateNrmlWip from "../js/flwattrctr/actions/calculateNrmlWip.js";
 //------------------------------------------------------------------------------
 // FIXTURES
 //------------------------------------------------------------------------------

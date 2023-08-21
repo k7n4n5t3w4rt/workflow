@@ -134,7 +134,7 @@ const cssStyles = () /*: Object */ => {
     logo: {
       width: "75vw",
       maxWidth: "100vh",
-      minWidth: "45vh",
+      minWidth: "40vh",
       height: "auto",
       marginTop: "10vh",
     },
