@@ -22,9 +22,11 @@ export const populateSteps = () /*: void */ => {
     return;
   }
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
-    for (let i = 1; i <= steps[index].limit; i++) {
-      if (steps[index].status !== "done") {
-        newFlwItem(index);
+    if (steps[index].limit !== undefined) {
+      for (let i = 1; i <= steps[index].limit; i++) {
+        if (steps[index].status !== "done") {
+          newFlwItem(index);
+        }
       }
     }
   });
