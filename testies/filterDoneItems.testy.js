@@ -32,10 +32,15 @@ const removeDoneFlwItmsFromFlwMap = (
 ) /*: void */ => {
   // There is a lot of stuff missing here
   // ...
+  let dStpIndex = flwItem.dStpIndex;
+  if (dStpIndex > gSttngs().get("steps").length - 1) {
+    dStpIndex = gSttngs().get("steps").length - 1;
+    flwItem.dStpIndex = dStpIndex;
+  }
   // This is the bit we need for the test
   const deletedFlwItem = gState()
     .get("flwMap")
-    [flwItem.dStpIndex.toString()].splice(index, 1);
+    [dStpIndex.toString()].splice(index, 1);
 };
 //------------------------------------------------------------------
 // TEST: filterOutDoneItems()
