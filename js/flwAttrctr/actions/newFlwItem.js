@@ -173,10 +173,15 @@ const setAge = (
 // setDays()
 //------------------------------------------------------------------
 const setDays = (flwItem /*: FlwItem */) /*: void */ => {
+  let dStpIndex = flwItem.dStpIndex;
+  if (dStpIndex > gSttngs().get("steps").length - 1) {
+    dStpIndex = gSttngs().get("steps").length - 1;
+    flwItem.dStpIndex = dStpIndex;
+  }
   flwItem.dDysEachTouchStep = flwItem.dDysTotal / calculateTouchSteps();
   flwItem.dDysRmnngThisStep = 0;
   // This will only be the case for prepopulated items
-  if (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch") {
+  if (gSttngs().get("steps")[dStpIndex].status === "touch") {
     flwItem.dDysRmnngThisStep = rndmBetween(0, flwItem.dDysEachTouchStep);
   }
 };
@@ -205,7 +210,12 @@ const setPosition = (
 // refineNewPosition()
 //------------------------------------------------------------------
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
-  const range = calculateRange(flwItem.dStpIndex);
+  let dStpIndex = flwItem.dStpIndex;
+  if (dStpIndex > gSttngs().get("steps").length - 1) {
+    dStpIndex = gSttngs().get("steps").length - 1;
+    flwItem.dStpIndex = dStpIndex;
+  }
+  const range = calculateRange(dStpIndex);
   const newPosition = { ...flwItem.dPosition };
 
   newPosition.x =

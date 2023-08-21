@@ -70,13 +70,23 @@ export const updateMetricsOnClickInterval = (
       // Little's Law = ThruPut = WIP/FlowTime
       const totalValue = gState().get("vQueue").total();
       // Before any adjustments based on flwSizeLimit, value is the same as scale
-      const avrgValuePerItem = flwTimeAtStart / flwTimeMax;
-      // There is, currently, an even distribution of value across all items
-      // there is a direct mapping of value to the flow time This will need to change,
-      //  [a] when we have a more realistic distribution of value across items, and
-      //  [b] when we have a more realistic system of assigning value to items.
-      const totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
-      const displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+      let avrgValuePerItem = 0;
+      let totalThruPut = 0;
+      let displayValue = 0;
+      if (
+        flwTimeAtStart > 0 &&
+        flwTimeMax > 0 &&
+        totalWipAtStart > 0 &&
+        totalValue > 0
+      ) {
+        avrgValuePerItem = flwTimeAtStart / flwTimeMax;
+        // There is, currently, an even distribution of value across all items
+        // there is a direct mapping of value to the flow time This will need to change,
+        //  [a] when we have a more realistic distribution of value across items, and
+        //  [b] when we have a more realistic system of assigning value to items.
+        totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
+        displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+      }
       // Format the display value as a percentage
       setValue(Math.floor(displayValue).toString() + "%");
     }

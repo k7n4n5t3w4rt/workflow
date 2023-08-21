@@ -49,12 +49,17 @@ export default (
     if (gSttngs().get("death") > 0 && flwItem.dAge >= gSttngs().get("death")) {
       return availableLimit;
     }
+    let dStpIndex = flwItem.dStpIndex;
+    if (dStpIndex > gSttngs().get("steps").length - 1) {
+      dStpIndex = gSttngs().get("steps").length - 1;
+      flwItem.dStpIndex = dStpIndex;
+    }
     if (
       // If the flwItem.dStpIndex is 0, then we are at the backlog, in
       // which case the dDysRmnngThisStep is not relevant
-      flwItem.dStpIndex === 0 ||
+      dStpIndex === 0 ||
       // This is a wait step so no work is being done
-      gSttngs().get("steps")[flwItem.dStpIndex].status === "wait" ||
+      gSttngs().get("steps")[dStpIndex].status === "wait" ||
       // In all other cases, we only want to move the flwItem if it is
       // not moving and it has no days remaining
       (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)

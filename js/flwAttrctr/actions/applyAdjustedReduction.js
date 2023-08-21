@@ -21,24 +21,24 @@ export default (
     // Apply the adjusted reduction to each flow item.
     flwItems.forEach((flwItem /*: FlwItem */) => {
       // Just the number of dev units for this step.
-      let devUnits = gSttngs().get("steps")[flwItem.dStpIndex].movingDevUnits;
+      let dStpIndex = flwItem.dStpIndex;
+      if (dStpIndex > gSttngs().get("steps").length - 1) {
+        dStpIndex = gSttngs().get("steps").length - 1;
+        flwItem.dStpIndex = dStpIndex;
+      }
+      let devUnits = gSttngs().get("steps")[dStpIndex].movingDevUnits;
       if (expdtIsOn() === true && expediteFlag === true) {
         devUnits = devUnits * gSttngs().get("expdtDvUnitsFactor");
       }
       // First, work out how many flow items are in the step.
-      const wipThisStep = stepWip(
-        flwItem.dStpIndex.toString(),
-        flwItem.dExpedite,
-      );
+      const wipThisStep = stepWip(dStpIndex.toString(), flwItem.dExpedite);
       // If there are no dev units, or no dev capacity, we're done.
       if (devUnits <= 0 || wipThisStep <= 0) {
         return;
       }
       // The ratio of flow time at start for this step to the total flow time at start.
-      const idealStepFlwTime =
-        gSttngs().get("steps")[flwItem.dStpIndex].flwTimeAtStart;
-      const actualStepFlwTime =
-        gSttngs().get("steps")[flwItem.dStpIndex].actualFlwTime;
+      const idealStepFlwTime = gSttngs().get("steps")[dStpIndex].flwTimeAtStart;
+      const actualStepFlwTime = gSttngs().get("steps")[dStpIndex].actualFlwTime;
       const totalFlwTime = calculateFlwTimeAtStart();
       const avrgFlwTimePerStep = totalFlwTime / calculateTouchSteps();
       const flwTimeRatio = actualStepFlwTime / idealStepFlwTime;
