@@ -31,6 +31,7 @@ const updateLocalStateFromGlobalState =
     setStateFunctions["devPowerFix"](gSttngs().get("devPowerFix"));
     setStateFunctions["devUnits"](gSttngs().get("devUnits"));
     setStateFunctions["drag"](gSttngs().get("drag"));
+    setStateFunctions["dragPoint"](gSttngs().get("dragPoint"));
     setStateFunctions["expdtDvUnitsFactor"](
       gSttngs().get("expdtDvUnitsFactor"),
     );
