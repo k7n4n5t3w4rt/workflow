@@ -32,6 +32,8 @@ export const updateMetricsOnClickInterval = (
   value /*: number */,
   setTimeBox /*: function */,
   tmBox /*: number */,
+  setMetricToggle /*: function */,
+  metricToggle /*: boolean */,
 ) => {
   setInterval(() => {
     if (
@@ -66,17 +68,31 @@ export const updateMetricsOnClickInterval = (
       setThruPutExpPerDay(thrPutExpPerDay);
       setWipExp(wipExp);
       setTimeBox((tmBox / 5).toString() + " wks");
+      // Make the metrics visible
+      if (flwTime > 0 && !metricToggle) {
+        setMetricToggle(true);
+      }
       // Caclulate the value as a percentage of the ideal throughput:
       // Little's Law = ThruPut = WIP/FlowTime
       const totalValue = gState().get("vQueue").total();
       // Before any adjustments based on flwSizeLimit, value is the same as scale
-      const avrgValuePerItem = flwTimeAtStart / flwTimeMax;
-      // There is, currently, an even distribution of value across all items
-      // there is a direct mapping of value to the flow time This will need to change,
-      //  [a] when we have a more realistic distribution of value across items, and
-      //  [b] when we have a more realistic system of assigning value to items.
-      const totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
-      const displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+      let avrgValuePerItem = 0;
+      let totalThruPut = 0;
+      let displayValue = 0;
+      if (
+        flwTimeAtStart > 0 &&
+        flwTimeMax > 0 &&
+        totalWipAtStart > 0 &&
+        totalValue > 0
+      ) {
+        avrgValuePerItem = flwTimeAtStart / flwTimeMax;
+        // There is, currently, an even distribution of value across all items
+        // there is a direct mapping of value to the flow time This will need to change,
+        //  [a] when we have a more realistic distribution of value across items, and
+        //  [b] when we have a more realistic system of assigning value to items.
+        totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
+        displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+      }
       // Format the display value as a percentage
       setValue(Math.floor(displayValue).toString() + "%");
     }

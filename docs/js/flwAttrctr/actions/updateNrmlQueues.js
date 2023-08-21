@@ -9,11 +9,13 @@ import expdtIsOn from "./expdtIsOn.js";
 // updateQueues()
 //------------------------------------------------------------------
 export default (
-  doneFlwItems /*: FlwItem[] */,
+  doneFlwItems /*: FlwItem[] | typeof undefined */,
   removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:FlwItem, index:number) => void */,
 ) /*: void */ => {
-  updateThroughPutQueue([...doneFlwItems].reduce(processThroughPut, [0]));
-  updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
+  if (doneFlwItems !== undefined && doneFlwItems.length > 0) {
+    updateThroughPutQueue([...doneFlwItems].reduce(processThroughPut, [0]));
+    updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
+  }
 };
 //------------------------------------------------------------------
 // processThroughPut()

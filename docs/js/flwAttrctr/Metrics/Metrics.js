@@ -41,11 +41,11 @@ export const Metrics = (props /*: Props */) /*: string */ => {
   const [wipExp /*: number */, setWipExp /*: function */] = useState(0);
   const [value /*: number */, setValue /*: function */] = useState(0);
   const [tmBox /*: number */, setTmBox /*: function */] = useState(0);
-  const [metricToggle, setMetricToggle] = useState(true);
+  const [metricToggle, setMetricToggle] = useState(false);
   const styles = cssStyles();
   rawStyles(getRawStyles());
 
-  useEffect(hideOrShowMetricsDivs(metricToggle), []);
+  useEffect(hideOrShowMetricsDivs(metricToggle), [metricToggle]);
 
   useEffect(() => {
     updateMetricsOnClickInterval(
@@ -67,6 +67,8 @@ export const Metrics = (props /*: Props */) /*: string */ => {
       value,
       setTmBox,
       tmBox,
+      setMetricToggle,
+      metricToggle,
     );
   }, []);
 

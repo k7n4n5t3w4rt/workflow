@@ -32,6 +32,8 @@ export const updateMetricsOnClickInterval = (
   value /*: number */,
   setTimeBox /*: function */,
   tmBox /*: number */,
+  setMetricToggle /*: function */,
+  metricToggle /*: boolean */,
 ) => {
   setInterval(() => {
     if (
@@ -66,6 +68,10 @@ export const updateMetricsOnClickInterval = (
       setThruPutExpPerDay(thrPutExpPerDay);
       setWipExp(wipExp);
       setTimeBox((tmBox / 5).toString() + " wks");
+      // Make the metrics visible
+      if (flwTime > 0 && !metricToggle) {
+        setMetricToggle(true);
+      }
       // Caclulate the value as a percentage of the ideal throughput:
       // Little's Law = ThruPut = WIP/FlowTime
       const totalValue = gState().get("vQueue").total();

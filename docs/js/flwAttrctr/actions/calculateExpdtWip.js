@@ -15,12 +15,17 @@ import getAllFlwItems from "./getAllFlwItems.js";
 export default () /*: number */ => {
   return getAllFlwItems().reduce(
     (_ /*: number */, flwItem /*: FlwItem */) /*: number */ => {
+      let dStpIndex = flwItem.dStpIndex;
+      if (dStpIndex > gSttngs().get("steps").length - 1) {
+        dStpIndex = gSttngs().get("steps").length - 1;
+        flwItem.dStpIndex = dStpIndex;
+      }
       if (
         expdtIsOn() === true &&
         flwItem.dExpedite === true &&
         // The flwItem is not in the backlog or in Done
-        (gSttngs().get("steps")[flwItem.dStpIndex].status === "touch" ||
-          gSttngs().get("steps")[flwItem.dStpIndex].status === "wait")
+        (gSttngs().get("steps")[dStpIndex].status === "touch" ||
+          gSttngs().get("steps")[dStpIndex].status === "wait")
       ) {
         return (_ += 1);
       } else {

@@ -18,6 +18,7 @@ import Debug from "./Debug.js";
 import DevPowerFix from "./DevPowerFix.js";
 import DfntnOfReady from "./DfntnOfReady.js";
 import Drag from "./Drag.js";
+import DragPoint from "./DragPoint.js";
 import EasyStorage from "./EasyStorage.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
@@ -95,6 +96,10 @@ export default (props /*: Props */) /*: string */ => {
         <${Drag}
           drag=${lState.drag}
           changeSetting=${changeSetting("drag", setStateFunctions)}
+        />
+        <${DragPoint}
+          dragPoint=${lState.dragPoint}
+          changeSetting=${changeSetting("dragPoint", setStateFunctions)}
         />
         <!------------------------------------------------------------------>
         <!-- PARETO POINT -->

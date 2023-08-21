@@ -38,6 +38,14 @@ const calculateDevPowerForDevToWipRatio = (
   if (devUnitsToWipRatio > 1) {
     return 1;
   }
+  const drag = gSttngs().get("drag");
+  if (drag <= 0) {
+    return 1;
+  }
+  const dragPoint = gSttngs().get("dragPoint");
+  if (drag <= 0) {
+    return 1;
+  }
   // Three x values:
   //   |
   //   |                .
@@ -48,10 +56,6 @@ const calculateDevPowerForDevToWipRatio = (
   // If drag is 0.2, y will be 0.8 when x is 0.5, i.e. when the ratio of dev units to
   // WIP is 1:2.
   // k = log(0.8) / log(0.5) = 0.3219;
-  const drag = gSttngs().get("drag");
-  if (drag <= 0) {
-    return 1;
-  }
   const k = Math.log(1 - drag) / Math.log(0.5);
   const y = Math.round(Math.pow(devUnitsToWipRatio, k) * 100) / 100;
   return y; // Scale the y value to the same range as x

@@ -64,6 +64,9 @@ export default (props /*: Props */) /*: string */ => {
 
   return html`
     <div id="flw" className="${styles.flw}">
+      <div id="logo" className="${styles.logoDiv}">
+        <img src="/img/logo_web_white.png" className="${styles.logo}" />
+      </div>
       <div id="dom-overlay">
         <div id="console-ui"></div>
         <${Metrics} />
@@ -116,6 +119,24 @@ const cssStyles = () /*: Object */ => {
       backgroundRepeat: "none",
       position: "absolute",
       backgroundPosition: "center",
+    },
+    logoDiv: {
+      position: "absolute",
+      left: "0",
+      top: "0",
+      width: "100%",
+      height: "100%",
+      zIndex: "1",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+    },
+    logo: {
+      width: "75vw",
+      maxWidth: "100vh",
+      minWidth: "45vh",
+      height: "auto",
+      marginTop: "10vh",
     },
   });
   return styles;
