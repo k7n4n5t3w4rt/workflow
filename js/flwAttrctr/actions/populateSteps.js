@@ -30,6 +30,5 @@ export const populateSteps = () /*: void */ => {
       }
     }
   });
-  console.log("Preload done.");
 };
 export default populateSteps;

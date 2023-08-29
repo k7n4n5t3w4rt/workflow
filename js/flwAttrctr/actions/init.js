@@ -47,24 +47,15 @@ export const init = () /*: void */ => {
     reticle: {},
     active: false,
   };
-  // --------------------------------------------------------------
-  // AUTOMODE
-  // --------------------------------------------------------------
-  if (gSttngs().get("autoMode")) {
-    reticleStuff = {
-      reticle: {},
-      active: false,
-    };
-  }
+  const controller = renderer.xr.getController(0);
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
-  if (!gSttngs().get("autoMode")) {
+  if (gSttngs().get("autoMode") === false) {
     // The reticle is the donut that appears on the ground
     reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
     // This start the whole process when the user clicks the
     // reticle to put the click cube on the ground
-    const controller = renderer.xr.getController(0);
     controller.addEventListener("select", start);
     scene.add(controller);
   }
@@ -80,6 +71,7 @@ export const init = () /*: void */ => {
     scene,
     camera,
     reticleStuff,
+    controller,
     renderer,
   });
 };

@@ -87,6 +87,13 @@ function gModel() /*: void */ {
     return value;
   };
   //------------------------------------------------------------------------------
+  // clear()
+  //------------------------------------------------------------------------------
+  this.clear = () /*: () => GlobalModel */ => {
+    this.keyValuePairs = [];
+    return this;
+  };
+  //------------------------------------------------------------------------------
   // set()
   //------------------------------------------------------------------------------
   this.set = (key /*: string */, value /*: any  */) /*: any */ => {
@@ -143,12 +150,6 @@ function gModel() /*: void */ {
     let lSValue /*: any */ = "NOT SET 5";
     let lSTimestamp /*: number */ = 0;
     ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
-    // The value of eSTimestamp and lSTimestamp will be 0 if they don't
-    // exist in either of the caches.
-    // Use the value from Easy if the timestamp is newer
-    if (key === "steps") {
-      console.log("eSTimestamp", eSTimestamp);
-    }
     if (eSTimestamp > lSTimestamp) {
       this.keyValuePairs[key] = eSValue;
       // And set localStorage
@@ -189,9 +190,6 @@ function gModel() /*: void */ {
     }
     // If nothing was cached, use the value provided and set both caches
     if (lSTimestamp === 0 && eSTimestamp === 0) {
-      if (key === "arrivalRate") {
-        console.log("lSTimestamp is === eSTimestamp");
-      }
       this.keyValuePairs[key] = value;
       if (typeof value !== "string") {
         value = JSON.stringify(value);

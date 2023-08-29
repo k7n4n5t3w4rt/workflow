@@ -2,6 +2,7 @@
 type GlobalModel = {
   sid: string,
   set: (key: string, value: any) => Object,
+  clear: () => Object,
   setSid: (sid: string) => Object,
   setSidIfNotInLocalStore: (sid: string) => Object,
   getSid: () => string,
@@ -298,6 +299,7 @@ type SceneData = {
   camera: Object,
   renderer: Object,
   reticleStuff: ReticleStuff,
+  controller: Object,
 };
 
 type ThrPtQueue = {

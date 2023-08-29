@@ -11,17 +11,17 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // orientEverythingToTheClickCube()
 //------------------------------------------------------------------
-export const orientEverythingToTheClickCube = () => {
+export const orientEverythingToTheClickCube = () /*: number */ => {
   // Get the direction in which the camera is looking
   const vector = new THREE.Vector3();
   gState().get("scnData").camera.getWorldDirection(vector);
-  const radians = Math.atan2(vector.x, vector.z);
+  let radians = Math.atan2(vector.x, vector.z);
   // Rotate the group on the Y axis (around it's centre, always the 0,0,0 point)
-  gState().get("clckCbGroup").rotateY(radians);
+  gState().get("clckCbGroup").rotation.y = radians;
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
-  if (!gSttngs().get("autoMode")) {
+  if (gSttngs().get("autoMode") === false) {
     // Last thing: set the position of the cube based on the location of  the reticle
     gState()
       .get("clckCbGroup")
@@ -37,5 +37,6 @@ export const orientEverythingToTheClickCube = () => {
       .get("clckCbGroup")
       .rotateY(90 * (Math.PI / 180));
   }
+  return radians;
 };
 export default orientEverythingToTheClickCube;

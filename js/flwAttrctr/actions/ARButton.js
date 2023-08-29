@@ -2,11 +2,17 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
+import gState from "./gState.js";
 import gSttngs from "./gSttngs.js";
+//------------------------------------------------------------------
+// IMPORT: THREE.js
+//------------------------------------------------------------------
+import * as THREE from "../../../web_modules/three.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import start from "./start.js";
+import reset from "./reset.js";
 
 const createButton = (
   renderer /*: function */,
@@ -21,24 +27,80 @@ const createButton = (
   const button = document.createElement("button");
 
   function showStartAR(/*device*/) {
+    // Show the "START" button
+    button.style.display = "block";
+    button.textContent =
+      gSttngs().sid.split("___")[0] || gSttngs().sid || "START";
+    // Desktop behaviour
+    button.onmouseenter = function () {
+      button.style.opacity = "1.0";
+    };
+    button.onmouseleave = function () {
+      button.style.opacity = "0.5";
+    };
+    // Start the AR session when the button is clicked
+    button.onclick = function () {
+      if (currentSession === null) {
+        if ("xr" in navigator) {
+          // $FlowFixMe
+          navigator.xr
+            .requestSession("immersive-ar", sessionInit)
+            .then(onSessionStarted);
+        }
+      } else {
+        if (button.textContent === "REPLACE") {
+          // button.textContent = "RELOAD";
+          // // Kill the cubes
+          const scnData = gState().get("scnData");
+          const scene = scnData.scene;
+          const clckCbGroup = gState().get("clckCbGroup");
+          // Remove the clickCube;
+          // const clckCube = clckCbGroup.children[0];
+          const clckCube = clckCbGroup.clckCube;
+          clckCbGroup.remove(clckCube);
+          if (clckCube instanceof THREE.Mesh) {
+            clckCube.material.dispose();
+            clckCube.geometry.dispose();
+          }
+          // renderer.clear();
+          // Show the reticule
+          const reticleStuff = gState().get("scnData").reticleStuff;
+          reticleStuff.active = true;
+          reticleStuff.reticle.visible = true;
+          reticleStuff.hitTestSourceInitialized = false;
+          reticleStuff.hitTestSource = null;
+          const controller = gState().get("scnData").controller;
+          // // Clear the global state
+          // globalState();
+          // // Put back the scene data
+          // gState().set("scnData", scnData);
+          // gState().set("clckCbGroup", clckCbGroup);
+          // Put in some delay so that it doesn't capture the current touch
+          setTimeout(() => {
+            controller.addEventListener("select", reset);
+          }, 1000);
+          // Change the "started" state to false
+          gState().set("started", false);
+        } else {
+          currentSession.end();
+        }
+      }
+    };
+
     async function onSessionStarted(session) {
       session.addEventListener("end", onSessionEnded);
 
       if ("xr" in navigator) {
         renderer.xr.setReferenceSpaceType("local");
-
         await renderer.xr.setSession(session);
-
         // --------------------------------------------------------------
         // AUTOMODE
         // --------------------------------------------------------------
         if (gSttngs().get("autoMode")) {
           start();
         }
-
-        button.textContent = "RELOAD";
-        button.style.display = "";
-
+        button.textContent = "REPLACE";
+        // button.textContent = "RELOAD";
         currentSession = session;
       }
     }
@@ -51,34 +113,6 @@ const createButton = (
         window.location.assign(`/`);
       }
     }
-
-    button.style.display = "";
-    button.style.cursor = "pointer";
-    button.style.left = "calc(50% - 50px)";
-    button.style.width = "100px";
-    button.textContent =
-      gSttngs().sid.split("___")[0] || gSttngs().sid || "START";
-
-    button.onmouseenter = function () {
-      button.style.opacity = "1.0";
-    };
-
-    button.onmouseleave = function () {
-      button.style.opacity = "0.5";
-    };
-
-    button.onclick = function () {
-      if (currentSession === null) {
-        if ("xr" in navigator) {
-          // $FlowFixMe
-          navigator.xr
-            .requestSession("immersive-ar", sessionInit)
-            .then(onSessionStarted);
-        }
-      } else {
-        currentSession.end();
-      }
-    };
   }
 
   function disableButton() {
@@ -102,6 +136,9 @@ const createButton = (
 
   function stylizeElement(element) {
     element.style.position = "absolute";
+    button.style.cursor = "pointer";
+    button.style.left = "calc(50% - 50px)";
+    button.style.width = "100px";
     element.style.bottom = "20px";
     element.style.padding = "12px 6px";
     element.style.border = "1px solid #fff";

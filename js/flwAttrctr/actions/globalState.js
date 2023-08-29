@@ -4,9 +4,14 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import setUpFlwMap from "./setUpFlwMap.js";
-
-export default () => {
+//------------------------------------------------------------------
+// FUNCTION: globalState()
+//------------------------------------------------------------------
+export const globalState = () => {
   gState().setSidButNotInLocalStore("workflowState");
   //------------------------------------------------------------------
   // Empty objects and sensible defaults
@@ -37,6 +42,7 @@ export default () => {
   gState().set("wipExpQueue", new xQueue());
   setUpFlwMap(gState().get("flwMap"));
 };
+export default globalState;
 //------------------------------------------------------------------
 // new vQueue()
 //------------------------------------------------------------------

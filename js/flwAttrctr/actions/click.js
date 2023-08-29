@@ -41,9 +41,9 @@ export const onClickComplete = () /*: void */ => {
   addNewFlowItemsAtArrivalRate();
   setExpedite();
   if (gState().get("clicks") === gSttngs().get("timeBox")) {
-    console.log("----------------------------------");
-    console.log("Timebox.");
-    console.log("----------------------------------");
+    // console.log("----------------------------------");
+    // console.log("Timebox.");
+    // console.log("----------------------------------");
   }
   resizeVSphere();
   updateAge();
@@ -52,6 +52,10 @@ export const onClickComplete = () /*: void */ => {
   updateExpdtWip();
   updateNrmlWip();
   filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-  click();
+  // If we stop the simulation - like, because we want to replace it -
+  // we want to stop the click.
+  if (gState().get("started") === true) {
+    click();
+  }
 };
 export default click;

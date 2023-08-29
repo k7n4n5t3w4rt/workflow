@@ -69,8 +69,10 @@ export const updateMetricsOnClickInterval = (
       setWipExp(wipExp);
       setTimeBox((tmBox / 5).toString() + " wks");
       // Make the metrics visible
-      if (flwTime > 0 && !metricToggle) {
+      if (gState().get("started") === true && flwTime > 0 && !metricToggle) {
         setMetricToggle(true);
+      } else {
+        setMetricToggle(false);
       }
       // Caclulate the value as a percentage of the ideal throughput:
       // Little's Law = ThruPut = WIP/FlowTime

@@ -29,15 +29,18 @@ export const start = async () /*: Promise<void> */ => {
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
-  // Trying to stop the duplication of the animation ariseing from
+  // Trying to stop the duplication of the animation arising from
   // subsequent touch events.
-  if (gState().get("started") === true) {
+  const started = gState().get("started");
+  if (started === true) {
     return;
   } else {
     gState().set("started", true);
   }
   if (!gSttngs().get("autoMode")) {
     hideReticule();
+    const controller = gState().get("scnData").controller;
+    controller.removeEventListener("select", start);
   }
   createClickCube();
   orientEverythingToTheClickCube();

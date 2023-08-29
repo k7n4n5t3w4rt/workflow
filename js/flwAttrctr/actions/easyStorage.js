@@ -36,7 +36,6 @@ const easyStorage = {
           return response.json();
         })
         .then((data /*: Object */) /*: Promise<Object> */ => {
-          // console.log(data);
           return data;
         })
         .catch((e /*: Error */) /*: Object */ => {
@@ -75,7 +74,6 @@ const easyStorage = {
           return response.json();
         })
         .then((data /*: Object */) /*: Promise<Object> */ => {
-          // console.log(data);
           return data;
         })
         .catch((e /*: Error */) /*: Object */ => {
@@ -113,7 +111,6 @@ const easyStorage = {
           return response.json();
         })
         .then((data /*: Object */) /*: Promise<Object> */ => {
-          // console.log(data);
           return data;
         })
         .catch((e /*: Error */) /*: Object */ => {

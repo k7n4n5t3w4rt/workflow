@@ -72,6 +72,7 @@ export default (props /*: Props */) /*: string */ => {
         <${Metrics} />
         <${Share} />
         <${LinkedIn} />
+        <button id="ARButton">START</button>
         <${Sttngs} />
         <${Params} />
       </div>
@@ -94,7 +95,6 @@ const loadSharedSettings =
         gSttngs().setSid(sid);
         const keyValuePairs = JSON.parse(atob(share));
         Object.keys(keyValuePairs).forEach((key /*: string */) /*: void */ => {
-          console.log(key, keyValuePairs[key]);
           gSttngs().set(key, keyValuePairs[key]);
         });
       }

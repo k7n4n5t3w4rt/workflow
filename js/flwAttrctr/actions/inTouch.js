@@ -16,7 +16,6 @@ export default (flwItem /*: FlwItem */, index /*:number */) /*: boolean */ => {
   const stpStatus = gSttngs().get("steps")[dStpIndex].status;
   // If this flwItem is in the backlog, don't update it
   if (stpStatus !== "touch") {
-    // console.log("inTouch: Filtering out this flwItem");
     flwItem.dDysRmnngThisStep = 0;
     return false;
   }

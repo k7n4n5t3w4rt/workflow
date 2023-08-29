@@ -7,11 +7,11 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import clckCbGroup from "./newClickCube.js";
+import clckCbGroup from "./newClickCubeGroup.js";
 //------------------------------------------------------------------
 // createClickCube()
 //------------------------------------------------------------------
-export const createClickCube = () => {
+export const createClickCubeGroup = () => {
   gState().set("clckCbGroup", clckCbGroup());
   // --------------------------------------------------------------
   // AUTOMODE
@@ -23,4 +23,4 @@ export const createClickCube = () => {
   }
   gState().get("scnData").scene.add(gState().get("clckCbGroup"));
 };
-export default createClickCube;
+export default createClickCubeGroup;

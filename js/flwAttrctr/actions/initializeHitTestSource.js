@@ -5,13 +5,12 @@
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 //------------------------------------------------------------------
-// IMPORT: HELPERS
+// FUNCTION: initializeHitTestSource()
 //------------------------------------------------------------------
-
 // This function gets called just once to initialize a hitTestSource
 // The purpose of this function is to get a) a hit test source and b) a reference space
 
-export default async () /*: Promise<void> */ => {
+export const initializeHitTestSource = async () /*: Promise<void> */ => {
   const scnData = gState().get("scnData");
   const session = scnData.renderer.xr.getSession();
 
@@ -40,3 +39,4 @@ export default async () /*: Promise<void> */ => {
     scnData.reticleStuff.hitTestSource = null;
   });
 };
+export default initializeHitTestSource;

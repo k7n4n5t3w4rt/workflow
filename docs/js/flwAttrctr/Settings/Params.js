@@ -141,7 +141,7 @@ export const Params = (props /*: Props */) /*: string */ => {
             if (step.status !== "touch") return html``;
             return html`
               <div>
-                <label for="step${index}DevUnits"
+                <label for="step${index}DevUnit"
                   >Dev units working on "${step.name}" items:</label
                 >s
                 <output

@@ -31,4 +31,3 @@ function calculateStandardDeviation(max, min) {
 const min = 20 / 340;
 const max = 1;
 const result = calculateStandardDeviation(max, min);
-console.log("Standard Deviation:", result);

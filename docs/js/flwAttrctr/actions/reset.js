@@ -19,12 +19,12 @@ import createValueSphere from "./createValueSphere.js";
 import setEndPosition from "./setEndPosition.js";
 import setStartPosition from "./setStartPosition.js";
 import orientEverythingToTheClickCube from "./orientEverythingToTheClickCube.js";
-import createClickCube from "./createClickCube.js";
+import newClickCube from "./newClickCube.js";
 import hideReticule from "./hideReticule.js";
 //------------------------------------------------------------------
-// FUNCTION: start()
+// FUNCTION: reset()
 //------------------------------------------------------------------
-export const start = async () /*: Promise<void> */ => {
+export const reset = async () /*: Promise<void> */ => {
   const scene = gState().get("scnData").scene;
   // --------------------------------------------------------------
   // ! AUTOMODE
@@ -34,36 +34,19 @@ export const start = async () /*: Promise<void> */ => {
   const started = gState().get("started");
   if (started === true) {
     return;
-  } else {
-    gState().set("started", true);
   }
-  if (!gSttngs().get("autoMode")) {
-    hideReticule();
-    const controller = gState().get("scnData").controller;
-    controller.removeEventListener("select", start);
-  }
-  createClickCube();
+  hideReticule();
+  const controller = gState().get("scnData").controller;
+  controller.removeEventListener("select", reset);
+  const clckCbGroup = gState().get("clckCbGroup");
+  const cube = newClickCube();
+  // Add the cube to the group (and the THREE.js scene)
+  clckCbGroup.add(cube);
+  // ..also add the cube to the group object so we can access it later
+  clckCbGroup.clckCube = cube;
   orientEverythingToTheClickCube();
-  setStartPosition();
-  setEndPosition();
-  await createValueSphere();
-  const ambientLight = ambientLightSetup();
-  scene.add(ambientLight);
-  // const pointLights = pointLightsSetup();
-  // scene.add(pointLights.pointLight1);
-  // scene.add(pointLights.pointLight2);
-  // scene.add(pointLights.pointLight3);
-  // // const hemisphereLight = hemisphereLightSetup();
-  // // scene.add(hemisphereLight);
-  const directionalLight = directionalLightSetup();
-  directionalLight.target = gState().get("vSphere");
-  scene.add(directionalLight);
-  // directionalLights.directionalLight2.target = gState().get("vSphere");
-  // scene.add(directionalLights.directionalLight2);
-  // directionalLights.directionalLight3.target = gState().get("vSphere");
-  // scene.add(directionalLights.directionalLight3);
-  populateSteps();
-  // Start the clubes flying
+  // Change the "started" state to true
+  gState().set("started", true);
   click();
 };
-export default start;
+export default reset;

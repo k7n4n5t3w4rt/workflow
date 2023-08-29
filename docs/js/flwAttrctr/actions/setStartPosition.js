@@ -20,9 +20,6 @@ export const setStartPosition = () /*: void */ => {
   } else {
     setTimeout(setStartPosition, 1000);
     gState().set("strtPosition", { x: 0, y: 0, z: 0 });
-    console.log(
-      "setStartPosition(): Waiting for `clckCbGroup` of `yOffset` to be set",
-    );
   }
 };
 export default setStartPosition;

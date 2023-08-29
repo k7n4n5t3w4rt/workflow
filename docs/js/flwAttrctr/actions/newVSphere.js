@@ -8,8 +8,10 @@ import * as THREE from "../../../web_modules/three.js";
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-
-export default async () /*: Promise<Object> */ => {
+//------------------------------------------------------------------
+// FUNCTION" newVSphere()
+//------------------------------------------------------------------
+export const newVSphere = async () /*: Promise<Object> */ => {
   // Create a texture loader
   // How to use it
   const textureMap = await new THREE.TextureLoader()
@@ -32,5 +34,7 @@ export default async () /*: Promise<Object> */ => {
   sphere.position.z = gState().get("endPosition").z;
   sphere.dPosition = sphere.position.clone();
   sphere.material.opacity = 0.9;
+  sphere.scale.set(0, 0, 0);
   return sphere;
 };
+export default newVSphere;

@@ -9,7 +9,7 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 import newVSphere from "./newVSphere.js";
 //------------------------------------------------------------------
-// createValueSphere()
+// FUNCTION: createValueSphere()
 //------------------------------------------------------------------
 export const createValueSphere = async () /*: Promise<void> */ => {
   // Create the valueSphere
