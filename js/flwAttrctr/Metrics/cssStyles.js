@@ -26,7 +26,7 @@ export const cssStyles = () /*: Object */ => {
     metricsDivs: {
       display: "flex",
       flexWrap: "nowrap",
-      justifyContent: "space-between",
+      justifyContent: "space-evenly",
     },
     metricsSpans: {
       display: "block",
