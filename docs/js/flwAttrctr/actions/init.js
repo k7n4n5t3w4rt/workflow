@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import ARButton from "./ARButton.js";
-import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
+// import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
 import createStats from "../../create_stats.js";
 import onWindowResize from "../actions/onWindowResize.js";
 import start from "./start.js";
@@ -47,7 +47,7 @@ export const init = () /*: void */ => {
     reticle: {},
     active: false,
   };
-  const controller = renderer.xr.getController(0);
+  const controller /*: Object */ = renderer.xr.getController(0);
   // --------------------------------------------------------------
   // ! AUTOMODE
   // --------------------------------------------------------------
@@ -70,9 +70,9 @@ export const init = () /*: void */ => {
     stats,
     scene,
     camera,
+    renderer,
     reticleStuff,
     controller,
-    renderer,
   });
 };
 export default init;

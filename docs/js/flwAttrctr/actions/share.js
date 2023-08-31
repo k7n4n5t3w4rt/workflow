@@ -28,7 +28,7 @@ const share = async () /*: Promise<void> */ => {
   const hostname = window.location.hostname; // e.g., "www.example.com"
   const port = window.location.port; // e.g., "8080"
   const sidName = sid.split("___")[0] || sid;
-  const urlToShare = `${protocol}://${hostname}:${port}/?sid=${sidName}___${rndmBetweenIntegers(
+  const urlToShare = `${protocol}//${hostname}:${port}/?sid=${sidName}___${rndmBetweenIntegers(
     1,
     1000000,
   )}&share=${btoa(gSttngsString)}`;

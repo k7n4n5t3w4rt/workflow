@@ -22,7 +22,7 @@ export const populateSteps = () /*: void */ => {
     return;
   }
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
-    if (steps[index].limit !== undefined) {
+    if (steps[index] !== undefined && steps[index].limit !== undefined) {
       for (let i = 1; i <= steps[index].limit; i++) {
         if (steps[index].status !== "done") {
           newFlwItem(index);

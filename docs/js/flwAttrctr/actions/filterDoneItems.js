@@ -20,6 +20,9 @@ export default (
     gState().get("vSphere").dRllngTtlVolume = 0;
     const doneFlwItems =
       gState().get("flwMap")[(gSttngs().get("steps").length - 1).toString()];
+    if (doneFlwItems === undefined) {
+      return;
+    }
     if (expdtIsOn() === true) {
       updateExpdtQueues(doneFlwItems);
     }
