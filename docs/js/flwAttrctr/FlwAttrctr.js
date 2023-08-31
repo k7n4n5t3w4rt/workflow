@@ -51,6 +51,7 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
+  const [shortcutsToggle, setShortcutsToggle] = useState(true);
   // Initialize global settings and state
   useEffect(() => {
     // setupMobileDebug();
@@ -61,6 +62,23 @@ export default (props /*: Props */) /*: string */ => {
     loadSharedSettings(props.sid, props.share)();
     populateStepsGlobal();
   }, [props.share]);
+  useEffect(hideOrShowShortcutsDivs(shortcutsToggle), [shortcutsToggle]);
+  //------------------------------------------------------------------
+  // updateShortcutsOnClickInterval()
+  //------------------------------------------------------------------
+  const updateShortcutsOnClickInterval = (quickLinksToggle /*: boolean */) => {
+    setInterval(() => {
+      // Make the metrics visible
+      if (gState().get("started") === true) {
+        setShortcutsToggle(false);
+      } else {
+        setShortcutsToggle(true);
+      }
+    }, 1000);
+  };
+  useEffect(() => {
+    updateShortcutsOnClickInterval(shortcutsToggle);
+  }, []);
 
   return html`
     <div id="flw" className="${styles.flw}">
@@ -70,7 +88,7 @@ export default (props /*: Props */) /*: string */ => {
       <div id="dom-overlay">
         <div id="console-ui"></div>
         <${Metrics} />
-        <div className="${styles.shortcutsDiv}">
+        <div id="shortcuts-container" className="${styles.shortcutsDiv}">
           <div id="simplistic" className="${styles.shortcut}">
             <a
               className="${styles.shortcutLink}"
@@ -141,6 +159,20 @@ const loadSharedSettings =
       }
     } else {
       setTimeout(loadSharedSettings(sid, share), 1000);
+    }
+  };
+//------------------------------------------------------------------
+// hideOrShowShortcutsDiv()
+//------------------------------------------------------------------
+const hideOrShowShortcutsDivs =
+  (shortcutsToggle) /*: () => void */ => () /*: void */ => {
+    const shortcutsContainer = document.getElementById("shortcuts-container");
+    if (shortcutsContainer !== null) {
+      if (shortcutsToggle === true) {
+        shortcutsContainer.style.display = "block";
+      } else {
+        shortcutsContainer.style.display = "none";
+      }
     }
   };
 //------------------------------------------------------------------
