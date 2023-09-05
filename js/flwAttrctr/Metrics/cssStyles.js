@@ -22,6 +22,7 @@ export const cssStyles = () /*: Object */ => {
       color: "white",
       textShadow: "2px 2px 2px grey",
       marginTop: "0.6rem",
+      top: "0",
     },
     metricsDivs: {
       display: "flex",
