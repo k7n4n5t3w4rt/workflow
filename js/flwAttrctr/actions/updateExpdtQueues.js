@@ -8,7 +8,12 @@ import expdtIsOn from "./expdtIsOn.js";
 //------------------------------------------------------------------
 // updateExpdtQueues()
 //------------------------------------------------------------------
-export default (doneFlwItems /*: FlwItem[] */) /*: void */ => {
+export default (
+  doneFlwItems /*: FlwItem[] | typeof undefined */,
+) /*: void */ => {
+  if (doneFlwItems === undefined) {
+    doneFlwItems = [];
+  }
   if (expdtIsOn() === true) {
     updateThroughPutExpQueue(
       [...doneFlwItems].reduce(processThroughPutExp, [0]),
