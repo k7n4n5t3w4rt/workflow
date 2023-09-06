@@ -50,6 +50,7 @@ export default () /*: Object */ => {
       backgroundColor: "rgba(0, 0, 0, 0.4)",
       padding: "3rem",
       paddingBottom: "6rem",
+      top: "0",
     },
     settings: {
       position: "absolute",

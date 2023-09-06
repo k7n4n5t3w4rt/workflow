@@ -12,10 +12,11 @@ export default (
   doneFlwItems /*: FlwItem[] | typeof undefined */,
   removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:FlwItem, index:number) => void */,
 ) /*: void */ => {
-  if (doneFlwItems !== undefined && doneFlwItems.length > 0) {
-    updateThroughPutQueue([...doneFlwItems].reduce(processThroughPut, [0]));
-    updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
+  if (doneFlwItems === undefined) {
+    doneFlwItems = [];
   }
+  updateThroughPutQueue([...doneFlwItems].reduce(processThroughPut, [0]));
+  updateFlowTimeQueue([...doneFlwItems].reduce(processFlowTime, []));
 };
 //------------------------------------------------------------------
 // processThroughPut()

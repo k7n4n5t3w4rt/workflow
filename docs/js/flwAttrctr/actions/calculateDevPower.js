@@ -13,17 +13,24 @@ import calculateTouchSteps from "./calculateTouchSteps.js";
 //------------------------------------------------------------------
 // calculateDevPower()
 //------------------------------------------------------------------
-export const calculateDevPower = () /*: number */ => {
+export const calculateDevPower = (
+  wipThisStep /*: number */,
+  devUnits /*: number */,
+) /*: number */ => {
   const touchSteps = calculateTouchSteps();
-  //const flwTimePerItemPerTouchStep = avrgFlwTimePerItem / touchSteps;
-  const devUnits = calculateMovingDevUnits();
+  const devUnitsTotal = calculateMovingDevUnits();
   const devUnitsPerTouchStep = devUnits / touchSteps;
   const touchWipAtStart = calculateTouchWipLimits();
   const wipPerTouchStep = touchWipAtStart / touchSteps;
   const devPowerPerDevUnitPerFlwItemPerTouchStep =
     wipPerTouchStep / devUnitsPerTouchStep;
-  const devPower =
+  let devPower =
     devPowerPerDevUnitPerFlwItemPerTouchStep * gSttngs().get("devPowerFix");
+  // If there are no WIP limits, devPower will be 0, so we fall back
+  // to a straight calculation of devPower for this step
+  if (devPower === 0) {
+    devPower = 1;
+  }
   return devPower;
 };
 export default calculateDevPower;

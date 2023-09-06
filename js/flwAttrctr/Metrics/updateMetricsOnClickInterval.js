@@ -81,22 +81,23 @@ export const updateMetricsOnClickInterval = (
       let avrgValuePerItem = 0;
       let totalThruPut = 0;
       let displayValue = 0;
-      if (
-        flwTimeAtStart > 0 &&
-        flwTimeMax > 0 &&
-        totalWipAtStart > 0 &&
-        totalValue > 0
-      ) {
+      if (flwTimeMax > 0) {
         avrgValuePerItem = flwTimeAtStart / flwTimeMax;
-        // There is, currently, an even distribution of value across all items
-        // there is a direct mapping of value to the flow time This will need to change,
-        //  [a] when we have a more realistic distribution of value across items, and
-        //  [b] when we have a more realistic system of assigning value to items.
-        totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
-        displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
       }
-      // Format the display value as a percentage
-      setValue(Math.floor(displayValue).toString() + "%");
+      // There is, currently, an even distribution of value across all items
+      // there is a direct mapping of value to the flow time This will need to change,
+      //  [a] when we have a more realistic distribution of value across items, and
+      //  [b] when we have a more realistic system of assigning value to items.
+      if (flwTimeAtStart > 0) {
+        totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
+      }
+      if (totalThruPut > 0 && avrgValuePerItem > 0) {
+        displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+        // Format the display value as a percentage
+        setValue(Math.floor(displayValue).toString() + "%");
+      } else {
+        setValue("NA");
+      }
     }
   }, 1000);
 };
