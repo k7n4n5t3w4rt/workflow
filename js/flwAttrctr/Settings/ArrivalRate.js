@@ -21,6 +21,7 @@ import {
   isParsableAsBoolean,
   isParsableAsArray,
 } from "../actions/isParsable.js";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {
@@ -43,6 +44,10 @@ export default (props /*: Props */) /*: string */ => {
         max="100"
         step=".25"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.arrivalRate || 0).toString()}"
       />
     </div>

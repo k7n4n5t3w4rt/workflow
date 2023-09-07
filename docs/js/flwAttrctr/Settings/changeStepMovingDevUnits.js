@@ -15,8 +15,8 @@ import isParsable from "../actions/isParsable.js";
 //------------------------------------------------------------------
 export const changeStepDevUnits =
   (
-    setSteps /*: (any) => void */,
     index /*: number */,
+    dispatch /*: ( action: { type: "SET", payload: { key:string, value:any } },) => Object */,
   ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
   (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
     let value = e.target.value;
@@ -41,6 +41,7 @@ export const changeStepDevUnits =
       step.movingDevUnits += devUnits - movingDevUnits;
       gSttngs().set("steps", steps);
     }
-    setSteps(steps);
+    const action = { type: "SET", payload: { key: "steps", value: steps } };
+    dispatch(action);
   };
 export default changeStepDevUnits;

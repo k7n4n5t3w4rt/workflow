@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: FlwItmSizeLimit
+//------------------------------------------------------------------
 /*::
 type Props = {
 	flwItmSizeLimit: number,
@@ -31,6 +34,10 @@ export default (props /*: Props */) /*: string */ => {
         max="1"
         step="0.1"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.flwItmSizeLimit || 0).toString()}"
       />
     </div>

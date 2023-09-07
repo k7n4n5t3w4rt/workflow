@@ -7,6 +7,7 @@ import gState from "../actions/gState.js";
 // PREACT
 //------------------------------------------------------------------
 import {
+  useContext,
   useEffect,
   useState,
   useReducer,
@@ -38,15 +39,16 @@ import Sid from "./Sid.js";
 import Steps from "./Steps.js";
 import NumberOfSteps from "./NumberOfSteps.js";
 import ParamsMaxWip from "./ParamsMaxWip.js";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
-import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
+// import updateLocastateFromGlobastate from "./updateLocastateFromGlobastate.js";
 import hideOrShowSettingsDivs from "./hideOrShowSettingsDivs.js";
 import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
-import setStateFunctionsStore from "./setStateFunctionsStore.js";
+// import dispatchStore from "./dispatchStore.js";
 import changeSetting from "./changeSetting.js";
 import changeSid from "./changeSid.js";
 
@@ -58,20 +60,7 @@ export default (props /*: Props */) /*: string */ => {
   // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
-  // A toggle to show or hide the settings
-  const [settingsToggle, setSettingsToggle] = useState(false);
-  // Hide or show the settings divs when the toggle changes
-  // useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
-  // The function that toggles the settings by setting the toggle
-  // to whatever it isn't
-  const toggleSettings = () => {
-    setSettingsToggle(!settingsToggle);
-  };
-  // A local state to hold the settings
-  const [lState, setStateFunctions] = setStateFunctionsStore(useState);
-  // Once, on load, update the local state from the global state
-  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
-
+  const [state, dispatch] = useContext(AppContext);
   return html`
     <div id="config-container" className="${styles.configContainer}">
       <fieldset>
@@ -83,25 +72,25 @@ export default (props /*: Props */) /*: string */ => {
         <!-- Auto Mode -->
         <!-------------------------------------------------------------------->
         <${AutoMode}
-          autoMode=${lState.autoMode}
+          autoMode=${state.autoMode}
           styles=${styles}
-          changeSetting=${changeSetting("autoMode", setStateFunctions)}
+          changeSetting=${changeSetting("autoMode", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Easy Storage -->
         <!-------------------------------------------------------------------->
         <${EasyStorage}
-          easyStorage=${lState.easyStorage}
+          easyStorage=${state.easyStorage}
           styles=${styles}
-          changeSetting=${changeSetting("easyStorage", setStateFunctions)}
+          changeSetting=${changeSetting("easyStorage", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- SID -->
         <!-------------------------------------------------------------------->
         <${Sid}
-          sid=${lState.sid}
+          sid=${state.sid}
           styles=${styles}
-          changeSid=${changeSid(setStateFunctions)}
+          changeSid=${changeSid(dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- DISPLAY -->
@@ -111,36 +100,36 @@ export default (props /*: Props */) /*: string */ => {
         <!-- fps -->
         <!-------------------------------------------------------------------->
         <${Fps}
-          fps=${lState.fps}
-          changeSetting=${changeSetting("fps", setStateFunctions)}
+          fps=${state.fps}
+          changeSetting=${changeSetting("fps", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- ScaleCm -->
         <!-------------------------------------------------------------------->
         <${ScaleCm}
-          scaleCm=${lState.scaleCm}
-          changeSetting=${changeSetting("scaleCm", setStateFunctions)}
+          scaleCm=${state.scaleCm}
+          changeSetting=${changeSetting("scaleCm", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Range Max. -->
         <!-------------------------------------------------------------------->
         <${RangeMax}
-          rangeMax=${lState.rangeMax}
-          changeSetting=${changeSetting("rangeMax", setStateFunctions)}
+          rangeMax=${state.rangeMax}
+          changeSetting=${changeSetting("rangeMax", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Range Increase Rate -->
         <!-------------------------------------------------------------------->
         <${RangeIncreaseRate}
-          rangeIncreaseRate=${lState.rangeIncreaseRate}
-          changeSetting=${changeSetting("rangeIncreaseRate", setStateFunctions)}
+          rangeIncreaseRate=${state.rangeIncreaseRate}
+          changeSetting=${changeSetting("rangeIncreaseRate", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Range Decrease Rate -->
         <!-------------------------------------------------------------------->
         <${RangeMidpoint}
-          rangeMidpoint=${lState.rangeMidpoint}
-          changeSetting=${changeSetting("rangeMidpoint", setStateFunctions)}
+          rangeMidpoint=${state.rangeMidpoint}
+          changeSetting=${changeSetting("rangeMidpoint", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- GLOBAL FLOW -->
@@ -150,88 +139,85 @@ export default (props /*: Props */) /*: string */ => {
         <!-- DevPowerFix -->
         <!-------------------------------------------------------------------->
         <${DevPowerFix}
-          devPowerFix=${lState.devPowerFix}
-          changeSetting=${changeSetting("devPowerFix", setStateFunctions)}
+          devPowerFix=${state.devPowerFix}
+          changeSetting=${changeSetting("devPowerFix", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->
         <${Drag}
-          drag=${lState.drag}
-          changeSetting=${changeSetting("drag", setStateFunctions)}
+          drag=${state.drag}
+          changeSetting=${changeSetting("drag", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- ParetoPoint -->
         <!-------------------------------------------------------------------->
         <${ParetoPoint}
-          paretoPoint=${lState.paretoPoint}
-          changeSetting=${changeSetting("paretoPoint", setStateFunctions)}
+          paretoPoint=${state.paretoPoint}
+          changeSetting=${changeSetting("paretoPoint", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- ArrivalRate -->
         <!-------------------------------------------------------------------->
         <${ArrivalRate}
-          arrivalRate=${lState.arrivalRate}
-          changeSetting=${changeSetting("arrivalRate", setStateFunctions)}
+          arrivalRate=${state.arrivalRate}
+          changeSetting=${changeSetting("arrivalRate", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Flow Item Size Min -->
         <!-------------------------------------------------------------------->
         <${FlwTimeMin}
-          flwTimeMin=${lState.flwTimeMin}
-          changeSetting=${changeSetting("flwTimeMin", setStateFunctions)}
+          flwTimeMin=${state.flwTimeMin}
+          changeSetting=${changeSetting("flwTimeMin", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- timeBox -->
         <!-------------------------------------------------------------------->
         <${TimeBox}
-          timeBox=${lState.timeBox}
-          changeSetting=${changeSetting("timeBox", setStateFunctions)}
+          timeBox=${state.timeBox}
+          changeSetting=${changeSetting("timeBox", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- expdtQueueLength -->
         <!-------------------------------------------------------------------->
         <${ExpdtQueueLength}
-          expdtQueueLength=${lState.expdtQueueLength}
-          changeSetting=${changeSetting("expdtQueueLength", setStateFunctions)}
+          expdtQueueLength=${state.expdtQueueLength}
+          changeSetting=${changeSetting("expdtQueueLength", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- expdtDvUnitsFactor -->
         <!-------------------------------------------------------------------->
         <${ExpdtDvUnitsFactor}
-          expdtDvUnitsFactor=${lState.expdtDvUnitsFactor}
-          changeSetting=${changeSetting(
-            "expdtDvUnitsFactor",
-            setStateFunctions,
-          )}
+          expdtDvUnitsFactor=${state.expdtDvUnitsFactor}
+          changeSetting=${changeSetting("expdtDvUnitsFactor", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- Death -->
         <!-------------------------------------------------------------------->
         <${Death}
-          death=${lState.death}
-          changeSetting=${changeSetting("death", setStateFunctions)}
+          death=${state.death}
+          changeSetting=${changeSetting("death", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- BacklogDeath -->
         <!-------------------------------------------------------------------->
         <${BacklogDeath}
-          backlogDeath=${lState.backlogDeath}
-          changeSetting=${changeSetting("backlogDeath", setStateFunctions)}
+          backlogDeath=${state.backlogDeath}
+          changeSetting=${changeSetting("backlogDeath", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- flwItmSizeLimit -->
         <!-------------------------------------------------------------------->
         <${FlwItmSizeLimit}
-          flwItmSizeLimit=${lState.flwItmSizeLimit}
-          changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
+          flwItmSizeLimit=${state.flwItmSizeLimit}
+          changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- NumberOfSteps -->
         <!-------------------------------------------------------------------->
         <${NumberOfSteps}
-          numberOfSteps=${lState.numberOfSteps}
-          changeSetting=${changeSetting("numberOfSteps", setStateFunctions)}
+          numberOfSteps=${state.numberOfSteps}
+          changeSetting=${changeSetting("numberOfSteps", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- PARAMS UI -->
@@ -241,14 +227,14 @@ export default (props /*: Props */) /*: string */ => {
         <!-- Params Max WIP -->
         <!-------------------------------------------------------------------->
         <${ParamsMaxWip}
-          paramsMaxWip=${lState.paramsMaxWip}
-          changeSetting=${changeSetting("paramsMaxWip", setStateFunctions)}
+          paramsMaxWip=${state.paramsMaxWip}
+          changeSetting=${changeSetting("paramsMaxWip", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- STEPS-->
         <!------------------------------------------------------------------>
         <div className="${styles.inputHeading}">Steps</div>
-        <${Steps} numberOfSteps=${lState.numberOfSteps} />
+        <${Steps} numberOfSteps=${state.numberOfSteps} />
       </fieldset>
     </div>
   `;

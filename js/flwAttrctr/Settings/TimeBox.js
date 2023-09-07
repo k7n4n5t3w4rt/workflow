@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: TimeBox
+//------------------------------------------------------------------
 /*::
 type Props = {
 	timeBox: number,
@@ -28,6 +31,11 @@ export default (props /*: Props */) /*: string */ => {
         max="60"
         step="1"
         onChange=${props.changeSetting}
+        onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.timeBox || 0).toString()}"
       />
     </div>

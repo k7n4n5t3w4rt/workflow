@@ -4,6 +4,10 @@
 //------------------------------------------------------------------
 import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
 // ParetoPoint
 //------------------------------------------------------------------
 /*::
@@ -27,6 +31,11 @@ export const ParetoPoint = (props /*: Props */) /*: string */ => {
         max="0.8"
         step="0.1"
         onChange=${props.changeSetting}
+        onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.paretoPoint || 0).toString()}"
       />
     </div>

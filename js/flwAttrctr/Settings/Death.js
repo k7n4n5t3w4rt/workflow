@@ -3,10 +3,14 @@
 // PREACT
 //------------------------------------------------------------------
 import { html } from "../../../web_modules/htm/preact.js";
+
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: Death
+//------------------------------------------------------------------
 /*::
 type Props = {
 	death: number,
@@ -28,6 +32,10 @@ export default (props /*: Props */) /*: string */ => {
         max="500"
         step="1"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.death || 0).toString()}"
       />
     </div>

@@ -7,6 +7,7 @@ import gState from "../actions/gState.js";
 // PREACT
 //------------------------------------------------------------------
 import {
+  useContext,
   useEffect,
   useState,
   useReducer,
@@ -35,6 +36,8 @@ import ScaleCm from "./ScaleCm.js";
 import ShowMetrics from "./ShowMetrics.js";
 import Steps from "./Steps.js";
 import TimeBox from "./TimeBox.js";
+import { AppContext } from "../../AppContext.js";
+
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -43,8 +46,6 @@ import changeSetting from "./changeSetting.js";
 import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
 import hideOrShowSettingsDivs from "./hideOrShowSettingsDivs.js";
-import setStateFunctionsStore from "./setStateFunctionsStore.js";
-import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
 
 /*::
 type Props = {
@@ -54,26 +55,24 @@ export default (props /*: Props */) /*: string */ => {
   // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
+  const [state, dispatch] = useContext(AppContext);
   // A toggle to show or hide the settings
   const [settingsToggle, setSettingsToggle] = useState(false);
   // Hide or show the settings divs when the toggle changes
-  // useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
-  // The function that toggles the settings by setting the toggle
-  // to whatever it isn't
   const toggleSettings = () => {
     setSettingsToggle(!settingsToggle);
   };
-
+  // Set the settings toggle to false on load
   useEffect(() => {
     setSettingsToggle(false);
   }, []);
-
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
+
   // A local state to hold the settings
-  const [lState, setStateFunctions] = setStateFunctionsStore(useState);
+  // const [state, dispatch] = state, dispatchStore(useState);
   // Once, on load, update the local state from the global state
-  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
+  // useEffect(updateLocastateFromGlobastate(setStateFunctions), []);
 
   return html`
     <div
@@ -94,12 +93,12 @@ export default (props /*: Props */) /*: string */ => {
         <!-- Drag -->
         <!-------------------------------------------------------------------->
         <${Drag}
-          drag=${lState.drag}
-          changeSetting=${changeSetting("drag", setStateFunctions)}
+          drag=${state.drag}
+          changeSetting=${changeSetting("drag", dispatch)}
         />
         <${DragPoint}
-          dragPoint=${lState.dragPoint}
-          changeSetting=${changeSetting("dragPoint", setStateFunctions)}
+          dragPoint=${state.dragPoint}
+          changeSetting=${changeSetting("dragPoint", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- PARETO POINT -->
@@ -109,8 +108,8 @@ export default (props /*: Props */) /*: string */ => {
         <!-- ParetoPoint -->
         <!-------------------------------------------------------------------->
         <${ParetoPoint}
-          paretoPoint=${lState.paretoPoint}
-          changeSetting=${changeSetting("paretoPoint", setStateFunctions)}
+          paretoPoint=${state.paretoPoint}
+          changeSetting=${changeSetting("paretoPoint", dispatch)}
         />
       </fieldset>
     </div>

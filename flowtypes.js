@@ -74,6 +74,7 @@ type FlwStep = {
   movingDevUnits: number | typeof undefined,
   flwTimeAtStart: number | typeof undefined,
   actualFlwTime: number | typeof undefined,
+  avAge: number | typeof undefined,
 };
 
 //------------------------------------------------------------------

@@ -15,19 +15,20 @@ import calculateDevPower from "../actions/calculateDevPower.js";
 // FUNCTION: changeSetting()
 //------------------------------------------------------------------
 export default (
-    setting /*: string */,
-    setStateFunctions /*: { [string]: (string|number|boolean) => void } */,
+    key /*: string */,
+    dispatch /*: ( action: { type: "SET", payload: { key:string, value:any } },) => Object */,
   ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
   (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
-    // Set the global settings for use in real-time, non-Preact JS
+    // Set the global keys for use in real-time, non-Preact JS
     let value = e.target.value;
     if (isParsable(value)) {
       value = JSON.parse(value);
     }
-    if (setting === "easyStorage" || setting === "autoMode") {
-      gSttngs().setNoCache(setting, value);
+    if (key === "easyStorage" || key === "autoMode") {
+      gSttngs().setNoCache(key, value);
     } else {
-      gSttngs().set(setting, value);
+      gSttngs().set(key, value);
     }
-    setStateFunctions[setting](value);
+    const action = { type: "SET", payload: { key, value } };
+    dispatch(action);
   };

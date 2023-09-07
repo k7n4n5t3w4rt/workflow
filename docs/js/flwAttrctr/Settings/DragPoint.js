@@ -4,7 +4,11 @@
 //------------------------------------------------------------------
 import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
-// Drag
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: DragPoint
 //------------------------------------------------------------------
 /*::
 type Props = {
@@ -27,6 +31,10 @@ export const Drag = (props /*: Props */) /*: string */ => {
         max="0.75"
         step="0.01"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.dragPoint || 0).toString()}"
       />
     </div>

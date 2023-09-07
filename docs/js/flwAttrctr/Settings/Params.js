@@ -8,6 +8,7 @@ import gState from "../actions/gState.js";
 // PREACT
 //------------------------------------------------------------------
 import {
+  useContext,
   useEffect,
   useState,
   useReducer,
@@ -21,6 +22,7 @@ import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import FlwItmSizeLimit from "./FlwItmSizeLimit.js";
 import Fps from "./Fps.js";
 import ScaleCm from "./ScaleCm.js";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -33,10 +35,7 @@ import changeStepMovingLimit from "./changeStepMovingLimit.js";
 import cssStyles from "./cssStylesParams.js";
 import getRawStyles from "./getRawStyles.js";
 import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
-import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import setUpdtngCnfg from "./setUpdtngCnfg.js";
-import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
-import updateStepsStateFromGlobalState from "./updateStepsStateFromGlobalState.js";
 //------------------------------------------------------------------
 // Params
 //------------------------------------------------------------------
@@ -48,11 +47,9 @@ export const Params = (props /*: Props */) /*: string */ => {
   // Styles
   const styles = cssStyles();
   rawStyles(getRawStyles());
+  const [state, dispatch] = useContext(AppContext);
   // A toggle to show or hide the params
   const [paramsToggle, setParamsToggle] = useState(false);
-  // A local state to hold the params
-  const [steps, setSteps] = useState([]);
-  const [lState, setStateFunctions] = setStateFunctionsStore(useState);
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
   // The function that toggles the params by setting the toggle
@@ -60,9 +57,6 @@ export const Params = (props /*: Props */) /*: string */ => {
   const toggleParams = () => {
     setParamsToggle(!paramsToggle);
   };
-  // Once, on load, update the local state from the global state
-  useEffect(updateStepsStateFromGlobalState(setSteps), []);
-  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
 
   return html`
     <div
@@ -79,7 +73,7 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!-- STEP WIP LIMIT -->
         <!-------------------------------------------------------------------->
         <div className="${styles.inputHeading}">WIP Limits</div>
-        ${(steps || []).map(
+        ${(state.steps || []).map(
           (
             step /*: { 
             name: string,
@@ -107,9 +101,9 @@ export const Params = (props /*: Props */) /*: string */ => {
                   id="step${index}MovingLimit"
                   name="step${index}MovingLimit"
                   min="0"
-                  max="${lState.paramsMaxWip}"
+                  max="${state.paramsMaxWip}"
                   step="1"
-                  onChange=${changeStepMovingLimit(setSteps, index)}
+                  onChange=${changeStepMovingLimit(index, dispatch)}
                   onTouchStart=${setUpdtngCnfg(true)}
                   onTouchEnd=${setUpdtngCnfg(false)}
                   onMouseDown=${setUpdtngCnfg(true)}
@@ -126,7 +120,7 @@ export const Params = (props /*: Props */) /*: string */ => {
         <div className="${styles.inputHeading}">
           Devs / Teams (${calculateMovingDevUnits()}/${calculateDevUnits()})
         </div>
-        ${(steps || []).map(
+        ${(state.steps || []).map(
           (
             step /*: { 
             name: string,
@@ -157,7 +151,7 @@ export const Params = (props /*: Props */) /*: string */ => {
                   min="0"
                   max="${calculateDevUnits()}"
                   step="1"
-                  onChange=${changeStepDevUnits(setSteps, index)}
+                  onChange=${changeStepDevUnits(index, dispatch)}
                   onTouchStart=${setUpdtngCnfg(true)}
                   onTouchEnd=${setUpdtngCnfg(false)}
                   onMouseDown=${setUpdtngCnfg(true)}
@@ -175,8 +169,8 @@ export const Params = (props /*: Props */) /*: string */ => {
           Size Limit for Flow Items (% of current max. size)
         </div>
         <${FlwItmSizeLimit}
-          flwItmSizeLimit=${lState.flwItmSizeLimit}
-          changeSetting=${changeSetting("flwItmSizeLimit", setStateFunctions)}
+          flwItmSizeLimit=${state.flwItmSizeLimit}
+          changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- EXPEDITE QUEUE -->
@@ -186,18 +180,15 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!-- expdtQueueLength -->
         <!-------------------------------------------------------------------->
         <${ExpdtQueueLength}
-          expdtQueueLength=${lState.expdtQueueLength}
-          changeSetting=${changeSetting("expdtQueueLength", setStateFunctions)}
+          expdtQueueLength=${state.expdtQueueLength}
+          changeSetting=${changeSetting("expdtQueueLength", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- expdtDvUnitsFactor -->
         <!-------------------------------------------------------------------->
         <${ExpdtDvUnitsFactor}
-          expdtDvUnitsFactor=${lState.expdtDvUnitsFactor}
-          changeSetting=${changeSetting(
-            "expdtDvUnitsFactor",
-            setStateFunctions,
-          )}
+          expdtDvUnitsFactor=${state.expdtDvUnitsFactor}
+          changeSetting=${changeSetting("expdtDvUnitsFactor", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- AGE -->
@@ -207,15 +198,15 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!-- Death -->
         <!-------------------------------------------------------------------->
         <${Death}
-          death=${lState.death}
-          changeSetting=${changeSetting("death", setStateFunctions)}
+          death=${state.death}
+          changeSetting=${changeSetting("death", dispatch)}
         />
         <!-------------------------------------------------------------------->
         <!-- BacklogDeath -->
         <!-------------------------------------------------------------------->
         <${BacklogDeath}
-          backlogDeath=${lState.backlogDeath}
-          changeSetting=${changeSetting("backlogDeath", setStateFunctions)}
+          backlogDeath=${state.backlogDeath}
+          changeSetting=${changeSetting("backlogDeath", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- DISPLAY -->
@@ -225,8 +216,8 @@ export const Params = (props /*: Props */) /*: string */ => {
         <!-- DISPLAY: FRAMES PER SECOND -->
         <!-------------------------------------------------------------------->
         <${Fps}
-          fps=${lState.fps}
-          changeSetting=${changeSetting("fps", setStateFunctions)}
+          fps=${state.fps}
+          changeSetting=${changeSetting("fps", dispatch)}
         />
       </fieldset>
     </div>

@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: FlwTimeMax
+//------------------------------------------------------------------
 /*::
 type Props = {
 	flwTimeMax: number,
@@ -28,6 +31,11 @@ export default (props /*: Props */) /*: string */ => {
         max="400"
         step="1"
         onChange=${props.changeSetting}
+        onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.flwTimeMax || 0).toString()}"
       />
     </div>

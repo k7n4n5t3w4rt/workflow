@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: ScaleCm
+//------------------------------------------------------------------
 /*::
 type Props = {
 	scaleCm: number,
@@ -28,6 +31,10 @@ export default (props /*: Props */) /*: string */ => {
         max="100"
         step="0.5"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.scaleCm || 0).toString()}"
       />
     </div>

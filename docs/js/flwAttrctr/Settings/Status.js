@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: Status
+//------------------------------------------------------------------
 /*::
 type Props = {
   index: number,
@@ -23,6 +26,8 @@ export default (props /*: Props */) /*: string */ => {
         id="status${props.index}"
         name="status${props.index}"
         onChange=${props.changeStepStatus}
+        onFocus=${setUpdtngCnfg(true)}
+        onBlur=${setUpdtngCnfg(false)}
       >
         ${props.status === "backlog" &&
         html`<option value="backlog" selected>Backlog</option>`}

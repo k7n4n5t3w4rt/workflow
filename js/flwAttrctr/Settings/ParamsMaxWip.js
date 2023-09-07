@@ -21,6 +21,7 @@ import {
   isParsableAsBoolean,
   isParsableAsArray,
 } from "../actions/isParsable.js";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 //------------------------------------------------------------------
 // FUNCTION: ParamsMaxWip
 //------------------------------------------------------------------
@@ -48,6 +49,10 @@ export default (props /*: Props */) /*: string */ => {
         max="200"
         step="1"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.paramsMaxWip || 0).toString()}"
       />
     </div>

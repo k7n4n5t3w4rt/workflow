@@ -49,19 +49,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
     <!------------------------------------------------------------------>
     <div className="${styles.metricsDivs}">
       ${(steps || []).map(
-        (
-          step /*: { 
-            name: string,
-            status: string,
-            limit: number,
-            devUnits: number,
-            flwTimeAtStart: number,
-            actualFlwTime: number,
-            movingLimit: number,
-            avAge: number,
-          } */,
-          index /*: number */,
-        ) /*: void */ => {
+        (step /*: FlwStep */, index /*: number */) /*: void */ => {
           if (step.status === "done") return html``;
           return html`
             <div className="${styles.metricsSpans}">
@@ -70,7 +58,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
                 Limit: ${(step.movingLimit || 0).toString()}<br />
                 Av.Ag: ${(step.avAge || 0).toString()}<br />
                 ${step.status === "touch" &&
-                html`DvUnts: ${(step.devUnits || 0).toString()}`}<br />
+                html`DvUnts: ${(step.movingDevUnits || 0).toString()}`}<br />
               </div>
             </div>
           `;

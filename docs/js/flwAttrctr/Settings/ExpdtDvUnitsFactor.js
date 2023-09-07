@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: ExpdtDvUnitsFactor
+//------------------------------------------------------------------
 /*::
 type Props = {
 	expdtDvUnitsFactor: number,
@@ -33,6 +36,10 @@ export default (props /*: Props */) /*: string */ => {
         max="1"
         step="0.25"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.expdtDvUnitsFactor || 0).toString()}"
       />
     </div>

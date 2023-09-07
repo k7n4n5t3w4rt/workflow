@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>v0.21.5</title>
+	<title>v0.21.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="manifest" href="/site.webmanifest">
@@ -56,11 +56,9 @@
 			<label>AutoMode:</label>
 			<div class="radioContainer_gbwdbjfuujbeha">
 				<label for="autoModeTrue">
-					<input type="radio" id="autoModeTrue" name="autoMode" value="true" />
 					<span>True</span>
 				</label>
 				<label for="autoModeFalse">
-					<input type="radio" id="autoModeFalse" name="autoMode" value="false" checked />
 					<span>false</span>
 				</label>
 			</div>
@@ -69,44 +67,42 @@
 			<label>Easy Storage:</label>
 			<div class="radioContainer_gbwdbjfuujbeha">
 				<label for="easyStorageTrue">
-					<input type="radio" id="easyStorageTrue" name="easyStorage" value="true" />
 					<span>True</span>
 				</label>
 				<label for="easyStorageFalse">
-					<input type="radio" id="easyStorageFalse" name="easyStorage" value="false" checked />
 					<span>false</span>
 				</label>
 			</div>
 		</div>
 		<div>
 			<label for="sid">ID:</label>
-			<input type="text" id="sid" name="sid" value="workflow" />
+			<input type="text" id="sid" name="sid" value="0" />
 		</div>
 		<div class="inputHeading_gbwdbjfuujbeha">Display</div>
 		<div>
 			<label for="fps">FPS:</label>
-			<output id="fpsOutput" name="fpsOutput" for="fps">1</output>
-			<input type="range" id="fps" name="fps" min="0.25" max="10" step="0.25" value="1" />
+			<output id="fpsOutput" name="fpsOutput" for="fps">0</output>
+			<input type="range" id="fps" name="fps" min="0.25" max="10" step="0.25" value="0" />
 		</div>
 		<div>
 			<label for="scaleCm">Scale (cm):</label>
-			<output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm">10</output>
-			<input type="range" id="scaleCm" name="scaleCm" min="1" max="100" step="0.5" value="10" />
+			<output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm">0</output>
+			<input type="range" id="scaleCm" name="scaleCm" min="1" max="100" step="0.5" value="0" />
 		</div>
 		<div>
 			<label for="rangeMax">Range Max:</label>
-			<output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax">1</output>
-			<input type="range" id="rangeMax" name="rangeMax" min="1" max="10" step="1" value="1" />
+			<output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax">0</output>
+			<input type="range" id="rangeMax" name="rangeMax" min="1" max="10" step="1" value="0" />
 		</div>
 		<div>
 			<label for="rangeIncreaseRate">Range Increase Rate:</label>
-			<output id="rangeIncreaseRateOutput" name="rangeIncreaseRateOutput" for="rangeIncreaseRate">1</output>
-			<input type="range" id="rangeIncreaseRate" name="rangeIncreaseRate" min="0.1" max="1" step="0.1" value="1" />
+			<output id="rangeIncreaseRateOutput" name="rangeIncreaseRateOutput" for="rangeIncreaseRate">0</output>
+			<input type="range" id="rangeIncreaseRate" name="rangeIncreaseRate" min="0.1" max="1" step="0.1" value="0" />
 		</div>
 		<div>
 			<label for="rangeMidpoint">Range Midpoint:</label>
-			<output id="rangeMidpointOutput" name="rangeMidpointOutput" for="rangeMidpoint">1</output>
-			<input type="range" id="rangeMidpoint" name="rangeMidpoint" min="0.05" max="0.5" step="0.05" value="1" />
+			<output id="rangeMidpointOutput" name="rangeMidpointOutput" for="rangeMidpoint">0</output>
+			<input type="range" id="rangeMidpoint" name="rangeMidpoint" min="0.05" max="0.5" step="0.05" value="0" />
 		</div>
 		<div class="inputHeading_gbwdbjfuujbeha">Global Flow</div>
 		<div>
@@ -118,8 +114,8 @@
 			<label for="drag">
 				Dev. capacity lost when there is too much WIP:
 			</label>
-			<output id="dragOutput" name="dragOutput" for="drag">1</output>
-			<input type="range" id="drag" name="drag" min="0" max="1" step="0.1" value="1" />
+			<output id="dragOutput" name="dragOutput" for="drag">0</output>
+			<input type="range" id="drag" name="drag" min="0" max="1" step="0.1" value="0" />
 		</div>
 		<div>
 			<label for="paretoPoint">80% of value comes from:</label>
@@ -133,13 +129,13 @@
 		</div>
 		<div>
 			<label for="flwTimeMin">Flow Time Min.:</label>
-			<output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin">1</output>
-			<input type="range" id="flwTimeMin" name="flwTimeMin" min="1" max="200" step="1" value="1" />
+			<output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin">0</output>
+			<input type="range" id="flwTimeMin" name="flwTimeMin" min="1" max="200" step="1" value="0" />
 		</div>
 		<div>
 			<label for="timeBox">TimeBox:</label>
-			<output id="timeBoxOutput" name="timeBoxOutput" for="timeBox">10</output>
-			<input type="range" id="timeBox" name="timeBox" min="5" max="60" step="5" value="10" />
+			<output id="timeBoxOutput" name="timeBoxOutput" for="timeBox">0</output>
+			<input type="range" id="timeBox" name="timeBox" min="1" max="60" step="1" value="0" />
 		</div>
 		<div>
 			<label for="expdtQueueLength">Number of expedited items in the system:</label>
@@ -150,8 +146,8 @@
 			<label for="expdtDvUnitsFactor">
 				% of dev units focused on expedited items:
 			</label>
-			<output id="expdtDvUnitsFactorOutput" name="expdtDvUnitsFactorOutput" for="expdtDvUnitsFactor">100%</output>
-			<input type="range" id="expdtDvUnitsFactor" name="expdtDvUnitsFactor" min="0" max="1" step="0.25" value="1" />
+			<output id="expdtDvUnitsFactorOutput" name="expdtDvUnitsFactorOutput" for="expdtDvUnitsFactor">0%</output>
+			<input type="range" id="expdtDvUnitsFactor" name="expdtDvUnitsFactor" min="0" max="1" step="0.25" value="0" />
 		</div>
 		<div>
 			<label for="death">Lifespan for work items (0 = no limit):</label>
@@ -167,19 +163,19 @@
 		</div>
 		<div>
 			<label for="flwItmSizeLimit">Size Limit:</label>
-			<output id="flwItmSizeLimitOutput" name="flwItmSizeLimitOutput" for="flwItmSizeLimit">100%</output>
-			<input type="range" id="flwItmSizeLimit" name="flwItmSizeLimit" min="0.2" max="1" step="0.1" value="1" />
+			<output id="flwItmSizeLimitOutput" name="flwItmSizeLimitOutput" for="flwItmSizeLimit">0%</output>
+			<input type="range" id="flwItmSizeLimit" name="flwItmSizeLimit" min="0.2" max="1" step="0.1" value="0" />
 		</div>
 		<div>
 			<label for="numberOfSteps">No. of Steps:</label>
-			<output id="numberOfStepsOutput" name="numberOfStepsOutput" for="numberOfSteps">4</output>
-			<input type="range" id="numberOfSteps" name="numberOfSteps" min="1" max="12" step="1" value="4" />
+			<output id="numberOfStepsOutput" name="numberOfStepsOutput" for="numberOfSteps">0</output>
+			<input type="range" id="numberOfSteps" name="numberOfSteps" min="1" max="12" step="1" value="0" />
 		</div>
 		<div class="inputHeading_gbwdbjfuujbeha">Parameters UI</div>
 		<div>
 			<label for="paramsMaxWip">Params Max. WIP:</label>
-			<output id="paramsMaxWipOutput" name="paramsMaxWipOutput" for="paramsMaxWip">1</output>
-			<input type="range" id="paramsMaxWip" name="paramsMaxWip" min="1" max="200" step="1" value="1" />
+			<output id="paramsMaxWipOutput" name="paramsMaxWipOutput" for="paramsMaxWip">0</output>
+			<input type="range" id="paramsMaxWip" name="paramsMaxWip" min="1" max="200" step="1" value="0" />
 		</div>
 		<div class="inputHeading_gbwdbjfuujbeha">Steps</div>
 	</fieldset>

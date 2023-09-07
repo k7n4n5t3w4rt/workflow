@@ -21,7 +21,10 @@ import {
   isParsableAsBoolean,
   isParsableAsArray,
 } from "../actions/isParsable.js";
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: RangeMax
+//------------------------------------------------------------------
 /*::
 type Props = {
 	rangeMax: number,
@@ -43,6 +46,10 @@ export default (props /*: Props */) /*: string */ => {
         max="10"
         step="1"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.rangeMax || 0).toString()}"
       />
     </div>

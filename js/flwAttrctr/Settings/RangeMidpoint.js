@@ -21,7 +21,10 @@ import {
   isParsableAsBoolean,
   isParsableAsArray,
 } from "../actions/isParsable.js";
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: RangeMidpoint
+//------------------------------------------------------------------
 /*::
 type Props = {
 	rangeMidpoint: number,
@@ -46,6 +49,10 @@ export default (props /*: Props */) /*: string */ => {
         max="0.5"
         step="0.05"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.rangeMidpoint || 0).toString()}"
       />
     </div>

@@ -24,11 +24,17 @@ import { html } from "../web_modules/htm/preact.js";
 // is an async funnction. The value of `gSttngs()` properties will be
 // updated after they are first set with the defaults, based on
 // calls to Easy, the backend keystore.
-globalSettings().then(() => {
+globalSettings().then(() /*: void */ => {
+  // Initialise the global Steps settings
   globalStepSettings();
+  // Initialise the global state
   globalState();
+  // If we are using Easy, then we need to update the global settings
+  // every second as they may be set by another user.
   if (gSttngs().get("easyStorage") === true) {
     setInterval(getSttngsFromEasyStorage, 1000);
   }
+  // Only when the global settings and state are loaded and initialised
+  // do we render the app.
+  render(html` <${App} /> `, document.getElementById("goodthing"));
 });
-render(html` <${App} /> `, document.getElementById("goodthing"));

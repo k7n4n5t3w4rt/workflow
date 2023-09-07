@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: NumberOfSteps
+//------------------------------------------------------------------
 /*::
 type Props = {
 	numberOfSteps: number,
@@ -31,6 +34,10 @@ export default (props /*: Props */) /*: string */ => {
         max="12"
         step="1"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.numberOfSteps || 0).toString()}"
       />
     </div>

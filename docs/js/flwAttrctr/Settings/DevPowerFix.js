@@ -6,7 +6,10 @@ import { html } from "../../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: DevPowerFix
+//------------------------------------------------------------------
 /*::
 type Props = {
 	devPowerFix: number,
@@ -28,6 +31,10 @@ export default (props /*: Props */) /*: string */ => {
         max="5"
         step="0.01"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.devPowerFix || 1).toString()}"
       />
     </div>

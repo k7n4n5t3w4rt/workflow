@@ -21,7 +21,10 @@ import {
   isParsableAsBoolean,
   isParsableAsArray,
 } from "../actions/isParsable.js";
-
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+//------------------------------------------------------------------
+// FUNCTION: RangeIncreaseRate
+//------------------------------------------------------------------
 /*::
 type Props = {
 	rangeIncreaseRate: number,
@@ -46,6 +49,10 @@ export default (props /*: Props */) /*: string */ => {
         max="1"
         step="0.1"
         onChange=${props.changeSetting}
+        onTouchStart=${setUpdtngCnfg(true)}
+        onTouchEnd=${setUpdtngCnfg(false)}
+        onMouseDown=${setUpdtngCnfg(true)}
+        onMouseUp=${setUpdtngCnfg(false)}
         value="${(props.rangeIncreaseRate || 0).toString()}"
       />
     </div>

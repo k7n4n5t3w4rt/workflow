@@ -44,6 +44,7 @@ export const populateSteps =
           movingDevUnits: 0,
           flwTimeAtStart: 1,
           actualFlwTime: 1,
+          avAge: 0,
         });
       }
     }
