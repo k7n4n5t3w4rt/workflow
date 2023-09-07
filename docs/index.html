@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>v0.21.7</title>
+	<title>v0.22.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="manifest" href="/site.webmanifest">
@@ -99,6 +99,143 @@
 			</a>
 		</div>
 		<button id="ARButton">START</button>
+		<div id="config-close-icon" class="configClose_gbwddpohac">
+			<span class="material-icons undefined"> close </span>
+		</div>
+		<div id="config-container" class="configContainer_gbwddpogjj">
+			<fieldset>
+				<div class="inputHeading_gbwddpogjh">Session</div>
+				<div>
+					<label>AutoMode:</label>
+					<div class="radioContainer_gbwddpohae">
+						<label for="autoModeTrue">
+							<span>True</span>
+						</label>
+						<label for="autoModeFalse">
+							<span>false</span>
+						</label>
+					</div>
+				</div>
+				<div>
+					<label>Easy Storage:</label>
+					<div class="radioContainer_gbwddpohae">
+						<label for="easyStorageTrue">
+							<span>True</span>
+						</label>
+						<label for="easyStorageFalse">
+							<span>false</span>
+						</label>
+					</div>
+				</div>
+				<div>
+					<label for="sid">ID:</label>
+					<input type="text" id="sid" name="sid" value="0" />
+				</div>
+				<div class="inputHeading_gbwddpogjh">Display</div>
+				<div>
+					<label for="fps">FPS:</label>
+					<output id="fpsOutput" name="fpsOutput" for="fps">0</output>
+					<input type="range" id="fps" name="fps" min="0.25" max="10" step="0.25" value="0" />
+				</div>
+				<div>
+					<label for="scaleCm">Scale (cm):</label>
+					<output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm">0</output>
+					<input type="range" id="scaleCm" name="scaleCm" min="1" max="100" step="0.5" value="0" />
+				</div>
+				<div>
+					<label for="rangeMax">Range Max:</label>
+					<output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax">0</output>
+					<input type="range" id="rangeMax" name="rangeMax" min="1" max="10" step="1" value="0" />
+				</div>
+				<div>
+					<label for="rangeIncreaseRate">Range Increase Rate:</label>
+					<output id="rangeIncreaseRateOutput" name="rangeIncreaseRateOutput" for="rangeIncreaseRate">0</output>
+					<input type="range" id="rangeIncreaseRate" name="rangeIncreaseRate" min="0.1" max="1" step="0.1" value="0" />
+				</div>
+				<div>
+					<label for="rangeMidpoint">Range Midpoint:</label>
+					<output id="rangeMidpointOutput" name="rangeMidpointOutput" for="rangeMidpoint">0</output>
+					<input type="range" id="rangeMidpoint" name="rangeMidpoint" min="0.05" max="0.5" step="0.05" value="0" />
+				</div>
+				<div class="inputHeading_gbwddpogjh">Global Flow</div>
+				<div>
+					<label for="devPowerFix">Dev Power Fix:</label>
+					<output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix">1</output>
+					<input type="range" id="devPowerFix" name="devPowerFix" min="0" max="5" step="0.01" value="1" />
+				</div>
+				<div>
+					<label for="drag">
+						Dev. capacity lost when there is too much WIP:
+					</label>
+					<output id="dragOutput" name="dragOutput" for="drag">0</output>
+					<input type="range" id="drag" name="drag" min="0" max="1" step="0.1" value="0" />
+				</div>
+				<div>
+					<label for="paretoPoint">80% of value comes from:</label>
+					<output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint">0%</output>
+					<input type="range" id="paretoPoint" name="paretoPoint" min="0.2" max="0.8" step="0.1" value="0" />
+				</div>
+				<div>
+					<label for="arrivalRate">Arrival Rate:</label>
+					<output id="arrivalRateOutput" name="arrivalRateOutput" for="arrivalRate">0</output>
+					<input type="range" id="arrivalRate" name="arrivalRate" min="0" max="100" step=".25" value="0" />
+				</div>
+				<div>
+					<label for="flwTimeMin">Flow Time Min.:</label>
+					<output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin">0</output>
+					<input type="range" id="flwTimeMin" name="flwTimeMin" min="1" max="200" step="1" value="0" />
+				</div>
+				<div>
+					<label for="timeBox">TimeBox:</label>
+					<output id="timeBoxOutput" name="timeBoxOutput" for="timeBox">0</output>
+					<input type="range" id="timeBox" name="timeBox" min="1" max="60" step="1" value="0" />
+				</div>
+				<div>
+					<label for="expdtQueueLength">Number of expedited items in the system:</label>
+					<output id="expdtQueueLengthOutput" name="expdtQueueLengthOutput" for="expdtQueueLength">0</output>
+					<input type="range" id="expdtQueueLength" name="expdtQueueLength" min="0" max="20" step="1" value="0" />
+				</div>
+				<div>
+					<label for="expdtDvUnitsFactor">
+						% of dev units focused on expedited items:
+					</label>
+					<output id="expdtDvUnitsFactorOutput" name="expdtDvUnitsFactorOutput" for="expdtDvUnitsFactor">0%</output>
+					<input type="range" id="expdtDvUnitsFactor" name="expdtDvUnitsFactor" min="0" max="1" step="0.25" value="0" />
+				</div>
+				<div>
+					<label for="death">Lifespan for work items (0 = no limit):</label>
+					<output id="deathOutput" name="deathOutput" for="death">0</output>
+					<input type="range" id="death" name="death" min="0" max="500" step="1" value="0" />
+				</div>
+				<div>
+					<label for="backlogDeath">
+						Max. age for items in the backlog (0 = no limit):
+					</label>
+					<output id="backlogDeathOutput" name="backlogDeathOutput" for="backlogDeath">0</output>
+					<input type="range" id="backlogDeath" name="backlogDeath" min="0" max="500" step="1" value="0" />
+				</div>
+				<div>
+					<label for="flwItmSizeLimit">Size Limit:</label>
+					<output id="flwItmSizeLimitOutput" name="flwItmSizeLimitOutput" for="flwItmSizeLimit">0%</output>
+					<input type="range" id="flwItmSizeLimit" name="flwItmSizeLimit" min="0.2" max="1" step="0.1" value="0" />
+				</div>
+				<div>
+					<label for="numberOfSteps">No. of Steps:</label>
+					<output id="numberOfStepsOutput" name="numberOfStepsOutput" for="numberOfSteps">0</output>
+					<input type="range" id="numberOfSteps" name="numberOfSteps" min="1" max="12" step="1" value="0" />
+				</div>
+				<div class="inputHeading_gbwddpogjh">Parameters UI</div>
+				<div>
+					<label for="paramsMaxWip">Params Max. WIP:</label>
+					<output id="paramsMaxWipOutput" name="paramsMaxWipOutput" for="paramsMaxWip">0</output>
+					<input type="range" id="paramsMaxWip" name="paramsMaxWip" min="1" max="200" step="1" value="0" />
+				</div>
+				<div class="inputHeading_gbwddpogjh">Steps</div>
+			</fieldset>
+		</div>
+		<div id="config-icon" class="config_gbwddpohaa">
+			<span class="material-icons undefined"> settings </span>
+		</div>
 		<div id="settings-close-icon" class="settingsClose_gbwdbjfuujbeha">
 			<span class="material-icons settingsIcon_gbwdbjfuujbeha"> close </span>
 		</div>

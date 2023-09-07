@@ -68,12 +68,6 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
-
-  // A local state to hold the settings
-  // const [state, dispatch] = state, dispatchStore(useState);
-  // Once, on load, update the local state from the global state
-  // useEffect(updateLocastateFromGlobastate(setStateFunctions), []);
-
   return html`
     <div
       id="settings-close-icon"

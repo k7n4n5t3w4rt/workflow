@@ -45,8 +45,8 @@ import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
 // import updateLocastateFromGlobastate from "./updateLocastateFromGlobastate.js";
-import hideOrShowSettingsDivs from "./hideOrShowSettingsDivs.js";
-import cssStyles from "./cssStylesSettings.js";
+import hideOrShowConfigDivs from "./hideOrShowConfigDivs.js";
+import cssStyles from "./cssStylesConfig.js";
 import getRawStyles from "./getRawStyles.js";
 // import dispatchStore from "./dispatchStore.js";
 import changeSetting from "./changeSetting.js";
@@ -61,7 +61,27 @@ export default (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   const [state, dispatch] = useContext(AppContext);
+  // A toggle to show or hide the config
+  const [configToggle, setConfigToggle] = useState(false);
+  // Hide or show the config divs when the toggle changes
+  const toggleConfig = () => {
+    setConfigToggle(!configToggle);
+  };
+  // Set the config toggle to false on load
+  useEffect(() => {
+    setConfigToggle(false);
+  }, []);
+  // Hide or show the params divs when the toggle changes
+  useEffect(hideOrShowConfigDivs(configToggle), [configToggle]);
   return html`
+    <div
+      id="config-close-icon"
+      className="${styles.configClose}"
+      onClick="${toggleConfig}"
+    >
+      <span className="material-icons ${styles.configIcon}"> close </span>
+    </div>
+
     <div id="config-container" className="${styles.configContainer}">
       <fieldset>
         <!------------------------------------------------------------------>
@@ -236,6 +256,13 @@ export default (props /*: Props */) /*: string */ => {
         <div className="${styles.inputHeading}">Steps</div>
         <${Steps} numberOfSteps=${state.numberOfSteps} />
       </fieldset>
+    </div>
+    <div
+      id="config-icon"
+      className="${styles.config}"
+      onClick="${toggleConfig}"
+    >
+      <span className="material-icons ${styles.configIcon}"> tune </span>
     </div>
   `;
 };

@@ -27,6 +27,7 @@ import Metrics from "./Metrics/Metrics.js";
 import Share from "./Share.js";
 import Params from "./Settings/Params.js";
 import Sttngs from "./Settings/Settings.js";
+import Config from "./Settings/Config.js";
 import LinkedIn from "./LinkedIn.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -116,6 +117,7 @@ export default (props /*: Props */) /*: string */ => {
         <${Share} />
         <${LinkedIn} />
         <button id="ARButton">START</button>
+        <${Config} />
         <${Sttngs} />
         <${Params} />
       </div>

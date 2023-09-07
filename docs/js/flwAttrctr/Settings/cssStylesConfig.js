@@ -6,11 +6,11 @@ import seedString from "../../simple_css_seed.js";
 import { createStyles, setSeed } from "../../../web_modules/simplestyle-js.js";
 
 //------------------------------------------------------------------
-// FUNCTION: cssStylesSettings()
+// FUNCTION: cssStylesConfig()
 //------------------------------------------------------------------
 export default () /*: Object */ => {
   // A seed for getting unique class names
-  setSeed(seedString("flwparams"));
+  setSeed(seedString("flwconfig"));
 
   const [styles] = createStyles({
     inputHeading: {
@@ -23,42 +23,54 @@ export default () /*: Object */ => {
       marginBottom: "1rem",
       padding: "0.4rem",
     },
-    paramsContainer: {
+    stepHeading: {
+      fontSize: "1rem",
+      padding: "0.2rem",
+      marginTop: "1rem",
+      marginBottom: "1rem",
+      backgroundColor: "#f79c43",
+      padding: "0.4rem",
+    },
+    configContainer: {
       position: "absolute",
-      zIndex: "31000",
+      zIndex: "41000",
       boxSizing: "border-box",
       width: "100%",
       height: "100%",
-      paddingTop: "3rem",
       backgroundColor: "rgba(0, 0, 0, 0.8)",
       padding: "3rem",
       paddingBottom: "6rem",
       top: "0",
     },
-    params: {
+    config: {
       position: "absolute",
-      zIndex: "32000",
+      zIndex: "42000",
       boxSizing: "border-box",
-      bottom: ".5rem",
-      right: ".5rem",
+      bottom: "0.5rem",
+      left: "7rem",
       cursor: "pointer",
     },
-    paramsIcon: {
+    configIcon: {
       fontSize: "54px",
       color: "white",
     },
-    paramsClose: {
+    configClose: {
       position: "absolute",
-      zIndex: "33000",
+      zIndex: "43000",
       boxSizing: "border-box",
       top: ".4rem",
       right: ".4rem",
       cursor: "pointer",
     },
-    paramsCloseIcon: {
+    configCloseIcon: {
       fontSize: "54px",
       color: "white",
     },
+    radioContainer: {
+      display: "flex",
+      marginBottom: "1rem",
+    },
   });
+
   return styles;
 };

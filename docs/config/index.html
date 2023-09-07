@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>v0.21.7</title>
+	<title>v0.22.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="manifest" href="/site.webmanifest">
@@ -49,12 +49,15 @@
 </head>
 
 <body>
-	<div id="goodthing" data-goodthing><div id="config-container" class="configContainer_gbwdbjfuujbeha">
+	<div id="goodthing" data-goodthing><div id="config-close-icon" class="configClose_gbwddpohac">
+	<span class="material-icons undefined"> close </span>
+</div>
+<div id="config-container" class="configContainer_gbwddpogjj">
 	<fieldset>
-		<div class="inputHeading_gbwdbjfuujbeha">Session</div>
+		<div class="inputHeading_gbwddpogjh">Session</div>
 		<div>
 			<label>AutoMode:</label>
-			<div class="radioContainer_gbwdbjfuujbeha">
+			<div class="radioContainer_gbwddpohae">
 				<label for="autoModeTrue">
 					<span>True</span>
 				</label>
@@ -65,7 +68,7 @@
 		</div>
 		<div>
 			<label>Easy Storage:</label>
-			<div class="radioContainer_gbwdbjfuujbeha">
+			<div class="radioContainer_gbwddpohae">
 				<label for="easyStorageTrue">
 					<span>True</span>
 				</label>
@@ -78,7 +81,7 @@
 			<label for="sid">ID:</label>
 			<input type="text" id="sid" name="sid" value="0" />
 		</div>
-		<div class="inputHeading_gbwdbjfuujbeha">Display</div>
+		<div class="inputHeading_gbwddpogjh">Display</div>
 		<div>
 			<label for="fps">FPS:</label>
 			<output id="fpsOutput" name="fpsOutput" for="fps">0</output>
@@ -104,7 +107,7 @@
 			<output id="rangeMidpointOutput" name="rangeMidpointOutput" for="rangeMidpoint">0</output>
 			<input type="range" id="rangeMidpoint" name="rangeMidpoint" min="0.05" max="0.5" step="0.05" value="0" />
 		</div>
-		<div class="inputHeading_gbwdbjfuujbeha">Global Flow</div>
+		<div class="inputHeading_gbwddpogjh">Global Flow</div>
 		<div>
 			<label for="devPowerFix">Dev Power Fix:</label>
 			<output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix">1</output>
@@ -171,14 +174,17 @@
 			<output id="numberOfStepsOutput" name="numberOfStepsOutput" for="numberOfSteps">0</output>
 			<input type="range" id="numberOfSteps" name="numberOfSteps" min="1" max="12" step="1" value="0" />
 		</div>
-		<div class="inputHeading_gbwdbjfuujbeha">Parameters UI</div>
+		<div class="inputHeading_gbwddpogjh">Parameters UI</div>
 		<div>
 			<label for="paramsMaxWip">Params Max. WIP:</label>
 			<output id="paramsMaxWipOutput" name="paramsMaxWipOutput" for="paramsMaxWip">0</output>
 			<input type="range" id="paramsMaxWip" name="paramsMaxWip" min="1" max="200" step="1" value="0" />
 		</div>
-		<div class="inputHeading_gbwdbjfuujbeha">Steps</div>
+		<div class="inputHeading_gbwddpogjh">Steps</div>
 	</fieldset>
+</div>
+<div id="config-icon" class="config_gbwddpohaa">
+	<span class="material-icons undefined"> settings </span>
 </div></div data-goodthing>
 	<!-- <script type="text/javascript" src="/js/vendor/materialize.js"></script> -->
 </body>
