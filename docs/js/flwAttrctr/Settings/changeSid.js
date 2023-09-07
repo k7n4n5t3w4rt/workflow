@@ -8,9 +8,9 @@ import gState from "../actions/gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import isParsable from "../actions/isParsable.js";
-import calculateFlwTimeMax from "../actions/calculateFlwTimeMax.js";
+// import calculateFlwTimeMax from "../actions/calculateFlwTimeMax.js";
 import touchStepsCount from "../actions/touchStepsCount.js";
-import calculateDevUnits from "../actions/calculateDevUnits.js";
+// import calculateDevUnits from "../actions/calculateDevUnits.js";
 import calculateDevPower from "../actions/calculateDevPower.js";
 //------------------------------------------------------------------
 // FUNCTION: changeSid()

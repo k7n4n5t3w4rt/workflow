@@ -42,7 +42,7 @@ export default (
       const totalFlwTime = calculateFlwTimeAtStart();
       const avrgFlwTimePerStep = totalFlwTime / calculateTouchSteps();
       const flwTimeRatio = actualStepFlwTime / idealStepFlwTime;
-      const devPower = calculateDevPower(wipThisStep, devUnits) / flwTimeRatio;
+      const devPower = calculateDevPower(devUnits) / flwTimeRatio;
       // The `devPowerFactor` is 1.2 for a 1:1 ratio, and 0.8 for a 10:1 ratio.
       const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
       // const devPowerFactor = 1; // The simple, linear version.

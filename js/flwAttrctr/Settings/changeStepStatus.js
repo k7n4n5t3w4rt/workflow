@@ -12,8 +12,8 @@ import isParsable from "../actions/isParsable.js";
 //------------------------------------------------------------------
 const changeStepStatus =
   (
-    setSteps /*: (any) => void */,
     index /*: number */,
+    dispatch /*: ( action: { type: "SET", payload: { key:string, value:any } },) => Object */,
   ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
   (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
     let value = e.target.value;
@@ -24,6 +24,7 @@ const changeStepStatus =
     const step = steps[index];
     step.status = value;
     gSttngs().set("steps", steps);
-    setSteps(steps);
+    const action = { type: "SET", payload: { key: "steps", value: steps } };
+    dispatch(action);
   };
 export default changeStepStatus;

@@ -19,7 +19,7 @@ import createValueSphere from "./createValueSphere.js";
 import setEndPosition from "./setEndPosition.js";
 import setStartPosition from "./setStartPosition.js";
 import orientEverythingToTheClickCube from "./orientEverythingToTheClickCube.js";
-import createClickCube from "./createClickCube.js";
+import createClickCubeGroup from "./createClickCubeGroup.js";
 import hideReticule from "./hideReticule.js";
 //------------------------------------------------------------------
 // FUNCTION: start()
@@ -42,7 +42,7 @@ export const start = async () /*: Promise<void> */ => {
     const controller = gState().get("scnData").controller;
     controller.removeEventListener("select", start);
   }
-  createClickCube();
+  createClickCubeGroup();
   orientEverythingToTheClickCube();
   setStartPosition();
   setEndPosition();

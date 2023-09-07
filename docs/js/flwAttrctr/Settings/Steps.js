@@ -6,6 +6,7 @@
 // PREACT
 //------------------------------------------------------------------
 import {
+  useContext,
   useEffect,
   useState,
   useReducer,
@@ -30,6 +31,7 @@ import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import ScaleCm from "./ScaleCm.js";
 import Status from "./Status.js";
 import StepName from "./StepName.js";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -62,8 +64,8 @@ export const Steps = (props /*: Props */) /*: string */ => {
   const styles = cssStyles();
   rawStyles(getRawStyles());
   // A toggle to show or hide the settings
+  const [state, dispatch] = useContext(AppContext);
   const [paramsToggle, setParamsToggle] = useState(false);
-  const [steps, setSteps] = useState([]);
   // Hide or show the settings divs when the toggle changes
   // useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
   // The function that toggles the settings by setting the toggle
@@ -71,12 +73,6 @@ export const Steps = (props /*: Props */) /*: string */ => {
   const toggleParams = () => {
     setParamsToggle(!paramsToggle);
   };
-  // A local state to hold the settings
-  const [lState, setStateFunctions] = setStateFunctionsStore(useState);
-  // Once, on load, update the local state from the global state
-  useEffect(populateSteps(props, steps, setSteps), [props.numberOfSteps]);
-  useEffect(updateLocalStateFromGlobalState(setStateFunctions), []);
-  useEffect(updateStepsStateFromGlobalState(setSteps), []);
 
   // <div id="params-container" className="${styles.paramsContainer}">
   //   <fieldset>
@@ -84,7 +80,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
     <!------------------------------------------------------------------>
     <!-- Steps -->
     <!------------------------------------------------------------------>
-    ${(steps || []).map(
+    ${(state.steps || []).map(
       (
         step /*: { 
             name: string,
@@ -102,12 +98,12 @@ export const Steps = (props /*: Props */) /*: string */ => {
             <${StepName}
               index=${index}
               name=${step.name}
-              changeStepName=${changeStepName(setSteps, index)}
+              changeStepName=${changeStepName(index, dispatch)}
             />
             <${Status}
               index=${index}
               status=${step.status}
-              changeStepStatus=${changeStepStatus(setSteps, index)}
+              changeStepStatus=${changeStepStatus(index, dispatch)}
             />
             <label for="step${index}Limit">Limit:</label>
             <output
@@ -123,7 +119,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
               min="0"
               max="200"
               step="1"
-              onChange=${changeStepLimit(setSteps, index)}
+              onChange=${changeStepLimit(index, dispatch)}
               onTouchStart=${setUpdtngCnfg(true)}
               onTouchEnd=${setUpdtngCnfg(false)}
               onMouseDown=${setUpdtngCnfg(true)}
@@ -148,7 +144,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
                 min="1"
                 max="100"
                 step="1"
-                onChange=${changeStepDevUnits(setSteps, index)}
+                onChange=${changeStepDevUnits(index, dispatch)}
                 onTouchStart=${setUpdtngCnfg(true)}
                 onTouchEnd=${setUpdtngCnfg(false)}
                 onMouseDown=${setUpdtngCnfg(true)}
@@ -173,7 +169,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
                 min="0.5"
                 max="200"
                 step="0.5"
-                onChange=${changeStepFlwTimeAtStart(setSteps, index)}
+                onChange=${changeStepFlwTimeAtStart(index, dispatch)}
                 onTouchStart=${setUpdtngCnfg(true)}
                 onTouchEnd=${setUpdtngCnfg(false)}
                 onMouseDown=${setUpdtngCnfg(true)}
@@ -198,7 +194,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
                 min="0.5"
                 max="200"
                 step="0.5"
-                onChange=${changeStepActualFlwTime(setSteps, index)}
+                onChange=${changeStepActualFlwTime(index, dispatch)}
                 onTouchStart=${setUpdtngCnfg(true)}
                 onTouchEnd=${setUpdtngCnfg(false)}
                 onMouseDown=${setUpdtngCnfg(true)}

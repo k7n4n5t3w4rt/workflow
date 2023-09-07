@@ -9,7 +9,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import clckCbGroup from "./newClickCubeGroup.js";
 //------------------------------------------------------------------
-// createClickCube()
+// createClickCubeGroup()
 //------------------------------------------------------------------
 export const createClickCubeGroup = () => {
   gState().set("clckCbGroup", clckCbGroup());
