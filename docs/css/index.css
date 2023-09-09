@@ -13,3 +13,29 @@ body,
 	left: 0;
 	display: none;
 }
+
+/* .stpLabelHeading {
+	color: black;
+	font-size: 15px;
+	line-height: 20px;
+	width: 150px;
+	height: 30px;
+	outline: 1px solid white;
+	background-color: rgba(255,255,255,0.8);
+	text-align: center;
+	margin-left: -75px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+.stpLabelData {
+	color: black;
+	font-size: 15px;
+	line-height: 20px;
+	width: 150px;
+	height: 115px;
+	outline: 1px solid white;
+	background-color: rgba(255,255,255,0.8);
+	text-align: left;
+	margin-left: -75px;
+	padding: 5px;
+} */

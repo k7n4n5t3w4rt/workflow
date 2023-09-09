@@ -18,6 +18,7 @@ install(
     "three/examples/jsm/controls/OrbitControls",
     "three/examples/jsm/loaders/TGALoader",
     "three/examples/jsm/libs/stats.module.js",
+    "three/examples/jsm/renderers/CSS2DRenderer.js",
   ],
   {
     polyfillNode: false,

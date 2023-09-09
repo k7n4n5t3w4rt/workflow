@@ -13,7 +13,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import ARButton from "./ARButton.js";
 // import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
-import createStats from "../../create_stats.js";
+import { CSS2DRenderer } from "../../../web_modules/three/examples/jsm/renderers/CSS2DRenderer.js";
 import onWindowResize from "../actions/onWindowResize.js";
 import start from "./start.js";
 import addReticleToScene from "./addReticleToScene.js";
@@ -39,9 +39,6 @@ export const init = () /*: void */ => {
   // );
   // scene.add(directionalLightHelper);
   const renderer = rendererSetup();
-  // Not appearing for some reason. I think it is hidden
-  const stats = createStats();
-  ARContainer.appendChild(stats.dom);
   // Declare it for later
   let reticleStuff = {
     reticle: {},
@@ -53,24 +50,31 @@ export const init = () /*: void */ => {
   // --------------------------------------------------------------
   if (gSttngs().get("autoMode") === false) {
     // The reticle is the donut that appears on the ground
-    reticleStuff = addReticleToScene({ stats, scene, camera, renderer });
+    reticleStuff = addReticleToScene({ scene, camera, renderer });
     // This start the whole process when the user clicks the
     // reticle to put the click cube on the ground
     controller.addEventListener("select", start);
     scene.add(controller);
   }
+  // --------------------------------------------------------------
+  // LABELS
+  // --------------------------------------------------------------
+  const labelRenderer = labelRendererSetup();
   // The Three.js supplied start button checks for AR support
   startButtonSetup(renderer);
   // Start the render loop
   renderer.setAnimationLoop(render());
   // A fix for when the phone is rotated, etc
-  window.addEventListener("resize", onWindowResize(camera, renderer, window));
+  window.addEventListener(
+    "resize",
+    onWindowResize(camera, renderer, labelRenderer, window),
+  );
   // Populate the global state, for posterity
   gState().set("scnData", {
-    stats,
     scene,
     camera,
     renderer,
+    labelRenderer,
     reticleStuff,
     controller,
   });
@@ -94,6 +98,22 @@ const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
   domOverlayDiv.appendChild(button);
 };
 //------------------------------------------------------------------
+// labelRendererSetup()
+//------------------------------------------------------------------
+const labelRendererSetup = () /*: Object */ => {
+  const labelRenderer = new CSS2DRenderer();
+  labelRenderer.setSize(window.innerWidth, window.innerHeight);
+  labelRenderer.domElement.style.position = "absolute";
+  labelRenderer.domElement.style.top = "0";
+  labelRenderer.domElement.style.pointerEvents = "none";
+  labelRenderer.domElement.id = "label-renderer";
+  const domOverlayDiv = document.getElementById("dom-overlay");
+  if (domOverlayDiv !== null) {
+    domOverlayDiv.appendChild(labelRenderer.domElement);
+  }
+  return labelRenderer;
+};
+//------------------------------------------------------------------
 // rendererSetup()
 //------------------------------------------------------------------
 const rendererSetup = () /*: Object */ => {
@@ -112,11 +132,17 @@ const rendererSetup = () /*: Object */ => {
 // addArContainerToDom()
 //------------------------------------------------------------------
 const addArContainerToDom = () /*: HTMLDivElement */ => {
+  // The AR container is where the AR scene will be rendered
   const ARContainer = document.createElement("div");
+  // Give it an id
   ARContainer.id = "ar-container";
   const flw = document.getElementById("flw");
-  // $FlowFixMe - Flow doesn't know about the DOM
-  flw.appendChild(ARContainer);
+  // Flow doesn't know about the DOM so we make sure it isn't null
+  if (flw !== null) {
+    flw.appendChild(ARContainer);
+  } else {
+    console.error('There is no <div> with id "flw".');
+  }
   return ARContainer;
 };
 //------------------------------------------------------------------

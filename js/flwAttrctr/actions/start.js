@@ -12,7 +12,6 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import click from "./click.js";
 import populateSteps from "./populateSteps.js";
-import pointLightsSetup from "./pointLightsSetup.js";
 import ambientLightSetup from "./ambientLightSetup.js";
 import directionalLightSetup from "./directionalLightSetup.js";
 import createValueSphere from "./createValueSphere.js";
@@ -49,19 +48,9 @@ export const start = async () /*: Promise<void> */ => {
   await createValueSphere();
   const ambientLight = ambientLightSetup();
   scene.add(ambientLight);
-  // const pointLights = pointLightsSetup();
-  // scene.add(pointLights.pointLight1);
-  // scene.add(pointLights.pointLight2);
-  // scene.add(pointLights.pointLight3);
-  // // const hemisphereLight = hemisphereLightSetup();
-  // // scene.add(hemisphereLight);
   const directionalLight = directionalLightSetup();
   directionalLight.target = gState().get("vSphere");
   scene.add(directionalLight);
-  // directionalLights.directionalLight2.target = gState().get("vSphere");
-  // scene.add(directionalLights.directionalLight2);
-  // directionalLights.directionalLight3.target = gState().get("vSphere");
-  // scene.add(directionalLights.directionalLight3);
   populateSteps();
   // Start the clubes flying
   click();

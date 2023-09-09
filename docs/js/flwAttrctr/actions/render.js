@@ -11,12 +11,9 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import click from "./click.js";
-import move from "./move.js";
 import initializeHitTestSource from "./initializeHitTestSource.js";
-import anime from "../../../web_modules/animejs.js";
 
-export default () /*: () => Promise<any>  */ => {
+export const render = () /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
     const scnData = gState().get("scnData");
 
@@ -59,18 +56,18 @@ export default () /*: () => Promise<any>  */ => {
         // reticleStuff.hitTestSourceInitialized = false;
         // reticleStuff.hitTestSource = null;
       }
-
-      // if (cubes.active === true) {
-      // }
-      if (scnData.pointLights !== undefined) {
-        scnData.pointLights.pointLight1.position.x =
-          2500 * Math.cos(scnData.pointLights.r);
-        scnData.pointLights.pointLight1.position.z =
-          2500 * Math.sin(scnData.pointLights.r);
-        scnData.pointLights.r += 0.01;
+      if (scnData.stats !== undefined) {
+        scnData.stats.update();
       }
-      scnData.stats.update();
+      // if (scnData.stepLabels !== undefined) {
+      //   for (let label of scnData.stepLabels) {
+      //     label.lookAt(scnData.camera.position);
+      //     // label.rotateY(Math.PI);
+      //   }
+      // }
+      // Render the scene
       scnData.renderer.render(scnData.scene, scnData.camera);
     }
   };
 };
+export default render;

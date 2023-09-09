@@ -9,6 +9,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import newFlwItem from "./newFlwItem.js";
+import newStepLabel from "./newStepLabel.js";
 import expediteNewFlwItems from "./expediteNewFlwItems.js";
 
 //------------------------------------------------------------------
@@ -23,6 +24,9 @@ export const populateSteps = () /*: void */ => {
   }
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
     if (steps[index] !== undefined && steps[index].limit !== undefined) {
+      if (steps[index].status !== "done") {
+        newStepLabel(index);
+      }
       for (let i = 1; i <= steps[index].limit; i++) {
         if (steps[index].status !== "done") {
           newFlwItem(index);

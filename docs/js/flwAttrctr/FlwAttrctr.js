@@ -32,7 +32,6 @@ import LinkedIn from "./LinkedIn.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-// import setupMobileDebug from "../setup_mobile_debug.js";
 import createStats from "../create_stats.js";
 import init from "./actions/init.js";
 import seedString from "../simple_css_seed.js";
@@ -80,9 +79,21 @@ export default (props /*: Props */) /*: string */ => {
     updateShortcutsOnClickInterval(shortcutsToggle);
   }, []);
 
+  useEffect(() => {
+    const stats = createStats();
+    // Add it to the scnData object in the global state for use
+    // in `js/flwAttrctr/actions/render.js`
+    const scnData = gState().get("scnData");
+    scnData.stats = stats;
+    const domOverlayDiv = document.getElementById("dom-overlay");
+    if (domOverlayDiv === null) {
+      return;
+    }
+    domOverlayDiv.appendChild(stats.dom);
+  }, []);
   return html`
     <div id="flw" className="${styles.flw}">
-      <div>
+      <div id="landing-container">
         <div id="logo" className="${styles.logoDiv}">
           <div>
             <img src="/img/logo_web_white.png" className="${styles.logo}" />
@@ -112,11 +123,9 @@ export default (props /*: Props */) /*: string */ => {
         </div>
       </div>
       <div id="dom-overlay">
-        <div id="console-ui"></div>
         <${Metrics} />
         <${Share} />
         <${LinkedIn} />
-        <button id="ARButton">START</button>
         <${Config} />
         <${Sttngs} />
         <${Params} />

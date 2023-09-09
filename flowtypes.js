@@ -120,6 +120,21 @@ type GlobalState = {
   },
 };
 
+type StpLabel = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  dPosition: ThrMeshPosition,
+  // -----------------------
+  // Three.js:
+  // -----------------------
+  name: string,
+  position: ThrMeshPosition,
+  uuid: string,
+  rotation: ThrMeshRotation,
+  lookAt: function,
+  rotateY: function,
+};
 type FlwItem = {
   // -----------------------
   // Data:
@@ -277,6 +292,7 @@ type ThrMeshRotation = {
   x: number,
   y: number,
   z: number,
+  set: (number, number, number) => void,
 };
 
 type ReticleStuff = {
@@ -295,10 +311,11 @@ type SceneData = {
   // -----------------------
   // Three.js:
   // -----------------------
-  stats: Object,
+  stats: Object | typeof undefined,
   scene: Object,
   camera: Object,
   renderer: Object,
+  stepLabels: Array<Object>,
   reticleStuff: ReticleStuff,
   controller: Object,
 };
@@ -494,6 +511,9 @@ declare module "../../web_modules/three/examples/jsm/loaders/TGALoader.js" {
   declare module.exports: any;
 }
 
+declare module "../../../web_modules/three/examples/jsm/renderers/CSS2DRenderer.js" {
+  declare module.exports: any;
+}
 declare module "../../../web_modules/animejs.js" {
   declare module.exports: any;
 }
