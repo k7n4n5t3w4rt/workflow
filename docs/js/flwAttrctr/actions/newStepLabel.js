@@ -28,7 +28,7 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   const step = steps[stepIndex];
   const text = step.name;
   const clckGroup = gState().get("clckCbGroup");
-  const textCanvas = createTextCanvas(text);
+  const textCanvas = createLabelCanvas(text);
   const texture = new THREE.CanvasTexture(textCanvas);
 
   const material = new THREE.MeshBasicMaterial({
@@ -41,7 +41,7 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   const aspect = texture.image.width / texture.image.height;
   const planeGeometry = new THREE.PlaneGeometry(aspect, 1);
   const textMesh = new THREE.Mesh(planeGeometry, material);
-  textMesh.scale.set(0.1, 0.1, 0.1); // Adjust this as needed
+  textMesh.scale.set(0.075, 0.075, 0.075); // Adjust this as needed
   scnData.stepLabels.push(textMesh);
   setDProps(textMesh);
   setPosition(textMesh, stepIndex);
@@ -50,31 +50,49 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
 };
 export default newStepLabel;
 //------------------------------------------------------------------
-// createTextCanvas()
+// createLabelCanvas() // Again, renaming for clarity
 //------------------------------------------------------------------
-const createTextCanvas = (
+const createLabelCanvas = (
   text /*: string */,
-  color /*: string */ = "black",
-  bgColor /*: string */ = "white",
+  color /*: string */ = "white",
+  borderColor /*: string */ = "white",
+  bgColor /*: string */ = "black",
+  bgOpacity /*: number */ = 0.25,
 ) /*: HTMLCanvasElement */ => {
   const scaleCm = gState().get("scaleCm");
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
+  text = text.toUpperCase(); // Convert text to uppercase
+
   const fontSize = 24; // in pixels
-  ctx.font = `${fontSize}px Courier`;
+  ctx.font = `${fontSize}px Verdana`;
   const textWidth = ctx.measureText(text).width;
 
   canvas.width = textWidth * 1.2;
   canvas.height = fontSize * (scaleCm / 4); // This assumes some amount of padding.
 
-  // Background color
+  const borderThickness = 2; // For border
+
+  // Background fill
+  ctx.globalAlpha = bgOpacity;
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // Border drawing
+  ctx.globalAlpha = 1.0; // Reset opacity for the border
+  ctx.lineWidth = borderThickness;
+  ctx.strokeStyle = borderColor;
+  ctx.strokeRect(
+    borderThickness / 2,
+    borderThickness / 2,
+    canvas.width - borderThickness,
+    canvas.height - borderThickness,
+  );
+
   // Text color
   ctx.fillStyle = color;
-  ctx.font = `${fontSize}px Courier`;
+  ctx.font = `${fontSize}px Verdana`;
   ctx.textBaseline = "middle"; // Center vertically
   const centerX = (canvas.width - textWidth) / 2;
   const centerY = canvas.height / 2;
@@ -82,7 +100,6 @@ const createTextCanvas = (
 
   return canvas;
 };
-
 //------------------------------------------------------------------
 // setDProps(flwItem)
 //------------------------------------------------------------------

@@ -21,7 +21,7 @@ export const cssStyles = () /*: Object */ => {
       backgroundColor: "rgba(0, 0, 0, 0)",
       color: "white",
       textShadow: "2px 2px 2px grey",
-      marginTop: "0.6rem",
+      marginTop: "2.2rem",
       top: "0",
     },
     metricsDivs: {
@@ -49,7 +49,7 @@ export const cssStyles = () /*: Object */ => {
       marginTop: "0.7rem",
       fontSize: "0.9em",
     },
-    stepMetrics: {
+    stpMetrics: {
       boxSizing: "border-box",
       border: "1px solid white",
       padding: "0.2rem",

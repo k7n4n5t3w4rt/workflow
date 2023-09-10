@@ -10,6 +10,7 @@ import gState from "../actions/gState.js";
 import calculateTotalWipLimits from "../actions/calculateTotalWipLimits.js";
 import calculateFlwTimeMax from "../actions/calculateFlwTimeMax.js";
 import calculateFlwTimeAtStart from "../actions/calculateFlwTimeAtStart.js";
+import updateStepMetrics from "../actions/updateStepMetrics.js";
 //------------------------------------------------------------------
 // updateMetricsOnClickInterval()
 //------------------------------------------------------------------
@@ -44,7 +45,8 @@ export const updateMetricsOnClickInterval = (
       gState().get("flwTmExpQueue") !== undefined &&
       gState().get("thrPtExpQueue") !== undefined &&
       gState().get("wipExpQueue") !== undefined &&
-      gSttngs().get("timeBox") !== undefined
+      gSttngs().get("timeBox") !== undefined &&
+      gState().get("scnData") !== undefined
     ) {
       // Some shorter names
       const tmBox = gSttngs().get("timeBox");
@@ -98,6 +100,13 @@ export const updateMetricsOnClickInterval = (
       } else {
         setValue("NA");
       }
+      const scnData = gState().get("scnData");
+      if (scnData === undefined || scnData.stpMetrics === undefined) {
+        return;
+      }
+      scnData.stpMetrics.forEach((stpMetrics) => {
+        updateStepMetrics(stpMetrics);
+      });
     }
   }, 1000);
 };

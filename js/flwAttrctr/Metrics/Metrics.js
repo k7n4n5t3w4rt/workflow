@@ -98,9 +98,9 @@ export const Metrics = (props /*: Props */) /*: string */ => {
         >
         <div className="${styles.metricsSpans}">WipExp: ${wipExp}</div>
       </div>`}
-      <${Steps} />
     </div>
   `;
+  // <${Steps} />
 };
 export default Metrics;
 //------------------------------------------------------------------

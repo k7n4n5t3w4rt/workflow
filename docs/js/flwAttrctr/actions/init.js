@@ -19,7 +19,7 @@ import start from "./start.js";
 import addReticleToScene from "./addReticleToScene.js";
 import render from "./render.js";
 //------------------------------------------------------------------
-// init()
+// FUNTION: init()
 //------------------------------------------------------------------
 export const init = () /*: void */ => {
   const x = gSttngs().get("x");

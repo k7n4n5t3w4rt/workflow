@@ -316,7 +316,7 @@ type SceneData = {
   camera: Object,
   renderer: Object,
   stepLabels: Array<Object>,
-  stepMetrics: Array<StpMetrics>,
+  stpMetrics: Array<StpMetrics>,
   reticleStuff: ReticleStuff,
   controller: Object,
 };
@@ -325,12 +325,30 @@ type StpMetrics = {
   // -----------------------
   // Data:
   // -----------------------
+  dStpIndex: number,
+  dPosition: ThrMeshPosition,
+  // -----------------------
+  // Metrics:
+  // -----------------------
   Limit: number,
   AvAg: number,
   DvUnts: number,
   // -----------------------
   // Three.js:
   // -----------------------
+  geometry: {
+    scale: (x: number, y: number, z: number) => void,
+    dispose: () => void,
+  },
+  material: {
+    color: ThrMtrlColor,
+    opacity: number,
+    needsUpdate: boolean,
+    map: {
+      dispose: () => void,
+    },
+    dispose: () => void,
+  },
   name: string,
   position: ThrMeshPosition,
   uuid: string,

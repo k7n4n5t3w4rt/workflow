@@ -61,8 +61,8 @@ export const render = () /*: () => Promise<any>  */ => {
       if (scnData.stats !== undefined) {
         scnData.stats.update();
       }
-      if (scnData.stepMetrics !== undefined) {
-        for (let metrics of scnData.stepMetrics) {
+      if (scnData.stpMetrics !== undefined) {
+        for (let metrics of scnData.stpMetrics) {
           metrics.lookAt(scnData.camera.position);
           // metrics.rotateY(Math.PI);
         }

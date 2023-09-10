@@ -2,8 +2,6 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "../actions/gState.js";
-import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -20,7 +18,8 @@ import { rawStyles } from "../../../web_modules/simplestyle-js.js";
 import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval.js";
 import cssStyles from "./cssStyles.js";
 import getRawStyles from "./getRawStyles.js";
-import getFlwMpSteps from "../actions/getFlwMpSteps.js";
+import updateStepMetrics from "../actions/updateStepMetrics.js";
+import updateStepsStateFromGlobalState from "./updateStepsStateFromGlobalState.js";
 //------------------------------------------------------------------
 // Steps()
 //------------------------------------------------------------------
@@ -41,8 +40,9 @@ export const Steps = (props /*: Props */) /*: string */ => {
   const toggleParams = () => {
     setParamsToggle(!paramsToggle);
   };
+  // THIS FUNCTION HAS BEEN CHANGD - IT NO LONGER SETS THE STATE
   // Once, on load, update the local state from the global state
-  useEffect(updateStepsStateFromGlobalState(setSteps), []);
+  // useEffect(updateStepsStateFromGlobalState(setSteps), []);
   return html`
     <!------------------------------------------------------------------>
     <!-- Steps -->
@@ -54,7 +54,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
           return html`
             <div className="${styles.metricsSpans}">
               <div className="${styles.stepName}">${step.name}</div>
-              <div className="${styles.stepMetrics}">
+              <div className="${styles.stpMetrics}">
                 Limit: ${(step.movingLimit || 0).toString()}<br />
                 Av.Ag: ${(step.avAge || 0).toString()}<br />
                 ${step.status === "touch" &&
@@ -70,30 +70,3 @@ export const Steps = (props /*: Props */) /*: string */ => {
   // </div>
 };
 export default Steps;
-//------------------------------------------------------------------
-// updateStepsStateFromGlobalState()
-//------------------------------------------------------------------
-const updateStepsStateFromGlobalState =
-  (setSteps /*: (any) => void */) /*: () => void */ => () /*: void */ => {
-    setTimeout(updateStepsStateFromGlobalState(setSteps), 1000);
-    const isUpdtngCnfg = gState().get("isUpdtngCnfg");
-    if (isUpdtngCnfg === true) {
-      return;
-    }
-    const steps = gSttngs().get("steps");
-    getFlwMpSteps().forEach(
-      (flwMpStep /*: FlwItem[] */, index /*: number */) /*: void */ => {
-        if (steps[index] === undefined) return;
-        steps[index].avAge = 0;
-        const flwItemAges /*: Array<number> */ = [];
-        flwMpStep.forEach((flwItem /*: FlwItem */) => {
-          flwItemAges.push(flwItem.dStepsAges[index.toString()]);
-        });
-        const avAge =
-          flwItemAges.reduce((acc, num) => acc + num, 0) / flwItemAges.length;
-        if (isNaN(avAge)) return;
-        steps[index].avAge = Math.round(avAge * 100) / 100;
-      },
-    );
-    setSteps(steps);
-  };
