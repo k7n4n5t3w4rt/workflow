@@ -12,7 +12,9 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import initializeHitTestSource from "./initializeHitTestSource.js";
-
+//------------------------------------------------------------------
+// FUNCTION: render()
+//------------------------------------------------------------------
 export const render = () /*: () => Promise<any>  */ => {
   return async (timestamp, frame) /*: Promise<any> */ => {
     const scnData = gState().get("scnData");
@@ -59,12 +61,12 @@ export const render = () /*: () => Promise<any>  */ => {
       if (scnData.stats !== undefined) {
         scnData.stats.update();
       }
-      // if (scnData.stepLabels !== undefined) {
-      //   for (let label of scnData.stepLabels) {
-      //     label.lookAt(scnData.camera.position);
-      //     // label.rotateY(Math.PI);
-      //   }
-      // }
+      if (scnData.stepMetrics !== undefined) {
+        for (let metrics of scnData.stepMetrics) {
+          metrics.lookAt(scnData.camera.position);
+          // metrics.rotateY(Math.PI);
+        }
+      }
       // Render the scene
       scnData.renderer.render(scnData.scene, scnData.camera);
     }

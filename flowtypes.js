@@ -316,8 +316,27 @@ type SceneData = {
   camera: Object,
   renderer: Object,
   stepLabels: Array<Object>,
+  stepMetrics: Array<StpMetrics>,
   reticleStuff: ReticleStuff,
   controller: Object,
+};
+
+type StpMetrics = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  Limit: number,
+  AvAg: number,
+  DvUnts: number,
+  // -----------------------
+  // Three.js:
+  // -----------------------
+  name: string,
+  position: ThrMeshPosition,
+  uuid: string,
+  rotation: ThrMeshRotation,
+  lookAt: function,
+  rotateY: function,
 };
 
 type ThrPtQueue = {

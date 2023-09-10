@@ -47,24 +47,26 @@ export const Steps = (props /*: Props */) /*: string */ => {
     <!------------------------------------------------------------------>
     <!-- Steps -->
     <!------------------------------------------------------------------>
+    <!--
     <div className="${styles.metricsDivs}">
       ${(steps || []).map(
-        (step /*: FlwStep */, index /*: number */) /*: void */ => {
-          if (step.status === "done") return html``;
-          return html`
-            <div className="${styles.metricsSpans}">
-              <div className="${styles.stepName}">${step.name}</div>
-              <div className="${styles.stepMetrics}">
-                Limit: ${(step.movingLimit || 0).toString()}<br />
-                Av.Ag: ${(step.avAge || 0).toString()}<br />
-                ${step.status === "touch" &&
-                html`DvUnts: ${(step.movingDevUnits || 0).toString()}`}<br />
-              </div>
+      (step /*: FlwStep */, index /*: number */) /*: void */ => {
+        if (step.status === "done") return html``;
+        return html`
+          <div className="${styles.metricsSpans}">
+            <div className="${styles.stepName}">${step.name}</div>
+            <div className="${styles.stepMetrics}">
+              Limit: ${(step.movingLimit || 0).toString()}<br />
+              Av.Ag: ${(step.avAge || 0).toString()}<br />
+              ${step.status === "touch" &&
+              html`DvUnts: ${(step.movingDevUnits || 0).toString()}`}<br />
             </div>
-          `;
-        },
-      )}
+          </div>
+        `;
+      },
+    )}
     </div>
+    -->
   `;
   //   </fieldset>
   // </div>

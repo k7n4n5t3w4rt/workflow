@@ -10,6 +10,7 @@ import gState from "./gState.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import newFlwItem from "./newFlwItem.js";
 import newStepLabel from "./newStepLabel.js";
+import newStepMetrics from "./newStepMetrics.js";
 import expediteNewFlwItems from "./expediteNewFlwItems.js";
 
 //------------------------------------------------------------------
@@ -26,6 +27,13 @@ export const populateSteps = () /*: void */ => {
     if (steps[index] !== undefined && steps[index].limit !== undefined) {
       if (steps[index].status !== "done") {
         newStepLabel(index);
+        newStepMetrics(index, [
+          { key: "Limit", value: steps[index].limit.toString() },
+          { key: "AvAg", value: "0" },
+          { key: "DvUnts", value: "0" },
+        ]);
+      } else {
+        // Set up the overall flow metrics over the Done step
       }
       for (let i = 1; i <= steps[index].limit; i++) {
         if (steps[index].status !== "done") {
