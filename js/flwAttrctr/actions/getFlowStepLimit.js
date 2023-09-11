@@ -7,6 +7,9 @@ import gSttngs from "./gSttngs.js";
 // getFlowStepLimit()
 //------------------------------------------------------------------
 export default (flwMpStpKeyNumber /*: number */) /*: number */ => {
+  if (gSttngs().get("steps")[flwMpStpKeyNumber] === undefined) {
+    return 0;
+  }
   let flwStpLimit = gSttngs().get("steps")[flwMpStpKeyNumber].movingLimit;
   if (
     // If we're on the last step

@@ -21,10 +21,8 @@ import calculateValueForScale from "./calculateValueForScale.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
-//------------------------------------------------------------------
-// FUNCTION: newFlwItem()
-//------------------------------------------------------------------
-export const newFlwItem = (stepIndex /*: number */ = 0) /*: FlwItem */ => {
+
+export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube
   const flwItem = threeJsCube(stepIndex);
   setDProps(flwItem);
@@ -38,7 +36,7 @@ export const newFlwItem = (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   gState().get("clckCbGroup").add(flwItem);
   return flwItem;
 };
-export default newFlwItem;
+
 //------------------------------------------------------------------
 // threeJsCube()
 //------------------------------------------------------------------
@@ -67,6 +65,7 @@ const threeJsCube = (stepIndex /*: number */) /*: FlwItem */ => {
   flwItem.dColor = colorCode;
   return flwItem;
 };
+
 //------------------------------------------------------------------
 // setDProps(flwItem)
 //------------------------------------------------------------------
@@ -81,6 +80,7 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   flwItem.dSkipForWip = false;
   return flwItem;
 };
+
 //------------------------------------------------------------------
 // mapIt(flwItem)
 //------------------------------------------------------------------
@@ -93,6 +93,7 @@ const mapIt = (
   gState().get("flwMap")[flwItem.dStpIndex.toString()].push(flwItem);
   return flwItem;
 };
+
 //------------------------------------------------------------------
 // setScaleAndValue()
 //------------------------------------------------------------------
@@ -184,6 +185,7 @@ const setDays = (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.dDysRmnngThisStep = rndmBetween(0, flwItem.dDysEachTouchStep);
   }
 };
+
 //------------------------------------------------------------------
 // setPosition()
 //------------------------------------------------------------------
@@ -203,6 +205,7 @@ const setPosition = (
   flwItem.position.z = flwItem.dPosition.z;
   flwItem.dMoving = false;
 };
+
 //------------------------------------------------------------------
 // refineNewPosition()
 //------------------------------------------------------------------

@@ -8,6 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import setUpFlwMap from "./setUpFlwMap.js";
+import generateInctvCbInstancesDataArray from "./generateInctvCbInstancesDataArray.js";
 //------------------------------------------------------------------
 // FUNCTION: globalState()
 //------------------------------------------------------------------
@@ -33,6 +34,8 @@ export const globalState = () => {
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------
+  gState().set("actvInstances", []);
+  gState().set("inctvInstances", generateInctvCbInstancesDataArray());
   gState().set("vQueue", new xQueue());
   gState().set("flwTmQueue", new xQueue());
   gState().set("thrPtQueue", new xQueue());

@@ -41,6 +41,7 @@ import {
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
 import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
+import generateInctvCbInstancesDataArray from "./actions/generateInctvCbInstancesDataArray.js";
 
 /*::
 type Props = {
@@ -185,6 +186,9 @@ const loadSharedSettings =
         Object.keys(keyValuePairs).forEach((key /*: string */) /*: void */ => {
           gSttngs().set(key, keyValuePairs[key]);
         });
+        // Set the global state's inctvInstances again
+        gState().set("actvInstances", []);
+        gState().set("inctvInstances", generateInctvCbInstancesDataArray());
       }
     } else {
       setTimeout(loadSharedSettings(sid, share), 1000);

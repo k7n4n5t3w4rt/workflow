@@ -44,6 +44,7 @@ type GlobalSettings = {
     flwTimeMax: number,
     flwTimeMin: number,
     fps: number,
+    instancedMax: number,
     numberOfSteps: number,
     paramsMaxWip: number,
     rangeIncreaseRate: number,
@@ -95,6 +96,8 @@ type GlobalState = {
     // -----------------------
     // Data:
     // -----------------------
+    actvCbInstances: CbInstance[],
+    inctvCbInstances: CbInstance[],
     arrivalNumber: number,
     clckCbGroup: ClickCubeGroup,
     clicks: number,
@@ -119,7 +122,28 @@ type GlobalState = {
     wipQueue: WipQueue,
   },
 };
-
+type CbInstance = {
+  index: number,
+  // -----------------------
+  // Data:
+  // -----------------------
+  dAge: number,
+  dColor: string,
+  dDysEachTouchStep: number,
+  dDysRmnngInTotal: number,
+  dDysRmnngThisStep: number,
+  dDysTotal: number,
+  dExpedite: boolean,
+  dMoving: boolean,
+  dPosition: ThrMeshPosition,
+  dScale: number,
+  dSkipForWip: boolean,
+  dStepsAges: { [string]: number },
+  dStpIndex: number,
+  dTmNumber: number,
+  dValue: number,
+  dVolume: number,
+};
 type StpLabel = {
   // -----------------------
   // Data:
@@ -268,8 +292,8 @@ type ThrMeshPosition = {
   // -----------------------
   // Three.js:
   // -----------------------
-  setFromMatrixPosition: (matrix: Object) => void,
-  clone: () => ThrMeshPosition,
+  setFromMatrixPosition?: (matrix: Object) => void,
+  clone?: () => ThrMeshPosition,
   x: number,
   y: number,
   z: number,
