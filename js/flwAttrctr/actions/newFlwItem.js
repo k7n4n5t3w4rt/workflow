@@ -21,10 +21,11 @@ import calculateValueForScale from "./calculateValueForScale.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
+import hexToHSL from "./hexToHSL.js";
 //------------------------------------------------------------------
 // FUNCTION: newFlwItem()
 //------------------------------------------------------------------
-export const newFlwItem = (stepIndex /*: number */ = 0) /*: FlwItem */ => {
+export const newFlwItem = (stepIndex /*: number */ = 0) /*: CbInstance */ => {
   // Create the cube
   const flwItem = threeJsCube(stepIndex);
   setDProps(flwItem);
@@ -35,32 +36,34 @@ export const newFlwItem = (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   setVolume(flwItem);
   setDays(flwItem);
   setPosition(flwItem, stepIndex);
-  gState().get("clckCbGroup").add(flwItem);
   return flwItem;
 };
 export default newFlwItem;
 //------------------------------------------------------------------
 // threeJsCube()
 //------------------------------------------------------------------
-const threeJsCube = (stepIndex /*: number */) /*: FlwItem */ => {
-  // Basic Three.js geometry and material
-  const geometry = new THREE.BoxGeometry(
-    gSttngs().get("x"),
-    gSttngs().get("y"),
-    gSttngs().get("z"),
-  );
+const threeJsCube = (stepIndex /*: number */) /*: CbInstance */ => {
+  const instncdCbMesh = gState().get("instncdCbMesh");
+  // const actvInstances = gState().get("actvInstances");
+  const inctvInstances = gState().get("inctvInstances");
   const stpStatus = gSttngs().get("steps")[stepIndex].status;
+  const flwItem = inctvInstances.pop();
+  // actvInstances.push(flwItem);
+  //------------------------------------------------------------------
+  // COLOR
+  //------------------------------------------------------------------
   // Gold, for touch is the default
-  let colorCode;
+  let colorCode = "#" + gSttngs().get("colorGold");
   if (stpStatus === "backlog") {
     colorCode = "#" + gSttngs().get("colorBlue");
   } else if (stpStatus === "wait") {
     colorCode = "#" + gSttngs().get("colorGrey");
-  } else if (stpStatus === "touch") {
-    colorCode = "#" + gSttngs().get("colorGold");
   }
-  const material = new THREE.MeshLambertMaterial({ color: colorCode });
-  const flwItem = new THREE.Mesh(geometry, material);
+  const HSL = hexToHSL(colorCode);
+  const instanceColor = new THREE.Color();
+  instanceColor.setHSL(HSL.h, HSL.s, HSL.l); // set color using hue, saturation, lightness
+  instncdCbMesh.setColorAt(flwItem.index, instanceColor);
+  instncdCbMesh.instanceColor.needsUpdate = true;
   flwItem.receiveShadow = true;
   flwItem.castShadow = true;
   // Set the color for changing it later
@@ -70,9 +73,9 @@ const threeJsCube = (stepIndex /*: number */) /*: FlwItem */ => {
 //------------------------------------------------------------------
 // setDProps(flwItem)
 //------------------------------------------------------------------
-const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+const setDProps = (flwItem /*: CbInstance */) /*: CbInstance */ => {
   // Set the name to the uuid so we can find it later - Three.js "needs" a name property
-  flwItem.name = flwItem.uuid;
+  flwItem.name = "cb_" + flwItem.index.toString();
   // Set the team number (there is only one for now)
   flwItem.dTmNumber = rndmBetween(1, 1);
   // Expedite is false by default
@@ -85,9 +88,9 @@ const setDProps = (flwItem /*: FlwItem */) /*: FlwItem */ => {
 // mapIt(flwItem)
 //------------------------------------------------------------------
 const mapIt = (
-  flwItem /*: FlwItem */,
+  flwItem /*: CbInstance */,
   flwMapIndex /*: number */,
-) /*: FlwItem */ => {
+) /*: CbInstance */ => {
   // Add the new flwItem to the flwMap in the backlog
   flwItem.dStpIndex = flwMapIndex;
   gState().get("flwMap")[flwItem.dStpIndex.toString()].push(flwItem);
@@ -96,7 +99,8 @@ const mapIt = (
 //------------------------------------------------------------------
 // setScaleAndValue()
 //------------------------------------------------------------------
-const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+const setScaleAndValue = (flwItem /*: CbInstance */) /*: CbInstance */ => {
+  const instncdCbMesh = gState().get("instncdCbMesh");
   const flwTimeAtStart = calculateFlwTimeAtStart();
   const daysMax = calculateFlwTimeMax();
   let daysMin = gSttngs().get("flwTimeMin");
@@ -110,45 +114,59 @@ const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
   flwItem.dDysTotal = rndmBetween(daysMin, daysMax);
   const daysTotal = flwItem.dDysTotal;
   // This will be the scale and value if the flwItmSizeLimit is not set
-  let scale = daysTotal / daysMax;
-  flwItem.dValue = scale;
+  let scaleValue = daysTotal / daysMax;
+  flwItem.dValue = scaleValue;
   // If the flwItmSizeLimit is set, use it to reduce the scale
   // and increase the relative value
   if (
     gSttngs().get("flwItmSizeLimit") >= 0.2 &&
     gSttngs().get("flwItmSizeLimit") < 1 &&
-    scale >= gSttngs().get("flwItmSizeLimit")
+    scaleValue >= gSttngs().get("flwItmSizeLimit")
   ) {
     flwItem.dValue = calculateValueForScale(
-      scale,
+      scaleValue,
       gSttngs().get("flwItmSizeLimit"),
     );
     flwItem.dDysTotal = gSttngs().get("flwItmSizeLimit") * daysMax;
-    scale = gSttngs().get("flwItmSizeLimit");
+    scaleValue = gSttngs().get("flwItmSizeLimit");
   }
   // Set the scale and store the scale value
-  flwItem.scale.set(scale, scale, scale);
-  flwItem.dScale = scale;
+  //------------------------------------------------------------------
+  // SCALE
+  //------------------------------------------------------------------
+  const matrix = new THREE.Matrix4();
+  const position = new THREE.Vector3();
+  const quaternion = new THREE.Quaternion();
+  const scale = new THREE.Vector3();
+  const newScale = new THREE.Vector3(scaleValue, scaleValue, scaleValue);
+  instncdCbMesh.getMatrixAt(flwItem.index, matrix);
+  // Decompose the matrix to get position, rotation, and scale
+  matrix.decompose(position, quaternion, scale);
+  // Now, we'll set the new scale
+  matrix.compose(position, quaternion, newScale);
+  // Set the updated matrix back to the instance
+  instncdCbMesh.setMatrixAt(flwItem.index, matrix);
+  instncdCbMesh.instanceMatrix.needsUpdate = true;
+  flwItem.dScale = scaleValue;
   return flwItem;
 };
 //------------------------------------------------------------------
 // setVolume()
 //------------------------------------------------------------------
-const setVolume = (flwItem /*: FlwItem */) /*: FlwItem */ => {
+const setVolume = (flwItem /*: CbInstance */) /*: CbInstance */ => {
   const scale = flwItem.dScale;
   flwItem.dVolume =
     gSttngs().get("x") *
     scale *
     (gSttngs().get("y") * scale) *
     (gSttngs().get("z") * scale);
-  // Account for a 0 value edge case
   return flwItem;
 };
 //------------------------------------------------------------------
 // setAge()
 //------------------------------------------------------------------
 const setAge = (
-  flwItem /*: FlwItem */,
+  flwItem /*: CbInstance */,
   stepIndex /*: number */,
 ) /*: void */ => {
   // Set the ages to 0 by default
@@ -171,7 +189,7 @@ const setAge = (
 //------------------------------------------------------------------
 // setDays()
 //------------------------------------------------------------------
-const setDays = (flwItem /*: FlwItem */) /*: void */ => {
+const setDays = (flwItem /*: CbInstance */) /*: void */ => {
   let dStpIndex = flwItem.dStpIndex;
   if (dStpIndex > gSttngs().get("steps").length - 1) {
     dStpIndex = gSttngs().get("steps").length - 1;
@@ -188,25 +206,36 @@ const setDays = (flwItem /*: FlwItem */) /*: void */ => {
 // setPosition()
 //------------------------------------------------------------------
 const setPosition = (
-  flwItem /*: FlwItem */,
+  flwItem /*: CbInstance */,
   flwMapIndex /*: number */,
 ) /*: void */ => {
-  flwItem.position.x = gState().get("strtPosition").x;
-  flwItem.position.y = gState().get("strtPosition").y;
-  flwItem.position.z = calculateZPosFromStep(flwMapIndex);
-  // Set the dPosition because refineNewPosition() needs it
-  flwItem.dPosition = { ...flwItem.position };
+  const instncdCbMesh = gState().get("instncdCbMesh");
+  flwItem.dPosition.x = gState().get("strtPosition").x;
+  flwItem.dPosition.y = gState().get("strtPosition").y;
+  flwItem.dPosition.z = calculateZPosFromStep(flwMapIndex);
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   // Set the position to the refined position
-  flwItem.position.x = flwItem.dPosition.x;
-  flwItem.position.y = flwItem.dPosition.y;
-  flwItem.position.z = flwItem.dPosition.z;
+  const matrix = new THREE.Matrix4();
+  instncdCbMesh.getMatrixAt(flwItem.index, matrix);
+
+  // Setting position values from flwItem.dPosition
+  const position = new THREE.Vector3(
+    flwItem.dPosition.x,
+    flwItem.dPosition.y,
+    flwItem.dPosition.z,
+  );
+  matrix.setPosition(position);
+
+  instncdCbMesh.setMatrixAt(flwItem.index, matrix);
+  instncdCbMesh.instanceMatrix.needsUpdate = true;
   flwItem.dMoving = false;
 };
 //------------------------------------------------------------------
 // refineNewPosition()
 //------------------------------------------------------------------
-const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
+const refineNewPosition = (
+  flwItem /*: CbInstance */,
+) /*: ThrMeshPosition */ => {
   let dStpIndex = flwItem.dStpIndex;
   if (dStpIndex > gSttngs().get("steps").length - 1) {
     dStpIndex = gSttngs().get("steps").length - 1;

@@ -14,7 +14,7 @@ import updateNrmlQueues from "./updateNrmlQueues.js";
 // filterDoneItems()
 //------------------------------------------------------------------
 export default (
-    removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:FlwItem, index:number) => void */,
+    removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:CbInstance, index:number) => void */,
   ) /*: () => void */ =>
   () /*: void */ => {
     gState().get("vSphere").dRllngTtlVolume = 0;

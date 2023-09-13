@@ -5,12 +5,13 @@ import getFlwMpSteps from "./getFlwMpSteps.js";
 //------------------------------------------------------------------
 // getAllFlwItems()
 //------------------------------------------------------------------
-export default () => {
-  const flwItems /*: FlwItem[] */ = [];
-  getFlwMpSteps().forEach((flwMpStep /*: FlwItem[] */) => {
-    flwMpStep.forEach((flwItem /*: FlwItem */) => {
+export const getAllFlwItems = () /*: CbInstance[] */ => {
+  const flwItems /*: CbInstance[] */ = [];
+  getFlwMpSteps().forEach((flwMpStep /*: CbInstance[] */) => {
+    flwMpStep.forEach((flwItem /*: CbInstance */) => {
       flwItems.push(flwItem);
     });
   });
   return flwItems;
 };
+export default getAllFlwItems;

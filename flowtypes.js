@@ -44,7 +44,7 @@ type GlobalSettings = {
     flwTimeMax: number,
     flwTimeMin: number,
     fps: number,
-    instancedMax: number,
+    instancedCbMax: number,
     numberOfSteps: number,
     paramsMaxWip: number,
     rangeIncreaseRate: number,
@@ -124,6 +124,7 @@ type GlobalState = {
 };
 type CbInstance = {
   index: number,
+  name: string,
   // -----------------------
   // Data:
   // -----------------------
@@ -276,6 +277,17 @@ type SimplePosition = {
   x: number,
   y: number,
   z: number,
+};
+
+type ThrInstancedMeshType = {
+  geometry: Object, // You might refine this with a more detailed type later.
+  material: Object, // Same here.
+  count: number,
+  setColorAt: function,
+  setMatrixAt: function,
+  instancedColor: Object,
+  instanceMatrix: Object,
+  // ... any other properties/methods you want to type
 };
 
 type ThrMeshScale = {

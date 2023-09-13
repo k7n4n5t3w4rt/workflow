@@ -8,9 +8,9 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-// calculateCubeInstanceMax()
+// calculateInstancedCubeMax()
 //------------------------------------------------------------------
-export const calculateCubeInstanceMax = () /*: number */ => {
+export const calculateInstancedCubeMax = () /*: number */ => {
   return gSttngs()
     .get("steps")
     .reduce(
@@ -30,4 +30,4 @@ export const calculateCubeInstanceMax = () /*: number */ => {
       0,
     );
 };
-export default calculateCubeInstanceMax;
+export default calculateInstancedCubeMax;

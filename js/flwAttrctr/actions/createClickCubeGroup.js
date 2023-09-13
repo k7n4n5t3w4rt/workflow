@@ -7,12 +7,12 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import clckCbGroup from "./newClickCubeGroup.js";
+import newClckCbGroup from "./newClickCubeGroup.js";
 //------------------------------------------------------------------
 // createClickCubeGroup()
 //------------------------------------------------------------------
 export const createClickCubeGroup = () => {
-  gState().set("clckCbGroup", clckCbGroup());
+  gState().set("clckCbGroup", newClckCbGroup());
   // --------------------------------------------------------------
   // AUTOMODE
   // --------------------------------------------------------------

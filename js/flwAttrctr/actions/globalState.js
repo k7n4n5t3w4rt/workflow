@@ -34,7 +34,7 @@ export const globalState = () => {
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------
-  gState().set("actvInstances", []);
+  gState().set("instncdCbMesh", {});
   gState().set("inctvInstances", generateInctvCbInstancesDataArray());
   gState().set("vQueue", new xQueue());
   gState().set("flwTmQueue", new xQueue());

@@ -9,8 +9,8 @@ import expdtIsOn from "./expdtIsOn.js";
 // updateQueues()
 //------------------------------------------------------------------
 export default (
-  doneFlwItems /*: FlwItem[] | typeof undefined */,
-  removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:FlwItem, index:number) => void */,
+  doneFlwItems /*: CbInstance[] | typeof undefined */,
+  removeDoneFlwItmsFromFlwMap /*: (_:null|void, flwItem:CbInstance, index:number) => void */,
 ) /*: void */ => {
   if (doneFlwItems === undefined) {
     doneFlwItems = [];
@@ -23,7 +23,7 @@ export default (
 //------------------------------------------------------------------
 export const processThroughPut = (
   _ /*: Array<number> */,
-  flwItem /*: FlwItem */,
+  flwItem /*: CbInstance */,
 ) /*: Array<number> */ => {
   if (expdtIsOn() === false || flwItem.dExpedite === false) {
     _[0] += 1;
@@ -35,7 +35,7 @@ export const processThroughPut = (
 //------------------------------------------------------------------
 export const processFlowTime = (
   _ /*: Array<number> */,
-  flwItem /*: FlwItem */,
+  flwItem /*: CbInstance */,
 ) /*: Array<number> */ => {
   if (expdtIsOn() === false || flwItem.dExpedite === false) {
     _.push(flwItem.dAge);

@@ -42,7 +42,9 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
 import generateInctvCbInstancesDataArray from "./actions/generateInctvCbInstancesDataArray.js";
-
+//------------------------------------------------------------------
+// FUNCTION: FlwAttrctr()
+//------------------------------------------------------------------
 /*::
 type Props = {
 	sid?: string,
@@ -187,7 +189,6 @@ const loadSharedSettings =
           gSttngs().set(key, keyValuePairs[key]);
         });
         // Set the global state's inctvInstances again
-        gState().set("actvInstances", []);
         gState().set("inctvInstances", generateInctvCbInstancesDataArray());
       }
     } else {

@@ -15,7 +15,6 @@ import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
 import updateAge from "./updateAge.js";
 import updateDays from "./updateDays.js";
-import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getSttngsFromEasyStorage from "./getSttngsFromEasyStorage.js";
 import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";

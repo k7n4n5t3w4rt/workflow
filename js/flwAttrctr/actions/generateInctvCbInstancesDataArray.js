@@ -15,11 +15,12 @@ import isParsable from "./isParsable.js";
 //------------------------------------------------------------------
 const generateInctvCbInstancesDataArray = () /*: Array<CbInstance> */ => {
   // A default of 0 just in case
-  const instanceMax = gSttngs().get("instanceMax") || 0;
+  const instancedCbMax = gSttngs().get("instancedCbMax") || 0;
   const inctvCbInstancesDataArray = [];
-  for (let i = 0; i < instanceMax; i++) {
+  for (let i = 0; i < instancedCbMax; i++) {
     inctvCbInstancesDataArray.push({
       index: i,
+      name: "cb_" + i.toString(),
       // -----------------------
       // Data:
       // -----------------------

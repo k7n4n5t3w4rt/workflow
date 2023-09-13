@@ -20,6 +20,7 @@ import setStartPosition from "./setStartPosition.js";
 import orientEverythingToTheClickCube from "./orientEverythingToTheClickCube.js";
 import createClickCubeGroup from "./createClickCubeGroup.js";
 import hideReticule from "./hideReticule.js";
+import generateInstancedCbMeshes from "./generateInstancedCbMeshes.js";
 //------------------------------------------------------------------
 // FUNCTION: start()
 //------------------------------------------------------------------
@@ -42,6 +43,7 @@ export const start = async () /*: Promise<void> */ => {
     controller.removeEventListener("select", start);
   }
   createClickCubeGroup();
+  generateInstancedCbMeshes();
   orientEverythingToTheClickCube();
   setStartPosition();
   setEndPosition();

@@ -7,7 +7,6 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import getFlwMpSteps from "./getFlwMpSteps.js";
 import skipForWip from "./skipForWip.js";
@@ -24,7 +23,7 @@ import updateDaysRemainingNrml from "./updateDaysRemainingNrml.js";
 export default () /*: void */ => {
   // Get all the flwItems, remove the dead ones, and then remove the done ones.
   const flwItems = getAllFlwItems()
-    .filter(theNonDead(removeFlowItem, removeDoneFlwItmsFromFlwMap))
+    .filter(theNonDead(removeDoneFlwItmsFromFlwMap))
     .filter(inTouch);
   //------------------------------------------------------------------
   // EXPEDITED

@@ -12,8 +12,10 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import newClickCube from "./newClickCube.js";
-
-export default () /*: Object */ => {
+//------------------------------------------------------------------
+// FUNCTION: newClickCubeGroup()
+//------------------------------------------------------------------
+export const newClickCubeGroup = () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group
   const clckCbGroup = new THREE.Group();
   const cube = newClickCube();
@@ -23,3 +25,4 @@ export default () /*: Object */ => {
   clckCbGroup.clckCube = cube;
   return clckCbGroup;
 };
+export default newClickCubeGroup;

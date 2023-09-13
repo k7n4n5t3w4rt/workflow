@@ -10,7 +10,7 @@ import cleanInt from "../calculations/cleanInt.js";
 import round2Places from "../calculations/round2Places.js";
 import calculateDevPower from "./calculateDevPower.js";
 import touchStepsCount from "./touchStepsCount.js";
-import calculateInstanceMax from "./calculateCubeInstanceMax.js";
+import calculateInstancedCubeMax from "./calculateInstancedCubeMax.js";
 //------------------------------------------------------------------
 // globalSettings()
 //------------------------------------------------------------------
@@ -115,7 +115,7 @@ export default async () /*: Promise<void> */ => {
   ]);
   // Ditto, this will be overwritten if there is preset data in the URL
   // See: js/flwAttrctr/FlwAttrctr.js - loadSharedSettings()
-  gSttngs().set("instancedMax", calculateInstanceMax());
+  gSttngs().set("instancedCbMax", calculateInstancedCubeMax());
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------

@@ -23,7 +23,7 @@ export default (flwMpStpItems /*: FlwItem[] */) => {
       flwItem.dExpedite === false
     ) {
       flwItem.dExpedite = true;
-      flwItem.name = "EXP-" + flwItem.name.split("-")[0];
+      flwItem.name = "EXP-" + flwItem.name;
       // Increment the global counter
       gState().set("expdtCount", gState().get("expdtCount") + 1);
       // Change the color of the item to green

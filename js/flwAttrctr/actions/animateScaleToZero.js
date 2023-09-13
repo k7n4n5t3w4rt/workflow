@@ -1,27 +1,32 @@
 // @flow
 //------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
+//------------------------------------------------------------------
+// IMPORTS: THREE.js
+//------------------------------------------------------------------
+import * as THREE from "../../../web_modules/three.js";
+//------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import anime from "../../../web_modules/animejs.js";
-
 //------------------------------------------------------------------
 // animateScaleToZero()
 //------------------------------------------------------------------
-export default (
-  flwItem /*: FlwItem */,
+export const animateScaleToZero = (
+  flwItem /*: CbInstance */,
   duration /*: number */ = 1200,
   completeFunction /*: function */ = () => {},
 ) /*: void */ => {
-  // Create an object with a scale property that can be animated.
+  const instncdCbMesh = gState().get("instncdCbMesh");
   let scaleObject = {
-    x: flwItem.scale.x,
-    y: flwItem.scale.y,
-    z: flwItem.scale.z,
+    x: flwItem.dScale,
+    y: flwItem.dScale,
+    z: flwItem.dScale,
   };
-
   flwItem.dMoving = true;
-
-  // Create an animation that transitions the scale from 1.0 to 2.0 over 2 seconds.
   anime({
     targets: [scaleObject],
     x: 0,
@@ -29,10 +34,23 @@ export default (
     z: 0,
     duration: duration,
     easing: "linear",
-    // Update the sphere's scale on each frame.
+    // Update the instance's scale on each frame.
     update: function () {
-      flwItem.scale.set(scaleObject.x, scaleObject.y, scaleObject.z);
+      const matrix = new THREE.Matrix4();
+      const quaternion = new THREE.Quaternion();
+      const position = new THREE.Vector3();
+      instncdCbMesh.getMatrixAt(flwItem.index, matrix);
+      matrix.decompose(position, quaternion, new THREE.Vector3());
+      const newMatrix = new THREE.Matrix4();
+      newMatrix.compose(
+        position,
+        quaternion,
+        new THREE.Vector3(scaleObject.x, scaleObject.y, scaleObject.z),
+      );
+      instncdCbMesh.setMatrixAt(flwItem.index, newMatrix);
+      instncdCbMesh.instanceMatrix.needsUpdate = true;
     },
     complete: completeFunction,
   });
 };
+export default animateScaleToZero;

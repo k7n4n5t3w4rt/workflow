@@ -9,7 +9,7 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 export default (
   _ /*: null | void */,
-  flwItem /*: FlwItem */,
+  flwItem /*: CbInstance */,
   index /*: number */,
 ) /*: void */ => {
   let dStpIndex = flwItem.dStpIndex;
