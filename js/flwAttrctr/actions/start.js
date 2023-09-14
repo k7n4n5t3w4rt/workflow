@@ -43,15 +43,16 @@ export const start = async () /*: Promise<void> */ => {
     controller.removeEventListener("select", start);
   }
   createClickCubeGroup();
-  generateInstancedCbMeshes();
-  orientEverythingToTheClickCube();
   setStartPosition();
   setEndPosition();
+  generateInstancedCbMeshes();
+  orientEverythingToTheClickCube();
   await createValueSphere();
   const ambientLight = ambientLightSetup();
   scene.add(ambientLight);
   const directionalLight = directionalLightSetup();
   directionalLight.target = gState().get("vSphere");
+  // directionalLight.target = gState().get("instncdCbMesh");
   scene.add(directionalLight);
   populateSteps();
   // Start the clubes flying

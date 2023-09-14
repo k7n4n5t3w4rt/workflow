@@ -20,53 +20,59 @@ import calculateInstancedCubeMax from "./calculateInstancedCubeMax.js";
 // generateInstancedCbMeshes()
 //------------------------------------------------------------------
 const generateInstancedCbMeshes = () /*: ThrInstancedMeshType */ => {
-  // Create the geometry. I'm assuming you're using a BoxBufferGeometry for cubes.
+  //------------------------------------------------------------------
+  // Create the geometry
+  //------------------------------------------------------------------
   const x = gSttngs().get("x");
   const y = gSttngs().get("y");
   const z = gSttngs().get("z");
-  const geometry = new THREE.BoxBufferGeometry(x, y, z); // Adjust size as needed
+  const geometry = new THREE.BoxBufferGeometry(x, y, z);
 
-  // Create a color for each vertex of the geometry.
-  // In this case, we'll set them all to white.
-  const numVertices = geometry.attributes.position.count;
-  const colors = new Float32Array(numVertices * 3); // each vertex needs 3 float values for r, g, b
-
-  for (let i = 0; i < numVertices; i++) {
-    colors[i * 3] = 1; // red
-    colors[i * 3 + 1] = 1; // green
-    colors[i * 3 + 2] = 1; // blue
-  }
-
-  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-  // Get the color from your settings
+  //------------------------------------------------------------------
+  // Set the material
+  //------------------------------------------------------------------
   const color /*: string */ = gSttngs().get("colorGrey");
   const colorCode = "#" + color;
   const material = new THREE.MeshLambertMaterial({
     color: colorCode,
-    // this tells the material to use vertex colors
-    vertexColors: THREE.VertexColors,
+    transparent: true,
   });
 
-  // Get the max instances from your settings
-  const instancedCbMax /*: number */ = gSttngs().get("instancedCbMax");
-
+  //------------------------------------------------------------------
   // Create the InstancedMesh
-  const instncdCbMesh /*: ThrInstancedMeshType */ = new THREE.InstancedMesh(
+  //------------------------------------------------------------------
+  let instancedCbMax = gSttngs().get("instancedCbMax");
+  const instncdCbMesh = new THREE.InstancedMesh(
     geometry,
     material,
     instancedCbMax,
   );
+  instncdCbMesh.castShadow = true;
+  instncdCbMesh.receiveShadow = true;
+  instncdCbMesh.material.opacity = 0.9;
+
+  //------------------------------------------------------------------
+  // Set the position
+  //------------------------------------------------------------------
+  const strtPosition = gState().get("strtPosition");
+  instncdCbMesh.position.set(strtPosition.x, strtPosition.y, strtPosition.z);
+
+  //------------------------------------------------------------------
   // Hide all the instances
-  const matrix = new THREE.Matrix4().scale(new THREE.Vector3(0, 0, 0));
+  //------------------------------------------------------------------
+  const matrix = new THREE.Matrix4().scale(new THREE.Vector3(4, 4, 4));
   for (let i = 0; i < instancedCbMax; i++) {
     instncdCbMesh.setMatrixAt(i, matrix);
   }
   instncdCbMesh.instanceMatrix.needsUpdate = true;
+
+  //------------------------------------------------------------------
+  // Add the InstancedMesh to the scene
+  //------------------------------------------------------------------
   const clckCbGroup = gState().get("clckCbGroup");
   clckCbGroup.add(instncdCbMesh);
-  // Set the state
   gState().set("instncdCbMesh", instncdCbMesh);
+
   return instncdCbMesh;
 };
 export default generateInstancedCbMeshes;

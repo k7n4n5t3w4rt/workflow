@@ -22,10 +22,17 @@ import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
 import hexToHSL from "./hexToHSL.js";
+import setInstanceColor from "./setInstanceColor.js";
 //------------------------------------------------------------------
 // FUNCTION: newFlwItem()
 //------------------------------------------------------------------
-export const newFlwItem = (stepIndex /*: number */ = 0) /*: CbInstance */ => {
+export const newFlwItem = (
+  stepIndex /*: number */ = 0,
+) /*: CbInstance | void */ => {
+  // //------------------------------------------------------------------
+  // // DEBUG
+  // //------------------------------------------------------------------
+  // return;
   // Create the cube
   const flwItem = threeJsCube(stepIndex);
   setDProps(flwItem);
@@ -59,13 +66,16 @@ const threeJsCube = (stepIndex /*: number */) /*: CbInstance */ => {
   } else if (stpStatus === "wait") {
     colorCode = "#" + gSttngs().get("colorGrey");
   }
-  const HSL = hexToHSL(colorCode);
-  const instanceColor = new THREE.Color();
-  instanceColor.setHSL(HSL.h, HSL.s, HSL.l); // set color using hue, saturation, lightness
-  instncdCbMesh.setColorAt(flwItem.index, instanceColor);
-  instncdCbMesh.instanceColor.needsUpdate = true;
-  flwItem.receiveShadow = true;
-  flwItem.castShadow = true;
+  //------------------------------------------------------------------
+  // NOT WORKING
+  //------------------------------------------------------------------
+  // THIS IS THE "VERTICES" WAY OFSETTING HE COLOUR
+  // const HSL = hexToHSL(colorCode);
+  // const instanceColor = new THREE.Color();
+  // instanceColor.setHSL(HSL.h, HSL.s, HSL.l); // set color using hue, saturation, lightness
+  // const color = new THREE.Color().setHSL(HSL.h, HSL.s, HSL.l);
+  // THIS IS THE, APPARENTLY, SIMPLER HEX VALUE WAY OF SETTING IT
+  // setInstanceColor(flwItem.index, colorCode);
   // Set the color for changing it later
   flwItem.dColor = colorCode;
   return flwItem;
@@ -142,6 +152,8 @@ const setScaleAndValue = (flwItem /*: CbInstance */) /*: CbInstance */ => {
   instncdCbMesh.getMatrixAt(flwItem.index, matrix);
   // Decompose the matrix to get position, rotation, and scale
   matrix.decompose(position, quaternion, scale);
+  // Store the quaternion for later use - like wen manipulating the matrix to move the cube
+  flwItem.dQuaternion = quaternion;
   // Now, we'll set the new scale
   matrix.compose(position, quaternion, newScale);
   // Set the updated matrix back to the instance

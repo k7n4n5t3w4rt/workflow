@@ -19,13 +19,16 @@ import animateScaleToZero from "./animateScaleToZero.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import hexToHSL from "./hexToHSL.js";
-
-export default (flwItem /*: Object */) /*: void */ => {
-  animateColorChange(flwItem, newColor(flwItem));
+import setInstanceColor from "./setInstanceColor.js";
+//------------------------------------------------------------------
+// FUNCTION: move()
+//------------------------------------------------------------------
+export const move = (flwItem /*: Object */) /*: void */ => {
+  // animateColorChange(flwItem, newColor(flwItem));
   flwItem.dPosition = { ...refineNewPosition(flwItem) };
   animatePositionChange(flwItem);
 };
-
+export default move;
 //------------------------------------------------------------------
 // animatePositionChange()
 //------------------------------------------------------------------
@@ -59,7 +62,7 @@ const animatePositionChange = (flwItem /*: CbInstance */) /*: void */ => {
     update: () => {
       setInstancePosition(
         instncdCbMesh,
-        flwItem.index,
+        flwItem,
         new THREE.Vector3(dummyPosition.x, dummyPosition.y, dummyPosition.z),
       );
     },
@@ -81,20 +84,16 @@ const animatePositionChange = (flwItem /*: CbInstance */) /*: void */ => {
 //------------------------------------------------------------------
 const setInstancePosition = (
   instncdCbMesh /*: Object */,
-  index /*: number */,
+  flwItem /*: CbInstance */,
   position /*: Object */,
 ) /*: void */ => {
   const matrix /*: Object */ = new THREE.Matrix4();
-  const quaternion /*: Object */ = new THREE.Quaternion();
-  const scale /*: Object */ = new THREE.Vector3();
 
-  instncdCbMesh.getMatrixAt(index, matrix);
-  matrix.decompose(new THREE.Vector3(), quaternion, scale);
-  matrix.compose(position, quaternion, scale);
-  instncdCbMesh.setMatrixAt(index, matrix);
+  instncdCbMesh.getMatrixAt(flwItem.index, matrix);
+  matrix.compose(position, flwItem.dQuaternion, flwItem.dScale);
+  instncdCbMesh.setMatrixAt(flwItem.index, matrix);
   instncdCbMesh.instanceMatrix.needsUpdate = true;
 };
-
 //------------------------------------------------------------------
 // animateColorChange()
 //------------------------------------------------------------------
@@ -141,28 +140,11 @@ const animateColorChange = (
   });
 };
 //------------------------------------------------------------------
-// setInstanceColor()
-//------------------------------------------------------------------
-// Helper function to set instance color
-const setInstanceColor = (
-  index /*: number */,
-  color /*: Object */,
-) /*: void */ => {
-  const instncdCbMesh = gState().get("instncdCbMesh");
-  const dummyGeometry /*: Object */ = instncdCbMesh.geometry;
-  const colorAttribute = dummyGeometry.attributes.color;
-
-  // Set the color for the instance.
-  colorAttribute.setXYZ(index, color.r, color.g, color.b);
-  colorAttribute.needsUpdate = true;
-};
-//------------------------------------------------------------------
 // newColor()
 //------------------------------------------------------------------
 const newColor = (flwItem /*: CbInstance */) /*: string */ => {
   const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex + 1].status;
   let newColor = "#" + gSttngs().get("colorGrey"); // Grey for "waiting" status
-
   if (nextStatus === "touch" || nextStatus === "done") {
     newColor = "#" + gSttngs().get("colorGold"); // Gold for "touch" status
     if (flwItem.dExpedite == true) {
@@ -171,7 +153,6 @@ const newColor = (flwItem /*: CbInstance */) /*: string */ => {
   }
   return newColor;
 };
-
 //------------------------------------------------------------------
 // refineNewPosition()
 //------------------------------------------------------------------

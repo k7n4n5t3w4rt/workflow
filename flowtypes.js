@@ -138,6 +138,7 @@ type CbInstance = {
   dMoving: boolean,
   dPosition: ThrMeshPosition,
   dScale: number,
+  dQuaternion: Object,
   dSkipForWip: boolean,
   dStepsAges: { [string]: number },
   dStpIndex: number,
@@ -285,8 +286,11 @@ type ThrInstancedMeshType = {
   count: number,
   setColorAt: function,
   setMatrixAt: function,
+  position: ThrMeshPosition,
   instancedColor: Object,
   instanceMatrix: Object,
+  castShadow: boolean,
+  receiveShadow: boolean,
   // ... any other properties/methods you want to type
 };
 
@@ -306,6 +310,7 @@ type ThrMeshPosition = {
   // -----------------------
   setFromMatrixPosition?: (matrix: Object) => void,
   clone?: () => ThrMeshPosition,
+  set: (number, number, number) => void,
   x: number,
   y: number,
   z: number,
