@@ -11,7 +11,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import click from "./click.js";
-import populateSteps from "./populateSteps.js";
+import populateSteps from "./populateStepsOnStart.js";
 import ambientLightSetup from "./ambientLightSetup.js";
 import directionalLightSetup from "./directionalLightSetup.js";
 import createValueSphere from "./createValueSphere.js";

@@ -5,19 +5,21 @@
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 //------------------------------------------------------------------
-// setUpFlwMap(gFlwMap, gFlwSteps)
+// setUpFlwMap()
 //------------------------------------------------------------------
-export const setUpFlwMap = (gFlwMap /*: FlwMap */) /*: void */ => {
-  const gFlwSteps = gSttngs().get("steps");
+export const setUpFlwMap = () /*: void */ => {
+  const steps = gSttngs().get("steps");
+  const flwMap = {};
   // Set each stepTotal to 0
-  if (gFlwSteps !== undefined) {
-    gFlwSteps.forEach((step /*: FlwStep */, index /*: number */) => {
-      gState().get("flwMap")[index.toString()] = [];
+  if (steps !== undefined) {
+    steps.forEach((step /*: FlwStep */, index /*: number */) => {
+      flwMap[index.toString()] = [];
     });
   } else {
     setTimeout(() => {
-      setUpFlwMap(gFlwMap);
+      setUpFlwMap();
     }, 1000);
   }
+  gState().set("flwMap", flwMap);
 };
 export default setUpFlwMap;

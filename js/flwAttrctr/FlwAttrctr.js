@@ -41,7 +41,10 @@ import {
   setSeed,
 } from "../../web_modules/simplestyle-js.js";
 import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
-
+import setUpFlwMap from "./actions/setUpFlwMap.js";
+//------------------------------------------------------------------
+// FUNCTION: FlwAttrctr()
+//------------------------------------------------------------------
 /*::
 type Props = {
 	sid?: string,
@@ -107,17 +110,19 @@ export default (props /*: Props */) /*: string */ => {
           >
             <option value="" disabled selected>Presets:</option>
             <option value=${EXAMPLE_0}>
-              EXAMPLE_ 0: No WIP Limit (arrival rate, drag)
+              EXAMPLE_ 0: No WIP Limit (Hint: 1. Set WIP limit to 8)
             </option>
             <option value=${EXAMPLE_1}>
-              EXAMPLE_ 1: Simplistic (timebox, work item size)
+              EXAMPLE_ 1: Time Period & Little's Law (Hint: 1. Set TimeBox to
+              12)
             </option>
             <option value=${EXAMPLE_2}>
-              EXAMPLE_ 2: Bottleneck (exploit, subordinate)
+              EXAMPLE_ 2: Bottleneck in Test (Hint: 1. People can move 2. Set
+              WIP limit in)
             </option>
             <option value=${EXAMPLE_3}>
-              EXAMPLE_ 3: Initiative WIP (drag, pereto, WIP limit, max size
-              limit)
+              EXAMPLE_ 3: Initiative WIP (Hont: 1. Set WIP limit to 25 2. Set
+              max size limit to 20%)
             </option>
           </select>
         </div>
@@ -142,7 +147,7 @@ const handleChange = (event /*: SyntheticEvent<HTMLSelectElement> */) => {
 };
 
 const EXAMPLE_0 =
-  "/?sid=EXAMPLE_0&share=eyJkZXZQb3dlckZpeCI6MSwiZHJhZyI6MCwiZHJhZ1BvaW50IjowLjUsInBhcmV0b1BvaW50IjowLjgsImFycml2YWxSYXRlIjoxLCJmbHdUaW1lTWluIjo0LCJ0aW1lQm94IjoxMCwiZXhwZHRRdWV1ZUxlbmd0aCI6MCwiZXhwZHREdlVuaXRzRmFjdG9yIjoxLCJmbHdJdG1TaXplTGltaXQiOjEsIm51bWJlck9mU3RlcHMiOjMsInJhbmdlTWF4IjoxMCwicmFuZ2VJbmNyZWFzZVJhdGUiOjAuMSwicmFuZ2VNaWRwb2ludCI6MC4xLCJmcHMiOjEsInNob3dNZXRyaWNzIjp0cnVlLCJjb2xvckdvbGQiOiJmNmJhMDAiLCJjb2xvckdyZXkiOiI4MDgwODAiLCJjb2xvckdyZWVuIjoiMDBmZjAwIiwiY29sb3JCbHVlIjoiMWQyNTcwIiwicGFyYW1zTWF4V2lwIjoxMiwic2NhbGVDbSI6Nywic2NhbGUiOjAuMDcsIngiOjAuMDcsInkiOjAuMDcsInoiOjAuMDcsInN0ZXAiOjAuMzUsInlPZmZzZXQiOjAuNywiZGVhdGgiOjAsImJhY2tsb2dEZWF0aCI6MCwic3RlcHMiOlt7Im5hbWUiOiJCYWNrbG9nIiwic3RhdHVzIjoiYmFja2xvZyIsImxpbWl0Ijo0LCJtb3ZpbmdMaW1pdCI6NCwiYXZBZ2UiOjQwLjU4fSx7Im5hbWUiOiJJbiBQcm9ncmVzcyIsInN0YXR1cyI6InRvdWNoIiwibGltaXQiOjAsIm1vdmluZ0xpbWl0IjowLCJhdkFnZSI6NS43LCJkZXZVbml0cyI6NCwibW92aW5nRGV2VW5pdHMiOjQsImZsd1RpbWVBdFN0YXJ0Ijo0LCJhY3R1YWxGbHdUaW1lIjo0fSx7Im5hbWUiOiJEb25lIiwic3RhdHVzIjoiZG9uZSIsImxpbWl0IjowLCJhdkFnZSI6MTAwLjY1LCJtb3ZpbmdMaW1pdCI6MH1dfQ==";
+  "/?sid=EXAMPLE_0___600557&share=eyJkZXZQb3dlckZpeCI6MSwiZHJhZyI6MC4yLCJkcmFnUG9pbnQiOjAuNSwicGFyZXRvUG9pbnQiOjAuOCwiYXJyaXZhbFJhdGUiOjEuNSwiZmx3VGltZU1pbiI6NSwidGltZUJveCI6MTAsImV4cGR0UXVldWVMZW5ndGgiOjAsImV4cGR0RHZVbml0c0ZhY3RvciI6MSwiZmx3SXRtU2l6ZUxpbWl0IjoxLCJudW1iZXJPZlN0ZXBzIjozLCJyYW5nZU1heCI6MTAsInJhbmdlSW5jcmVhc2VSYXRlIjowLjEsInJhbmdlTWlkcG9pbnQiOjAuMSwiZnBzIjoxLCJzaG93TWV0cmljcyI6dHJ1ZSwiY29sb3JHb2xkIjoiZjZiYTAwIiwiY29sb3JHcmV5IjoiODA4MDgwIiwiY29sb3JHcmVlbiI6IjAwZmYwMCIsImNvbG9yQmx1ZSI6IjFkMjU3MCIsInBhcmFtc01heFdpcCI6MzAsInNjYWxlQ20iOjcsInNjYWxlIjowLjA3LCJ4IjowLjA3LCJ5IjowLjA3LCJ6IjowLjA3LCJzdGVwIjowLjM1LCJ5T2Zmc2V0IjowLjcsImRlYXRoIjowLCJiYWNrbG9nRGVhdGgiOjAsInN0ZXBzIjpbeyJuYW1lIjoiQmFja2xvZyIsInN0YXR1cyI6ImJhY2tsb2ciLCJsaW1pdCI6OCwibW92aW5nTGltaXQiOjgsImF2QWdlIjo0MC41OH0seyJuYW1lIjoiSW4gUHJvZ3Jlc3MiLCJzdGF0dXMiOiJ0b3VjaCIsImxpbWl0IjowLCJtb3ZpbmdMaW1pdCI6MCwiYXZBZ2UiOjUuNywiZGV2VW5pdHMiOjgsIm1vdmluZ0RldlVuaXRzIjo4LCJmbHdUaW1lQXRTdGFydCI6NSwiYWN0dWFsRmx3VGltZSI6NX0seyJuYW1lIjoiRG9uZSIsInN0YXR1cyI6ImRvbmUiLCJsaW1pdCI6MCwiYXZBZ2UiOjEwMC42NSwibW92aW5nTGltaXQiOjB9XX0=";
 const EXAMPLE_1 =
   "/?sid=EXAMPLE_1&share=eyJkZXZQb3dlckZpeCI6MSwiZHJhZyI6MCwiZHJhZ1BvaW50IjowLjUsInBhcmV0b1BvaW50IjowLjgsImFycml2YWxSYXRlIjoxMiwiZmx3VGltZU1pbiI6NiwidGltZUJveCI6MTAsImV4cGR0UXVldWVMZW5ndGgiOjAsImV4cGR0RHZVbml0c0ZhY3RvciI6MSwiZmx3SXRtU2l6ZUxpbWl0IjoxLCJudW1iZXJPZlN0ZXBzIjozLCJyYW5nZU1heCI6MTAsInJhbmdlSW5jcmVhc2VSYXRlIjowLjEsInJhbmdlTWlkcG9pbnQiOjAuMSwiZnBzIjoxLCJzaG93TWV0cmljcyI6dHJ1ZSwiY29sb3JHb2xkIjoiZjZiYTAwIiwiY29sb3JHcmV5IjoiODA4MDgwIiwiY29sb3JHcmVlbiI6IjAwZmYwMCIsImNvbG9yQmx1ZSI6IjFkMjU3MCIsInBhcmFtc01heFdpcCI6MTIsInNjYWxlQ20iOjcsInNjYWxlIjowLjA3LCJ4IjowLjA3LCJ5IjowLjA3LCJ6IjowLjA3LCJzdGVwIjowLjM1LCJ5T2Zmc2V0IjowLjcsImRlYXRoIjowLCJiYWNrbG9nRGVhdGgiOjAsInN0ZXBzIjpbeyJuYW1lIjoiQmFja2xvZyIsInN0YXR1cyI6ImJhY2tsb2ciLCJsaW1pdCI6MTIsIm1vdmluZ0xpbWl0IjoxMiwiYXZBZ2UiOjB9LHsibmFtZSI6IkluIFByb2dyZXNzIiwic3RhdHVzIjoidG91Y2giLCJsaW1pdCI6MTIsIm1vdmluZ0xpbWl0IjoxMiwiYXZBZ2UiOjAsImRldlVuaXRzIjo2LCJtb3ZpbmdEZXZVbml0cyI6NiwiZmx3VGltZUF0U3RhcnQiOjYsImFjdHVhbEZsd1RpbWUiOjZ9LHsibmFtZSI6IkRvbmUiLCJzdGF0dXMiOiJkb25lIiwibGltaXQiOjAsImF2QWdlIjowLCJtb3ZpbmdMaW1pdCI6MH1dfQ==";
 const EXAMPLE_2 =
@@ -185,6 +190,8 @@ const loadSharedSettings =
         Object.keys(keyValuePairs).forEach((key /*: string */) /*: void */ => {
           gSttngs().set(key, keyValuePairs[key]);
         });
+        // Reinitalize the simulation
+        setUpFlwMap();
       }
     } else {
       setTimeout(loadSharedSettings(sid, share), 1000);

@@ -11,7 +11,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import click from "./click.js";
-import populateSteps from "./populateSteps.js";
+import populateStepsOnStart from "./populateStepsOnStart.js";
 import ambientLightSetup from "./ambientLightSetup.js";
 import directionalLightSetup from "./directionalLightSetup.js";
 import createValueSphere from "./createValueSphere.js";
@@ -41,6 +41,11 @@ export const start = async () /*: Promise<void> */ => {
     const controller = gState().get("scnData").controller;
     controller.removeEventListener("select", start);
   }
+  // const steps = gSttngs().get("steps");
+  // const flwMpSteps = getFlwMpSteps();
+  // if (steps.length !== flwMpSteps.length) {
+  // }
+
   createClickCubeGroup();
   orientEverythingToTheClickCube();
   setStartPosition();
@@ -51,7 +56,7 @@ export const start = async () /*: Promise<void> */ => {
   const directionalLight = directionalLightSetup();
   directionalLight.target = gState().get("vSphere");
   scene.add(directionalLight);
-  populateSteps();
+  populateStepsOnStart();
   // Start the clubes flying
   click();
 };

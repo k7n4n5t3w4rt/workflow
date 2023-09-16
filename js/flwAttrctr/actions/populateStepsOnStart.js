@@ -16,11 +16,15 @@ import expediteNewFlwItems from "./expediteNewFlwItems.js";
 //------------------------------------------------------------------
 // populateSteps()
 //------------------------------------------------------------------
-export const populateSteps = () /*: void */ => {
+export const populateStepsOnStart = () /*: void */ => {
   const flwMpSteps = getFlwMpSteps();
   const steps = gSttngs().get("steps") || [];
-  if (flwMpSteps.length === 0 || steps.length === 0) {
-    setTimeout(populateSteps, 1000);
+  if (
+    flwMpSteps.length === 0 ||
+    steps.length === 0 ||
+    flwMpSteps.length !== steps.length
+  ) {
+    setTimeout(populateStepsOnStart, 1000);
     return;
   }
   flwMpSteps.forEach((flwMpStep /*: Array<FlwItem> */, index /*: number */) => {
@@ -43,4 +47,4 @@ export const populateSteps = () /*: void */ => {
     }
   });
 };
-export default populateSteps;
+export default populateStepsOnStart;

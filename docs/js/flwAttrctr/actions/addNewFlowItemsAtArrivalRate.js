@@ -8,7 +8,6 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import newFlwItem from "./newFlwItem.js";
-import { click } from "./click.js";
 //------------------------------------------------------------------
 // FUNCTION: addNewFlowItemsAtArrivalRate()
 //------------------------------------------------------------------

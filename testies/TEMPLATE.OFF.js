@@ -17,7 +17,7 @@ import globalState from "../js/flwAttrctr/actions/globalState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import newClickCube from "../js/flwAttrctr/actions/newClickCube.js";
-import populateSteps from "../js/flwAttrctr/actions/populateSteps.js";
+// import populateSteps from "../js/flwAttrctr/actions/populateSteps.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
@@ -40,7 +40,7 @@ const fixture = () /*: void */ => {
   ]);
   globalState();
   gState().set("clckCbGroup", newClickCube());
-  populateSteps();
+  // populateSteps();
 };
 
 test("Returns...", () /*: void */ => {

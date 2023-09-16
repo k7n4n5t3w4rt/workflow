@@ -19,15 +19,15 @@ export const calculateDevPower = (devUnits /*: number */) /*: number */ => {
   const devUnitsPerTouchStep = devUnits / touchSteps;
   const touchWipAtStart = calculateTouchWipLimits();
   const wipPerTouchStep = touchWipAtStart / touchSteps;
-  const devPowerPerDevUnitPerFlwItemPerTouchStep =
+  let devPowerPerDevUnitPerFlwItemPerTouchStep =
     wipPerTouchStep / devUnitsPerTouchStep;
-  let devPower =
-    devPowerPerDevUnitPerFlwItemPerTouchStep * gSttngs().get("devPowerFix");
   // If there are no WIP limits, devPower will be 0, so we fall back
   // to a straight calculation of devPower for this step
-  if (devPower === 0) {
-    devPower = 1;
+  if (devPowerPerDevUnitPerFlwItemPerTouchStep === 0) {
+    devPowerPerDevUnitPerFlwItemPerTouchStep = 1;
   }
+  let devPower =
+    devPowerPerDevUnitPerFlwItemPerTouchStep * gSttngs().get("devPowerFix");
   return devPower;
 };
 export default calculateDevPower;

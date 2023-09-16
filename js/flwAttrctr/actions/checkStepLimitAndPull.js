@@ -11,7 +11,7 @@ import pullFromPreviousStep from "./pullFromPreviousStep.js";
 //------------------------------------------------------------------
 // checkStepLimitAndPull()
 //------------------------------------------------------------------
-export default (
+export const checkStepLimitAndPull = (
   // This function is called using `reduceRight()` in `pullFlwItems()`:
   //  ...
   //  flwMpSteps.reduceRight(checkStepLimitAndPull, null);
@@ -35,3 +35,4 @@ export default (
   );
   pullFromPreviousStep(flwMpStpKeyNumber - 1, availableLimit);
 };
+export default checkStepLimitAndPull;

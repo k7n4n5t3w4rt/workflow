@@ -56,6 +56,8 @@ export const onClickComplete = () /*: void */ => {
   // we want to stop the click.
   if (gState().get("started") === true) {
     click();
+  } else {
+    console.log("Stopped.");
   }
 };
 export default click;

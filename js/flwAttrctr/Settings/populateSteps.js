@@ -4,6 +4,10 @@
 //------------------------------------------------------------------
 import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
+import setUpFlwMap from "../actions/setUpFlwMap.js";
+//------------------------------------------------------------------
 // populateSteps()
 //------------------------------------------------------------------
 /*::
@@ -74,5 +78,7 @@ export const populateSteps =
     });
     setSteps(steps);
     gSttngs().set("steps", steps);
+    // Regenerate the flwMap
+    setUpFlwMap();
   };
 export default populateSteps;

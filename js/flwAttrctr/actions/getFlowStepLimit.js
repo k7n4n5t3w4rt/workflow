@@ -6,12 +6,21 @@ import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // getFlowStepLimit()
 //------------------------------------------------------------------
-export default (flwMpStpKeyNumber /*: number */) /*: number */ => {
-  let flwStpLimit = gSttngs().get("steps")[flwMpStpKeyNumber].movingLimit;
+export const getFlowStepLimit = (
+  flwMpStpKeyNumber /*: number */,
+) /*: number */ => {
+  const steps = gSttngs().get("steps");
+  if (
+    // If we're on the last step
+    flwMpStpKeyNumber >= steps.length
+  ) {
+    console.error("The Flow Map and the Steps are out of sync.");
+  }
+  let flwStpLimit = steps[flwMpStpKeyNumber].movingLimit;
   if (
     // If we're on the last step
     flwMpStpKeyNumber ===
-    gSttngs().get("steps").length - 1
+    steps.length - 1
   ) {
     // Maybe a limit was set accidentally on the Done step, but it
     // should be 0
@@ -19,3 +28,4 @@ export default (flwMpStpKeyNumber /*: number */) /*: number */ => {
   }
   return flwStpLimit;
 };
+export default getFlowStepLimit;

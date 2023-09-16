@@ -25,6 +25,7 @@ export const globalState = () => {
   gState().set("flwItems", []);
   gState().set("flwItmTracker", {});
   gState().set("flwMap", {});
+  setUpFlwMap();
   gState().set("flwItmsPulledCount", 0);
   gState().set("scnData", {});
   gState().set("strtPosition", {});
@@ -40,7 +41,6 @@ export const globalState = () => {
   gState().set("flwTmExpQueue", new xQueue());
   gState().set("thrPtExpQueue", new xQueue());
   gState().set("wipExpQueue", new xQueue());
-  setUpFlwMap(gState().get("flwMap"));
 };
 export default globalState;
 //------------------------------------------------------------------
