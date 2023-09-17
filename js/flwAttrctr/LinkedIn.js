@@ -30,8 +30,8 @@ const [styles] = createStyles({
     position: "absolute",
     zIndex: "10000",
     boxSizing: "border-box",
-    bottom: "1.2rem",
-    left: "4rem",
+    top: "1.2rem",
+    right: "1.2rem",
     cursor: "pointer",
   },
   linkedInIcon: {

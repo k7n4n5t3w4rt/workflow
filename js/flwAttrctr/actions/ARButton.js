@@ -42,6 +42,7 @@ const createButton = (
     button.onclick = function () {
       if (currentSession === null) {
         if ("xr" in navigator) {
+          hideOrShowLandingPageElements(true)();
           // $FlowFixMe
           navigator.xr
             .requestSession("immersive-ar", sessionInit)
@@ -50,7 +51,8 @@ const createButton = (
       } else {
         if (button.textContent === "REPLACE") {
           // button.textContent = "RELOAD";
-          // // Kill the cubes
+          //------------------------------------------------------------------
+          // // Do we really want to kill the cubes?
           const scnData = gState().get("scnData");
           const scene = scnData.scene;
           const clckCbGroup = gState().get("clckCbGroup");
@@ -62,6 +64,7 @@ const createButton = (
             clckCube.material.dispose();
             clckCube.geometry.dispose();
           }
+          //------------------------------------------------------------------
           // renderer.clear();
           // Show the reticule
           const reticleStuff = gState().get("scnData").reticleStuff;
@@ -187,5 +190,22 @@ const createButton = (
     return message;
   }
 };
-
 export default { createButton };
+
+//------------------------------------------------------------------
+// FUNCTION: hideOrShowLandingPageElements()
+//------------------------------------------------------------------
+export const hideOrShowLandingPageElements =
+  (toggle /*: boolean */) /*: () => void */ => () /*: void */ => {
+    const configIcon = document.getElementById("config-icon");
+    const linkedinIcon = document.getElementById("linkedin-icon");
+    if (configIcon !== null && linkedinIcon !== null) {
+      if (toggle === true) {
+        configIcon.style.display = "none";
+        linkedinIcon.style.display = "none";
+      } else {
+        configIcon.style.display = "block";
+        linkedinIcon.style.display = "block";
+      }
+    }
+  };

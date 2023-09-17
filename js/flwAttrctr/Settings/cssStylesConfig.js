@@ -46,8 +46,8 @@ export default () /*: Object */ => {
       position: "absolute",
       zIndex: "42000",
       boxSizing: "border-box",
-      bottom: "0.5rem",
-      left: "7rem",
+      top: "0.8rem",
+      right: "4.2rem",
       cursor: "pointer",
     },
     configIcon: {
