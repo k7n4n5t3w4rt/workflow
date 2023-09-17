@@ -26,7 +26,6 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
         settingsIcon.style.display = "none";
         paramsIcon.style.display = "none";
         shareIcon.style.display = "none";
-        linkedinIcon.style.display = "none";
         configCloseIcon.style.display = "block";
       } else {
         configContainer.style.display = "none";
@@ -34,7 +33,6 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
         settingsIcon.style.display = "block";
         paramsIcon.style.display = "block";
         shareIcon.style.display = "block";
-        linkedinIcon.style.display = "block";
         configCloseIcon.style.display = "none";
       }
     }

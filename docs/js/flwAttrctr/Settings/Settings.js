@@ -62,12 +62,17 @@ export default (props /*: Props */) /*: string */ => {
   const toggleSettings = () => {
     setSettingsToggle(!settingsToggle);
   };
-  // Set the settings toggle to false on load
-  useEffect(() => {
-    setSettingsToggle(false);
-  }, []);
+  // // Set the settings toggle to false on load
+  // useEffect(() => {
+  //   setSettingsToggle(false);
+  // }, []);
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowSettingsDivs(settingsToggle), [settingsToggle]);
+  useEffect(() => {
+    setTimeout(() => {
+      hideSettingsIconOnLoad();
+    }, 100);
+  }, []);
   return html`
     <div
       id="settings-close-icon"
@@ -82,29 +87,86 @@ export default (props /*: Props */) /*: string */ => {
         <!------------------------------------------------------------------>
         <!-- DRAG -->
         <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Drag Factor</div>
-        <!-------------------------------------------------------------------->
-        <!-- Drag -->
-        <!-------------------------------------------------------------------->
-        <${Drag}
-          drag=${state.drag}
-          changeSetting=${changeSetting("drag", dispatch)}
-        />
-        <${DragPoint}
-          dragPoint=${state.dragPoint}
-          changeSetting=${changeSetting("dragPoint", dispatch)}
-        />
-        <!------------------------------------------------------------------>
-        <!-- PARETO POINT -->
-        <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Pereto Point</div>
-        <!-------------------------------------------------------------------->
-        <!-- ParetoPoint -->
-        <!-------------------------------------------------------------------->
-        <${ParetoPoint}
-          paretoPoint=${state.paretoPoint}
-          changeSetting=${changeSetting("paretoPoint", dispatch)}
-        />
+        ${(state.dragParam === true || state.dragPointParam === true) &&
+        html`
+          <div className="${styles.inputHeading}">Drag Factor</div>
+          <!-------------------------------------------------------------------->
+          <!-- Drag -->
+          <!-------------------------------------------------------------------->
+          ${state.dragParam === true &&
+          html`
+            <${Drag}
+              drag=${state.drag}
+              changeSetting=${changeSetting("drag", dispatch)}
+            />
+          `}
+          ${state.dragPointParam === true &&
+          html`
+            <${DragPoint}
+              dragPoint=${state.dragPoint}
+              changeSetting=${changeSetting("dragPoint", dispatch)}
+            />
+          `}
+        `}
+        ${state.paretoPointParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- PARETO POINT -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Pereto Point</div>
+          <!-------------------------------------------------------------------->
+          <!-- ParetoPoint -->
+          <!-------------------------------------------------------------------->
+          <${ParetoPoint}
+            paretoPoint=${state.paretoPoint}
+            changeSetting=${changeSetting("paretoPoint", dispatch)}
+          />
+        `}
+        ${state.timeBoxParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- TIMEBOX -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">TimeBox</div>
+          <!-------------------------------------------------------------------->
+          <!-- timeBox -->
+          <!-------------------------------------------------------------------->
+          <${TimeBox}
+            timeBox=${state.timeBox}
+            changeSetting=${changeSetting("timeBox", dispatch)}
+          />
+        `}
+        ${state.arrivalRateParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- ARRIVAL RATE -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Arrival Rate</div>
+          <!-------------------------------------------------------------------->
+          <!-- ArrivalRate -->
+          <!-------------------------------------------------------------------->
+          <${ArrivalRate}
+            arrivalRate=${state.arrivalRate}
+            changeSetting=${changeSetting("arrivalRate", dispatch)}
+          />
+        `}
+        ${state.fpsParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- DISPLAY -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Display</div>
+          <!-------------------------------------------------------------------->
+          <!-- DISPLAY: FRAMES PER SECOND -->
+          <!-------------------------------------------------------------------->
+          ${state.fpsParam === true &&
+          html`
+            <${Fps}
+              fps=${state.fps}
+              changeSetting=${changeSetting("fps", dispatch)}
+            />
+          `}
+        `}
       </fieldset>
     </div>
     <div
@@ -115,4 +177,13 @@ export default (props /*: Props */) /*: string */ => {
       <span className="material-icons ${styles.settingsIcon}"> settings </span>
     </div>
   `;
+};
+//------------------------------------------------------------------
+// FUNCTION: hideSettingsIconOnLoad()
+//------------------------------------------------------------------
+export const hideSettingsIconOnLoad = () /*: void */ => {
+  const settingsIcon = document.getElementById("settings-icon");
+  if (settingsIcon !== null) {
+    settingsIcon.style.display = "none";
+  }
 };

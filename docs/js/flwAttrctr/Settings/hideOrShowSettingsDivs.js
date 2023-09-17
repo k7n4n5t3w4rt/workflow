@@ -31,10 +31,8 @@ export default (settingsToggle /*: boolean */) /*: () => void */ =>
       } else {
         settingsContainer.style.display = "none";
         settingsIcon.style.display = "block";
-        configIcon.style.display = "block";
         paramsIcon.style.display = "block";
         shareIcon.style.display = "block";
-        linkedinIcon.style.display = "block";
         settingsCloseIcon.style.display = "none";
       }
     }

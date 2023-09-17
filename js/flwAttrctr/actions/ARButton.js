@@ -199,13 +199,24 @@ export const hideOrShowLandingPageElements =
   (toggle /*: boolean */) /*: () => void */ => () /*: void */ => {
     const configIcon = document.getElementById("config-icon");
     const linkedinIcon = document.getElementById("linkedin-icon");
-    if (configIcon !== null && linkedinIcon !== null) {
+    const paramsIcon = document.getElementById("params-icon");
+    const settingsIcon = document.getElementById("settings-icon");
+    if (
+      paramsIcon !== null &&
+      settingsIcon !== null &&
+      configIcon !== null &&
+      linkedinIcon !== null
+    ) {
       if (toggle === true) {
         configIcon.style.display = "none";
         linkedinIcon.style.display = "none";
+        paramsIcon.style.display = "block";
+        settingsIcon.style.display = "block";
       } else {
         configIcon.style.display = "block";
         linkedinIcon.style.display = "block";
+        paramsIcon.style.display = "none";
+        settingsIcon.style.display = "non";
       }
     }
   };

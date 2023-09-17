@@ -80,6 +80,30 @@ export const Steps = (props /*: Props */) /*: string */ => {
     <!------------------------------------------------------------------>
     <!-- Steps -->
     <!------------------------------------------------------------------>
+    <div>
+      <input
+        type="checkbox"
+        id="movingWipLimitsParam"
+        name="movingWipLimitsParam"
+        onChange=${changeSetting("movingWipLimitsParam", dispatch)}
+        checked=${state.movingWipLimitsParam === true}
+      />
+      <label for="movingWipLimitsParam"
+        >Make WIP Limits per step an editable parameter</label
+      >
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        id="movingDevUnitsParam"
+        name="movingDevUnitsParam"
+        onChange=${changeSetting("movingDevUnitsParam", dispatch)}
+        checked=${state.movingDevUnitsParam === true}
+      />
+      <label for="movingDevUnitsParam"
+        >Make DevUnts per step an editable parameter</label
+      >
+    </div>
     ${(state.steps || []).map(
       (
         step /*: { 

@@ -19,7 +19,7 @@ export default () /*: Object */ => {
       color: "white",
       fontWeight: "bold",
       textShadow: "2px 2px 2px grey",
-      backgroundColor: "#ef3735",
+      backgroundColor: "#ff7f00",
       marginBottom: "1rem",
       padding: "0.4rem",
     },
@@ -28,7 +28,7 @@ export default () /*: Object */ => {
       padding: "0.2rem",
       marginTop: "1rem",
       marginBottom: "1rem",
-      backgroundColor: "#f79c43",
+      backgroundColor: "#fabd20",
       padding: "0.4rem",
     },
     configContainer: {

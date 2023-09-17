@@ -175,7 +175,7 @@ export default (props /*: Props */) /*: string */ => {
             id="devPowerFixParam"
             name="devPowerFixParam"
             onChange=${changeSetting("devPowerFixParam", dispatch)}
-            checked=${true === true}
+            checked=${state.devPowerFixParam === true}
           />
           <label for="devPowerFixParam">Make this an editable parameter</label>
         </div>

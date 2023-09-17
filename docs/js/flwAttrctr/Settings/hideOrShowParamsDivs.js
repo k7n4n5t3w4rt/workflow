@@ -14,8 +14,8 @@ export default (paramsToggle /*: boolean */) /*: () => void */ =>
     if (
       paramsContainer !== null &&
       paramsIcon !== null &&
-      configIcon !== null &&
       settingsIcon !== null &&
+      configIcon !== null &&
       shareIcon !== null &&
       linkedinIcon !== null &&
       paramsCloseIcon !== null
@@ -31,10 +31,8 @@ export default (paramsToggle /*: boolean */) /*: () => void */ =>
       } else {
         paramsContainer.style.display = "none";
         paramsIcon.style.display = "block";
-        configIcon.style.display = "block";
         settingsIcon.style.display = "block";
         shareIcon.style.display = "block";
-        linkedinIcon.style.display = "block";
         paramsCloseIcon.style.display = "none";
       }
     }
