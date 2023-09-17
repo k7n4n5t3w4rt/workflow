@@ -89,7 +89,11 @@ export default (props /*: Props */) /*: string */ => {
     const scnData = gState().get("scnData");
     scnData.stats = stats;
     const domOverlayDiv = document.getElementById("dom-overlay");
-    if (domOverlayDiv === null) {
+    if (
+      domOverlayDiv === null ||
+      window === undefined ||
+      window.location.hostname !== "localhost"
+    ) {
       return;
     }
     domOverlayDiv.appendChild(stats.dom);
@@ -99,7 +103,7 @@ export default (props /*: Props */) /*: string */ => {
       <div id="landing-container">
         <div id="logo" className="${styles.logoDiv}">
           <div>
-            <img src="/img/logo_web_white.png" className="${styles.logo}" />
+            <img src="/img/logo_final_05.png" className="${styles.logo}" />
           </div>
         </div>
         <div id="shortcuts-container" className="${styles.shortcutsDiv}">
@@ -222,7 +226,7 @@ const cssStyles = () /*: Object */ => {
     flw: {
       width: "100%",
       height: "100%",
-      backgroundImage: "url(/img/bg2.png)",
+      backgroundImage: "url(/img/bg3.png)",
       backgroundClip: "border-box",
       backgroundSize: "cover",
       backgroundRepeat: "none",
@@ -234,13 +238,15 @@ const cssStyles = () /*: Object */ => {
       display: "flex",
       justifyContent: "center",
       alignItems: "flex-start",
+      marginTop: "-20px",
+      marginBottom: "-60px",
     },
     logo: {
-      width: "75vw",
+      width: "100vw",
       maxWidth: "100vh",
-      minWidth: "40vh",
+      minWidth: "80vh",
       height: "auto",
-      marginTop: "10vh",
+      marginTop: "0vh",
     },
     shortcutsDiv: {
       width: "100%",
@@ -249,9 +255,10 @@ const cssStyles = () /*: Object */ => {
       alignItems: "flex-start",
       height: "130px",
       zIndex: "2",
-      paddingTop: "60px",
+      paddingTop: "0px",
       paddingLeft: "20px",
       paddingRight: "20px",
+      boxSizing: "border-box",
     },
     shortcutsSelect: {
       display: "block",

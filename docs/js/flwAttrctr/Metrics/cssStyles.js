@@ -21,7 +21,7 @@ export const cssStyles = () /*: Object */ => {
       backgroundColor: "rgba(0, 0, 0, 0)",
       color: "white",
       textShadow: "2px 2px 2px grey",
-      marginTop: "2.2rem",
+      marginTop: "1.2rem",
       top: "0",
     },
     metricsDivs: {
