@@ -4,13 +4,14 @@
 //------------------------------------------------------------------
 import gSttngs from "./flwAttrctr/actions/gSttngs.js";
 import gState from "./flwAttrctr/actions/gState.js";
-import globalSettings from "./flwAttrctr/actions/globalSettings.js";
-import globalStepSettings from "./flwAttrctr/actions/globalStepSettings.js";
-import globalState from "./flwAttrctr/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import getSttngsFromEasyStorage from "./flwAttrctr/actions/getSttngsFromEasyStorage.js";
+import globalSettings from "./flwAttrctr/actions/globalSettings.js";
+import globalStepSettings from "./flwAttrctr/actions/globalStepSettings.js";
+import globalState from "./flwAttrctr/actions/globalState.js";
+import globalParamsSettings from "./flwAttrctr/actions/globalParamsSettings.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -27,6 +28,8 @@ import { html } from "../web_modules/htm/preact.js";
 globalSettings().then(() /*: void */ => {
   // Initialise the global Steps settings
   globalStepSettings();
+  // The Params settings define which parameters are editable by the user
+  globalParamsSettings();
   // Initialise the global state
   globalState();
   // If we are using Easy, then we need to update the global settings

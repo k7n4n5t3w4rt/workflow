@@ -20,8 +20,17 @@ export default (
   ) /*: (e: SyntheticInputEvent<HTMLInputElement>) => void */ =>
   (e /*: SyntheticInputEvent<HTMLInputElement> */) /*: void */ => {
     // Set the global keys for use in real-time, non-Preact JS
-    let value = e.target.value;
-    if (isParsable(value)) {
+    let value;
+
+    if (e.target.type === "checkbox") {
+      value = e.target.checked;
+    } else {
+      value = e.target.value;
+      if (isParsable(value)) {
+        value = JSON.parse(value);
+      }
+    }
+    if (value !== true && value !== false && isParsable(value)) {
       value = JSON.parse(value);
     }
     if (key === "easyStorage" || key === "autoMode") {

@@ -61,7 +61,7 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${props.changeSetting}
             />
           `}
-          <span>false</span>
+          <span>False</span>
         </label>
       </div>
     </div>

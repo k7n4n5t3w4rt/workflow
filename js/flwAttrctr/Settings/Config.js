@@ -18,6 +18,7 @@ import FlwTimeMin from "./FlwTimeMin.js";
 import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
 import Drag from "./Drag.js";
+import DragPoint from "./DragPoint.js";
 import ParetoPoint from "./ParetoPoint.js";
 import AutoMode from "./AutoMode.js";
 import EasyStorage from "./EasyStorage.js";
@@ -119,6 +120,16 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- fps -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="fpsParam"
+            name="fpsParam"
+            onChange=${changeSetting("fpsParam", dispatch)}
+            checked=${state.fpsParam === true}
+          />
+          <label for="fpsParam">Make this an editable parameter</label>
+        </div>
         <${Fps}
           fps=${state.fps}
           changeSetting=${changeSetting("fps", dispatch)}
@@ -158,6 +169,16 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- DevPowerFix -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="devPowerFixParam"
+            name="devPowerFixParam"
+            onChange=${changeSetting("devPowerFixParam", dispatch)}
+            checked=${true === true}
+          />
+          <label for="devPowerFixParam">Make this an editable parameter</label>
+        </div>
         <${DevPowerFix}
           devPowerFix=${state.devPowerFix}
           changeSetting=${changeSetting("devPowerFix", dispatch)}
@@ -165,13 +186,50 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- Drag -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="dragParam"
+            name="dragParam"
+            onChange=${changeSetting("dragParam", dispatch)}
+            checked=${state.dragParam === true}
+          />
+          <label for="dragParam">Make this an editable parameter</label>
+        </div>
         <${Drag}
           drag=${state.drag}
           changeSetting=${changeSetting("drag", dispatch)}
         />
         <!-------------------------------------------------------------------->
+        <!-- DragPoint -->
+        <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="dragPointParam"
+            name="dragPointParam"
+            onChange=${changeSetting("dragPointParam", dispatch)}
+            checked=${state.dragPointParam === true}
+          />
+          <label for="dragPointParam">Make this an editable parameter</label>
+        </div>
+        <${DragPoint}
+          paretoPoint=${state.dragPoint}
+          changeSetting=${changeSetting("dragPoint", dispatch)}
+        />
+        <!-------------------------------------------------------------------->
         <!-- ParetoPoint -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="paretoPointParam"
+            name="paretoPointParam"
+            onChange=${changeSetting("paretoPointParam", dispatch)}
+            checked=${state.paretoPointParam === true}
+          />
+          <label for="paretoPointParam">Make this an editable parameter</label>
+        </div>
         <${ParetoPoint}
           paretoPoint=${state.paretoPoint}
           changeSetting=${changeSetting("paretoPoint", dispatch)}
@@ -179,6 +237,16 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- ArrivalRate -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="arrivalRateParam"
+            name="arrivalRateParam"
+            onChange=${changeSetting("arrivalRateParam", dispatch)}
+            checked=${state.arrivalRateParam === true}
+          />
+          <label for="arrivalRateParam">Make this an editable parameter</label>
+        </div>
         <${ArrivalRate}
           arrivalRate=${state.arrivalRate}
           changeSetting=${changeSetting("arrivalRate", dispatch)}
@@ -193,6 +261,16 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- timeBox -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="timeBoxParam"
+            name="timeBoxParam"
+            onChange=${changeSetting("timeBoxParam", dispatch)}
+            checked=${state.timeBoxParam === true}
+          />
+          <label for="timeBoxParam">Make this an editable parameter</label>
+        </div>
         <${TimeBox}
           timeBox=${state.timeBox}
           changeSetting=${changeSetting("timeBox", dispatch)}
@@ -200,6 +278,18 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- expdtQueueLength -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="expdtQueueLengthParam"
+            name="expdtQueueLengthParam"
+            onChange=${changeSetting("expdtQueueLengthParam", dispatch)}
+            checked=${state.expdtQueueLengthParam === true}
+          />
+          <label for="expdtQueueLengthParam"
+            >Make this an editable parameter</label
+          >
+        </div>
         <${ExpdtQueueLength}
           expdtQueueLength=${state.expdtQueueLength}
           changeSetting=${changeSetting("expdtQueueLength", dispatch)}
@@ -207,6 +297,18 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- expdtDvUnitsFactor -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="expdtDvUnitsFactorParam"
+            name="expdtDvUnitsFactorParam"
+            onChange=${changeSetting("expdtDvUnitsFactorParam", dispatch)}
+            checked=${state.expdtDvUnitsFactorParam === true}
+          />
+          <label for="expdtDvUnitsFactorParam"
+            >Make this an editable parameter</label
+          >
+        </div>
         <${ExpdtDvUnitsFactor}
           expdtDvUnitsFactor=${state.expdtDvUnitsFactor}
           changeSetting=${changeSetting("expdtDvUnitsFactor", dispatch)}
@@ -221,6 +323,16 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- BacklogDeath -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="backlogDeathParam"
+            name="backlogDeathParam"
+            onChange=${changeSetting("backlogDeathParam", dispatch)}
+            checked=${state.backlogDeathParam === true}
+          />
+          <label for="backlogDeathParam">Make this an editable parameter</label>
+        </div>
         <${BacklogDeath}
           backlogDeath=${state.backlogDeath}
           changeSetting=${changeSetting("backlogDeath", dispatch)}
@@ -228,6 +340,18 @@ export default (props /*: Props */) /*: string */ => {
         <!-------------------------------------------------------------------->
         <!-- flwItmSizeLimit -->
         <!-------------------------------------------------------------------->
+        <div>
+          <input
+            type="checkbox"
+            id="flwItmSizeLimitParam"
+            name="flwItmSizeLimitParam"
+            onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
+            checked=${state.flwItmSizeLimitParam === true}
+          />
+          <label for="flwItmSizeLimitParam"
+            >Make this an editable parameter</label
+          >
+        </div>
         <${FlwItmSizeLimit}
           flwItmSizeLimit=${state.flwItmSizeLimit}
           changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
