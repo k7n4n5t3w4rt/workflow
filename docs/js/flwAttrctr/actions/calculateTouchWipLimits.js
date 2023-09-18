@@ -10,7 +10,7 @@ export const calculateTouchWipLimits = () /*: number */ => {
   const steps = gSttngs().get("steps");
   if (steps !== undefined) {
     return steps.reduce((_ /*: number*/, step /*: Object*/) => {
-      if (step.status === "touch" || step.status === "wait") {
+      if (step.status === "touch") {
         return _ + step.limit;
       } else {
         return _;

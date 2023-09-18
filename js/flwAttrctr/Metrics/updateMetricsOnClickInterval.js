@@ -50,39 +50,39 @@ export const updateMetricsOnClickInterval = (
     ) {
       // Some shorter names
       const tmBox = gSttngs().get("timeBox");
+      setTimeBox((tmBox / 5).toString() + " wks");
       const thrPutPerDay = gState().get("thrPtQueue").dailyMean();
+      setThruPutPerDay(thrPutPerDay);
       const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
+      setThruPutExpPerDay(thrPutExpPerDay);
       const thrPut =
         Math.round(thrPutExpPerDay * tmBox + thrPutPerDay * tmBox * 100) / 100;
-      const flwTimeAtStart = calculateFlwTimeAtStart();
-      const flwTimeMax = calculateFlwTimeMax();
-      const totalWipAtStart = calculateTotalWipLimits();
-      const flwTime = gState().get("flwTmQueue").flwItemMean();
-      const flwTmExp = gState().get("flwTmExpQueue").flwItemMean();
-      const wip = gState().get("wipQueue").dailyMean();
-      const wipExp = gState().get("wipExpQueue").dailyMean();
-      // Update the metrics
-      setFlowTime(flwTime);
       setThruPut(thrPut);
-      setThruPutPerDay(thrPutPerDay);
-      setWip(wip);
+      const flwTime = gState().get("flwTmQueue").flwItemMean();
+      setFlowTime(flwTime);
+      const flwTmExp = gState().get("flwTmExpQueue").flwItemMean();
       setFlowTimeExp(flwTmExp);
-      setThruPutExpPerDay(thrPutExpPerDay);
+      const wip = gState().get("wipQueue").dailyMean();
+      setWip(wip);
+      const wipExp = gState().get("wipExpQueue").dailyMean();
       setWipExp(wipExp);
-      setTimeBox((tmBox / 5).toString() + " wks");
+      // Update the metrics
       // Make the metrics visible
       if (gState().get("started") === true && !metricToggle) {
         setMetricToggle(true);
       } else {
         setMetricToggle(false);
       }
-      // Caclulate the value as a percentage of the ideal throughput:
-      // Little's Law = ThruPut = WIP/FlowTime
-      const totalValue = gState().get("vQueue").total();
-      // Before any adjustments based on flwSizeLimit, value is the same as scale
+      const flwTimeAtStart = calculateFlwTimeAtStart();
+      const flwTimeMax = calculateFlwTimeMax();
+      const totalWipAtStart = calculateTotalWipLimits();
       let avrgValuePerItem = 0;
-      let totalThruPut = 0;
+      let idealTotalThruPutBasedOnLittlesLaw = 0;
       let displayValue = 0;
+      const totalValue = gState().get("vQueue").total();
+      // Caclulate the value as a percentage of the ideal throughput.
+      // Little's Law = ThruPut = WIP/FlowTime
+      // Before any adjustments based on flwSizeLimit, value is the same as scale
       if (flwTimeMax > 0) {
         avrgValuePerItem = flwTimeAtStart / flwTimeMax;
       }
@@ -91,10 +91,15 @@ export const updateMetricsOnClickInterval = (
       //  [a] when we have a more realistic distribution of value across items, and
       //  [b] when we have a more realistic system of assigning value to items.
       if (flwTimeAtStart > 0) {
-        totalThruPut = (totalWipAtStart / flwTimeAtStart) * tmBox;
+        idealTotalThruPutBasedOnLittlesLaw =
+          (totalWipAtStart / flwTimeAtStart) * tmBox;
       }
-      if (totalThruPut > 0 && avrgValuePerItem > 0) {
-        displayValue = (totalValue / avrgValuePerItem / totalThruPut) * 100;
+      if (idealTotalThruPutBasedOnLittlesLaw > 0 && avrgValuePerItem > 0) {
+        const idealThruPutBasedOnActualValue = totalValue / avrgValuePerItem;
+        displayValue =
+          (idealThruPutBasedOnActualValue /
+            idealTotalThruPutBasedOnLittlesLaw) *
+          100;
         // Format the display value as a percentage
         setValue(Math.floor(displayValue).toString() + "%");
       } else {

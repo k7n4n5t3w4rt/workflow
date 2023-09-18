@@ -84,15 +84,23 @@ export default (props /*: Props */) /*: string */ => {
 
     <div id="settings-container" className="${styles.settingsContainer}">
       <fieldset>
-        <!------------------------------------------------------------------>
-        <!-- DRAG -->
-        <!------------------------------------------------------------------>
+        ${state.devPowerFixParam === true &&
+        html`
+          <!-------------------------------------------------------------------->
+          <!-- DevPowerFix -->
+          <!-------------------------------------------------------------------->
+          <div className="${styles.inputHeading}">DevPower Fix</div>
+          <${DevPowerFix}
+            devPowerFix=${state.devPowerFix}
+            changeSetting=${changeSetting("devPowerFix", dispatch)}
+          />
+        `}
         ${(state.dragParam === true || state.dragPointParam === true) &&
         html`
+          <!------------------------------------------------------------------>
+          <!-- DRAG -->
+          <!------------------------------------------------------------------>
           <div className="${styles.inputHeading}">Drag Factor</div>
-          <!-------------------------------------------------------------------->
-          <!-- Drag -->
-          <!-------------------------------------------------------------------->
           ${state.dragParam === true &&
           html`
             <${Drag}

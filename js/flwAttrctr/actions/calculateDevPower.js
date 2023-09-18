@@ -13,10 +13,10 @@ import calculateTouchSteps from "./calculateTouchSteps.js";
 //------------------------------------------------------------------
 // calculateDevPower()
 //------------------------------------------------------------------
-export const calculateDevPower = (devUnits /*: number */) /*: number */ => {
+export const calculateDevPower = () /*: number */ => {
   const touchSteps = calculateTouchSteps();
   const devUnitsTotal = calculateMovingDevUnits();
-  const devUnitsPerTouchStep = devUnits / touchSteps;
+  const devUnitsPerTouchStep = devUnitsTotal / touchSteps;
   const touchWipAtStart = calculateTouchWipLimits();
   const wipPerTouchStep = touchWipAtStart / touchSteps;
   let devPowerPerDevUnitPerFlwItemPerTouchStep =
