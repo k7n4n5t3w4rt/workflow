@@ -16,7 +16,7 @@ type Props = {
   changeSetting: () => void,
 }
 */
-export const Drag = (props /*: Props */) /*: string */ => {
+export const DragPoint = (props /*: Props */) /*: string */ => {
   return html`
     <div>
       <label for="dragPoint">The point at which drag kicks in:</label>
@@ -40,4 +40,4 @@ export const Drag = (props /*: Props */) /*: string */ => {
     </div>
   `;
 };
-export default Drag;
+export default DragPoint;

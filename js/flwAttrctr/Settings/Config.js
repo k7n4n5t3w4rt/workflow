@@ -214,7 +214,7 @@ export default (props /*: Props */) /*: string */ => {
           <label for="dragPointParam">Make this an editable parameter</label>
         </div>
         <${DragPoint}
-          paretoPoint=${state.dragPoint}
+          dragPoint=${state.dragPoint}
           changeSetting=${changeSetting("dragPoint", dispatch)}
         />
         <!-------------------------------------------------------------------->
