@@ -47,7 +47,7 @@ export default (
       const devPowerFactor = calculateDevPowerFactor(wipThisStep, devUnits);
       // const devPowerFactor = 1; // The simple, linear version.
       // Finally, work out how many days to reduce the `dDysRmnngThisStep` by
-      const devDays = (devUnits * devPower * devPowerFactor) / wipThisStep;
+      const devDays = (devUnits * (devPower * devPowerFactor)) / wipThisStep;
       // Reduce the days remaining by the number of days calculated above.
       flwItem.dDysRmnngThisStep -= devDays;
       // Round the days remaining to 2 decimal places.

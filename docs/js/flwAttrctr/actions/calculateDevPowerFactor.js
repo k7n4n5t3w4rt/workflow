@@ -43,7 +43,7 @@ const calculateDevPowerForDevToWipRatio = (
     return 1;
   }
   const dragPoint = gSttngs().get("dragPoint");
-  if (drag <= 0) {
+  if (dragPoint <= 0) {
     return 1;
   }
   // Three x values:
