@@ -25,6 +25,7 @@ import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 import Metrics from "./Metrics/Metrics.js";
 import Share from "./Share.js";
+import Controls from "./Controls.js";
 import Params from "./Settings/Params.js";
 import Sttngs from "./Settings/Settings.js";
 import Config from "./Settings/Config.js";
@@ -134,6 +135,7 @@ export default (props /*: Props */) /*: string */ => {
       <div id="dom-overlay">
         <${Metrics} />
         <${Share} />
+        <${Controls} />
         <${LinkedIn} />
         <${Config} />
         <${Sttngs} />

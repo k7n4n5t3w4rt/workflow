@@ -71,7 +71,7 @@ export const updateMetricsOnClickInterval = (
       setWipExp(wipExp);
       setTimeBox((tmBox / 5).toString() + " wks");
       // Make the metrics visible
-      if (gState().get("started") === true && flwTime > 0 && !metricToggle) {
+      if (gState().get("started") === true && !metricToggle) {
         setMetricToggle(true);
       } else {
         setMetricToggle(false);

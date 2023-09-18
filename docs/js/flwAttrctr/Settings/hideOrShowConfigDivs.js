@@ -23,15 +23,11 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
       if (configToggle === true) {
         configContainer.style.display = "block";
         configIcon.style.display = "none";
-        settingsIcon.style.display = "none";
-        paramsIcon.style.display = "none";
         shareIcon.style.display = "none";
         configCloseIcon.style.display = "block";
       } else {
         configContainer.style.display = "none";
         configIcon.style.display = "block";
-        settingsIcon.style.display = "block";
-        paramsIcon.style.display = "block";
         shareIcon.style.display = "block";
         configCloseIcon.style.display = "none";
       }

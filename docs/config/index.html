@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>v0.25.0</title>
+	<title>v0.26.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="manifest" href="/site.webmanifest">
@@ -61,7 +61,7 @@
 					<span>True</span>
 				</label>
 				<label for="autoModeFalse">
-					<span>false</span>
+					<span>False</span>
 				</label>
 			</div>
 		</div>
@@ -72,7 +72,7 @@
 					<span>True</span>
 				</label>
 				<label for="easyStorageFalse">
-					<span>false</span>
+					<span>False</span>
 				</label>
 			</div>
 		</div>
@@ -81,6 +81,10 @@
 			<input type="text" id="sid" name="sid" value="0" />
 		</div>
 		<div class="inputHeading_gbwddpogjh">Display</div>
+		<div>
+			<input type="checkbox" id="fpsParam" name="fpsParam" />
+			<label for="fpsParam">Make this an editable parameter</label>
+		</div>
 		<div>
 			<label for="fps">FPS:</label>
 			<output id="fpsOutput" name="fpsOutput" for="fps">0</output>
@@ -108,9 +112,17 @@
 		</div>
 		<div class="inputHeading_gbwddpogjh">Global Flow</div>
 		<div>
+			<input type="checkbox" id="devPowerFixParam" name="devPowerFixParam" />
+			<label for="devPowerFixParam">Make this an editable parameter</label>
+		</div>
+		<div>
 			<label for="devPowerFix">Dev Power Fix:</label>
 			<output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix">1</output>
 			<input type="range" id="devPowerFix" name="devPowerFix" min="0" max="5" step="0.01" value="1" />
+		</div>
+		<div>
+			<input type="checkbox" id="dragParam" name="dragParam" />
+			<label for="dragParam">Make this an editable parameter</label>
 		</div>
 		<div>
 			<label for="drag">
@@ -120,9 +132,26 @@
 			<input type="range" id="drag" name="drag" min="0" max="1" step="0.1" value="0" />
 		</div>
 		<div>
+			<input type="checkbox" id="dragPointParam" name="dragPointParam" />
+			<label for="dragPointParam">Make this an editable parameter</label>
+		</div>
+		<div>
+			<label for="dragPoint">The point at which drag kicks in:</label>
+			<output id="dragPointOutput" name="dragPointOutput" for="dragPoint">0</output>
+			<input type="range" id="dragPoint" name="dragPoint" min="0" max="0.75" step="0.01" value="0" />
+		</div>
+		<div>
+			<input type="checkbox" id="paretoPointParam" name="paretoPointParam" />
+			<label for="paretoPointParam">Make this an editable parameter</label>
+		</div>
+		<div>
 			<label for="paretoPoint">80% of value comes from:</label>
 			<output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint">0%</output>
 			<input type="range" id="paretoPoint" name="paretoPoint" min="0.2" max="0.8" step="0.1" value="0" />
+		</div>
+		<div>
+			<input type="checkbox" id="arrivalRateParam" name="arrivalRateParam" />
+			<label for="arrivalRateParam">Make this an editable parameter</label>
 		</div>
 		<div>
 			<label for="arrivalRate">Arrival Rate:</label>
@@ -135,14 +164,26 @@
 			<input type="range" id="flwTimeMin" name="flwTimeMin" min="1" max="200" step="1" value="0" />
 		</div>
 		<div>
+			<input type="checkbox" id="timeBoxParam" name="timeBoxParam" />
+			<label for="timeBoxParam">Make this an editable parameter</label>
+		</div>
+		<div>
 			<label for="timeBox">TimeBox:</label>
 			<output id="timeBoxOutput" name="timeBoxOutput" for="timeBox">0</output>
 			<input type="range" id="timeBox" name="timeBox" min="1" max="60" step="1" value="0" />
 		</div>
 		<div>
+			<input type="checkbox" id="expdtQueueLengthParam" name="expdtQueueLengthParam" />
+			<label for="expdtQueueLengthParam">Make this an editable parameter</label>
+		</div>
+		<div>
 			<label for="expdtQueueLength">Number of expedited items in the system:</label>
 			<output id="expdtQueueLengthOutput" name="expdtQueueLengthOutput" for="expdtQueueLength">0</output>
 			<input type="range" id="expdtQueueLength" name="expdtQueueLength" min="0" max="20" step="1" value="0" />
+		</div>
+		<div>
+			<input type="checkbox" id="expdtDvUnitsFactorParam" name="expdtDvUnitsFactorParam" />
+			<label for="expdtDvUnitsFactorParam">Make this an editable parameter</label>
 		</div>
 		<div>
 			<label for="expdtDvUnitsFactor">
@@ -157,11 +198,19 @@
 			<input type="range" id="death" name="death" min="0" max="500" step="1" value="0" />
 		</div>
 		<div>
+			<input type="checkbox" id="backlogDeathParam" name="backlogDeathParam" />
+			<label for="backlogDeathParam">Make this an editable parameter</label>
+		</div>
+		<div>
 			<label for="backlogDeath">
 				Max. age for items in the backlog (0 = no limit):
 			</label>
 			<output id="backlogDeathOutput" name="backlogDeathOutput" for="backlogDeath">0</output>
 			<input type="range" id="backlogDeath" name="backlogDeath" min="0" max="500" step="1" value="0" />
+		</div>
+		<div>
+			<input type="checkbox" id="flwItmSizeLimitParam" name="flwItmSizeLimitParam" />
+			<label for="flwItmSizeLimitParam">Make this an editable parameter</label>
 		</div>
 		<div>
 			<label for="flwItmSizeLimit">Size Limit:</label>
@@ -180,6 +229,19 @@
 			<input type="range" id="paramsMaxWip" name="paramsMaxWip" min="1" max="200" step="1" value="0" />
 		</div>
 		<div class="inputHeading_gbwddpogjh">Steps</div>
+		<div>
+			<input type="checkbox" id="movingWipLimitsParam" name="movingWipLimitsParam" />
+			<label for="movingWipLimitsParam">
+				Make WIP Limits per step an editable parameter
+			</label>
+		</div>
+		<div>
+			<input type="checkbox" id="movingDevUnitsParam" name="movingDevUnitsParam" />
+			<label for="movingDevUnitsParam">
+				Make DevUnts per step an editable parameter
+			</label>
+		</div>
+		
 	</fieldset>
 </div>
 <div id="config-icon" class="config_gbwddpohaa">

@@ -38,26 +38,19 @@ export const click = () /*: void */ => {
 //------------------------------------------------------------------
 export const onClickComplete = () /*: void */ => {
   // NOTE: The order of these function calls is important
-  addNewFlowItemsAtArrivalRate();
-  setExpedite();
-  if (gState().get("clicks") === gSttngs().get("timeBox")) {
-    // console.log("----------------------------------");
-    // console.log("Timebox.");
-    // console.log("----------------------------------");
+  if (gState().get("paused") === false) {
+    addNewFlowItemsAtArrivalRate();
+    setExpedite();
+    resizeVSphere();
+    updateAge();
+    updateDays();
+    recursivelyPullFlwItems();
+    updateExpdtWip();
+    updateNrmlWip();
+    filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+    // If we stop the simulation - like, because we want to replace it -
+    // we want to stop the click.
   }
-  resizeVSphere();
-  updateAge();
-  updateDays();
-  recursivelyPullFlwItems();
-  updateExpdtWip();
-  updateNrmlWip();
-  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-  // If we stop the simulation - like, because we want to replace it -
-  // we want to stop the click.
-  if (gState().get("started") === true) {
-    click();
-  } else {
-    console.log("Stopped.");
-  }
+  click();
 };
 export default click;

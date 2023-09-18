@@ -14,6 +14,11 @@ import setUpFlwMap from "./setUpFlwMap.js";
 export const globalState = () => {
   gState().setSidButNotInLocalStore("workflowState");
   //------------------------------------------------------------------
+  // Controls:
+  //------------------------------------------------------------------
+  gState().set("started", false);
+  gState().set("paused", false);
+  //------------------------------------------------------------------
   // Empty objects and sensible defaults
   //------------------------------------------------------------------
   gState().set("arrivalNumber", gSttngs().get("arrivalRate"));
