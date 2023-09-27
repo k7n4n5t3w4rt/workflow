@@ -33,6 +33,7 @@ export default (
     flwItem /*: FlwItem */,
     index /*: number */,
   ) /*: number | string */ => {
+    const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
     //------------------------------------------------------------------
     // CHECKS -  We start with a log of checks to see if we should pull
     // the flwItem. If not, we return the availableLimit unchanged
@@ -62,7 +63,7 @@ export default (
       gSttngs().get("steps")[dStpIndex].status === "wait" ||
       // In all other cases, we only want to move the flwItem if it is
       // not moving and it has no days remaining
-      (flwItem.dDysRmnngThisStep <= 0 && !flwItem.dMoving)
+      flwItem.dDysRmnngThisStep <= 0
     ) {
       // If the flwItem is expedited, we will make room for it even
       // if we have no availableLimit
@@ -77,8 +78,14 @@ export default (
       // ACTIONS - We have a flwItem that we can pull, so we move it
       // and update the flwMap
       // --------------------------------------------------------------
-      // Move the flwItem to the next step
-      move(flwItem);
+      // Update the step index to the next step
+      flwItem.dStpIndex += 1;
+      // We don't want to reset the days remaining if the item is
+      // in the last step, i.e. Done
+      if (flwItem.dStpIndex < gSttngs().get("steps").length - 1) {
+        flwItem.dDysRmnngThisStep = flwItem.dDysEachTouchStep;
+      }
+      flwItmsToMove[flwItem.name] = flwItem;
       updateFlowMap(flwItem, index);
       // In `pullFlwItems()` we check this is > 0 and do another run through.
       // We only stop when there is nothing left to pull

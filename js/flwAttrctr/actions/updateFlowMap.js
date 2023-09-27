@@ -14,7 +14,7 @@ export default (flwItem /*: FlwItem */, index /*: number */) => {
     flwItem.dStpIndex = dStpIndex;
   }
   // Remove the flwItem from the current step in the flwMap
-  // NOTE: The flwItem.dStpIndex was updated in the move() function
+  // NOTE: The flwItem.dStpIndex was updated in the pullFowItem.js function
   // so we need to use -1 to get the flwMap step we want
   const deletedFlwItem = gState()
     .get("flwMap")

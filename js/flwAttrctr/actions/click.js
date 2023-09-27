@@ -15,11 +15,10 @@ import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
 import updateAge from "./updateAge.js";
 import updateDays from "./updateDays.js";
-import removeFlowItem from "./removeFlowItem.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
-import getSttngsFromEasyStorage from "./getSttngsFromEasyStorage.js";
 import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
 import recursivelyPullFlwItems from "./recursivelyPullFlwItems.js";
+import move from "./move.js";
 //------------------------------------------------------------------
 // FUNCTION: click()
 //------------------------------------------------------------------
@@ -37,20 +36,33 @@ export const click = () /*: void */ => {
 // onClickComplete()
 //------------------------------------------------------------------
 export const onClickComplete = () /*: void */ => {
-  // NOTE: The order of these function calls is important
+  // Globals
+  const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
+  const timeBox = gSttngs().get("timeBox");
+  const clicks = gState().get("clicks");
   if (gState().get("paused") === false) {
+    // Do all the moving
+    const keys = Object.keys(flwItmsToMove);
+    for (let i = 0; i < keys.length; ++i) {
+      const flwItem = flwItmsToMove[keys[i]];
+      delete flwItmsToMove[keys[i]];
+      move(flwItem);
+    }
+    // NOTE: The order of these function calls is important
     addNewFlowItemsAtArrivalRate();
-    setExpedite();
+    // setExpedite();
     resizeVSphere();
     updateAge();
     updateDays();
     recursivelyPullFlwItems();
-    updateExpdtWip();
+    // updateExpdtWip();
     updateNrmlWip();
     filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-    // If we stop the simulation - like, because we want to replace it -
-    // we want to stop the click.
+    if (gState().get("clicks") === gSttngs().get("timeBox")) {
+    }
   }
+  // if (gState().get("clicks") <= 3) {
   click();
+  // }
 };
 export default click;

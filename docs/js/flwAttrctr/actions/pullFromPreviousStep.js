@@ -9,11 +9,10 @@ import gState from "./gState.js";
 import pullFlowItem from "./pullFlowItem.js";
 import move from "./move.js";
 import updateFlowMap from "./updateFlowMap.js";
-
 //------------------------------------------------------------------
-// pullFromPreviousStep()
+// FUNCTION: pullFromPreviousStep()
 //------------------------------------------------------------------
-export default (
+export const pullFromPreviousStep = (
   flwStpIndex /*: number */,
   availableLimit /*: "no limit" | number */,
 ) => {
@@ -38,3 +37,4 @@ export default (
   } else {
   }
 };
+export default pullFromPreviousStep;

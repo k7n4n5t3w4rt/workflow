@@ -48,10 +48,9 @@ export const populateStepsGlobal = () /*: void */ => {
     step.limit = step.limit || 0;
     step.movingLimit = step.limit;
     if (step.status !== "touch") {
-      delete step.devUnits;
-      delete step.devUnits;
-      delete step.flwTimeAtStart;
-      delete step.actualFlwTime;
+      step.devUnits = 0;
+      step.flwTimeAtStart = 0;
+      step.actualFlwTime = 0;
     }
     if (step.status === "touch") {
       step.devUnits = step.devUnits || 0;
@@ -61,7 +60,7 @@ export const populateStepsGlobal = () /*: void */ => {
     }
     if (step.status === "done") {
       step.limit = 0;
-      delete step.movingLimit;
+      step.movingLimit = 0;
     }
   });
   gSttngs().set("steps", steps);

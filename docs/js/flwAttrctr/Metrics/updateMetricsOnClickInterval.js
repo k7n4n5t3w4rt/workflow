@@ -113,6 +113,7 @@ export const updateMetricsOnClickInterval = (
         updateStepMetrics(stpMetrics);
       });
     }
-  }, 1000);
+    //}, (1000 / gSttngs().get("fps")) * gSttngs().get("timeBox"));
+  }, (1000 / gSttngs().get("fps")) * 5);
 };
 export default updateMetricsOnClickInterval;

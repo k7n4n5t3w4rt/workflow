@@ -21,10 +21,11 @@ import removeFlowItem from "./removeFlowItem.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
-  // gState().get("flwItmTracker")[flwItem.name].unshift(`Moving`);
-  animateColorChange(flwItem, newColor(flwItem));
-  flwItem.dPosition = { ...refineNewPosition(flwItem) };
-  animatePositionChange(flwItem);
+  if (flwItem.dMoving === false) {
+    animateColorChange(flwItem, newColor(flwItem));
+    flwItem.dPosition = { ...refineNewPosition(flwItem) };
+    animatePositionChange(flwItem);
+  }
 };
 
 //------------------------------------------------------------------
@@ -34,7 +35,6 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
   // Set the properties of the flwItem to the state they'll
   // should be in when the animation is complete.
   flwItem.dMoving = true;
-  flwItem.dStpIndex++;
   // We don't want to reset the days remaining if the item is
   // in the last step, i.e. Done
   if (flwItem.dStpIndex < gSttngs().get("steps").length - 1) {
@@ -52,9 +52,13 @@ const animatePositionChange = (flwItem /*: FlwItem */) /*: void */ => {
     complete: (anim) /*: void */ => {
       flwItem.dMoving = false;
       if (gSttngs().get("steps")[flwItem.dStpIndex].status === "done") {
-        flwItem.visible = false;
-        removeFlowItem(flwItem);
-      } else {
+        if (flwItem.dPosition.z === gState().get("endPosition").z) {
+          flwItem.visible = false;
+          removeFlowItem(flwItem);
+        } else {
+          flwItem.dPosition = { ...refineNewPosition(flwItem) };
+          animatePositionChange(flwItem);
+        }
       }
     },
   });
@@ -89,7 +93,7 @@ const animateColorChange = (
 // newColor()
 //------------------------------------------------------------------
 const newColor = (flwItem /*: FlwItem */) /*: string */ => {
-  const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex + 1].status;
+  const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex].status;
   let newColor = "#" + gSttngs().get("colorGrey"); // Grey for "waiting" status
 
   if (nextStatus === "touch" || nextStatus === "done") {
@@ -105,9 +109,9 @@ const newColor = (flwItem /*: FlwItem */) /*: string */ => {
 // refineNewPosition()
 //------------------------------------------------------------------
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
-  const range = calculateRange(flwItem.dStpIndex + 1);
+  const range = calculateRange(flwItem.dStpIndex);
   const newPosition = { ...flwItem.dPosition };
-  const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex + 1].status;
+  const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex].status;
 
   if (nextStatus === "done") {
     newPosition.x = gState().get("vSphere").dPosition.x;
@@ -123,7 +127,7 @@ const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
     newPosition.y =
       gState().get("strtPosition").y +
       (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
-    newPosition.z = calculateZPosFromStep(flwItem.dStpIndex + 1);
+    newPosition.z = calculateZPosFromStep(flwItem.dStpIndex);
   }
   return newPosition;
 };

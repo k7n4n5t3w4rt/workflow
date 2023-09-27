@@ -3,17 +3,26 @@
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { numberExpiditedDevUnits } from "./numberDevUnits.js";
-import applyAdjustedReduction from "./applyAdjustedReduction.js";
-import stepWip from "./stepWip.js";
+import applyDevCapacityAllFlwItems from "./applyDevCapacityAllFlwItems.js";
 //------------------------------------------------------------------
 // updateDaysRemaining()
 //------------------------------------------------------------------
-export default (flwItems /*: FlwItem[] */) /*: void */ => {
+export default (
+  flwItems /*: FlwItem[] */,
+  spareDevDays /*: SpareDevDays */ = {},
+  usingSpareDevDays /*: boolean */ = false,
+) /*: void */ => {
   const expdtFlwItems = flwItems.filter(
     (flwItem /*: FlwItem */) /*: boolean */ => {
       return flwItem.dExpedite === true;
     },
   );
-  const nmExpdtDvUnits = numberExpiditedDevUnits();
-  applyAdjustedReduction(stepWip)(expdtFlwItems, true);
+  // const nmExpdtDvUnits = numberExpiditedDevUnits();
+  const expediteFlag /*: boolean */ = true;
+  applyDevCapacityAllFlwItems(
+    expdtFlwItems,
+    expediteFlag,
+    spareDevDays,
+    usingSpareDevDays,
+  );
 };

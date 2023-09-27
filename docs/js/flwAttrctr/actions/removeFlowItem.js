@@ -11,11 +11,10 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import animateScaleToZero from "./animateScaleToZero.js";
-
 //------------------------------------------------------------------
-// removeFlowItem()
+// FUNCTION: removeFlowItem()
 //------------------------------------------------------------------
-export default (flwItem /*: FlwItem */) /*: void */ => {
+export const removeFlowItem = (flwItem /*: FlwItem */) /*: void */ => {
   if (flwItem.dMoving) {
     return;
   }
@@ -34,6 +33,7 @@ export default (flwItem /*: FlwItem */) /*: void */ => {
     flwItem.material.needsUpdate = true;
   }
 };
+export default removeFlowItem;
 //------------------------------------------------------------------
 // removeThreeObject()
 //------------------------------------------------------------------

@@ -69,12 +69,12 @@ type FlwStep = {
   name: string,
   status: "backlog" | "wait" | "touch" | "external" | "done",
   limit: number,
-  movingLimit: number | typeof undefined,
-  devUnits: number | typeof undefined,
-  movingDevUnits: number | typeof undefined,
-  flwTimeAtStart: number | typeof undefined,
-  actualFlwTime: number | typeof undefined,
-  avAge: number | typeof undefined,
+  movingLimit: number,
+  devUnits: number,
+  movingDevUnits: number,
+  flwTimeAtStart: number,
+  actualFlwTime: number,
+  avAge: number,
 };
 
 //------------------------------------------------------------------
@@ -104,6 +104,7 @@ type GlobalState = {
     flwItmsPulledCount: number,
     flwItmTracker: FlwItmTracker,
     flwMap: FlwMap,
+    flwItmsToMove: FlwItmsToMove,
     scnData: SceneData,
     strtPosition: ThrMeshPosition,
     vSphere: VSphere,
@@ -120,6 +121,7 @@ type GlobalState = {
   },
 };
 
+type FlwItmsToMove = { [string]: FlwItem };
 type StpLabel = {
   // -----------------------
   // Data:
@@ -180,6 +182,12 @@ type FlwItem = {
 
 type FlwItmTracker = Object;
 
+type SpareDevDays = {
+  // -----------------------
+  // Data:
+  // -----------------------
+  [string]: number,
+};
 type FlwMap = {
   // -----------------------
   // Data:

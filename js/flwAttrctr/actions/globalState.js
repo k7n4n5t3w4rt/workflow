@@ -28,6 +28,7 @@ export const globalState = () => {
   gState().set("endPosition", {});
   gState().set("expdtCount", gSttngs().get("expdtQueueLength"));
   gState().set("flwItems", []);
+  gState().set("flwItmsToMove", {});
   gState().set("flwItmTracker", {});
   gState().set("flwMap", {});
   setUpFlwMap();

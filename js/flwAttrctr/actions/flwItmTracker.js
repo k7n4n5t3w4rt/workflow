@@ -4,8 +4,10 @@
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-
-export default (
+//------------------------------------------------------------------
+// FUNCTION: flwItmTracker()
+//------------------------------------------------------------------
+export const flwItmTracker = (
   flwItmName /*: string */,
   message /*: string */,
 ) /*: void  */ => {
@@ -13,3 +15,4 @@ export default (
     gState().get("flwItmTracker")[flwItmName].unshift(message);
   }
 };
+export default flwItmTracker;
