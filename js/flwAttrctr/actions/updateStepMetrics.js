@@ -15,7 +15,6 @@ import gState from "./gState.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import setDProps from "./setMetricsDProps.js";
 import createTextCanvas from "./createMetricsTextCanvas.js";
-import updateStepsStateFromGlobalState from "../Metrics/updateStepsStateFromGlobalState.js";
 import getFlwMpSteps from "../actions/getFlwMpSteps.js";
 //------------------------------------------------------------------
 // FUNCTION: updateStepMetrics()
@@ -98,6 +97,5 @@ export const updateStepMetrics = (stpMetrics /*: StpMetrics */) /*: void */ => {
     stpMetrics.material = material;
     // If needed, add stpMetrics to a group or the scene here
   }
-  //updateStepsStateFromGlobalState();
 };
 export default updateStepMetrics;

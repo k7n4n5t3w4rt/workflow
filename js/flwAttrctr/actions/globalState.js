@@ -37,6 +37,16 @@ export const globalState = () => {
   gState().set("strtPosition", {});
   gState().set("vSphere", {});
   gState().set("isUpdtngCnfg", false);
+  gState().set("tmBox", 0);
+  gState().set("thrPutPerDay", 0);
+  gState().set("thrPutExpPerDay", 0);
+  gState().set("thrPut", 0);
+  gState().set("flwTime", 0);
+  gState().set("flwTmExp", 0);
+  gState().set("wip", 0);
+  gState().set("wipExp", 0);
+  gState().set("value", 0);
+  gState().set("started", 0);
   //------------------------------------------------------------------
   // Generated values:
   //------------------------------------------------------------------

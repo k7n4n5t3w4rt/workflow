@@ -50,23 +50,14 @@ export const Metrics = (props /*: Props */) /*: string */ => {
   useEffect(() => {
     updateMetricsOnClickInterval(
       setFlowTime,
-      flowTime,
       setThruPut,
-      thruPut,
       setThruPutPerDay,
-      thruPutPerDay,
       setThruPutExpPerDay,
-      thruPutExpPerDay,
       setWip,
-      wip,
       setFlowTimeExp,
-      flowTimeExp,
       setWipExp,
-      wipExp,
       setValue,
-      value,
       setTmBox,
-      tmBox,
       setMetricToggle,
       metricToggle,
     );
