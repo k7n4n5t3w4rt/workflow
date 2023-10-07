@@ -15,7 +15,8 @@ import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./animateClickCube.js";
 import updateAge from "./updateAge.js";
 import updateDays from "./updateDays.js";
-import updateMetrics from "./updateMetrics.js";
+import updateTimeBoxMetrics from "./updateTimeBoxMetrics.js";
+import updateClickMetrics from "./updateClickMetrics.js";
 import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
 import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
 import recursivelyPullFlwItems from "./recursivelyPullFlwItems.js";
@@ -60,8 +61,10 @@ export const onClickComplete = () /*: void */ => {
     updateNrmlWip();
     filterDoneItems(removeDoneFlwItmsFromFlwMap)();
     if (gState().get("clicks") % 5 !== 0) {
-      // if (gState().get("clicks") === gSttngs().get("timeBox")) {
-      updateMetrics();
+      updateClickMetrics();
+    }
+    if (gState().get("clicks") === gSttngs().get("timeBox")) {
+      updateTimeBoxMetrics();
     }
   }
   // if (gState().get("clicks") <= 3) {

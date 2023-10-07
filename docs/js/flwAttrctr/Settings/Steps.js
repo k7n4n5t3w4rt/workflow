@@ -44,7 +44,6 @@ import setStateFunctionsStore from "./setStateFunctionsStore.js";
 import changeSetting from "./changeSetting.js";
 import setUpdtngCnfg from "./setUpdtngCnfg.js";
 import populateSteps from "./populateSteps.js";
-import updateStepsStateFromGlobalState from "./updateStepsStateFromGlobalState.js";
 import changeStepName from "./changeStepName.js";
 import changeStepLimit from "./changeStepLimit.js";
 import changeStepDevUnits from "./changeStepDevUnits.js";

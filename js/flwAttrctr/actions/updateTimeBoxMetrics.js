@@ -12,17 +12,14 @@ import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
 import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
 import updateStepMetrics from "./updateStepMetrics.js";
 //------------------------------------------------------------------
-// updateMetrics()
+// FUNCTION: updateTimeBoxMetrics()
 //------------------------------------------------------------------
-export const updateMetrics = () => {
+export const updateTimeBoxMetrics = () => {
   if (
     gState().get("vQueue") !== undefined &&
-    gState().get("flwTmQueue") !== undefined &&
     gState().get("thrPtQueue") !== undefined &&
-    gState().get("wipQueue") !== undefined &&
-    gState().get("flwTmExpQueue") !== undefined &&
     gState().get("thrPtExpQueue") !== undefined &&
-    gState().get("wipExpQueue") !== undefined &&
+    gState().get("thrPut") !== undefined &&
     gSttngs().get("timeBox") !== undefined &&
     gState().get("scnData") !== undefined
   ) {
@@ -30,20 +27,10 @@ export const updateMetrics = () => {
     const tmBox = gSttngs().get("timeBox");
     gState().set("tmBox", (tmBox / 5).toString() + " wks");
     const thrPutPerDay = gState().get("thrPtQueue").dailyMean();
-    gState().set("thrPutPerDay", thrPutPerDay);
     const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
-    gState().set("thrPutExpPerDay", thrPutExpPerDay);
     const thrPut =
       Math.round(thrPutExpPerDay * tmBox + thrPutPerDay * tmBox * 100) / 100;
     gState().set("thrPut", thrPut);
-    const flwTime = gState().get("flwTmQueue").flwItemMean();
-    gState().set("flwTime", flwTime);
-    const flwTmExp = gState().get("flwTmExpQueue").flwItemMean();
-    gState().set("flwTmExp", flwTmExp);
-    const wip = gState().get("wipQueue").dailyMean();
-    gState().set("wip", wip);
-    const wipExp = gState().get("wipExpQueue").dailyMean();
-    gState().set("wipExp", wipExp);
     const flwTimeAtStart = calculateFlwTimeAtStart();
     const flwTimeMax = calculateFlwTimeMax();
     const totalWipAtStart = calculateTotalWipLimits();
@@ -84,4 +71,4 @@ export const updateMetrics = () => {
     });
   }
 };
-export default updateMetrics;
+export default updateTimeBoxMetrics;

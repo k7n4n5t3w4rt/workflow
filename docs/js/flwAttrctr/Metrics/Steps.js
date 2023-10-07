@@ -19,7 +19,6 @@ import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval.js";
 import cssStyles from "./cssStyles.js";
 import getRawStyles from "./getRawStyles.js";
 import updateStepMetrics from "../actions/updateStepMetrics.js";
-import updateStepsStateFromGlobalState from "./updateStepsStateFromGlobalState.js";
 //------------------------------------------------------------------
 // Steps()
 //------------------------------------------------------------------
@@ -42,7 +41,6 @@ export const Steps = (props /*: Props */) /*: string */ => {
   };
   // THIS FUNCTION HAS BEEN CHANGD - IT NO LONGER SETS THE STATE
   // Once, on load, update the local state from the global state
-  // useEffect(updateStepsStateFromGlobalState(setSteps), []);
   return html`
     <!------------------------------------------------------------------>
     <!-- Steps -->
