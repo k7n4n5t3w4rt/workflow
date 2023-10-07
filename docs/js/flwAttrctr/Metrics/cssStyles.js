@@ -34,6 +34,9 @@ export const cssStyles = () /*: Object */ => {
       boxSizing: "border-box",
       color: "white",
       textShadow: "2px 2px 2px grey",
+      fontSize: "min(6vw, 30px)",
+      lineHeight: "1.2em",
+      whiteSpace: "nowrap",
     },
     metricsSpansTopRow: {
       // border: "1px solid white",

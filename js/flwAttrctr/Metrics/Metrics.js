@@ -79,7 +79,7 @@ export const Metrics = (props /*: Props */) /*: string */ => {
       <div className="${styles.metricsDivs}">
         <div className="${styles.metricsSpans}">FlwTm: ${flowTime}</div>
         <div className="${styles.metricsSpans}">ThrPt: ${thruPutPerDay}</div>
-        <div className="${styles.metricsSpans}">Wip: ${wip}</div>
+        <div className="${styles.metricsSpans}">WIP: ${wip}</div>
       </div>
       ${gSttngs().get("expdtQueueLength") > 0 &&
       html` <div className="${styles.metricsDivs}">
@@ -87,7 +87,7 @@ export const Metrics = (props /*: Props */) /*: string */ => {
         <div className="${styles.metricsSpans}"
           >ThrPtExp: ${thruPutExpPerDay}</span
         >
-        <div className="${styles.metricsSpans}">WipExp: ${wipExp}</div>
+        <div className="${styles.metricsSpans}">WIPExp: ${wipExp}</div>
       </div>`}
     </div>
   `;
