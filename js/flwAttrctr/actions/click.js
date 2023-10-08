@@ -63,7 +63,7 @@ export const onClickComplete = () /*: void */ => {
     if (gState().get("clicks") % 5 !== 0) {
       updateClickMetrics();
     }
-    if (gState().get("clicks") === gSttngs().get("timeBox")) {
+    if (gState().get("clicks") === 1) {
       updateTimeBoxMetrics();
     }
   }
