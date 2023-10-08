@@ -59,7 +59,7 @@ export const updateStepMetrics = (stpMetrics /*: StpMetrics */) /*: void */ => {
   // Update the metrics
   const metrics = [
     { key: "Limit", value: newLimit.toString() },
-    { key: "AvAg", value: newAvAge.toString() },
+    // { key: "AvAg", value: newAvAge.toString() },
   ];
   // Only add the DevUnits if it's not zero
   if (newDevUnits !== 0) {
