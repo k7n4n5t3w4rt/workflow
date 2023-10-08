@@ -18,7 +18,7 @@ export default () /*: Object */ => {
       padding: "0.2rem",
       color: "white",
       fontWeight: "bold",
-      textShadow: "2px 2px 2px grey",
+      textShadow: "2px 2px 2px #444",
       backgroundColor: "#ff7f00",
       marginBottom: "1rem",
       padding: "0.4rem",
