@@ -33,7 +33,7 @@ export const populateStepsOnStart = () /*: void */ => {
         newStepLabel(index);
         newStepMetrics(index, [
           { key: "Limit", value: steps[index].limit.toString() },
-          { key: "AvAg", value: "0" },
+          // { key: "AvAg", value: "0" },
           { key: "DvUnts", value: "0" },
         ]);
       } else {
