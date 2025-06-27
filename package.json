@@ -34,9 +34,8 @@
     "wait-on": "^5.1.0"
   },
   "scripts": {
-    "browsersync": "cd public && browser-sync start --server",
+    "browsersync": "browser-sync start --server",
     "browsersync:proxy": "browser-sync start --proxy 'localhost:4000' --files \".\"",
-    "build": "npm run generate && npm run github-pages",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "esinstall": "node esinstall.js",
