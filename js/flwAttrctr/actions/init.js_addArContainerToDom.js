@@ -3,7 +3,7 @@
 //------------------------------------------------------------------
 // addArContainerToDom()
 //------------------------------------------------------------------
-const addArContainerToDom = (): HTMLDivElement => {
+const addArContainerToDom = () /*: HTMLDivElement */ => {
   // The AR container is where the AR scene will be rendered
   const ARContainer = document.createElement("div");
   // Give it an id
