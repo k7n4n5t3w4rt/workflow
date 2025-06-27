@@ -14,15 +14,17 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
 import { CSS2DRenderer } from "../../../web_modules/three/examples/jsm/renderers/CSS2DRenderer.js";
-import onWindowResize from "../actions/onWindowResize.js";
+// Also used in the ARButton.js file
 import start from "./start.js";
-import addReticleToScene from "./addReticleToScene.js";
-import render from "./render.js";
-import cameraSetup from "./cameraSetup.js";
-import addArContainerToDom from "./addArContainerToDom.js";
-import rendererSetup from "./rendererSetup.js";
-import labelRendererSetup from "./labelRendererSetup.js";
-import startButtonSetup from "./startButtonSetup.js";
+// Actions only used in this file
+import cameraSetup from "./init.js_cameraSetup.js";
+import onWindowResize from "../actions/init.js_onWindowResize.js";
+import addReticleToScene from "./init.js_addReticleToScene.js";
+import render from "./init.js_render.js";
+import addArContainerToDom from "./init.js_addArContainerToDom.js";
+import rendererSetup from "./init.js_rendererSetup.js";
+import labelRendererSetup from "./init.js_labelRendererSetup.js";
+import startButtonSetup from "./init.js_startButtonSetup.js";
 
 //------------------------------------------------------------------
 // FUNCTION: init()

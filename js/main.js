@@ -9,7 +9,7 @@ import gState from "./flwAttrctr/actions/gState.js";
 //------------------------------------------------------------------
 import getSttngsFromEasyStorage from "./flwAttrctr/actions/getSttngsFromEasyStorage.js";
 import globalSettings from "./flwAttrctr/actions/globalSettings.js";
-import globalStepSettings from "./flwAttrctr/actions/globalStepSettings.js";
+import globalStepSettings from "./flwAttrctr/actions/main.js_globalStepSettings.js";
 import globalState from "./flwAttrctr/actions/globalState.js";
 import globalParamsSettings from "./flwAttrctr/actions/globalParamsSettings.js";
 //------------------------------------------------------------------

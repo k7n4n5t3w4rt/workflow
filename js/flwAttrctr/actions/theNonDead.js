@@ -7,7 +7,7 @@ import gSttngs from "./gSttngs.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import removeFlowItem from "./removeFlowItem.js";
-import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
+import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
 //------------------------------------------------------------------
 // theNonDead()
 //------------------------------------------------------------------

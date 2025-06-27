@@ -7,20 +7,20 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import filterDoneItems from "./filterDoneItems.js";
-import updateExpdtWip from "./updateExpdtWip.js";
-import updateNrmlWip from "./updateNrmlWip.js";
-import setExpedite from "./setExpedite.js";
-import resizeVSphere from "./resizeVSphere.js";
-import animateClickCube from "./animateClickCube.js";
-import updateAge from "./updateAge.js";
-import updateDays from "./updateDays.js";
-import updateTimeBoxMetrics from "./updateTimeBoxMetrics.js";
-import updateClickMetrics from "./updateClickMetrics.js";
-import removeDoneFlwItmsFromFlwMap from "./removeDoneFlwItmsFromFlwMap.js";
-import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
-import recursivelyPullFlwItems from "./recursivelyPullFlwItems.js";
-import move from "./move.js";
+import filterDoneItems from "./click.js_filterDoneItems.js";
+import updateExpdtWip from "./click.js_updateExpdtWip.js";
+import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
+import updateNrmlWip from "./click.js_updateNrmlWip.js";
+import setExpedite from "./click.js_setExpedite.js";
+import resizeVSphere from "./click.js_resizeVSphere.js";
+import animateClickCube from "./click.js_animateClickCube.js";
+import updateAge from "./click.js_updateAge.js";
+import updateDays from "./click.js_updateDays.js";
+import updateTimeBoxMetrics from "./click.js_updateTimeBoxMetrics.js";
+import updateClickMetrics from "./click.js_updateClickMetrics.js";
+import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
+import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
+import move from "./click.js_move.js";
 //------------------------------------------------------------------
 // FUNCTION: click()
 //------------------------------------------------------------------

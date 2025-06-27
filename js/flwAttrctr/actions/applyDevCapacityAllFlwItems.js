@@ -8,8 +8,9 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import applyDevCapacityToFlwItem from "./applyDevCapacityToFlwItem.js";
-import recursivelyPullFlwItems from "./recursivelyPullFlwItems.js";
-import updateDays from "./updateDays.js";
+
+import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
+import updateDays from "./click.js_updateDays.js";
 //------------------------------------------------------------------
 // applyDevCapacityAllFlwItems()
 //------------------------------------------------------------------
