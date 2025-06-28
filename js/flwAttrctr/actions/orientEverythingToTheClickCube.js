@@ -22,12 +22,14 @@ export const orientEverythingToTheClickCube = () /*: number */ => {
   // ! AUTOMODE
   // --------------------------------------------------------------
   if (gSttngs().get("autoMode") === false) {
-    // Last thing: set the position of the cube based on the location of  the reticle
-    gState()
-      .get("clckCbGroup")
-      .position.setFromMatrixPosition(
-        gState().get("scnData").reticleStuff.reticle.matrix,
-      );
+    // Last thing: set the position of the cube based on the location of the reticle
+    const scnData = gState().get("scnData");
+    const reticleStuff = scnData && scnData.reticleStuff;
+    if (reticleStuff && reticleStuff.reticle && reticleStuff.reticle.matrix) {
+      gState()
+        .get("clckCbGroup")
+        .position.setFromMatrixPosition(reticleStuff.reticle.matrix);
+    }
   }
   // --------------------------------------------------------------
   // AUTOMODE
