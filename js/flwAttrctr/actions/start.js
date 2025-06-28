@@ -1,8 +1,5 @@
 // @flow
 //------------------------------------------------------------------
-// IMPORTS: THREE.js
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
@@ -57,7 +54,7 @@ export const start = async () /*: Promise<void> */ => {
   directionalLight.target = gState().get("vSphere");
   scene.add(directionalLight);
   populateStepsOnStart();
-  // Start the clubes flying
+  // Start the cubes flying
   click();
 };
 export default start;

@@ -1,3 +1,5 @@
+import start from "./start.js";
+import gSttngs from "./gSttngs.js";
 // @flow
 // 2D fallback experience for non-AR browsers
 //------------------------------------------------------------------
@@ -69,13 +71,12 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 0.5, 0);
   controls.update();
-  // Render loop
-  function animate() {
-    requestAnimationFrame(animate);
+  // Render function for setAnimationLoop
+  function render() {
     cube.rotation.y += 0.01;
     renderer.render(scene, camera);
   }
-  animate();
+  renderer.setAnimationLoop(render);
   // Handle resize
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -89,4 +90,6 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
     renderer,
     controls,
   });
+  // Always start automatically in 2D (2D is always automode)
+  start();
 };
