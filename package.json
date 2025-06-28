@@ -1,10 +1,10 @@
 {
   "name": "flow-attractor",
   "description": "Visualising flow of work.",
-  "version": "1.0.0",
+  "version": "0.27.0",
   "author": "Kynan Stewart",
   "bugs": {
-    "url": "https://github.com/k7n4n5t3w4rt/goodthing/issues"
+    "url": "https://github.com/k7n4n5t3w4rt/workflow/issues"
   },
   "dependencies": {
     "animejs": "^3.2.1",
