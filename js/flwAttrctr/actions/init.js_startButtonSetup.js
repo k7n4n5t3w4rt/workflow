@@ -8,19 +8,83 @@ import ARButton from "./ARButton.js";
 //------------------------------------------------------------------
 // startButtonSetup()
 //------------------------------------------------------------------
-const startButtonSetup = (renderer /*: Object */) /*: Object */ => {
+const startButtonSetup = async (
+  renderer /*: Object */,
+) /*: Promise<void> */ => {
   // The overlay for sliders, etc
   const domOverlayDiv = document.getElementById("dom-overlay");
+  if (!domOverlayDiv) return;
 
-  const button = ARButton.createButton(renderer, {
-    requiredFeatures: ["hit-test"],
-    optionalFeatures: ["dom-overlay"],
-    domOverlay: {
-      root: domOverlayDiv,
-    },
-  });
+  // Check if AR is supported
+  let arSupported = false;
   // $FlowFixMe
-  domOverlayDiv.appendChild(button);
+  if (navigator.xr && navigator.xr.isSessionSupported) {
+    try {
+      // $FlowFixMe
+      arSupported = await navigator.xr.isSessionSupported("immersive-ar");
+    } catch (e) {
+      arSupported = false;
+    }
+  }
+
+  if (!arSupported) {
+    // Create a button for 2D experience
+    const button = document.createElement("button");
+    button.innerHTML = "Start 2D Experience";
+    button.style.cssText = `
+      position: absolute;
+      bottom: 24px;
+      padding: 12px 24px;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.1);
+      color: #fff;
+      font: normal 13px sans-serif;
+      text-align: center;
+      opacity: 0.5;
+      outline: none;
+      z-index: 999;
+      cursor: pointer;
+      left: 50%;
+      transform: translateX(-50%);
+    `;
+    button.addEventListener("click", () => {
+      // Show 2D message
+      const messageDiv = document.createElement("div");
+      messageDiv.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 2rem;
+        border-radius: 8px;
+      `;
+      messageDiv.innerHTML = `
+        <h2>2D Experience</h2>
+        <p>Augmented Reality is not supported on this device.<br>You are viewing the 2D desktop experience.</p>
+      `;
+      if (document.body) {
+        document.body.appendChild(messageDiv);
+      }
+    });
+    domOverlayDiv.appendChild(button);
+  } else {
+    // Create AR button for supported devices
+    const button = ARButton.createButton(renderer, {
+      requiredFeatures: ["hit-test"],
+      optionalFeatures: ["dom-overlay"],
+      domOverlay: {
+        root: domOverlayDiv,
+      },
+    });
+    // Append the AR button to the overlay, making sure it's defined
+    if (button !== undefined) {
+      domOverlayDiv.appendChild(button);
+    }
+  }
 };
 
 export default startButtonSetup;
