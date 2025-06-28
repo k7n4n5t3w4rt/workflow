@@ -10,6 +10,8 @@ import ARButton from "./ARButton.js";
 //------------------------------------------------------------------
 const startButtonSetup = async (
   renderer /*: Object */,
+  on2DStart /*: ?(r: Object) => void */ = null,
+  on3DStart /*: ?(r: Object) => void */ = null,
 ) /*: Promise<void> */ => {
   // The overlay for sliders, etc
   const domOverlayDiv = document.getElementById("dom-overlay");
@@ -49,29 +51,37 @@ const startButtonSetup = async (
       transform: translateX(-50%);
     `;
     button.addEventListener("click", () => {
-      // Show 2D message
-      const messageDiv = document.createElement("div");
-      messageDiv.style.cssText = `
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 2rem;
-        border-radius: 8px;
-      `;
-      messageDiv.innerHTML = `
-        <h2>2D Experience</h2>
-        <p>Augmented Reality is not supported on this device.<br>You are viewing the 2D desktop experience.</p>
-      `;
-      if (document.body) {
-        document.body.appendChild(messageDiv);
+      if (typeof on2DStart === "function") {
+        on2DStart(renderer);
+      } else {
+        // Show 2D message fallback
+        const messageDiv = document.createElement("div");
+        messageDiv.style.cssText = `
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          padding: 2rem;
+          border-radius: 8px;
+        `;
+        messageDiv.innerHTML = `
+          <h2>2D Experience</h2>
+          <p>Augmented Reality is not supported on this device.<br>You are viewing the 2D desktop experience.</p>
+        `;
+        if (document.body) {
+          document.body.appendChild(messageDiv);
+        }
       }
     });
     domOverlayDiv.appendChild(button);
   } else {
+    // Call the 3D/AR experience setup if provided
+    if (typeof on3DStart === "function") {
+      on3DStart(renderer);
+    }
     // Create AR button for supported devices
     const button = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],

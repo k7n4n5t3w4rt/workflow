@@ -1,3 +1,40 @@
+//-----------------------
+// Three.js Camera
+//-----------------------
+type ThrCamera = {
+  aspect: number,
+  updateProjectionMatrix: () => void,
+  // Add more properties/methods as needed
+};
+
+//-----------------------
+// Three.js LabelRenderer
+//-----------------------
+type ThrLabelRenderer = {
+  setSize: (width: number, height: number) => void,
+  // Add more properties/methods as needed
+};
+
+//-----------------------
+// Window
+//-----------------------
+type DomWindow = {
+  innerWidth: number,
+  innerHeight: number,
+  // Add more properties/methods as needed
+};
+//-----------------------
+// Three.js Renderer
+//-----------------------
+type ThrRenderer = {
+  domElement: Object,
+  setClearColor: (color: number | string, alpha?: number) => void,
+  setSize: (width: number, height: number, updateStyle?: boolean) => void,
+  render: (scene: Object, camera: Object) => void,
+  setAnimationLoop: (callback: Function) => void,
+  xr: Object,
+  // Add more methods/properties as needed for your usage
+};
 // @flow
 type GlobalModel = {
   sid: string,

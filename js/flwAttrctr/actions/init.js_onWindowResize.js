@@ -1,10 +1,11 @@
 // @flow
+
 export default (
-  camera /*: { aspect: number, updateProjectionMatrix: () => {} } */,
-  renderer /*: { setSize: (number, number) => {} } */,
-  labelRenderer /*: { setSize: (number, number) => {} } */,
-  window /*: { innerWidth: number, innerHeight: number } */,
-) /*: ()=>void */ => {
+  camera /*: ThrCamera */,
+  renderer /*: ThrRenderer */,
+  labelRenderer /*: ThrLabelRenderer */,
+  window /*: DomWindow */,
+) /*: () => void */ => {
   return () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
