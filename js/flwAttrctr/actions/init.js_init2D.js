@@ -38,33 +38,46 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   // Make the scene, camera, geometry, etc.
   const camera = cameraSetup();
   const scene /*: Object */ = new THREE.Scene();
+
   if (!ARContainer.contains(renderer.domElement)) {
     ARContainer.appendChild(renderer.domElement);
   }
   // Set renderer size to match viewport
   renderer.setSize(window.innerWidth, window.innerHeight);
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 0.5, 0);
-  controls.update();
+
+  const controller = new OrbitControls(camera, renderer.domElement);
+  controller.target.set(0, 0.5, 0);
+  controller.update();
+
+  // --------------------------------------------------------------
+  // LABELS - not sure what this is...
+  // --------------------------------------------------------------
+  const labelRenderer = labelRendererSetup();
+
+  // --------------------------------------------------------------
+  // RENDERING
+  // --------------------------------------------------------------
   // Render function for setAnimationLoop
   function render() {
-    // cube.rotation.y += 0.01;
     renderer.render(scene, camera);
   }
+  // Start the render loop
   renderer.setAnimationLoop(render);
   // Handle resize
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-  // Save to global state for consistency
+  window.addEventListener(
+    "resize",
+    onWindowResize(camera, renderer, labelRenderer, window),
+  );
+  // Populate the global state, for posterity
   gState().set("scnData", {
     scene,
     camera,
     renderer,
-    controls,
+    labelRenderer,
+    reticleStuff: {},
+    controller,
   });
   // Always start automatically in 2D (2D is always automode)
   start();
+
 };
