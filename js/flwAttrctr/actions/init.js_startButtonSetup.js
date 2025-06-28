@@ -4,6 +4,7 @@
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import ARButton from "./ARButton.js";
+import hideLandingPageElements from "./hideLandingPageElements.js";
 
 //------------------------------------------------------------------
 // startButtonSetup()
@@ -52,6 +53,7 @@ const startButtonSetup = async (
     `;
     button.addEventListener("click", () => {
       if (typeof on2DStart === "function") {
+        hideLandingPageElements();
         on2DStart(renderer);
       } else {
         // Show 2D message fallback
