@@ -48,8 +48,8 @@ import setUpFlwMap from "./actions/setUpFlwMap.js";
 //------------------------------------------------------------------
 /*::
 type Props = {
-	sid?: string,
-	share?: string,
+  sid?: string,
+  share?: string,
 }
 */
 export default (props /*: Props */) /*: string */ => {
@@ -141,9 +141,9 @@ export default (props /*: Props */) /*: string */ => {
       </div>
       <div id="dom-overlay">
         <${Metrics} />
+        <${LinkedIn} />
         <${Share} />
         <${Controls} />
-        <${LinkedIn} />
         <${Config} />
         <${Sttngs} />
         <${Params} />

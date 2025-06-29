@@ -33,7 +33,7 @@ const [styles] = createStyles({
     zIndex: "10500",
     boxSizing: "border-box",
     bottom: "0.5rem",
-    left: "4rem",
+    left: "0.5rem",
     cursor: "pointer",
   },
   controlsIcon: {
