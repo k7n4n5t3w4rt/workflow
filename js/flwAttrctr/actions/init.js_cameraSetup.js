@@ -11,20 +11,33 @@ import * as THREE from "../../../web_modules/three.js";
 import gSttngs from "./gSttngs.js";
 
 //------------------------------------------------------------------
-// cameraSetup()
+// cameraSetup2D()
 //------------------------------------------------------------------
-const cameraSetup = () /*: Object */ => {
+export const cameraSetup2D = () /*: Object */ => {
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
     0.01,
     50,
   );
-  // Does this really get used? Probably not in AR mode
-  camera.position.z = 1;
-  camera.position.y = Math.abs(parseInt(4 / 2)) * gSttngs().get("y");
+  camera.position.z = 0.68;
+  camera.position.y = 0.3 * gSttngs().get("y");
   camera.position.x = Math.abs(parseInt(5 / 2)) * gSttngs().get("x");
   return camera;
 };
 
-export default cameraSetup;
+// cameraSetupAR()
+//------------------------------------------------------------------
+export const cameraSetupAR = () /*: Object */ => {
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.01,
+    50,
+  );
+  // AR mode: leave camera at default position (origin)
+  return camera;
+};
+
+// For backward compatibility, default export is 2D setup
+export default cameraSetup2D;

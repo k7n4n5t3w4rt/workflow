@@ -12,7 +12,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { OrbitControls } from "../../../web_modules/three/examples/jsm/controls/OrbitControls.js";
-import cameraSetup from "./init.js_cameraSetup.js";
+import { cameraSetup2D } from "./init.js_cameraSetup.js";
 import addReticleToScene from "./init.js_addReticleToScene.js";
 import render from "./init.js_render.js";
 import addArContainerToDom from "./init.js_addArContainerToDom.js";
@@ -36,7 +36,7 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   ARContainer.style.zIndex = "1000";
 
   // Make the scene, camera, geometry, etc.
-  const camera = cameraSetup();
+  const camera = cameraSetup2D();
   const scene /*: Object */ = new THREE.Scene();
 
   if (!ARContainer.contains(renderer.domElement)) {
@@ -46,7 +46,8 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   const controller = new OrbitControls(camera, renderer.domElement);
-  controller.target.set(0, 0.5, 0);
+  // Set the orbit target a bit in front of the camera
+  controller.target.set(0, camera.position.y, 0.15);
   controller.update();
 
   // --------------------------------------------------------------
@@ -59,6 +60,13 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   // --------------------------------------------------------------
   // Render function for setAnimationLoop
   function render() {
+    // Make labels (stpMetrics) always face the camera, as in AR mode
+    const scnData = gState().get("scnData");
+    if (scnData && scnData.stpMetrics !== undefined) {
+      for (let metrics of scnData.stpMetrics) {
+        metrics.lookAt(scnData.camera.position);
+      }
+    }
     renderer.render(scene, camera);
   }
   // Start the render loop

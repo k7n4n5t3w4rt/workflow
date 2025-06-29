@@ -11,7 +11,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import cameraSetup from "./init.js_cameraSetup.js";
+import { cameraSetupAR } from "./init.js_cameraSetup.js";
 import addReticleToScene from "./init.js_addReticleToScene.js";
 import render from "./init.js_render.js";
 import addArContainerToDom from "./init.js_addArContainerToDom.js";
@@ -27,7 +27,7 @@ export const init3D = function (renderer /*: ThrRenderer */) /*: void */ {
   // The AR container is where the AR scene will be rendered
   const ARContainer = addArContainerToDom();
   // Make the scene, camera, geometry, etc.
-  const camera = cameraSetup();
+  const camera = cameraSetupAR();
   const scene /*: Object */ = new THREE.Scene();
   // --------------------------------------------------------------
   // RETICLE & CONTROLLER
