@@ -1,107 +1,63 @@
-# GoodThing
+# FlowAttractor
 
-Preact static website generator boilerplate.
+Visualising the flow of work.
 
-  - No WebPack
-  - No compiling during development
-  - Global, Redux-like state store with `useReducer` and `Context`
-  - Cypress
+This project is a web application built with Preact and HTM, designed to run directly in the browser without a build step. It's hosted on GitHub Pages, serving files directly from the `main` branch.
+
+## Key Technologies
+
+*   **Frontend:** [Preact](https://preactjs.com/)
+*   **Templating:** [HTM](https://github.com/developit/htm) (JSX-like syntax in plain JavaScript)
+*   **State Management:** Preact's `useReducer` and `Context` API for a global state store.
+*   **ES Modules:** Dependencies are managed as ES modules in the `/web_modules` directory.
+*   **Testing:**
+    *   **Component/Unit:** A custom runner named "Testy" (see `testies/` directory).
+    *   **End-to-End:** [Cypress](https://www.cypress.io/) (see `cypress/` directory).
+*   **Type Checking:** [Flow](https://flow.org/)
 
 ## Getting Started
 
-[1] Clone the repo
+1.  **Clone the repository:**
+    ```bash
+    git clone git@github.com:k7n4n5t3w4rt/workflow.git
+    ```
 
-```
-git clone git@github.com:k7n4n5t3w4rt/goodthing.git mysite
-```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-[2] Remove `/.git`
+3.  **Update ES Modules:**
+    This step uses `esinstall` to populate the `/web_modules` directory based on `package.json` dependencies.
+    ```bash
+    npm run esinstall
+    ```
 
-```
-cd mysite && rm -rf .git
-```
+4.  **Start the development server:**
+    This will serve the application locally at `http://localhost:3000`.
+    ```bash
+    npm run browsersync
+    ```
 
-[3] Install NodeJS modules
+## Testing
 
-```
-npm i
-```
+To run the tests, first ensure the development server is running (`npm start`).
 
-[4] Update the ES modules in the `/web_modules` directory
+*   **Run all tests (Testy & Cypress):**
+    ```bash
+    npm run test
+    ```
 
-```
-npm run esinstall
-```
+*   **Run only Testy tests:**
+    ```bash
+    npm run testy
+    ```
 
-[5] Preview your site dynamically at <http://localhost:4000> during development
+*   **Run Cypress tests interactively:**
+    ```bash
+    npm run cypress:open
+    ```
 
-```
-npm start
-```
+## Deployment
 
-NOTE: Ctrl+C will stop the NodeJS server.
-
-[6] Test
-
-
-Start the server:
-
-```
-npm start
-````
-
-Then:
-
-```
-npm run test
-```
-
-NOTE: Install Cypress with:
-
-```
-npx cypress install
-```
-
-[7] Code (or don't if you're just trying it out)
-
-```
-...
-```
-
-[8] Generate your static site in the `/public` folder for GitHub pages, S3, etc.
-
-With the server running:
-
-```
-npm run generate
-```
-
-[9] Test it locally on port :3000 with Browsersync (I hardly ever do this)
-
-```
-npm run browsersync
-```
-
-[10] `git init` etc. and push your code up to GitHub or somewhere with great, free hosting for static sites.
-
-For [GitHub Pages](https://pages.github.com/), duplicate the `public` directory as `docs`:
-
-```
-npm run github-pages
-```
-
-[11] Clean up your static files
-
-```
-npm run generate:clear
-```
-
-## `htm` - "JSX-like syntax in plain JavaScript - no transpiler necessary"
-
-```
-import htm from '../web_modules/htm.js'
-```
-
-## To Do
-
-  2. The "Testy" test runner needs an "only" option
+This project is deployed on GitHub Pages and configured to serve files directly from the root of the `main` branch. Any changes pushed to `main` will be live.

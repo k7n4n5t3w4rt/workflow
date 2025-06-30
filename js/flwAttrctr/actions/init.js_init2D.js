@@ -71,14 +71,26 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
     // Update keyboard navigation (camera movement from arrow keys)
     keyboardNav.update();
     
-    // Make labels (stpMetrics) always face the camera, as in AR mode
+    // Update labels to face camera (similar to main render logic)
     const scnData = gState().get("scnData");
     if (scnData && scnData.stpMetrics !== undefined) {
       for (let metrics of scnData.stpMetrics) {
         metrics.lookAt(scnData.camera.position);
       }
     }
+    
+    // Update stats if available
+    if (scnData && scnData.stats !== undefined) {
+      scnData.stats.update();
+    }
+    
+    // Render the scene
     renderer.render(scene, camera);
+    
+    // Render CSS2D labels if any exist
+    if (labelRenderer) {
+      labelRenderer.render(scene, camera);
+    }
   }
   // Start the render loop
   renderer.setAnimationLoop(render);

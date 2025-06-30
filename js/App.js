@@ -24,6 +24,8 @@ const App /*: function */ = (props /*: Props */) => {
       <${Router}>
         <${FlwAttrctr} path="/" default />
         <${Settings} path="/config" />
+        <${Settings} path="/config" />
+        <${Settings} path="/config" />
       </${Router}>
     </${AppProvider}>
   `;

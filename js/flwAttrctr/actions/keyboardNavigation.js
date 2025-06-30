@@ -10,8 +10,8 @@ import * as THREE from "../../../web_modules/three.js";
 
 /*::
 type KeyboardState = {
-  forward: boolean,
-  backward: boolean,
+  up: boolean,
+  down: boolean,
   left: boolean,
   right: boolean,
 };
@@ -32,8 +32,8 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
   
   // Track which keys are currently pressed
   const keyState /*: KeyboardState */ = {
-    forward: false,
-    backward: false,
+    up: false,
+    down: false,
     left: false,
     right: false,
   };
@@ -49,11 +49,11 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
   const onKeyDown = (event /*: KeyboardEvent */) /*: void */ => {
     switch (event.code) {
       case 'ArrowUp':
-        keyState.forward = true;
+        keyState.up = true;
         event.preventDefault();
         break;
       case 'ArrowDown':
-        keyState.backward = true;
+        keyState.down = true;
         event.preventDefault();
         break;
       case 'ArrowLeft':
@@ -73,11 +73,11 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
   const onKeyUp = (event /*: KeyboardEvent */) /*: void */ => {
     switch (event.code) {
       case 'ArrowUp':
-        keyState.forward = false;
+        keyState.up = false;
         event.preventDefault();
         break;
       case 'ArrowDown':
-        keyState.backward = false;
+        keyState.down = false;
         event.preventDefault();
         break;
       case 'ArrowLeft':
@@ -99,21 +99,21 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
     // Reset movement vector
     moveVector.set(0, 0, 0);
 
-    // Calculate camera forward direction (in XZ plane for 2D-like movement)
+    // Calculate camera right direction for left/right movement
     camera.getWorldDirection(cameraDirection);
-    cameraDirection.y = 0; // Keep movement in horizontal plane
+    cameraDirection.y = 0; // Keep horizontal direction calculation in XZ plane
     cameraDirection.normalize();
-
-    // Calculate camera right direction
     cameraRight.crossVectors(cameraDirection, camera.up).normalize();
 
     // Apply movement based on pressed keys
-    if (keyState.forward) {
-      moveVector.add(cameraDirection.clone().multiplyScalar(moveSpeed));
+    // Up/Down arrows control vertical movement (Y axis)
+    if (keyState.up) {
+      moveVector.y += moveSpeed; // Move up
     }
-    if (keyState.backward) {
-      moveVector.add(cameraDirection.clone().multiplyScalar(-moveSpeed));
+    if (keyState.down) {
+      moveVector.y -= moveSpeed; // Move down
     }
+    // Left/Right arrows control horizontal movement relative to camera
     if (keyState.left) {
       moveVector.add(cameraRight.clone().multiplyScalar(-moveSpeed));
     }

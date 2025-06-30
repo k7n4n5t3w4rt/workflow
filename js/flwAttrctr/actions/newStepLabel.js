@@ -38,10 +38,17 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
     side: THREE.DoubleSide,
   });
   // Here we'll use a PlaneGeometry, but it's up to you.
-  const aspect = texture.image.width / texture.image.height;
+  // Ensure aspect ratio is reasonable to prevent horizontal stretching
+  const imageWidth = texture.image.width || 100; // fallback if undefined
+  const imageHeight = texture.image.height || 50; // fallback if undefined
+  let aspect = imageWidth / imageHeight;
+
+  // Clamp aspect ratio to reasonable bounds to prevent extreme stretching
+  aspect = Math.max(0.1, Math.min(10, aspect));
+
   const planeGeometry = new THREE.PlaneGeometry(aspect, 1);
   const textMesh = new THREE.Mesh(planeGeometry, material);
-  textMesh.scale.set(0.075, 0.075, 0.075); // Adjust this as needed
+  textMesh.scale.set(0.02, 0.02, 0.02); // Reduced scale for smaller labels
   scnData.stepLabels.push(textMesh);
   setDProps(textMesh);
   setPosition(textMesh, stepIndex);
@@ -65,12 +72,31 @@ const createLabelCanvas = (
 
   text = text.toUpperCase(); // Convert text to uppercase
 
-  const fontSize = 24; // in pixels
+  const fontSize = 8; // in pixels
   ctx.font = `${fontSize}px Verdana`;
   const textWidth = ctx.measureText(text).width;
 
-  canvas.width = textWidth * 1.2;
-  canvas.height = fontSize * (scaleCm / 4); // This assumes some amount of padding.
+  // Debug: log the scaleCm value to understand the issue
+  console.log(
+    `DEBUG newStepLabel: scaleCm=${scaleCm}, textWidth=${textWidth}, text="${text}"`,
+  );
+
+  // Ensure scaleCm has a reasonable value to prevent aspect ratio distortion
+  const safeScaleCm = typeof scaleCm === "number" && scaleCm > 0 ? scaleCm : 2;
+
+  // Calculate canvas dimensions with more reasonable proportions
+  const canvasWidth = Math.max(50, Math.min(1000, textWidth * 1.2)); // reasonable bounds
+  // Use a smaller height multiplier to reduce overall label size while keeping reasonable aspect ratios
+  const canvasHeight = Math.max(16, Math.min(80, fontSize * 0.8)); // smaller labels
+
+  console.log(
+    `DEBUG newStepLabel: canvasWidth=${canvasWidth}, canvasHeight=${canvasHeight}, aspect=${
+      canvasWidth / canvasHeight
+    }`,
+  );
+
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
 
   const borderThickness = 2; // For border
 
