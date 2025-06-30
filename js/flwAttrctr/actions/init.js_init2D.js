@@ -20,6 +20,7 @@ import rendererSetup from "./init.js_rendererSetup.js";
 import labelRendererSetup from "./init.js_labelRendererSetup.js";
 import onWindowResize from "../actions/init.js_onWindowResize.js";
 import start from "./start.js";
+import { createKeyboardNavigation } from "./keyboardNavigation.js";
 
 export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   // Add or reuse the AR container
@@ -50,6 +51,13 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   controller.target.set(0, camera.position.y, 0.15);
   controller.update();
 
+  // Setup keyboard navigation for arrow key controls
+  const keyboardNav = createKeyboardNavigation({
+    moveSpeed: 0.01, // Moderate movement speed
+    camera: camera,
+    controller: controller
+  });
+
   // --------------------------------------------------------------
   // LABELS - not sure what this is...
   // --------------------------------------------------------------
@@ -60,6 +68,9 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   // --------------------------------------------------------------
   // Render function for setAnimationLoop
   function render() {
+    // Update keyboard navigation (camera movement from arrow keys)
+    keyboardNav.update();
+    
     // Make labels (stpMetrics) always face the camera, as in AR mode
     const scnData = gState().get("scnData");
     if (scnData && scnData.stpMetrics !== undefined) {
@@ -84,6 +95,7 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
     labelRenderer,
     reticleStuff: {},
     controller,
+    keyboardNavigation: keyboardNav, // Store keyboard navigation for cleanup
   });
   // Always start automatically in 2D (2D is always automode)
   start();
