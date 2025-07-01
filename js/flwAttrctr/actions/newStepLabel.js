@@ -14,6 +14,8 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
+import createMetricsTextCanvas from "./createMetricsTextCanvas.js";
+
 export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   // Get the step info
   const steps = gSttngs().get("steps") || [];
@@ -28,7 +30,7 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   const step = steps[stepIndex];
   const text = step.name;
   const clckGroup = gState().get("clckCbGroup");
-  const textCanvas = createLabelCanvas(text);
+  const textCanvas = createMetricsTextCanvas([{ key: text, value: "" }], 25);
   const texture = new THREE.CanvasTexture(textCanvas);
 
   const material = new THREE.MeshBasicMaterial({
@@ -46,9 +48,11 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   // Clamp aspect ratio to reasonable bounds to prevent extreme stretching
   aspect = Math.max(0.1, Math.min(10, aspect));
 
-  const planeGeometry = new THREE.PlaneGeometry(aspect, 1);
+  const planeGeometry = new THREE.PlaneGeometry(
+    textCanvas.width / 300,
+    textCanvas.height / 300,
+  );
   const textMesh = new THREE.Mesh(planeGeometry, material);
-  textMesh.scale.set(0.02, 0.02, 0.02); // Reduced scale for smaller labels
   scnData.stepLabels.push(textMesh);
   setDProps(textMesh);
   setPosition(textMesh, stepIndex);
@@ -56,76 +60,7 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   clckGroup.add(textMesh);
 };
 export default newStepLabel;
-//------------------------------------------------------------------
-// createLabelCanvas() // Again, renaming for clarity
-//------------------------------------------------------------------
-const createLabelCanvas = (
-  text /*: string */,
-  color /*: string */ = "white",
-  borderColor /*: string */ = "white",
-  bgColor /*: string */ = "black",
-  bgOpacity /*: number */ = 0.25,
-) /*: HTMLCanvasElement */ => {
-  const scaleCm = gState().get("scaleCm");
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
 
-  text = text.toUpperCase(); // Convert text to uppercase
-
-  const fontSize = 8; // in pixels
-  ctx.font = `${fontSize}px Verdana`;
-  const textWidth = ctx.measureText(text).width;
-
-  // Debug: log the scaleCm value to understand the issue
-  console.log(
-    `DEBUG newStepLabel: scaleCm=${scaleCm}, textWidth=${textWidth}, text="${text}"`,
-  );
-
-  // Ensure scaleCm has a reasonable value to prevent aspect ratio distortion
-  const safeScaleCm = typeof scaleCm === "number" && scaleCm > 0 ? scaleCm : 2;
-
-  // Calculate canvas dimensions with more reasonable proportions
-  const canvasWidth = Math.max(50, Math.min(1000, textWidth * 1.2)); // reasonable bounds
-  // Use a smaller height multiplier to reduce overall label size while keeping reasonable aspect ratios
-  const canvasHeight = Math.max(16, Math.min(80, fontSize * 0.8)); // smaller labels
-
-  console.log(
-    `DEBUG newStepLabel: canvasWidth=${canvasWidth}, canvasHeight=${canvasHeight}, aspect=${
-      canvasWidth / canvasHeight
-    }`,
-  );
-
-  canvas.width = canvasWidth;
-  canvas.height = canvasHeight;
-
-  const borderThickness = 2; // For border
-
-  // Background fill
-  ctx.globalAlpha = bgOpacity;
-  ctx.fillStyle = bgColor;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Border drawing
-  ctx.globalAlpha = 1.0; // Reset opacity for the border
-  ctx.lineWidth = borderThickness;
-  ctx.strokeStyle = borderColor;
-  ctx.strokeRect(
-    borderThickness / 2,
-    borderThickness / 2,
-    canvas.width - borderThickness,
-    canvas.height - borderThickness,
-  );
-
-  // Text color
-  ctx.fillStyle = color;
-  ctx.font = `${fontSize}px Verdana`;
-  ctx.textBaseline = "middle"; // Center vertically
-  const centerX = (canvas.width - textWidth) / 2;
-  const centerY = canvas.height / 2;
-  ctx.fillText(text, centerX, centerY);
-
-  return canvas;
-};
 //------------------------------------------------------------------
 // setDProps(flwItem)
 //------------------------------------------------------------------
