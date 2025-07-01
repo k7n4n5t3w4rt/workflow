@@ -7,6 +7,12 @@ import { html } from "../../../web_modules/htm/preact.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import {
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "../../../web_modules/preact/hooks.js";
 //------------------------------------------------------------------
 // FUNCTION: Fps
 //------------------------------------------------------------------
@@ -17,6 +23,10 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
+  useEffect(() => {
+    console.log("Fps.js mounted");
+    console.log(props);
+  }, []);
   return html`
     <div>
       <label for="fps">FPS:</label>

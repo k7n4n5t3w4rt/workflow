@@ -62,18 +62,15 @@ export default (props /*: Props */) /*: string */ => {
   const [shortcutsToggle, setShortcutsToggle] = useState(true);
   // Initialize global settings and state
   useEffect(() => {
-    console.log("FlwAttrctr useEffect: init");
     // setupMobileDebug();
     let stats = createStats();
     init();
   }, []);
   useEffect(() => {
-    console.log("FlwAttrctr useEffect: loadSharedSettings");
     loadSharedSettings(props.sid, props.share)();
     populateStepsGlobal();
   }, [props.share]);
   useEffect(() => {
-    console.log("FlwAttrctr useEffect: hideOrShowShortcutsDivs");
     hideOrShowShortcutsDivs(shortcutsToggle)();
   }, [shortcutsToggle]);
   //------------------------------------------------------------------
@@ -90,12 +87,10 @@ export default (props /*: Props */) /*: string */ => {
     }, 1000);
   };
   useEffect(() => {
-    console.log("FlwAttrctr useEffect: updateShortcutsOnClickInterval");
     updateShortcutsOnClickInterval(shortcutsToggle);
   }, []);
 
   useEffect(() => {
-    console.log("FlwAttrctr useEffect: stats dom overlay");
     const stats = createStats();
     // Add it to the scnData object in the global state for use
     // in `js/flwAttrctr/actions/render.js`
