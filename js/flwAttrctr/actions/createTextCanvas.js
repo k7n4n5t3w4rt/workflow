@@ -5,9 +5,9 @@
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
 //------------------------------------------------------------------
-// FUNCTION: createMetricsTextCanvas()
+// FUNCTION: createTextCanvas()
 //------------------------------------------------------------------
-export const createTextCanvasStepLabel = (
+export const createTextCanvas = (
   lines /*: Array<string> */,
   fontSize /*: number */,
 ) /*: Object */ => {
@@ -22,8 +22,7 @@ export const createTextCanvasStepLabel = (
 
   // Measure the maximum width among all lines of text
   let maxTextWidth = 0;
-  const textLines = lines.map((line) => line.toUpperCase());
-  for (const line of textLines) {
+  for (const line of lines) {
     const lineWidth = ctx.measureText(line).width;
     if (lineWidth > maxTextWidth) {
       maxTextWidth = lineWidth;
@@ -32,7 +31,7 @@ export const createTextCanvasStepLabel = (
 
   canvas.width = maxTextWidth * 1.5;
   // Adjusted for multiple lines with one line at the end
-  canvas.height = lineHeight * textLines.length + lineHeight;
+  canvas.height = lineHeight * lines.length + lineHeight;
   const borderThickness = 2;
 
   // Background fill
@@ -58,7 +57,7 @@ export const createTextCanvasStepLabel = (
 
   // Write each line of text
   let offsetY = lineHeight / 2;
-  for (const line of textLines) {
+  for (const line of lines) {
     const lineWidth = ctx.measureText(line).width;
     const centerX = (canvas.width - lineWidth) / 2; // Center horizontally
     ctx.fillText(line, centerX, offsetY);
@@ -66,4 +65,4 @@ export const createTextCanvasStepLabel = (
   }
   return canvas;
 };
-export default createTextCanvasStepLabel;
+export default createTextCanvas;

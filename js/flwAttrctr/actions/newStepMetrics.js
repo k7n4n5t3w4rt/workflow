@@ -14,7 +14,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import setDProps from "./setMetricsDProps.js";
-import createTextCanvas from "./createTextCanvasMetrics.js";
+import createTextCanvas from "./createTextCanvas.js";
 //------------------------------------------------------------------
 // FUNCTION: newStepMetrics()
 //------------------------------------------------------------------
@@ -36,7 +36,8 @@ export const newStepMetrics = (
   const text = step.name;
   const clckGroup = gState().get("clckCbGroup");
   const fontSize = 25; // in pixels
-  const textCanvas = createTextCanvas(metrics, fontSize);
+  const textLines = metrics.map((m) => `${m.key}: ${m.value}`);
+  const textCanvas = createTextCanvas(textLines, fontSize);
   const texture = new THREE.CanvasTexture(textCanvas);
   const material = new THREE.MeshBasicMaterial({
     map: texture,

@@ -14,7 +14,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import setDProps from "./setMetricsDProps.js";
-import createTextCanvas from "./createTextCanvasMetrics.js";
+import createTextCanvas from "./createTextCanvas.js";
 import getFlwMpSteps from "../actions/getFlwMpSteps.js";
 //------------------------------------------------------------------
 // FUNCTION: updateStepMetrics()
@@ -66,7 +66,8 @@ export const updateStepMetrics = (stpMetrics /*: StpMetrics */) /*: void */ => {
     metrics.push({ key: "DvUnts", value: newDevUnits });
   }
   const fontSize = 25; // in pixels
-  const textCanvas = createTextCanvas(metrics, fontSize);
+  const textLines = metrics.map((m) => `${m.key}: ${m.value}`);
+  const textCanvas = createTextCanvas(textLines, fontSize);
   const texture = new THREE.CanvasTexture(textCanvas);
   const material = new THREE.MeshBasicMaterial({
     map: texture,
