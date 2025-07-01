@@ -53,8 +53,12 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
-  console.log("FlwAttrctr rendering");
-  const styles = cssStyles();
+  // Styles
+  const [styles /*: Object */, setStyles /*: function */] = useState({});
+  useEffect(() => {
+    setStyles(cssStyles());
+  }, []);
+
   const [shortcutsToggle, setShortcutsToggle] = useState(true);
   // Initialize global settings and state
   useEffect(() => {

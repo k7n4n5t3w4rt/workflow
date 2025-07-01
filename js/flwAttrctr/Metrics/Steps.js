@@ -28,8 +28,11 @@ type Props = {
 */
 export const Steps = (props /*: Props */) /*: string */ => {
   // Styles
-  const styles = cssStyles();
-  rawStyles(getRawStyles());
+  const [styles /*: Object */, setStyles /*: function */] = useState({});
+  useEffect(() => {
+    rawStyles(getRawStyles());
+    setStyles(cssStyles());
+  }, []);
   // A toggle to show or hide the settings
   const [paramsToggle, setParamsToggle] = useState(false);
   const [steps, setSteps] = useState([]);

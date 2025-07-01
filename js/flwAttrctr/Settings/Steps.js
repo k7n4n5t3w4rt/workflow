@@ -60,11 +60,16 @@ type Props = {
 */
 export const Steps = (props /*: Props */) /*: string */ => {
   // Styles
-  const styles = cssStyles();
-  rawStyles(getRawStyles());
+  const [styles /*: Object */, setStyles /*: function */] = useState({});
+  useEffect(() => {
+    rawStyles(getRawStyles());
+    setStyles(cssStyles());
+  }, []);
+
   // A toggle to show or hide the settings
   const [state, dispatch] = useContext(AppContext);
   const [paramsToggle, setParamsToggle] = useState(false);
+
   // Hide or show the settings divs when the toggle changes
   // useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
   // The function that toggles the settings by setting the toggle

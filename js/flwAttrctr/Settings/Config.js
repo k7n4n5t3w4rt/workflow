@@ -59,8 +59,12 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   // Styles
-  const styles = cssStyles();
-  rawStyles(getRawStyles());
+  const [styles /*: Object */, setStyles /*: function */] = useState({});
+  useEffect(() => {
+    rawStyles(getRawStyles());
+    setStyles(cssStyles());
+  }, []);
+
   const [state, dispatch] = useContext(AppContext);
   // A toggle to show or hide the config
   const [configToggle, setConfigToggle] = useState(false);

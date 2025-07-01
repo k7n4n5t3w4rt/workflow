@@ -42,8 +42,12 @@ export const Metrics = (props /*: Props */) /*: string */ => {
   const [value /*: number */, setValue /*: function */] = useState(0);
   const [tmBox /*: number */, setTmBox /*: function */] = useState(0);
   const [metricToggle, setMetricToggle] = useState(false);
-  const styles = cssStyles();
-  rawStyles(getRawStyles());
+  // Styles
+  const [styles /*: Object */, setStyles /*: function */] = useState({});
+  useEffect(() => {
+    rawStyles(getRawStyles());
+    setStyles(cssStyles());
+  }, []);
 
   useEffect(hideOrShowMetricsDivs(metricToggle), [metricToggle]);
 
