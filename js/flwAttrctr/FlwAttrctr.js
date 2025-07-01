@@ -73,6 +73,15 @@ export default (props /*: Props */) /*: string */ => {
   useEffect(() => {
     hideOrShowShortcutsDivs(shortcutsToggle)();
   }, [shortcutsToggle]);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const sid = url.searchParams.get("sid");
+    const share = url.searchParams.get("share");
+    if (sid && !share) {
+      window.location.href = EXAMPLE_0;
+    }
+  }, []);
   //------------------------------------------------------------------
   // updateShortcutsOnClickInterval()
   //------------------------------------------------------------------
