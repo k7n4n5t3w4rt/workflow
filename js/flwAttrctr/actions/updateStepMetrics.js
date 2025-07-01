@@ -14,7 +14,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 import setDProps from "./setMetricsDProps.js";
-import createTextCanvas from "./createMetricsTextCanvas.js";
+import createTextCanvas from "./createTextCanvasMetrics.js";
 import getFlwMpSteps from "../actions/getFlwMpSteps.js";
 //------------------------------------------------------------------
 // FUNCTION: updateStepMetrics()

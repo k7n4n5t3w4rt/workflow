@@ -7,8 +7,8 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // FUNCTION: createMetricsTextCanvas()
 //------------------------------------------------------------------
-export const createMetricsTextCanvas = (
-  metics /*: Array<{key:string,value:string}> */,
+export const createTextCanvasStepLabel = (
+  lines /*: Array<string> */,
   fontSize /*: number */,
 ) /*: Object */ => {
   const lineHeight = fontSize * 1.2;
@@ -16,27 +16,30 @@ export const createMetricsTextCanvas = (
   const borderColor /*: string */ = "white";
   const bgColor /*: string */ = "black";
   const bgOpacity /*: number */ = 0.25;
-  const scaleCm = gState().get("scaleCm");
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   ctx.font = `${fontSize}px Verdana`;
+
   // Measure the maximum width among all lines of text
   let maxTextWidth = 0;
-  const textLines = metics.map((m) => `${m.key}: ${m.value}`);
+  const textLines = lines.map((line) => line.toUpperCase());
   for (const line of textLines) {
     const lineWidth = ctx.measureText(line).width;
     if (lineWidth > maxTextWidth) {
       maxTextWidth = lineWidth;
     }
   }
+
   canvas.width = maxTextWidth * 1.5;
-  // Adjusted for multiple lines with one lin at the end
+  // Adjusted for multiple lines with one line at the end
   canvas.height = lineHeight * textLines.length + lineHeight;
   const borderThickness = 2;
+
   // Background fill
   ctx.globalAlpha = bgOpacity;
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   // Border drawing
   ctx.globalAlpha = 1; // Reset opacity for the border
   ctx.lineWidth = borderThickness;
@@ -47,10 +50,12 @@ export const createMetricsTextCanvas = (
     canvas.width - borderThickness,
     canvas.height - borderThickness,
   );
+
   // Text color
   ctx.fillStyle = color;
   ctx.font = `${fontSize}px Verdana`;
   ctx.textBaseline = "top";
+
   // Write each line of text
   let offsetY = lineHeight / 2;
   for (const line of textLines) {
@@ -61,4 +66,4 @@ export const createMetricsTextCanvas = (
   }
   return canvas;
 };
-export default createMetricsTextCanvas;
+export default createTextCanvasStepLabel;

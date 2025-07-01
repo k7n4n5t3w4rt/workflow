@@ -14,7 +14,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
-import createMetricsTextCanvas from "./createMetricsTextCanvas.js";
+import createTextCanvasStepLabel from "./createTextCanvasStepLabel.js";
 
 export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   // Get the step info
@@ -28,9 +28,9 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   }
   const camera = scnData.camera;
   const step = steps[stepIndex];
-  const text = step.name;
+  const textLines = step.name.split(":");
   const clckGroup = gState().get("clckCbGroup");
-  const textCanvas = createMetricsTextCanvas([{ key: text, value: "" }], 25);
+  const textCanvas = createTextCanvasStepLabel(textLines, 25);
   const texture = new THREE.CanvasTexture(textCanvas);
 
   const material = new THREE.MeshBasicMaterial({
