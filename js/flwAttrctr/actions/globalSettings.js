@@ -90,6 +90,7 @@ export default async () /*: Promise<void> */ => {
   // to see if they still want the thing we're working on, and reset the priority?
   const death = await gSttngs().setIfNotCached("death", 0);
   const backlogDeath = await gSttngs().setIfNotCached("backlogDeath", 0);
+  gSttngs().setIfNotCached("devUnitsTerm", "Devs");
   return;
 };
 //------------------------------------------------------------------

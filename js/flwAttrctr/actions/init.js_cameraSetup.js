@@ -20,8 +20,8 @@ export const cameraSetup2D = () /*: Object */ => {
     0.01,
     50,
   );
-  camera.position.z = 0.68;
-  camera.position.y = 0.3 * gSttngs().get("y");
+  camera.position.z = 1.5;
+  camera.position.y = gSttngs().get("y");
   camera.position.x = Math.abs(parseInt(5 / 2)) * gSttngs().get("x");
   return camera;
 };

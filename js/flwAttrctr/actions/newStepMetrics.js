@@ -27,16 +27,25 @@ export const newStepMetrics = (
   if (steps[stepIndex] === undefined) {
     return;
   }
+  const step = steps[stepIndex];
+  if (stepIndex === 0) {
+    return;
+  }
   const scnData = gState().get("scnData");
   if (scnData.stpMetrics === undefined) {
     scnData.stpMetrics = [];
   }
   const camera = scnData.camera;
-  const step = steps[stepIndex];
   const text = step.name;
   const clckGroup = gState().get("clckCbGroup");
   const fontSize = 25; // in pixels
-  const textLines = metrics.map((m) => `${m.key}: ${m.value}`);
+  const devUnitsTerm = gSttngs().get("devUnitsTerm");
+  const textLines = metrics.map((m) => {
+    if (m.key === "DvUnts") {
+      return `${devUnitsTerm}: ${m.value}`;
+    }
+    return `${m.key}: ${m.value}`;
+  });
   const textCanvas = createTextCanvas(textLines, fontSize);
   const texture = new THREE.CanvasTexture(textCanvas);
   const material = new THREE.MeshBasicMaterial({

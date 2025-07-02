@@ -1,8 +1,8 @@
 {
   "name": "flow-attractor",
   "description": "Visualising flow of work.",
-  "version": "0.27.5.16",
-  "author": "Kynan Stewart",
+  "version": "0.27.6.6",
+  "author": "Kynan Stewart Hughes",
   "bugs": {
     "url": "https://github.com/k7n4n5t3w4rt/workflow/issues"
   },

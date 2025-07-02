@@ -22,7 +22,7 @@ import getFlwMpSteps from "../actions/getFlwMpSteps.js";
 export const updateStepMetrics = (stpMetrics /*: StpMetrics */) /*: void */ => {
   // Get the step info
   const steps = gSttngs().get("steps") || [];
-  if (steps[stpMetrics.dStpIndex] === undefined) {
+  if (steps[stpMetrics.dStpIndex] === undefined || stpMetrics.dStpIndex === 0) {
     return;
   }
   const step = steps[stpMetrics.dStpIndex];
@@ -62,8 +62,9 @@ export const updateStepMetrics = (stpMetrics /*: StpMetrics */) /*: void */ => {
     // { key: "AvAg", value: newAvAge.toString() },
   ];
   // Only add the DevUnits if it's not zero
+  const devUnitsTerm = gSttngs().get("devUnitsTerm");
   if (newDevUnits !== 0) {
-    metrics.push({ key: "DvUnts", value: newDevUnits });
+    metrics.push({ key: devUnitsTerm, value: newDevUnits });
   }
   const fontSize = 25; // in pixels
   const textLines = metrics.map((m) => `${m.key}: ${m.value}`);

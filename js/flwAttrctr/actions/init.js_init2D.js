@@ -48,14 +48,14 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
 
   const controller = new OrbitControls(camera, renderer.domElement);
   // Set the orbit target a bit in front of the camera
-  controller.target.set(0, camera.position.y, 0.15);
+  controller.target.set(0, camera.position.y + 0.8, 0.15);
   controller.update();
 
   // Setup keyboard navigation for arrow key controls
   const keyboardNav = createKeyboardNavigation({
     moveSpeed: 0.01, // Moderate movement speed
     camera: camera,
-    controller: controller
+    controller: controller,
   });
 
   // --------------------------------------------------------------
@@ -70,7 +70,7 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   function render() {
     // Update keyboard navigation (camera movement from arrow keys)
     keyboardNav.update();
-    
+
     // Update labels to face camera (similar to main render logic)
     const scnData = gState().get("scnData");
     if (scnData && scnData.stpMetrics !== undefined) {
@@ -78,15 +78,15 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
         metrics.lookAt(scnData.camera.position);
       }
     }
-    
+
     // Update stats if available
     if (scnData && scnData.stats !== undefined) {
       scnData.stats.update();
     }
-    
+
     // Render the scene
     renderer.render(scene, camera);
-    
+
     // Render CSS2D labels if any exist
     if (labelRenderer) {
       labelRenderer.render(scene, camera);

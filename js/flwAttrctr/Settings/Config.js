@@ -36,6 +36,7 @@ import ScaleCm from "./ScaleCm.js";
 import RangeMax from "./RangeMax.js";
 import RangeIncreaseRate from "./RangeIncreaseRate.js";
 import RangeMidpoint from "./RangeMidpoint.js";
+import DevUnitsTerm from "./DevUnitsTerm.js";
 import Sid from "./Sid.js";
 import Steps from "./Steps.js";
 import NumberOfSteps from "./NumberOfSteps.js";
@@ -165,6 +166,10 @@ export default (props /*: Props */) /*: string */ => {
         <${RangeMidpoint}
           rangeMidpoint=${state.rangeMidpoint}
           changeSetting=${changeSetting("rangeMidpoint", dispatch)}
+        />
+        <${DevUnitsTerm}
+          devUnitsTerm=${state.devUnitsTerm}
+          changeSetting=${changeSetting("devUnitsTerm", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- GLOBAL FLOW -->
