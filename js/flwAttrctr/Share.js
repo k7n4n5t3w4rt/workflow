@@ -30,7 +30,7 @@ setSeed(seedString("flwshare"));
 const [styles] = createStyles({
   share: {
     position: "absolute",
-    zIndex: "9000",
+    zIndex: "50000",
     boxSizing: "border-box",
     top: "1.2rem",
     right: "1.2rem",

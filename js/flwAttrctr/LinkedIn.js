@@ -28,7 +28,7 @@ setSeed(seedString("flwshare"));
 const [styles] = createStyles({
   linkedIn: {
     position: "absolute",
-    zIndex: "10000",
+    zIndex: "50000",
     boxSizing: "border-box",
     bottom: "0.5rem",
     left: "0.5rem",

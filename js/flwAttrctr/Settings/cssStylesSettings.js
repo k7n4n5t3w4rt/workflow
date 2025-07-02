@@ -44,7 +44,7 @@ export default () /*: Object */ => {
     },
     settings: {
       position: "absolute",
-      zIndex: "22000",
+      zIndex: "50000",
       boxSizing: "border-box",
       bottom: "0.5rem",
       right: "5rem",

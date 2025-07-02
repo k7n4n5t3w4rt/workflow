@@ -30,7 +30,7 @@ setSeed(seedString("flwcontrols"));
 const [styles] = createStyles({
   controls: {
     position: "absolute",
-    zIndex: "10500",
+    zIndex: "50000",
     boxSizing: "border-box",
     bottom: "0.5rem",
     left: "0.5rem",

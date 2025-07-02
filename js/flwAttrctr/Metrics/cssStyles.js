@@ -14,7 +14,7 @@ export const cssStyles = () /*: Object */ => {
   const [styles] = createStyles({
     metricsContainer: {
       position: "absolute",
-      zIndex: "10500",
+      zIndex: "10000",
       boxSizing: "border-box",
       width: "100%",
       padding: "0.5rem",

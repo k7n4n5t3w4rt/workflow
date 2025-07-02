@@ -37,7 +37,7 @@ export default () /*: Object */ => {
     },
     params: {
       position: "absolute",
-      zIndex: "32000",
+      zIndex: "50000",
       boxSizing: "border-box",
       bottom: ".5rem",
       right: ".5rem",
