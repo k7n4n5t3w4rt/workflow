@@ -25,11 +25,15 @@ export const globalParamsSettings = async () /*: Promise<void> */ => {
   );
   const paretoPointParam = await gSttngs().setIfNotCached(
     "paretoPointParam",
-    false,
+    true,
   );
   const arrivalRateParam = await gSttngs().setIfNotCached(
     "arrivalRateParam",
     false,
+  );
+  const flwTimeMinParam = await gSttngs().setIfNotCached(
+    "flwTimeMinParam",
+    true,
   );
   const timeBoxParam = await gSttngs().setIfNotCached("timeBoxParam", false);
   const expdtQueueLengthParam = await gSttngs().setIfNotCached(
@@ -42,7 +46,7 @@ export const globalParamsSettings = async () /*: Promise<void> */ => {
   );
   const flwItmSizeLimitParam = await gSttngs().setIfNotCached(
     "flwItmSizeLimitParam",
-    false,
+    true,
   );
   const backlogDeathParam = await gSttngs().setIfNotCached(
     "backlogDeathParam",

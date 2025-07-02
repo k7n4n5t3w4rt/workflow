@@ -108,23 +108,28 @@ const setScaleAndValue = (flwItem /*: FlwItem */) /*: FlwItem */ => {
     // NOTE: In this case, daysMax will also be flwTimeAtStart
     daysMin = flwTimeAtStart;
   }
+  // The total days for a flow item is a random number between the min and max
   flwItem.dDysTotal = rndmBetween(daysMin, daysMax);
   const daysTotal = flwItem.dDysTotal;
-  // This will be the scale and value if the flwItmSizeLimit is not set
+  // The scale of the cube is proportional to the total days
   let scale = daysTotal / daysMax;
+  // The value of the flow item is also proportional to the total days
   flwItem.dValue = scale;
-  // If the flwItmSizeLimit is set, use it to reduce the scale
-  // and increase the relative value
+  // If the flwItmSizeLimit is set, it means we are using the Pareto principle
+  // to get a disproportionate amount of value for the size of the flow item.
   if (
     gSttngs().get("flwItmSizeLimit") >= 0.2 &&
     gSttngs().get("flwItmSizeLimit") < 1 &&
     scale >= gSttngs().get("flwItmSizeLimit")
   ) {
+    // The value is calculated based on the original scale, before it is reduced
     flwItem.dValue = calculateValueForScale(
       scale,
       gSttngs().get("flwItmSizeLimit"),
     );
+    // The total days is reduced to the size limit
     flwItem.dDysTotal = gSttngs().get("flwItmSizeLimit") * daysMax;
+    // The scale is also reduced to the size limit
     scale = gSttngs().get("flwItmSizeLimit");
   }
   // Set the scale and store the scale value

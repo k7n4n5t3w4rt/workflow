@@ -23,7 +23,7 @@ const share = async () /*: Promise<void> */ => {
     return step;
   });
   const gSttngsString = JSON.stringify(shareSettings);
-  const sid = gSttngs().sid;
+  const sid = gSttngs().get("sid");
   const protocol = window.location.protocol; // e.g., "http:"
   const hostname = window.location.hostname; // e.g., "www.example.com"
   const port = window.location.port; // e.g., "8080"
