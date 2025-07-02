@@ -48,7 +48,7 @@ export const newStepMetrics = (
   const aspect = texture.image.width / texture.image.height;
   const planeGeometry = new THREE.PlaneGeometry(aspect, 1);
   const textMesh = new THREE.Mesh(planeGeometry, material);
-  textMesh.scale.set(0.2, 0.2, 0.2);
+  textMesh.scale.set(0.16, 0.16, 0.16);
   scnData.stpMetrics.push(textMesh);
   setDProps(textMesh, metrics, stepIndex);
   setPosition(textMesh, stepIndex);

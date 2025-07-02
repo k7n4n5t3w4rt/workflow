@@ -49,8 +49,8 @@ export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   aspect = Math.max(0.1, Math.min(10, aspect));
 
   const planeGeometry = new THREE.PlaneGeometry(
-    textCanvas.width / 300,
-    textCanvas.height / 300,
+    textCanvas.width / 375,
+    textCanvas.height / 375,
   );
   const textMesh = new THREE.Mesh(planeGeometry, material);
   scnData.stepLabels.push(textMesh);

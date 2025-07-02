@@ -90,8 +90,8 @@ export const updateStepMetrics = (stpMetrics /*: StpMetrics */) /*: void */ => {
     // If stpMetrics doesn't have a material (maybe it's the first run), then create and add it
 
     const geometry = new THREE.PlaneGeometry(
-      textCanvas.width / 100, // Assuming you want to scale it down
-      textCanvas.height / 100,
+      textCanvas.width / 125, // Assuming you want to scale it down
+      textCanvas.height / 125,
     );
 
     stpMetrics.geometry = geometry;
