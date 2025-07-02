@@ -2,10 +2,7 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useEffect,
-  useState,
-} from "../../web_modules/preact/hooks.js";
+import { useEffect, useState } from "../../web_modules/preact/hooks.js";
 import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -42,7 +39,7 @@ rawStyles({});
 type Props = {
 }
 */
-export const Home = (props /*: Props */) => {
+export const Home = (props /*: Props */) /*: string */ => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (gState().get("sceneInitialized")) {
@@ -57,10 +54,12 @@ export const Home = (props /*: Props */) => {
   }, []);
 
   return html`
-    <div id="home-icon" className="${styles.home}" onClick=${() => window.location.reload()}>
-      <span className="material-icons ${styles.homeIcon}">
-        home
-      </span>
+    <div
+      id="home-icon"
+      className="${styles.home}"
+      onClick=${() => window.location.reload()}
+    >
+      <span className="material-icons ${styles.homeIcon}"> home </span>
     </div>
   `;
 };

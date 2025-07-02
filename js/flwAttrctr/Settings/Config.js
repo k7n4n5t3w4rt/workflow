@@ -37,6 +37,7 @@ import RangeMax from "./RangeMax.js";
 import RangeIncreaseRate from "./RangeIncreaseRate.js";
 import RangeMidpoint from "./RangeMidpoint.js";
 import DevUnitsTerm from "./DevUnitsTerm.js";
+import DisplayNameInput from "./DisplayNameInput.js";
 import Sid from "./Sid.js";
 import Steps from "./Steps.js";
 import NumberOfSteps from "./NumberOfSteps.js";
@@ -170,6 +171,10 @@ export default (props /*: Props */) /*: string */ => {
         <${DevUnitsTerm}
           devUnitsTerm=${state.devUnitsTerm}
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
+        />
+        <${DisplayNameInput}
+          displayName=${state.displayName}
+          changeSetting=${changeSetting("displayName", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- GLOBAL FLOW -->

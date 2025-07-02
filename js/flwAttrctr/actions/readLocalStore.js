@@ -22,11 +22,8 @@ export const readLocalStore = (
     const lSValueString /*: string */ = lSValueTimestamp.split("___")[0];
     const lSTimestampString /*: string */ = lSValueTimestamp.split("___")[1];
     if (lSValueString !== undefined && lSTimestampString !== undefined) {
-      // Strings don't need to be parsed - and some will throw an error
-      if (isParsable(lSValueString) && isParsable(lSTimestampString)) {
-        lSValue = JSON.parse(lSValueString);
-        lSTimestamp = parseInt(lSTimestampString, 10);
-      }
+      lSValue = JSON.parse(lSValueString);
+      lSTimestamp = parseInt(lSTimestampString, 10);
     }
   }
   return { lSTimestamp, lSValue };

@@ -91,6 +91,7 @@ export default async () /*: Promise<void> */ => {
   const death = await gSttngs().setIfNotCached("death", 0);
   const backlogDeath = await gSttngs().setIfNotCached("backlogDeath", 0);
   gSttngs().setIfNotCached("devUnitsTerm", "Devs");
+  gSttngs().setIfNotCached("displayName", "FlowAttractor");
   return;
 };
 //------------------------------------------------------------------

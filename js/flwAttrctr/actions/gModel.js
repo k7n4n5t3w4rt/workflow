@@ -107,11 +107,7 @@ function gModel() /*: void */ {
     // Because localStorage and easyStoryage can only store strings,
     // we need to stringify. But we don't want to stringify strings.
     const valueValue = value;
-    if (typeof value !== "string") {
-      value = JSON.stringify(value);
-    }
-    // Add the timestamp so we can tell later which is newer
-    const valueWithTimestamp = value + "___" + Date.now().toString();
+    const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
     try {
       // Set localStorage
       localStorage.setItem(key, valueWithTimestamp);
@@ -130,6 +126,10 @@ function gModel() /*: void */ {
     key /*: string */,
     value /*: any  */,
   ) /*: Promise<any> */ => {
+    console.log("gModel.setIfNotCached: " + key);
+    if (key === "displayName") {
+      console.log("gModel.setIfNotCached: displayName");
+    }
     // Ignore gState() - in case this function is called from `globalState()`
     if (this.sid === "workflowState") {
       return value;
