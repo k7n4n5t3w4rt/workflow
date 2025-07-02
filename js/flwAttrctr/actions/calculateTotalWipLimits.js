@@ -11,7 +11,7 @@ const calculateTotalWipLimits = () /*: number */ => {
   if (steps !== undefined) {
     return steps.reduce((_ /*: number*/, step /*: Object*/) => {
       if (step.status === "touch" || step.status === "wait") {
-        return _ + step.limit;
+        return _ + step.movingLimit;
       } else {
         return _;
       }
