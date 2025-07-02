@@ -31,7 +31,7 @@ const createButton = (
     // Show the "START" button
     button.style.display = "block";
     button.textContent =
-      gSttngs().sid.split("___")[0] || gSttngs().sid || "START";
+      gSttngs().get("sid").split("___")[0] || gSttngs().get("sid") || "START";
     // Desktop behaviour
     button.onmouseenter = function () {
       button.style.opacity = "1.0";

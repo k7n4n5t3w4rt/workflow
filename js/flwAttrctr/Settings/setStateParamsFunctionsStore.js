@@ -21,7 +21,7 @@ export const setStateParamsFunctionsStore = (
   //----------------------------------------
   // Sharing
   //----------------------------------------
-  const [sid, setSid] = useState(gSttngs().sid);
+  const [sid, setSid] = useState(gSttngs().get("sid"));
   setStateFunctions["sid"] = setSid;
   lState["sid"] = sid;
   //----------------------------------------

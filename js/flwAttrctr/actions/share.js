@@ -17,11 +17,16 @@ const share = async () /*: Promise<void> */ => {
   delete shareSettings.easyStorage;
   shareSettings.fps = 1;
   shareSettings.flwItmSizeLimit = 1;
-  shareSettings.steps = shareSettings.steps.map((step) => {
-    step.movingLimit = step.limit;
-    step.movingDevUnits = step.devUnits;
-    return step;
-  });
+  if (typeof shareSettings.steps === "string") {
+    shareSettings.steps = JSON.parse(shareSettings.steps);
+  }
+  if (Array.isArray(shareSettings.steps)) {
+    shareSettings.steps = shareSettings.steps.map((step) => {
+      step.movingLimit = step.limit;
+      step.movingDevUnits = step.devUnits;
+      return step;
+    });
+  }
   const gSttngsString = JSON.stringify(shareSettings);
   const sid = gSttngs().get("sid");
   const protocol = window.location.protocol; // e.g., "http:"
