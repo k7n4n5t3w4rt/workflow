@@ -30,6 +30,7 @@ import Params from "./Settings/Params.js";
 import Sttngs from "./Settings/Settings.js";
 import Config from "./Settings/Config.js";
 import LinkedIn from "./LinkedIn.js";
+import Home from "./Home.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -150,6 +151,7 @@ export default (props /*: Props */) /*: string */ => {
       <div id="dom-overlay">
         <${Metrics} />
         <${LinkedIn} />
+        <${Home} />
         <${Share} />
         <${Controls} />
         <${Config} />

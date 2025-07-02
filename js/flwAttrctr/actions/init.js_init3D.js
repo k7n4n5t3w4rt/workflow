@@ -73,4 +73,5 @@ export const init3D = function (renderer /*: ThrRenderer */) /*: void */ {
     reticleStuff,
     controller,
   });
+  gState().set("sceneInitialized", true);
 };

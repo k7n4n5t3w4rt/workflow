@@ -111,4 +111,5 @@ export const init2D = function (renderer /*: ThrRenderer */) /*: void */ {
   });
   // Always start automatically in 2D (2D is always automode)
   start();
+  gState().set("sceneInitialized", true);
 };
