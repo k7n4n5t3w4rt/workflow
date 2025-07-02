@@ -82,6 +82,9 @@ export default async () /*: Promise<void> */ => {
   gSttngs().set("z", scale);
   gSttngs().set("step", round2Places(scale * 5));
   gSttngs().set("yOffset", round2Places(scale * 10));
+  gSttngs().setIfNotCached("sid", "FlwAttractor_v0.1.0");
+  gSttngs().setIfNotCached("devUnitsTerm", "Devs");
+  gSttngs().setIfNotCached("displayName", "FlowAttractor_v0.1.0");
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
@@ -90,8 +93,6 @@ export default async () /*: Promise<void> */ => {
   // to see if they still want the thing we're working on, and reset the priority?
   const death = await gSttngs().setIfNotCached("death", 0);
   const backlogDeath = await gSttngs().setIfNotCached("backlogDeath", 0);
-  gSttngs().setIfNotCached("devUnitsTerm", "Devs");
-  gSttngs().setIfNotCached("displayName", "FlowAttractor");
   return;
 };
 //------------------------------------------------------------------

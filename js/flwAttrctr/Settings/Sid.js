@@ -2,7 +2,9 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
+import { useContext } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -12,12 +14,13 @@ import setUpdtngCnfg from "./setUpdtngCnfg.js";
 //------------------------------------------------------------------
 /*::
 type Props = {
-	sid: number,
+  sid: string,
   styles: Object,
-  changeSid: () => void,
+  changeSetting: (e: Event) => void,
 }
 */
 export const Sid = (props /*: Props */) /*: string */ => {
+  const { sid, changeSetting } = props;
   return html`
     <div>
       <label for="sid">ID:</label>
@@ -25,10 +28,10 @@ export const Sid = (props /*: Props */) /*: string */ => {
         type="text"
         id="sid"
         name="sid"
-        onInput=${props.changeSid}
-        value="${(props.sid || 0).toString()}"
-        onFocus=${setUpdtngCnfg(true)}
-        onBlur=${setUpdtngCnfg(false)}
+        onInput=${changeSetting}
+        value="${sid}"
+        onFocus=${() => setUpdtngCnfg(true)}
+        onBlur=${() => setUpdtngCnfg(false)}
       />
     </div>
   `;

@@ -53,7 +53,6 @@ import cssStyles from "./cssStylesConfig.js";
 import getRawStyles from "./getRawStyles.js";
 // import dispatchStore from "./dispatchStore.js";
 import changeSetting from "./changeSetting.js";
-import changeSid from "./changeSid.js";
 
 /*::
 type Props = {
@@ -117,7 +116,14 @@ export default (props /*: Props */) /*: string */ => {
         <${Sid}
           sid=${state.sid}
           styles=${styles}
-          changeSid=${changeSid(dispatch)}
+          changeSetting=${changeSetting("sid", dispatch)}
+        />
+        <!-------------------------------------------------------------------->
+        <!-- DisplayName -->
+        <!-------------------------------------------------------------------->
+        <${DisplayNameInput}
+          displayName=${state.displayName}
+          changeSetting=${changeSetting("displayName", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- DISPLAY -->
@@ -168,13 +174,12 @@ export default (props /*: Props */) /*: string */ => {
           rangeMidpoint=${state.rangeMidpoint}
           changeSetting=${changeSetting("rangeMidpoint", dispatch)}
         />
+        <!-------------------------------------------------------------------->
+        <!-- DevUnitsTerm -->
+        <!-------------------------------------------------------------------->
         <${DevUnitsTerm}
           devUnitsTerm=${state.devUnitsTerm}
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
-        />
-        <${DisplayNameInput}
-          displayName=${state.displayName}
-          changeSetting=${changeSetting("displayName", dispatch)}
         />
         <!------------------------------------------------------------------>
         <!-- GLOBAL FLOW -->

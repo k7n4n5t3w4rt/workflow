@@ -126,10 +126,6 @@ function gModel() /*: void */ {
     key /*: string */,
     value /*: any  */,
   ) /*: Promise<any> */ => {
-    console.log("gModel.setIfNotCached: " + key);
-    if (key === "displayName") {
-      console.log("gModel.setIfNotCached: displayName");
-    }
     // Ignore gState() - in case this function is called from `globalState()`
     if (this.sid === "workflowState") {
       return value;
@@ -153,11 +149,9 @@ function gModel() /*: void */ {
     if (eSTimestamp > lSTimestamp) {
       this.keyValuePairs[key] = eSValue;
       // And set localStorage
-      if (typeof eSValue !== "string") {
-        value = JSON.stringify(eSValue);
-      }
+      const valueWithTimestamp = JSON.stringify(eSValue) + "___" + eSTimestamp.toString();
       try {
-        localStorage.setItem(key, value + "___" + eSTimestamp.toString());
+        localStorage.setItem(key, valueWithTimestamp);
       } catch (e) {}
       if (isParsable(value)) {
         value = JSON.parse(value);
@@ -169,11 +163,9 @@ function gModel() /*: void */ {
       this.keyValuePairs[key] = lSValue;
       value = lSValue;
       // And set localStorage
-      if (typeof value !== "string") {
-        value = JSON.stringify(value);
-      }
+      const valueWithTimestamp = JSON.stringify(value) + "___" + lSTimestamp.toString();
       if (this.keyValuePairs.easyStorage === true) {
-        easyStorage.set(this.sid, key, value + "___" + lSTimestamp.toString());
+        easyStorage.set(this.sid, key, valueWithTimestamp);
       }
       if (isParsable(value)) {
         value = JSON.parse(value);
@@ -191,15 +183,12 @@ function gModel() /*: void */ {
     // If nothing was cached, use the value provided and set both caches
     if (lSTimestamp === 0 && eSTimestamp === 0) {
       this.keyValuePairs[key] = value;
-      if (typeof value !== "string") {
-        value = JSON.stringify(value);
-      }
-      const timestamp = Date.now().toString();
+      const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
       if (this.keyValuePairs.easyStorage === true) {
-        easyStorage.set(this.sid, key, value + "___" + timestamp);
+        easyStorage.set(this.sid, key, valueWithTimestamp);
       }
       try {
-        localStorage.setItem(key, value + "___" + timestamp);
+        localStorage.setItem(key, valueWithTimestamp);
       } catch (e) {}
       if (isParsable(value)) {
         value = JSON.parse(value);
@@ -228,11 +217,9 @@ function gModel() /*: void */ {
       "autoMode",
     ));
     // No Easy storage cache, but we still set localStorage
-    if (typeof value !== "string") {
-      value = JSON.stringify(value);
-    }
+    const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
     try {
-      localStorage.setItem(key, value + "___" + Date.now().toString());
+      localStorage.setItem(key, valueWithTimestamp);
     } catch (e) {}
     if (isParsable(value)) {
       value = JSON.parse(value);
@@ -256,11 +243,9 @@ function gModel() /*: void */ {
     ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
     if (lSValue === "NOT SET 2") {
       // No Easy storage cache, but we still set localStorage
-      if (typeof value !== "string") {
-        value = JSON.stringify(value);
-      }
+      const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
       try {
-        localStorage.setItem(key, value + "___" + Date.now().toString());
+        localStorage.setItem(key, valueWithTimestamp);
       } catch (e) {}
     }
     if (isParsable(value)) {
