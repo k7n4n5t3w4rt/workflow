@@ -20,6 +20,7 @@ import {
   useReducer,
 } from "../../web_modules/preact/hooks.js";
 import { html } from "../../web_modules/htm/preact.js";
+import { route } from "../../web_modules/preact-router.js";
 //------------------------------------------------------------------
 // COMPONENTS
 //------------------------------------------------------------------
@@ -32,7 +33,6 @@ import Config from "./Settings/Config.js";
 import LinkedIn from "./LinkedIn.js";
 import Home from "./Home.js";
 import DisplayName from "./DisplayName.js";
-import { route } from "../../web_modules/preact-router.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
