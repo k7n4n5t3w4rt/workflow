@@ -56,18 +56,33 @@ export const DisplayName = (props /*: Props */) /*: string */ => {
         }
         clearInterval(sceneInitInterval);
       }
-    }, 100);
+    }, 20);
 
     return () => {
       clearInterval(sceneInitInterval);
     };
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      showDisplayNameOnLoad();
+    }, 20);
+  }, []);
   return html`
     <div id="display-name" className="${styles.displayName}">
       ${state.displayName}
     </div>
   `;
+};
+
+//------------------------------------------------------------------
+// FUNCTION: showDisplayNameIconOnLoad()
+//------------------------------------------------------------------
+export const showDisplayNameOnLoad = () /*: void */ => {
+  const displayName = document.getElementById("display-name");
+  if (displayName !== null) {
+    displayName.style.display = "block";
+  }
 };
 
 export default DisplayName;

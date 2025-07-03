@@ -29,6 +29,7 @@ const [styles] = createStyles({
   linkedIn: {
     position: "absolute",
     zIndex: "50000",
+    display: "block",
     boxSizing: "border-box",
     bottom: "0.5rem",
     left: "0.5rem",
@@ -48,6 +49,12 @@ type Props = {
 }
 */
 export const LinkedIn = (props /*: Props */) /*: string */ => {
+  useEffect(() => {
+    setTimeout(() => {
+      showLinkedInIconOnLoad();
+    }, 20);
+  }, []);
+
   return html`
     <div id="linkedin-icon" className="${styles.linkedIn}">
       <a href="https://www.linkedin.com/in/kynanhughes/" target="_blank"
@@ -57,3 +64,13 @@ export const LinkedIn = (props /*: Props */) /*: string */ => {
   `;
 };
 export default LinkedIn;
+
+//------------------------------------------------------------------
+// FUNCTION: showLinkedInIconOnLoad()
+//------------------------------------------------------------------
+export const showLinkedInIconOnLoad = () /*: void */ => {
+  const linkedinIcon = document.getElementById("linkedin-icon");
+  if (linkedinIcon !== null) {
+    linkedinIcon.style.display = "block";
+  }
+};

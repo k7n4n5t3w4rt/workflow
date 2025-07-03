@@ -2,9 +2,7 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useContext,
-} from "../../../web_modules/preact/hooks.js";
+import { useContext } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
 import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
@@ -19,7 +17,7 @@ type Props = {
 };
 */
 
-export const DevUnitsMoveToWork = (props /*: Props */) => {
+export const DevUnitsMoveToWork = (props /*: Props */) /*: string */ => {
   const { devUnitsMoveToWork, changeSetting } = props;
   const [state, dispatch] = useContext(AppContext);
   const devUnitsTerm = gSttngs().get("devUnitsTerm");

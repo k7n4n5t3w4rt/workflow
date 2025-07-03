@@ -16,11 +16,11 @@ export default (paramsToggle /*: boolean */) /*: () => void */ =>
 
     if (paramsToggle === true) {
       if (paramsContainer) paramsContainer.style.display = "block";
-      if (paramsIcon) paramsIcon.style.display = "none";
       if (paramsCloseIcon) paramsCloseIcon.style.display = "block";
-      if (configIcon) configIcon.style.display = "none";
       if (shareIcon) shareIcon.style.display = "none";
       if (controlsIcon) controlsIcon.style.display = "none";
+      if (paramsIcon) paramsIcon.style.display = "none";
+      if (configIcon) configIcon.style.display = "none";
       if (linkedinIcon) linkedinIcon.style.display = "none";
       if (homeIcon) homeIcon.style.display = "none";
       if (displayName) displayName.style.display = "none";
@@ -31,8 +31,8 @@ export default (paramsToggle /*: boolean */) /*: () => void */ =>
       if (shareIcon) shareIcon.style.display = "block";
       if (controlsIcon) controlsIcon.style.display = "block";
       if (homeIcon) homeIcon.style.display = "block";
-      // if (configIcon) configIcon.style.display = "block";
-      // if (linkedinIcon) linkedinIcon.style.display = "block";
-      // if (displayName) displayName.style.display = "block";
+      if (configIcon) configIcon.style.display = "none";
+      if (linkedinIcon) linkedinIcon.style.display = "none";
+      if (displayName) displayName.style.display = "none";
     }
   };

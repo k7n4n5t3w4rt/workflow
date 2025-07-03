@@ -25,14 +25,14 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
       if (homeIcon) homeIcon.style.display = "none";
       if (displayName) displayName.style.display = "none";
     } else {
-      if (configContainer) configContainer.style.display = "none";
       if (configIcon) configIcon.style.display = "block";
-      if (configCloseIcon) configCloseIcon.style.display = "none";
-      if (paramsIcon) paramsIcon.style.display = "block";
       if (shareIcon) shareIcon.style.display = "block";
-      if (controlsIcon) controlsIcon.style.display = "block";
-      if (homeIcon) homeIcon.style.display = "block";
-      // if (linkedinIcon) linkedinIcon.style.display = "block";
-      // if (displayName) displayName.style.display = "block";
+      if (linkedinIcon) linkedinIcon.style.display = "block";
+      if (displayName) displayName.style.display = "block";
+      if (configContainer) configContainer.style.display = "none";
+      if (configCloseIcon) configCloseIcon.style.display = "none";
+      if (paramsIcon) paramsIcon.style.display = "none";
+      if (controlsIcon) controlsIcon.style.display = "none";
+      if (homeIcon) homeIcon.style.display = "none";
     }
   };

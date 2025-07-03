@@ -72,7 +72,7 @@ export const Params = (props /*: Props */) /*: string */ => {
         }
         clearInterval(interval);
       }
-    }, 100);
+    }, 20);
     return () => clearInterval(interval);
   }, []);
   useEffect(() => {
@@ -83,7 +83,7 @@ export const Params = (props /*: Props */) /*: string */ => {
   useEffect(() => {
     setTimeout(() => {
       hideParamsIconOnLoad();
-    }, 100);
+    }, 20);
   }, []);
   // The function that toggles the params by setting the toggle
   // to whatever it isn't

@@ -59,7 +59,7 @@ export const Controls = (props /*: Props */) /*: string */ => {
   useEffect(() => {
     setTimeout(() => {
       hideControlsIconOnLoad();
-    }, 100);
+    }, 20);
   }, []);
   return html`
     <div id="controls-icon" className="${styles.controls}">

@@ -86,7 +86,7 @@ export default (props /*: Props */) /*: string */ => {
       if (configIcon) {
         configIcon.style.display = "block";
       }
-    }, 100);
+    }, 20);
   }, []);
   return html`
     <div

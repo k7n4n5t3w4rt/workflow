@@ -49,8 +49,14 @@ export const Home = (props /*: Props */) /*: string */ => {
         }
         clearInterval(interval);
       }
-    }, 100);
+    }, 20);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      hideHomeIconOnLoad();
+    }, 20);
   }, []);
 
   return html`
@@ -65,3 +71,13 @@ export const Home = (props /*: Props */) /*: string */ => {
 };
 
 export default Home;
+
+//------------------------------------------------------------------
+// FUNCTION: showHomeIconOnLoad()
+//------------------------------------------------------------------
+export const hideHomeIconOnLoad = () /*: void */ => {
+  const homeIcon = document.getElementById("home-icon");
+  if (homeIcon !== null) {
+    homeIcon.style.display = "none";
+  }
+};
