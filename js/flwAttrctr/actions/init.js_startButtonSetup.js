@@ -33,7 +33,8 @@ const startButtonSetup = async (
   if (!arSupported) {
     // Create a button for 2D experience
     const button = document.createElement("button");
-    button.innerHTML = "Start 2D Experience";
+    button.innerHTML = "START";
+    button.id = "start-button";
     button.style.cssText = `
       position: absolute;
       bottom: 24px;

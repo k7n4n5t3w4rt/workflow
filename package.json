@@ -1,7 +1,7 @@
 {
   "name": "flow-attractor",
   "description": "Visualising flow of work.",
-  "version": "0.28.2.0",
+  "version": "0.28.3.0",
   "author": "Kynan Stewart Hughes",
   "bugs": {
     "url": "https://github.com/k7n4n5t3w4rt/workflow/issues"
@@ -44,10 +44,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "goodthing:update": "rsync -a --exclude='.git' --exclude='docs' --exclude='web_modules' ../goodthing/ ./",
     "lint": "prettier --check \"src/**/*.{js,jsx}\"",
-    "start": "node server/index.js",
-    "start:dev": "node -r dotenv/config server/index.js",
-    "start:in-background": "nohup node server/index.js &",
-    "start:wait-on": "npm start & wait-on http://localhost:4000",
+    "start": "npm run browsersync",
     "test": "npm run testy && npm run cypress:run",
     "testy": "export RUN_CONTEXT='testy'; node --no-warnings server/testyrunner.js | faucet"
   },
