@@ -20,6 +20,7 @@ import Death from "./Death.js";
 import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
 import ExpdtQueueLength from "./ExpdtQueueLength.js";
 import FlwItmSizeLimit from "./FlwItmSizeLimit.js";
+import DevUnitsMoveToWork from "./DevUnitsMoveToWork.js";
 import Fps from "./Fps.js";
 import ScaleCm from "./ScaleCm.js";
 import { AppContext } from "../../AppContext.js";
@@ -244,6 +245,19 @@ export const Params = (props /*: Props */) /*: string */ => {
               changeSetting=${changeSetting("backlogDeath", dispatch)}
             />
           `}
+        `}
+        ${state.devUnitsMoveToWorkParam === true &&
+        html`
+          <!-------------------------------------------------------------------->
+          <!-- DEV UNITS MOVE TO WORK -->
+          <!-------------------------------------------------------------------->
+          <div className="${styles.inputHeading}">
+            Allow Devs to Move to the Work
+          </div>
+          <${DevUnitsMoveToWork}
+            devUnitsMoveToWork=${state.devUnitsMoveToWork}
+            changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
+          />
         `}
       </fieldset>
     </div>

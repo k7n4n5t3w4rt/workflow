@@ -21,6 +21,7 @@ import updateClickMetrics from "./click.js_updateClickMetrics.js";
 import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
 import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
 import move from "./click.js_move.js";
+import autoMoveDevUnits from "./autoMoveDevUnits.js";
 //------------------------------------------------------------------
 // FUNCTION: click()
 //------------------------------------------------------------------
@@ -49,6 +50,9 @@ export const onClickComplete = () /*: void */ => {
       const flwItem = flwItmsToMove[keys[i]];
       delete flwItmsToMove[keys[i]];
       move(flwItem);
+    }
+    if (gSttngs().get("devUnitsMoveToWork")) {
+      autoMoveDevUnits();
     }
     // NOTE: The order of these function calls is important
     addNewFlowItemsAtArrivalRate();

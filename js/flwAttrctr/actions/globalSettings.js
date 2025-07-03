@@ -85,6 +85,7 @@ export default async () /*: Promise<void> */ => {
   gSttngs().setIfNotCached("sid", "FlwAttractor_v0.1.0");
   gSttngs().setIfNotCached("devUnitsTerm", "Devs");
   gSttngs().setIfNotCached("displayName", "FlowAttractor_v0.1.0");
+  gSttngs().setIfNotCached("devUnitsMoveToWork", false);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------

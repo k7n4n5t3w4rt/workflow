@@ -38,6 +38,7 @@ import RangeIncreaseRate from "./RangeIncreaseRate.js";
 import RangeMidpoint from "./RangeMidpoint.js";
 import DevUnitsTerm from "./DevUnitsTerm.js";
 import DisplayNameInput from "./DisplayNameInput.js";
+import DevUnitsMoveToWork from "./DevUnitsMoveToWork.js";
 import Sid from "./Sid.js";
 import Steps from "./Steps.js";
 import NumberOfSteps from "./NumberOfSteps.js";
@@ -181,6 +182,20 @@ export default (props /*: Props */) /*: string */ => {
           devUnitsTerm=${state.devUnitsTerm}
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
         />
+        <${DevUnitsMoveToWork}
+          devUnitsMoveToWork=${state.devUnitsMoveToWork}
+          changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
+        />
+        <div>
+          <input
+            type="checkbox"
+            id="devUnitsMoveToWorkParam"
+            name="devUnitsMoveToWorkParam"
+            onChange=${changeSetting("devUnitsMoveToWorkParam", dispatch)}
+            checked=${state.devUnitsMoveToWorkParam === true}
+          />
+          <label for="devUnitsMoveToWorkParam">Make this an editable parameter</label>
+        </div>
         <!------------------------------------------------------------------>
         <!-- GLOBAL FLOW -->
         <!------------------------------------------------------------------>
