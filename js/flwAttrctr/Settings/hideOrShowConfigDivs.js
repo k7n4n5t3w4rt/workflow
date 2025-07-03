@@ -6,30 +6,33 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
   () /*: void */ => {
     const configContainer = document.getElementById("config-container");
     const configIcon = document.getElementById("config-icon");
-    const settingsIcon = document.getElementById("settings-icon");
+    const configCloseIcon = document.getElementById("config-close-icon");
     const paramsIcon = document.getElementById("params-icon");
     const shareIcon = document.getElementById("share-icon");
+    const controlsIcon = document.getElementById("controls-icon");
     const linkedinIcon = document.getElementById("linkedin-icon");
-    const configCloseIcon = document.getElementById("config-close-icon");
-    if (
-      configContainer !== null &&
-      configIcon !== null &&
-      settingsIcon !== null &&
-      paramsIcon !== null &&
-      shareIcon !== null &&
-      linkedinIcon !== null &&
-      configCloseIcon !== null
-    ) {
-      if (configToggle === true) {
-        configContainer.style.display = "block";
-        configIcon.style.display = "none";
-        shareIcon.style.display = "none";
-        configCloseIcon.style.display = "block";
-      } else {
-        configContainer.style.display = "none";
-        configIcon.style.display = "block";
-        shareIcon.style.display = "block";
-        configCloseIcon.style.display = "none";
-      }
+    const homeIcon = document.getElementById("home-icon");
+    const displayName = document.getElementById("display-name");
+
+    if (configToggle === true) {
+      if (configContainer) configContainer.style.display = "block";
+      if (configIcon) configIcon.style.display = "none";
+      if (configCloseIcon) configCloseIcon.style.display = "block";
+      if (paramsIcon) paramsIcon.style.display = "none";
+      if (shareIcon) shareIcon.style.display = "none";
+      if (controlsIcon) controlsIcon.style.display = "none";
+      if (linkedinIcon) linkedinIcon.style.display = "none";
+      if (homeIcon) homeIcon.style.display = "none";
+      if (displayName) displayName.style.display = "none";
+    } else {
+      if (configContainer) configContainer.style.display = "none";
+      if (configIcon) configIcon.style.display = "block";
+      if (configCloseIcon) configCloseIcon.style.display = "none";
+      if (paramsIcon) paramsIcon.style.display = "block";
+      if (shareIcon) shareIcon.style.display = "block";
+      if (controlsIcon) controlsIcon.style.display = "block";
+      if (homeIcon) homeIcon.style.display = "block";
+      // if (linkedinIcon) linkedinIcon.style.display = "block";
+      // if (displayName) displayName.style.display = "block";
     }
   };

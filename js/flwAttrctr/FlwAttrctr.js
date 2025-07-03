@@ -28,7 +28,6 @@ import Metrics from "./Metrics/Metrics.js";
 import Share from "./Share.js";
 import Controls from "./Controls.js";
 import Params from "./Settings/Params.js";
-import Sttngs from "./Settings/Settings.js";
 import Config from "./Settings/Config.js";
 import LinkedIn from "./LinkedIn.js";
 import Home from "./Home.js";
@@ -158,7 +157,6 @@ export default (props /*: Props */) /*: string */ => {
         <${Share} />
         <${Controls} />
         <${Config} />
-        <${Sttngs} />
         <${Params} />
       </div>
     </div>

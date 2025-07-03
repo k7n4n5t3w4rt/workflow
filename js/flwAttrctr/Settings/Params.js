@@ -23,6 +23,12 @@ import FlwItmSizeLimit from "./FlwItmSizeLimit.js";
 import DevUnitsMoveToWork from "./DevUnitsMoveToWork.js";
 import Fps from "./Fps.js";
 import ScaleCm from "./ScaleCm.js";
+import DevPowerFix from "./DevPowerFix.js";
+import Drag from "./Drag.js";
+import DragPoint from "./DragPoint.js";
+import ParetoPoint from "./ParetoPoint.js";
+import TimeBox from "./TimeBox.js";
+import ArrivalRate from "./ArrivalRate.js";
 import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -57,6 +63,23 @@ export const Params = (props /*: Props */) /*: string */ => {
   const [paramsToggle, setParamsToggle] = useState(false);
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (gState().get("sceneInitialized")) {
+        const paramsIcon = document.getElementById("params-icon");
+        if (paramsIcon) {
+          paramsIcon.style.display = "block";
+        }
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      hideOrShowParamsDivs(false)();
+    }, 0);
+  }, []);
   useEffect(() => {
     setTimeout(() => {
       hideParamsIconOnLoad();
@@ -258,6 +281,97 @@ export const Params = (props /*: Props */) /*: string */ => {
             devUnitsMoveToWork=${state.devUnitsMoveToWork}
             changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
           />
+        `}
+        ${state.devPowerFixParam === true &&
+        html`
+          <!-------------------------------------------------------------------->
+          <!-- DevPowerFix -->
+          <!-------------------------------------------------------------------->
+          <div className="${styles.inputHeading}">DevPower Fix</div>
+          <${DevPowerFix}
+            devPowerFix=${state.devPowerFix}
+            changeSetting=${changeSetting("devPowerFix", dispatch)}
+          />
+        `}
+        ${(state.dragParam === true || state.dragPointParam === true) &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- DRAG -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Drag Factor</div>
+          ${state.dragParam === true &&
+          html`
+            <${Drag}
+              drag=${state.drag}
+              changeSetting=${changeSetting("drag", dispatch)}
+            />
+          `}
+          ${state.dragPointParam === true &&
+          html`
+            <${DragPoint}
+              dragPoint=${state.dragPoint}
+              changeSetting=${changeSetting("dragPoint", dispatch)}
+            />
+          `}
+        `}
+        ${state.paretoPointParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- PARETO POINT -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Pereto Point</div>
+          <!-------------------------------------------------------------------->
+          <!-- ParetoPoint -->
+          <!-------------------------------------------------------------------->
+          <${ParetoPoint}
+            paretoPoint=${state.paretoPoint}
+            changeSetting=${changeSetting("paretoPoint", dispatch)}
+          />
+        `}
+        ${state.timeBoxParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- TIMEBOX -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">TimeBox</div>
+          <!-------------------------------------------------------------------->
+          <!-- timeBox -->
+          <!-------------------------------------------------------------------->
+          <${TimeBox}
+            timeBox=${state.timeBox}
+            changeSetting=${changeSetting("timeBox", dispatch)}
+          />
+        `}
+        ${state.arrivalRateParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- ARRIVAL RATE -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Arrival Rate</div>
+          <!-------------------------------------------------------------------->
+          <!-- ArrivalRate -->
+          <!-------------------------------------------------------------------->
+          <${ArrivalRate}
+            arrivalRate=${state.arrivalRate}
+            changeSetting=${changeSetting("arrivalRate", dispatch)}
+          />
+        `}
+        ${state.fpsParam === true &&
+        html`
+          <!------------------------------------------------------------------>
+          <!-- DISPLAY -->
+          <!------------------------------------------------------------------>
+          <div className="${styles.inputHeading}">Display</div>
+          <!-------------------------------------------------------------------->
+          <!-- DISPLAY: FRAMES PER SECOND -->
+          <!-------------------------------------------------------------------->
+          ${state.fpsParam === true &&
+          html`
+            <${Fps}
+              fps=${state.fps}
+              changeSetting=${changeSetting("fps", dispatch)}
+            />
+          `}
         `}
       </fieldset>
     </div>

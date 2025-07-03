@@ -80,6 +80,14 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
   // Hide or show the params divs when the toggle changes
   useEffect(hideOrShowConfigDivs(configToggle), [configToggle]);
+  useEffect(() => {
+    setTimeout(() => {
+      const configIcon = document.getElementById("config-icon");
+      if (configIcon) {
+        configIcon.style.display = "none";
+      }
+    }, 100);
+  }, []);
   return html`
     <div
       id="config-close-icon"
