@@ -64,9 +64,7 @@ export const onClickComplete = () /*: void */ => {
     // updateExpdtWip();
     updateNrmlWip();
     filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-    if (gState().get("clicks") % 5 !== 0) {
-      updateClickMetrics();
-    }
+    updateClickMetrics();
     if (gState().get("clicks") === 1) {
       updateTimeBoxMetrics();
     }
