@@ -8,27 +8,38 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import calculateDevUnits from "./calculateDevUnits.js";
+import calculateTotalWip from "./calculateTotalWip.js";
 
 export const autoMoveDevUnits = () => {
   const steps = gSttngs().get("steps");
   const flwMap = gState().get("flwMap");
   const totalDevUnits = calculateDevUnits();
-
-  // Get all "touch" steps and their WIP
-  const touchSteps = steps
-    .map((step, index) => ({
-      index,
-      wip: flwMap[index] ? flwMap[index].length : 0,
-    }))
-    .filter((step) => steps[step.index].status === "touch");
-
-  // Calculate total WIP across all "touch" steps
-  const totalWip = touchSteps.reduce((sum, step) => sum + step.wip, 0);
+  const totalWip = calculateTotalWip();
 
   // If there's no WIP, do nothing
   if (totalWip === 0) {
     return;
   }
+
+  // Get all "touch" steps and their WIP
+  const touchSteps = steps
+    .map((step, index) => {
+      let wip = 0;
+      if (flwMap[index]) {
+        wip = flwMap[index].length;
+      }
+      // if the preceding step is a wait step, add its wip to this step's wip
+      if (index > 0 && steps[index - 1].status === "wait") {
+        if (flwMap[index - 1]) {
+          wip += flwMap[index - 1].length;
+        }
+      }
+      return {
+        index,
+        wip,
+      };
+    })
+    .filter((step) => steps[step.index].status === "touch");
 
   // Allocate DevUnits proportionally
   touchSteps.forEach((step) => {
