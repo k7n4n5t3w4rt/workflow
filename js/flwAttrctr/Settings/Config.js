@@ -84,7 +84,7 @@ export default (props /*: Props */) /*: string */ => {
     setTimeout(() => {
       const configIcon = document.getElementById("config-icon");
       if (configIcon) {
-        configIcon.style.display = "none";
+        configIcon.style.display = "block";
       }
     }, 100);
   }, []);
@@ -202,7 +202,9 @@ export default (props /*: Props */) /*: string */ => {
             onChange=${changeSetting("devUnitsMoveToWorkParam", dispatch)}
             checked=${state.devUnitsMoveToWorkParam === true}
           />
-          <label for="devUnitsMoveToWorkParam">Make this an editable parameter</label>
+          <label for="devUnitsMoveToWorkParam"
+            >Make this an editable parameter</label
+          >
         </div>
         <!------------------------------------------------------------------>
         <!-- GLOBAL FLOW -->
