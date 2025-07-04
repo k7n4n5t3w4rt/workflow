@@ -1,15 +1,7 @@
 // @flow
-//------------------------------------------------------------------
-// IMPORT: HELPERS
-//------------------------------------------------------------------
-import { test, testPromise, should } from "../server/testy.js";
-//------------------------------------------------------------------
-// IMPORT: The functions we're testing
-//------------------------------------------------------------------
+import { test, should } from "../server/testy.js";
 import findRadius from "../js/flwAttrctr/calculations/findRadius.js";
-//------------------------------------------------------------------
-// TEST: findRadius()
-//------------------------------------------------------------------
+
 test("------- findRadius.js -------", () /*: void */ => {
   should(1).be.exactly(1);
 });
