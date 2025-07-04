@@ -30,8 +30,7 @@ const createButton = (
   function showStartAR(/*device*/) {
     // Show the "START" button
     button.style.display = "block";
-    button.textContent =
-      gSttngs().get("sid").split("___")[0] || gSttngs().get("sid") || "START";
+    button.textContent = gSttngs().get("displayName") || "START";
     // Desktop behaviour
     button.onmouseenter = function () {
       button.style.opacity = "1.0";

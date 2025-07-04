@@ -6,7 +6,7 @@ context('UI Visibility', () => {
   })
 
   it('should show the correct elements on page load', () => {
-    cy.get('#display-name').should('be.visible')
+    cy.get('#start-button').should('be.visible')
     cy.get('#share-icon').should('be.visible')
     cy.get('#linkedin-icon').should('be.visible')
     cy.get('#config-icon').should('be.visible')
@@ -26,7 +26,7 @@ context('UI Visibility', () => {
 
     cy.get('#linkedin-icon').should('not.be.visible')
     cy.get('#config-icon').should('not.be.visible')
-    cy.get('#display-name').should('not.be.visible')
+    cy.get('#start-button').should('not.be.visible')
   })
 
   it('should show the correct elements when opening and closing the params overlay', () => {
@@ -55,7 +55,7 @@ context('UI Visibility', () => {
     cy.get('#start-button').click()
     cy.get('#home-icon').click()
 
-    cy.get('#display-name').should('be.visible')
+    cy.get('#start-button').should('be.visible')
     cy.get('#share-icon').should('be.visible')
     cy.get('#linkedin-icon').should('be.visible')
     cy.get('#config-icon').should('be.visible')

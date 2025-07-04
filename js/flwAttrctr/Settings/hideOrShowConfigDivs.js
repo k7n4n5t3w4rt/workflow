@@ -2,6 +2,8 @@
 //------------------------------------------------------------------
 // FUNCTION: hideOrShowConfigDiv()
 //------------------------------------------------------------------
+import updateStartButtonText from "../actions/updateStartButtonText.js";
+
 export default (configToggle /*: boolean */) /*: () => void */ =>
   () /*: void */ => {
     const configContainer = document.getElementById("config-container");
@@ -34,5 +36,7 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
       if (paramsIcon) paramsIcon.style.display = "none";
       if (controlsIcon) controlsIcon.style.display = "none";
       if (homeIcon) homeIcon.style.display = "none";
+      // Update the start button text
+      updateStartButtonText();
     }
   };

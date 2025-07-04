@@ -1,6 +1,10 @@
 // @flow
 // Refer to copilot.md for TDD rules.
 //------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
+import gSttngs from "./gSttngs.js";
+//------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import ARButton from "./ARButton.js";
@@ -33,7 +37,7 @@ const startButtonSetup = async (
   if (!arSupported) {
     // Create a button for 2D experience
     const button = document.createElement("button");
-    button.innerHTML = "START";
+    button.innerHTML = gSttngs().get("displayName") || "START";
     button.id = "start-button";
     button.style.cssText = `
       position: absolute;

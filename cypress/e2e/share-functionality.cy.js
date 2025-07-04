@@ -37,7 +37,7 @@ context('Share Functionality', () => {
         cy.visit(shareUrl)
 
         // Check that the DisplayName and Sid value match
-        cy.get('#display-name').should('contain', expectedDisplayName)
+        cy.get('#start-button').should('contain', expectedDisplayName)
         cy.get('#config-icon').click()
         cy.get('#sid').should('have.value', expectedSid)
     })

@@ -31,7 +31,6 @@ import Params from "./Settings/Params.js";
 import Config from "./Settings/Config.js";
 import LinkedIn from "./LinkedIn.js";
 import Home from "./Home.js";
-import DisplayName from "./DisplayName.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -45,6 +44,7 @@ import {
 } from "../../web_modules/simplestyle-js.js";
 import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
 import setUpFlwMap from "./actions/setUpFlwMap.js";
+import updateStartButtonText from "./actions/updateStartButtonText.js";
 //------------------------------------------------------------------
 // FUNCTION: FlwAttrctr()
 //------------------------------------------------------------------
@@ -153,7 +153,6 @@ export default (props /*: Props */) /*: string */ => {
         <${Metrics} />
         <${LinkedIn} />
         <${Home} />
-        <${DisplayName} />
         <${Share} />
         <${Controls} />
         <${Config} />
@@ -168,6 +167,7 @@ export default (props /*: Props */) /*: string */ => {
 const handleChange = (event /*: SyntheticEvent<HTMLSelectElement> */) => {
   const selectedValue = event.currentTarget.value;
   route(selectedValue);
+  setTimeout(updateStartButtonText, 100);
 };
 
 const EXAMPLE_0 =
@@ -216,6 +216,7 @@ const loadSharedSettings =
         });
         // Reinitalize the simulation
         setUpFlwMap();
+        updateStartButtonText();
       }
     } else {
       setTimeout(loadSharedSettings(sid, share), 1000);
