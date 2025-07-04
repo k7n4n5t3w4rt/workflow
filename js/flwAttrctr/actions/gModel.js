@@ -97,6 +97,7 @@ function gModel() /*: void */ {
   // set()
   //------------------------------------------------------------------------------
   this.set = (key /*: string */, value /*: any  */) /*: any */ => {
+    console.log(`Setting key: ${key}, value: ${JSON.stringify(value)}`);
     // Set the gSttngs()/gState() object
     this.keyValuePairs[key] = value;
     // Set localStorage and easyStorage cache

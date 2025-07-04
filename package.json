@@ -1,7 +1,7 @@
 {
   "name": "flow-attractor",
   "description": "Visualising flow of work.",
-  "version": "0.28.3.0",
+  "version": "0.28.4.0",
   "author": "Kynan Stewart Hughes",
   "bugs": {
     "url": "https://github.com/k7n4n5t3w4rt/workflow/issues"
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.27.7",
-    "cypress": "^4.11.0",
+    "cypress": "^14.5.1",
     "esinstall": "^1.1.7",
     "faucet": "^0.0.4",
     "fixpack": "^3.0.6",
