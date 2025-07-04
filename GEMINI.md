@@ -157,3 +157,4 @@ When making changes to the codebase, please adhere to the following guidelines:
       return a + b;
     }
     ```
+- When I say "tag and push", I mean please tag with the latest version number in the format "v" + the version, e.g. "v0.28.4.0", then "git push".

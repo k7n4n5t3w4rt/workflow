@@ -7,6 +7,9 @@ let counter /*: number */ = 0;
 let testyExecs /*: Array<() => Promise<Array<string>>> */ = [];
 
 const execFactory = async (e /*: Error */, testies /*: Array<string> */) => {
+  // Sort the test files to ensure a consistent execution order.
+  testies.sort();
+
   testyExecs = [
     ...testyExecs,
     ...(await testies.reduce(execFactoryReducerFunction, Promise.resolve([]))),
@@ -16,7 +19,7 @@ const execFactory = async (e /*: Error */, testies /*: Array<string> */) => {
     Promise.resolve([]),
   );
   // Log this out for the faucet reporter
-  console.log(`1..${faucetMessages.length}`);
+  console.log(`1..${counter}`);
   faucetMessages
     .sort((a /*: string */, b /*: string */) /*: number */ => {
       // faucet needs the messages to be sorted by test number
