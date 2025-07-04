@@ -10,5 +10,5 @@ test("------- calculateStandardDeviation.js -------", () => {
 test("should return the correct standard deviation", () => {
   const numbers = [1, 2, 3, 4, 5];
   const result = calculateStandardDeviation(numbers);
-  result.should.be.approximately(1.414, 0.001);
+  should(result).be.approximately(1.414, 0.001);
 });

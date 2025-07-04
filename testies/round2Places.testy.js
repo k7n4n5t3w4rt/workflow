@@ -8,9 +8,9 @@ test("------- round2Places.js -------", () => {
 });
 
 test("should round a number to 2 decimal places", () => {
-  round2Places(1.2345).should.equal(1.23);
+  should(round2Places(1.2345)).equal(1.23);
 });
 
 test("should round a number up to 2 decimal places", () => {
-  round2Places(1.2355).should.equal(1.24);
+  should(round2Places(1.2355)).equal(1.24);
 });

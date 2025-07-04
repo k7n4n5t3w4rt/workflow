@@ -44,20 +44,16 @@ export const Home = (props /*: Props */) /*: string */ => {
     const interval = setInterval(() => {
       if (gState().get("sceneInitialized")) {
         const homeIcon = document.getElementById("home-icon");
-        if (homeIcon) {
+        if (homeIcon && gState().get("sceneInitialized") === true) {
           homeIcon.style.display = "block";
+        } else if (homeIcon && gState().get("sceneInitialized") === false) {
+          homeIcon.style.display = "none";
         }
         clearInterval(interval);
       }
     }, 20);
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      hideHomeIconOnLoad();
-    }, 20);
-  }, []);
+  }, [gState().get("sceneInitialized")]);
 
   return html`
     <div
@@ -71,13 +67,3 @@ export const Home = (props /*: Props */) /*: string */ => {
 };
 
 export default Home;
-
-//------------------------------------------------------------------
-// FUNCTION: showHomeIconOnLoad()
-//------------------------------------------------------------------
-export const hideHomeIconOnLoad = () /*: void */ => {
-  const homeIcon = document.getElementById("home-icon");
-  if (homeIcon !== null) {
-    homeIcon.style.display = "none";
-  }
-};

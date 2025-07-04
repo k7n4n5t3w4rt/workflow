@@ -26,5 +26,5 @@ test("should return the total wip", () => {
       "4": [{}, {}],
       "5": [],
     });
-    calculateTotalWip().should.equal(8);
+    should(calculateTotalWip()).equal(8);
 });
