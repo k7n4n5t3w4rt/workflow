@@ -38,19 +38,20 @@ const startButtonSetup = async (
     button.style.cssText = `
       position: absolute;
       bottom: 24px;
-      padding: 12px 24px;
-      border: 1px solid #fff;
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.1);
+      padding: 20px 40px;
+      border: none;
+      border-radius: 8px;
+      background: #4CAF50;
       color: #fff;
-      font: normal 13px sans-serif;
+      font: bold 20px sans-serif;
       text-align: center;
-      opacity: 0.5;
+      opacity: 1;
       outline: none;
       z-index: 999;
       cursor: pointer;
       left: 50%;
       transform: translateX(-50%);
+      outline: 1px solid white;
     `;
     button.addEventListener("click", () => {
       if (typeof on2DStart === "function") {
