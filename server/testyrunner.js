@@ -10,16 +10,17 @@ const execFactory = async (e /*: Error */, testies /*: Array<string> */) => {
   // Sort the test files to ensure a consistent execution order.
   testies.sort();
 
-  testyExecs = [
-    ...testyExecs,
-    ...(await testies.reduce(execFactoryReducerFunction, Promise.resolve([]))),
-  ];
-  const faucetMessages /*: Array<string>*/ = await testyExecs.reduce(
-    execReducerFunction,
-    Promise.resolve([]),
-  );
+  let faucetMessages = [];
+  for (const testy of testies) {
+    const execPromise = new Promise((resolve) => {
+      exec(`node ${testy}`, processExecMessages(resolve));
+    });
+    const messages = await execPromise;
+    faucetMessages = [...faucetMessages, ...messages];
+  }
+
   // Log this out for the faucet reporter
-  console.log(`1..${counter}`);
+  console.log(`1..${faucetMessages.length}`);
   faucetMessages
     .sort((a /*: string */, b /*: string */) /*: number */ => {
       // faucet needs the messages to be sorted by test number
