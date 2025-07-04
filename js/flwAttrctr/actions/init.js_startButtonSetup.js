@@ -8,7 +8,7 @@ import gSttngs from "./gSttngs.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import ARButton from "./ARButton.js";
-import hideLandingPageElements from "./hideLandingPageElements.js";
+import hideLandingPageElementsShowSceneElements from "./hideLandingPageElementsShowSceneElements.js";
 
 //------------------------------------------------------------------
 // startButtonSetup()
@@ -59,7 +59,7 @@ const startButtonSetup = async (
     `;
     button.addEventListener("click", () => {
       if (typeof on2DStart === "function") {
-        hideLandingPageElements();
+        hideLandingPageElementsShowSceneElements();
         on2DStart(renderer);
       } else {
         // Show 2D message fallback

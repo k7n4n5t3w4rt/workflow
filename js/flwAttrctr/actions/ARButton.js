@@ -13,7 +13,7 @@ import * as THREE from "../../../web_modules/three.js";
 //------------------------------------------------------------------
 import start from "./start.js";
 import reset from "./reset.js";
-import hideLandingPageElements from "./hideLandingPageElements.js";
+import hideLandingPageElementsShowSceneElements from "./hideLandingPageElementsShowSceneElements.js";
 
 const createButton = (
   renderer /*: function */,
@@ -42,7 +42,7 @@ const createButton = (
     button.onclick = function () {
       if (currentSession === null) {
         if ("xr" in navigator) {
-          hideLandingPageElements();
+          hideLandingPageElementsShowSceneElements();
           // $FlowFixMe
           navigator.xr
             .requestSession("immersive-ar", sessionInit)

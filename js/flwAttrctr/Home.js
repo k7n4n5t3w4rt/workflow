@@ -2,12 +2,19 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { useEffect, useState } from "../../web_modules/preact/hooks.js";
+//------------------------------------------------------------------
+// PREACT
+//------------------------------------------------------------------
+import {
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "../../../web_modules/preact/hooks.js";
 import { html } from "../../web_modules/htm/preact.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import gState from "./actions/gState.js";
 import seedString from "../simple_css_seed.js";
 import {
   rawStyles,
@@ -41,20 +48,10 @@ type Props = {
 */
 export const Home = (props /*: Props */) /*: string */ => {
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (gState().get("sceneInitialized")) {
-        const homeIcon = document.getElementById("home-icon");
-        if (homeIcon && gState().get("sceneInitialized") === true) {
-          homeIcon.style.display = "block";
-        } else if (homeIcon && gState().get("sceneInitialized") === false) {
-          homeIcon.style.display = "none";
-        }
-        clearInterval(interval);
-      }
+    setTimeout(() => {
+      hideHomeIconOnLoad();
     }, 20);
-    return () => clearInterval(interval);
-  }, [gState().get("sceneInitialized")]);
-
+  }, []);
   return html`
     <div
       id="home-icon"
@@ -64,6 +61,16 @@ export const Home = (props /*: Props */) /*: string */ => {
       <span className="material-icons ${styles.homeIcon}"> home </span>
     </div>
   `;
+};
+
+//------------------------------------------------------------------
+// FUNCTION: hideHomeIconOnLoad()
+//------------------------------------------------------------------
+export const hideHomeIconOnLoad = () /*: void */ => {
+  const homeIcon = document.getElementById("home-icon");
+  if (homeIcon !== null) {
+    homeIcon.style.display = "none";
+  }
 };
 
 export default Home;

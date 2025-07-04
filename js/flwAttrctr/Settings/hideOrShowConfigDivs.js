@@ -24,7 +24,7 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
       if (shareIcon) shareIcon.style.display = "none";
       if (controlsIcon) controlsIcon.style.display = "none";
       if (linkedinIcon) linkedinIcon.style.display = "none";
-      if (homeIcon) homeIcon.style.display = "none";
+      // if (homeIcon) homeIcon.style.display = "none";
       if (displayName) displayName.style.display = "none";
     } else {
       if (configIcon) configIcon.style.display = "block";
@@ -35,7 +35,7 @@ export default (configToggle /*: boolean */) /*: () => void */ =>
       if (configCloseIcon) configCloseIcon.style.display = "none";
       if (paramsIcon) paramsIcon.style.display = "none";
       if (controlsIcon) controlsIcon.style.display = "none";
-      if (homeIcon) homeIcon.style.display = "none";
+      // if (homeIcon) homeIcon.style.display = "none";
       // Update the start button text
       updateStartButtonText();
     }

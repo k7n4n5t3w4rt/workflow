@@ -12,12 +12,20 @@ import setUpFlwMap from "./setUpFlwMap.js";
 // FUNCTION: globalState()
 //------------------------------------------------------------------
 export const globalState = () => {
+  try {
+    // Ensure sceneInitialized is not persisted across page loads
+    localStorage.removeItem("sceneInitialized");
+  } catch (e) {
+    // ignore potential security errors in sandboxed environments
+  }
   gState().setSidButNotInLocalStore("workflowState");
   //------------------------------------------------------------------
   // Controls:
   //------------------------------------------------------------------
   gState().set("started", false);
   gState().set("paused", false);
+  gState().set("sceneInitialized", false);
+  gState().set("sceneInitialized", false);
   //------------------------------------------------------------------
   // Empty objects and sensible defaults
   //------------------------------------------------------------------

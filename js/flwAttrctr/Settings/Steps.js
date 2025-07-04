@@ -37,7 +37,6 @@ import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
 import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
-// import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
 import cssStyles from "./cssStylesSettings.js";
 import getRawStyles from "./getRawStyles.js";
 import setStateFunctionsStore from "./setStateFunctionsStore.js";
@@ -68,18 +67,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
 
   // A toggle to show or hide the settings
   const [state, dispatch] = useContext(AppContext);
-  const [paramsToggle, setParamsToggle] = useState(false);
 
-  // Hide or show the settings divs when the toggle changes
-  // useEffect(hideOrShowParamsDivs(paramsToggle), [paramsToggle]);
-  // The function that toggles the settings by setting the toggle
-  // to whatever it isn't
-  const toggleParams = () => {
-    setParamsToggle(!paramsToggle);
-  };
-
-  // <div id="params-container" className="${styles.paramsContainer}">
-  //   <fieldset>
   return html`
     <!------------------------------------------------------------------>
     <!-- Steps -->
