@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The percentage of dev units that will focus on expedited items.</p>
       <label for="expdtDvUnitsFactor"
         >% of dev units focused on expedited items:</label
       >

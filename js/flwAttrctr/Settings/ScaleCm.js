@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The scale of the work items and the environment.</p>
       <label for="scaleCm">Scale (cm):</label>
       <output id="scaleCmOutput" name="scaleCmOutput" for="scaleCm"
         >${(props.scaleCm || 0).toString()}</output

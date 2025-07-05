@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The number of steps in your workflow.</p>
       <label for="numberOfSteps">No. of Steps:</label>
       <output
         id="numberOfStepsOutput"

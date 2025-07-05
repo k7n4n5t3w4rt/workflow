@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The number of days in a timebox (e.g., 10 for a 2-week sprint).</p>
       <label for="timeBox">TimeBox:</label>
       <output id="timeBoxOutput" name="timeBoxOutput" for="timeBox"
         >${(props.timeBox || 0).toString()}</output

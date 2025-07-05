@@ -24,6 +24,7 @@ export const DevUnitsMoveToWork = (props /*: Props */) /*: string */ => {
 
   return html`
     <div>
+      <p>If checked, dev units will move to the step where the work is, rather than being fixed to a specific step.</p>
       <input
         type="checkbox"
         id="devUnitsMoveToWork"

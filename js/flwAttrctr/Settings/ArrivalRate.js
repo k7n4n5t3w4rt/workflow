@@ -32,6 +32,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The number of new work items that arrive per day.</p>
       <label for="arrivalRate">Arrival Rate:</label>
       <output id="arrivalRateOutput" name="arrivalRateOutput" for="arrivalRate"
         >${(props.arrivalRate || 0).toString()}</output

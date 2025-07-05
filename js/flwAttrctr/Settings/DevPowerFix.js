@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>A fixed value for the development power, which overrides the calculated value.</p>
       <label for="devPowerFix">Dev Power Fix:</label>
       <output id="devPowerFixOutput" name="devPowerFixOutput" for="devPowerFix"
         >${(props.devPowerFix || 1).toString()}</output

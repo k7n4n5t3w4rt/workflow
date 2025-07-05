@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The maximum size of a work item, as a percentage of the default size. This can be used to model the effect of large work items on the system.</p>
       <label for="flwItmSizeLimit">Size Limit:</label>
       <output
         id="flwItmSizeLimitOutput"

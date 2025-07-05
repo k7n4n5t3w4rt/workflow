@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The maximum number of days an item can remain in the backlog before being removed (0 = no limit).</p>
       <label for="backlogDeath"
         >Max. age for items in the backlog (0 = no limit):</label
       >

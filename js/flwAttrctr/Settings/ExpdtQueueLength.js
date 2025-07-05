@@ -19,6 +19,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The number of expedited (unplanned) work items that can be in the system at any one time.</p>
       <label for="expdtQueueLength"
         >Number of expedited items in the system:</label
       >

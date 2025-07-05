@@ -40,9 +40,9 @@ input[type="checkbox"] {
 	box-sizing: border-box;
 	padding: 10px;
 	display: inline-block;
-	height: 1rem;
+	height: 20px;
 	margin-right: 0%;
-	width: 5%;
+	width: 20px;
 }
 output {
 	display: inline;

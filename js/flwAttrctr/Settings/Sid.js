@@ -23,6 +23,7 @@ export const Sid = (props /*: Props */) /*: string */ => {
   const { sid, changeSetting } = props;
   return html`
     <div>
+      <p>A unique identifier for this simulation configuration.</p>
       <label for="sid">ID:</label>
       <input
         type="text"

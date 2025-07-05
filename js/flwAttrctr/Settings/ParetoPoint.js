@@ -19,6 +19,7 @@ type Props = {
 export const ParetoPoint = (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The Pareto principle (80/20 rule) applied to value. The default of 0.2 means 80% of the value comes from 20% of the work items.</p>
       <label for="paretoPoint">80% of value comes from:</label>
       <output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint"
         >${((props.paretoPoint || 0) * 100).toString() + "%"}</output

@@ -32,6 +32,7 @@ export const DisplayNameInput = (props /*: Props */) /*: string */ => {
   const [state, dispatch] = useContext(AppContext);
   return html`
     <div>
+      <p>The name of this simulation, which will be displayed on the start button.</p>
       <label for="displayName">Display Name:</label>
       <input
         type="text"

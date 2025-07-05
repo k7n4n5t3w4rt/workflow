@@ -13,24 +13,6 @@ export default () /*: Object */ => {
   setSeed(seedString("flwconfig"));
 
   const [styles] = createStyles({
-    inputHeading: {
-      fontSize: "1rem",
-      padding: "0.2rem",
-      color: "white",
-      fontWeight: "bold",
-      textShadow: "2px 2px 2px #444",
-      backgroundColor: "#ff7f00",
-      marginBottom: "1rem",
-      padding: "0.4rem",
-    },
-    stepHeading: {
-      fontSize: "1rem",
-      padding: "0.2rem",
-      marginTop: "1rem",
-      marginBottom: "1rem",
-      backgroundColor: "#fabd20",
-      padding: "0.4rem",
-    },
     configContainer: {
       position: "absolute",
       zIndex: "41000",
@@ -38,16 +20,18 @@ export default () /*: Object */ => {
       width: "100%",
       height: "100%",
       backgroundColor: "rgba(0, 0, 0, 0.8)",
-      padding: "3rem",
-      paddingBottom: "6rem",
+      padding: "48px",
+      paddingBottom: "96px",
       top: "0",
+      overflowY: "auto",
+      color: "white",
     },
     config: {
       position: "absolute",
       zIndex: "50000",
       boxSizing: "border-box",
-      bottom: ".5rem",
-      right: ".5rem",
+      bottom: "8px",
+      right: "8px",
       cursor: "pointer",
     },
     configIcon: {
@@ -58,17 +42,48 @@ export default () /*: Object */ => {
       position: "absolute",
       zIndex: "43000",
       boxSizing: "border-box",
-      top: ".4rem",
-      right: ".4rem",
+      top: "6px",
+      right: "6px",
       cursor: "pointer",
     },
-    configCloseIcon: {
-      fontSize: "54px",
-      color: "white",
+    field: {
+      display: "grid",
+      gridTemplateColumns: "1fr 200px",
+      alignItems: "center",
+      marginBottom: "16px",
+      "@media (max-width: 768px)": {
+        gridTemplateColumns: "1fr",
+      },
+    },
+    checkboxContainer: {
+      display: "flex",
+      alignItems: "center",
+      justifySelf: "end",
+      "@media (max-width: 768px)": {
+        justifySelf: "start",
+        marginTop: "8px",
+      },
+    },
+    stepHeading: {
+      fontSize: "16px",
+      padding: "3px",
+      marginTop: "16px",
+      marginBottom: "16px",
+      backgroundColor: "#fabd20",
     },
     radioContainer: {
       display: "flex",
-      marginBottom: "1rem",
+      marginBottom: "16px",
+    },
+    legend: {
+      fontSize: "19px",
+      fontWeight: "bold",
+      marginBottom: "16px",
+      color: "#ff7f00",
+    },
+    editableCheckbox: {
+      width: "20px",
+      height: "20px",
     },
   });
 

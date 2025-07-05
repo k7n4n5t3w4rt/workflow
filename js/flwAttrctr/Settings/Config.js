@@ -99,330 +99,276 @@ export default (props /*: Props */) /*: string */ => {
 
     <div id="config-container" className="${styles.configContainer}">
       <fieldset>
-        <!------------------------------------------------------------------>
-        <!-- SESSION -->
-        <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Session</div>
-        <!-------------------------------------------------------------------->
-        <!-- Auto Mode -->
-        <!-------------------------------------------------------------------->
-        <${AutoMode}
-          autoMode=${state.autoMode}
-          styles=${styles}
-          changeSetting=${changeSetting("autoMode", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Easy Storage -->
-        <!-------------------------------------------------------------------->
-        <${EasyStorage}
-          easyStorage=${state.easyStorage}
-          styles=${styles}
-          changeSetting=${changeSetting("easyStorage", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- SID -->
-        <!-------------------------------------------------------------------->
         <${Sid}
           sid=${state.sid}
           styles=${styles}
           changeSetting=${changeSetting("sid", dispatch)}
         />
-        <!-------------------------------------------------------------------->
-        <!-- DisplayName -->
-        <!-------------------------------------------------------------------->
         <${DisplayNameInput}
           displayName=${state.displayName}
           changeSetting=${changeSetting("displayName", dispatch)}
         />
-        <!------------------------------------------------------------------>
-        <!-- DISPLAY -->
-        <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Display</div>
-        <!-------------------------------------------------------------------->
-        <!-- fps -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="fpsParam"
-            name="fpsParam"
-            onChange=${changeSetting("fpsParam", dispatch)}
-            checked=${state.fpsParam === true}
-          />
-          <label for="fpsParam">Make this an editable parameter</label>
-        </div>
-        <${Fps}
-          fps=${state.fps}
-          changeSetting=${changeSetting("fps", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- ScaleCm -->
-        <!-------------------------------------------------------------------->
-        <${ScaleCm}
-          scaleCm=${state.scaleCm}
-          changeSetting=${changeSetting("scaleCm", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Range Max. -->
-        <!-------------------------------------------------------------------->
-        <${RangeMax}
-          rangeMax=${state.rangeMax}
-          changeSetting=${changeSetting("rangeMax", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Range Increase Rate -->
-        <!-------------------------------------------------------------------->
-        <${RangeIncreaseRate}
-          rangeIncreaseRate=${state.rangeIncreaseRate}
-          changeSetting=${changeSetting("rangeIncreaseRate", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Range Decrease Rate -->
-        <!-------------------------------------------------------------------->
-        <${RangeMidpoint}
-          rangeMidpoint=${state.rangeMidpoint}
-          changeSetting=${changeSetting("rangeMidpoint", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- DevUnitsTerm -->
-        <!-------------------------------------------------------------------->
+
+        <legend className=${styles.legend}>Display</legend>
         <${DevUnitsTerm}
           devUnitsTerm=${state.devUnitsTerm}
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
         />
-        <${DevUnitsMoveToWork}
-          devUnitsMoveToWork=${state.devUnitsMoveToWork}
-          changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
-        />
-        <div>
-          <input
-            type="checkbox"
-            id="devUnitsMoveToWorkParam"
-            name="devUnitsMoveToWorkParam"
-            onChange=${changeSetting("devUnitsMoveToWorkParam", dispatch)}
-            checked=${state.devUnitsMoveToWorkParam === true}
-          />
-          <label for="devUnitsMoveToWorkParam"
-            >Make this an editable parameter</label
-          >
-        </div>
-        <!------------------------------------------------------------------>
-        <!-- GLOBAL FLOW -->
-        <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Global Flow</div>
-        <!-------------------------------------------------------------------->
-        <!-- DevPowerFix -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="devPowerFixParam"
-            name="devPowerFixParam"
-            onChange=${changeSetting("devPowerFixParam", dispatch)}
-            checked=${state.devPowerFixParam === true}
-          />
-          <label for="devPowerFixParam">Make this an editable parameter</label>
-        </div>
-        <${DevPowerFix}
-          devPowerFix=${state.devPowerFix}
-          changeSetting=${changeSetting("devPowerFix", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Drag -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="dragParam"
-            name="dragParam"
-            onChange=${changeSetting("dragParam", dispatch)}
-            checked=${state.dragParam === true}
-          />
-          <label for="dragParam">Make this an editable parameter</label>
-        </div>
-        <${Drag}
-          drag=${state.drag}
-          changeSetting=${changeSetting("drag", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- DragPoint -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="dragPointParam"
-            name="dragPointParam"
-            onChange=${changeSetting("dragPointParam", dispatch)}
-            checked=${state.dragPointParam === true}
-          />
-          <label for="dragPointParam">Make this an editable parameter</label>
-        </div>
-        <${DragPoint}
-          dragPoint=${state.dragPoint}
-          changeSetting=${changeSetting("dragPoint", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- ParetoPoint -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="paretoPointParam"
-            name="paretoPointParam"
-            onChange=${changeSetting("paretoPointParam", dispatch)}
-            checked=${state.paretoPointParam === true}
-          />
-          <label for="paretoPointParam">Make this an editable parameter</label>
-        </div>
-        <${ParetoPoint}
-          paretoPoint=${state.paretoPoint}
-          changeSetting=${changeSetting("paretoPoint", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- ArrivalRate -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="arrivalRateParam"
-            name="arrivalRateParam"
-            onChange=${changeSetting("arrivalRateParam", dispatch)}
-            checked=${state.arrivalRateParam === true}
-          />
-          <label for="arrivalRateParam">Make this an editable parameter</label>
-        </div>
-        <${ArrivalRate}
-          arrivalRate=${state.arrivalRate}
-          changeSetting=${changeSetting("arrivalRate", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Flow Item Size Min -->
-        <!-------------------------------------------------------------------->
-        <${FlwTimeMin}
-          flwTimeMin=${state.flwTimeMin}
-          changeSetting=${changeSetting("flwTimeMin", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- timeBox -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="timeBoxParam"
-            name="timeBoxParam"
-            onChange=${changeSetting("timeBoxParam", dispatch)}
-            checked=${state.timeBoxParam === true}
-          />
-          <label for="timeBoxParam">Make this an editable parameter</label>
-        </div>
-        <${TimeBox}
-          timeBox=${state.timeBox}
-          changeSetting=${changeSetting("timeBox", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- expdtQueueLength -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="expdtQueueLengthParam"
-            name="expdtQueueLengthParam"
-            onChange=${changeSetting("expdtQueueLengthParam", dispatch)}
-            checked=${state.expdtQueueLengthParam === true}
-          />
-          <label for="expdtQueueLengthParam"
-            >Make this an editable parameter</label
-          >
-        </div>
-        <${ExpdtQueueLength}
-          expdtQueueLength=${state.expdtQueueLength}
-          changeSetting=${changeSetting("expdtQueueLength", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- expdtDvUnitsFactor -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="expdtDvUnitsFactorParam"
-            name="expdtDvUnitsFactorParam"
-            onChange=${changeSetting("expdtDvUnitsFactorParam", dispatch)}
-            checked=${state.expdtDvUnitsFactorParam === true}
-          />
-          <label for="expdtDvUnitsFactorParam"
-            >Make this an editable parameter</label
-          >
-        </div>
-        <${ExpdtDvUnitsFactor}
-          expdtDvUnitsFactor=${state.expdtDvUnitsFactor}
-          changeSetting=${changeSetting("expdtDvUnitsFactor", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- Death -->
-        <!-------------------------------------------------------------------->
-        <${Death}
-          death=${state.death}
-          changeSetting=${changeSetting("death", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- BacklogDeath -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="backlogDeathParam"
-            name="backlogDeathParam"
-            onChange=${changeSetting("backlogDeathParam", dispatch)}
-            checked=${state.backlogDeathParam === true}
-          />
-          <label for="backlogDeathParam">Make this an editable parameter</label>
-        </div>
-        <${BacklogDeath}
-          backlogDeath=${state.backlogDeath}
-          changeSetting=${changeSetting("backlogDeath", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- flwItmSizeLimit -->
-        <!-------------------------------------------------------------------->
-        <div>
-          <input
-            type="checkbox"
-            id="flwItmSizeLimitParam"
-            name="flwItmSizeLimitParam"
-            onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
-            checked=${state.flwItmSizeLimitParam === true}
-          />
-          <label for="flwItmSizeLimitParam"
-            >Make this an editable parameter</label
-          >
-        </div>
-        <${FlwItmSizeLimit}
-          flwItmSizeLimit=${state.flwItmSizeLimit}
-          changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
-        />
-        <!-------------------------------------------------------------------->
-        <!-- NumberOfSteps -->
-        <!-------------------------------------------------------------------->
+
+        <legend className=${styles.legend}>Workflow Steps</legend>
         <${NumberOfSteps}
           numberOfSteps=${state.numberOfSteps}
           changeSetting=${changeSetting("numberOfSteps", dispatch)}
         />
-        <!------------------------------------------------------------------>
-        <!-- PARAMS UI -->
-        <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Parameters UI</div>
-        <!-------------------------------------------------------------------->
-        <!-- Params Max WIP -->
-        <!-------------------------------------------------------------------->
+        <${Steps} numberOfSteps=${state.numberOfSteps} />
+
+        <legend className=${styles.legend}>Key Constraints</legend>
+        <div className=${styles.field}>
+          <${DevUnitsMoveToWork}
+            devUnitsMoveToWork=${state.devUnitsMoveToWork}
+            changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="devUnitsMoveToWorkParam"
+              name="devUnitsMoveToWorkParam"
+              onChange=${changeSetting("devUnitsMoveToWorkParam", dispatch)}
+              checked=${state.devUnitsMoveToWorkParam === true}
+            />
+            <label for="devUnitsMoveToWorkParam">Editable</label>
+          </div>
+        </div>
+        <div className=${styles.field}>
+          <${ParetoPoint}
+            paretoPoint=${state.paretoPoint}
+            changeSetting=${changeSetting("paretoPoint", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="paretoPointParam"
+              name="paretoPointParam"
+              onChange=${changeSetting("paretoPointParam", dispatch)}
+              checked=${state.paretoPointParam === true}
+            />
+            <label for="paretoPointParam">Editable</label>
+          </div>
+        </div>
+        <div className=${styles.field}>
+          <${FlwItmSizeLimit}
+            flwItmSizeLimit=${state.flwItmSizeLimit}
+            changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="flwItmSizeLimitParam"
+              name="flwItmSizeLimitParam"
+              onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
+              checked=${state.flwItmSizeLimitParam === true}
+            />
+            <label for="flwItmSizeLimitParam">Editable</label>
+          </div>
+        </div>
+
+        <legend className=${styles.legend}>Queue Settings</legend>
+        <div className=${styles.field}>
+          <${ArrivalRate}
+            arrivalRate=${state.arrivalRate}
+            changeSetting=${changeSetting("arrivalRate", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="arrivalRateParam"
+              name="arrivalRateParam"
+              onChange=${changeSetting("arrivalRateParam", dispatch)}
+              checked=${state.arrivalRateParam === true}
+            />
+            <label for="arrivalRateParam">Editable</label>
+          </div>
+        </div>
+        <${FlwTimeMin}
+          flwTimeMin=${state.flwTimeMin}
+          changeSetting=${changeSetting("flwTimeMin", dispatch)}
+        />
+        <div className=${styles.field}>
+          <${TimeBox}
+            timeBox=${state.timeBox}
+            changeSetting=${changeSetting("timeBox", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="timeBoxParam"
+              name="timeBoxParam"
+              onChange=${changeSetting("timeBoxParam", dispatch)}
+              checked=${state.timeBoxParam === true}
+            />
+            <label for="timeBoxParam">Editable</label>
+          </div>
+        </div>
+
+        <legend className=${styles.legend}>Unplanned Work</legend>
+        <div className=${styles.field}>
+          <${ExpdtQueueLength}
+            expdtQueueLength=${state.expdtQueueLength}
+            changeSetting=${changeSetting("expdtQueueLength", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="expdtQueueLengthParam"
+              name="expdtQueueLengthParam"
+              onChange=${changeSetting("expdtQueueLengthParam", dispatch)}
+              checked=${state.expdtQueueLengthParam === true}
+            />
+            <label for="expdtQueueLengthParam">Editable</label>
+          </div>
+        </div>
+        <div className=${styles.field}>
+          <${ExpdtDvUnitsFactor}
+            expdtDvUnitsFactor=${state.expdtDvUnitsFactor}
+            changeSetting=${changeSetting("expdtDvUnitsFactor", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="expdtDvUnitsFactorParam"
+              name="expdtDvUnitsFactorParam"
+              onChange=${changeSetting("expdtDvUnitsFactorParam", dispatch)}
+              checked=${state.expdtDvUnitsFactorParam === true}
+            />
+            <label for="expdtDvUnitsFactorParam">Editable</label>
+          </div>
+        </div>
+
+        <legend className=${styles.legend}>Expiry Dates</legend>
+        <${Death}
+          death=${state.death}
+          changeSetting=${changeSetting("death", dispatch)}
+        />
+        <div className=${styles.field}>
+          <${BacklogDeath}
+            backlogDeath=${state.backlogDeath}
+            changeSetting=${changeSetting("backlogDeath", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="backlogDeathParam"
+              name="backlogDeathParam"
+              onChange=${changeSetting("backlogDeathParam", dispatch)}
+              checked=${state.backlogDeathParam === true}
+            />
+            <label for="backlogDeathParam">Editable</label>
+          </div>
+        </div>
+
+        <legend className=${styles.legend}>Simulation Physics</legend>
+        <p>Drag from excess WIP:</p>
+        <div className=${styles.field}>
+          <${Drag}
+            drag=${state.drag}
+            changeSetting=${changeSetting("drag", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="dragParam"
+              name="dragParam"
+              onChange=${changeSetting("dragParam", dispatch)}
+              checked=${state.dragParam === true}
+            />
+            <label for="dragParam">Editable</label>
+          </div>
+        </div>
+        <div className=${styles.field}>
+          <${DragPoint}
+            dragPoint=${state.dragPoint}
+            changeSetting=${changeSetting("dragPoint", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="dragPointParam"
+              name="dragPointParam"
+              onChange=${changeSetting("dragPointParam", dispatch)}
+              checked=${state.dragPointParam === true}
+            />
+            <label for="dragPointParam">Editable</label>
+          </div>
+        </div>
+        <p>Item Spread/Clumping:</p>
+        <${RangeMax}
+          rangeMax=${state.rangeMax}
+          changeSetting=${changeSetting("rangeMax", dispatch)}
+        />
+        <${RangeIncreaseRate}
+          rangeIncreaseRate=${state.rangeIncreaseRate}
+          changeSetting=${changeSetting("rangeIncreaseRate", dispatch)}
+        />
+        <${RangeMidpoint}
+          rangeMidpoint=${state.rangeMidpoint}
+          changeSetting=${changeSetting("rangeMidpoint", dispatch)}
+        />
+
+        <legend className=${styles.legend}>UI Settings</legend>
         <${ParamsMaxWip}
           paramsMaxWip=${state.paramsMaxWip}
           changeSetting=${changeSetting("paramsMaxWip", dispatch)}
         />
-        <!------------------------------------------------------------------>
-        <!-- STEPS-->
-        <!------------------------------------------------------------------>
-        <div className="${styles.inputHeading}">Steps</div>
-        <${Steps} numberOfSteps=${state.numberOfSteps} />
+        <div className=${styles.field}>
+          <${Fps}
+            fps=${state.fps}
+            changeSetting=${changeSetting("fps", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="fpsParam"
+              name="fpsParam"
+              onChange=${changeSetting("fpsParam", dispatch)}
+              checked=${state.fpsParam === true}
+            />
+            <label for="fpsParam">Editable</label>
+          </div>
+        </div>
+        <${ScaleCm}
+          scaleCm=${state.scaleCm}
+          changeSetting=${changeSetting("scaleCm", dispatch)}
+        />
+
+        <legend className=${styles.legend}>Tuning</legend>
+        <div className=${styles.field}>
+          <${DevPowerFix}
+            devPowerFix=${state.devPowerFix}
+            changeSetting=${changeSetting("devPowerFix", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="devPowerFixParam"
+              name="devPowerFixParam"
+              onChange=${changeSetting("devPowerFixParam", dispatch)}
+              checked=${state.devPowerFixParam === true}
+            />
+            <label for="devPowerFixParam">Editable</label>
+          </div>
+        </div>
       </fieldset>
     </div>
     <div

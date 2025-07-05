@@ -20,6 +20,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The number of days after which a work item will be removed from the system (0 = no limit).</p>
       <label for="death">Lifespan for work items (0 = no limit):</label>
       <output id="deathOutput" name="deathOutput" for="death"
         >${(props.death || 0).toString()}</output

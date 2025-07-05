@@ -34,6 +34,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
+      <p>The minimum time a work item can take to complete, in days.</p>
       <label for="flwTimeMin">Flow Time Min.:</label>
       <output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin"
         >${(props.flwTimeMin || 0).toString()}</output
