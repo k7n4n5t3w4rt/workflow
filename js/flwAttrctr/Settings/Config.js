@@ -51,6 +51,7 @@ import { rawStyles } from "../../../web_modules/simplestyle-js.js";
 rawStyles({
   "div#config-container p": {
     marginBottom: "1rem",
+    marginTop: "1rem",
   },
 });
 // import updateLocastateFromGlobastate from "./updateLocastateFromGlobastate.js";

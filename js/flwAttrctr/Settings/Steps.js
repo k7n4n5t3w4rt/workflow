@@ -73,6 +73,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
     <!-- Steps -->
     <!------------------------------------------------------------------>
     <div>
+      <p>If checked, the WIP limits for each step will be editable in the main UI.</p>
       <input
         type="checkbox"
         id="movingWipLimitsParam"
@@ -85,6 +86,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
       >
     </div>
     <div>
+      <p>If checked, the number of dev units for each step will be editable in the main UI.</p>
       <input
         type="checkbox"
         id="movingDevUnitsParam"
