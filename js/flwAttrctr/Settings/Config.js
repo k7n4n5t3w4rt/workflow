@@ -114,20 +114,20 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("displayName", dispatch)}
         />
 
-        <legend className=${styles.legend}>Display</legend>
+        <h2 className=${styles.legend}>Display</h2>
         <${DevUnitsTerm}
           devUnitsTerm=${state.devUnitsTerm}
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
         />
 
-        <legend className=${styles.legend}>Workflow Steps</legend>
+        <h2 className=${styles.legend}>Workflow Steps</h2>
         <${NumberOfSteps}
           numberOfSteps=${state.numberOfSteps}
           changeSetting=${changeSetting("numberOfSteps", dispatch)}
         />
         <${Steps} numberOfSteps=${state.numberOfSteps} />
 
-        <legend className=${styles.legend}>Key Constraints</legend>
+        <h2 className=${styles.legend}>Key Constraints</h2>
         <div className=${styles.field}>
           <${DevUnitsMoveToWork}
             devUnitsMoveToWork=${state.devUnitsMoveToWork}
@@ -180,7 +180,7 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <legend className=${styles.legend}>Queue Settings</legend>
+        <h2 className=${styles.legend}>Queue Settings</h2>
         <div className=${styles.field}>
           <${ArrivalRate}
             arrivalRate=${state.arrivalRate}
@@ -220,7 +220,7 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <legend className=${styles.legend}>Unplanned Work</legend>
+        <h2 className=${styles.legend}>Unplanned Work</h2>
         <div className=${styles.field}>
           <${ExpdtQueueLength}
             expdtQueueLength=${state.expdtQueueLength}
@@ -256,7 +256,7 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <legend className=${styles.legend}>Expiry Dates</legend>
+        <h2 className=${styles.legend}>Expiry Dates</h2>
         <${Death}
           death=${state.death}
           changeSetting=${changeSetting("death", dispatch)}
@@ -279,7 +279,7 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <legend className=${styles.legend}>Simulation Physics</legend>
+        <h2 className=${styles.legend}>Simulation Physics</h2>
         <p>Drag from excess WIP:</p>
         <div className=${styles.field}>
           <${Drag}
@@ -329,7 +329,7 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("rangeMidpoint", dispatch)}
         />
 
-        <legend className=${styles.legend}>UI Settings</legend>
+        <h2 className=${styles.legend}>UI Settings</h2>
         <${ParamsMaxWip}
           paramsMaxWip=${state.paramsMaxWip}
           changeSetting=${changeSetting("paramsMaxWip", dispatch)}
@@ -356,7 +356,7 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("scaleCm", dispatch)}
         />
 
-        <legend className=${styles.legend}>Tuning</legend>
+        <h2 className=${styles.legend}>Tuning</h2>
         <div className=${styles.field}>
           <${DevPowerFix}
             devPowerFix=${state.devPowerFix}
