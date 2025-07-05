@@ -48,6 +48,11 @@ import { AppContext } from "../../AppContext.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "../../../web_modules/simplestyle-js.js";
+rawStyles({
+  "div#config-container p": {
+    marginBottom: "1rem",
+  },
+});
 // import updateLocastateFromGlobastate from "./updateLocastateFromGlobastate.js";
 import hideOrShowConfigDivs from "./hideOrShowConfigDivs.js";
 import cssStyles from "./cssStylesConfig.js";

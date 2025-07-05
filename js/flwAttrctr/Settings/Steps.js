@@ -169,6 +169,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
               />
             </div>
             <div>
+              <p>The planned, ideal time for a step. It's used as a baseline to compare against the actual flow time.</p>
               <label for="step${index}FlwTimeAtStart"
                 >Av. Flow Time at Start:</label
               >
@@ -194,6 +195,7 @@ export const Steps = (props /*: Props */) /*: string */ => {
               />
             </div>
             <div>
+              <p>The current, real-world time for a step. This is a configurable input that represents the measured reality.</p>
               <label for="step${index}ActualFlwTime"
                 >Actual Av. Flow Time:</label
               >
