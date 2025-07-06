@@ -110,12 +110,14 @@ export default (props /*: Props */) /*: string */ => {
           styles=${styles}
           changeSetting=${changeSetting("sid", dispatch)}
         />
+
+        <h2 className=${styles.legend}>Display Terms</h2>
+
         <${DisplayNameInput}
           displayName=${state.displayName}
           changeSetting=${changeSetting("displayName", dispatch)}
         />
 
-        <h2 className=${styles.legend}>Display</h2>
         <${DevUnitsTerm}
           devUnitsTerm=${state.devUnitsTerm}
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
@@ -128,60 +130,8 @@ export default (props /*: Props */) /*: string */ => {
         />
         <${Steps} numberOfSteps=${state.numberOfSteps} />
 
-        <h2 className=${styles.legend}>Key Constraints</h2>
-        <div className=${styles.field}>
-          <${DevUnitsMoveToWork}
-            devUnitsMoveToWork=${state.devUnitsMoveToWork}
-            changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="devUnitsMoveToWorkParam"
-              name="devUnitsMoveToWorkParam"
-              onChange=${changeSetting("devUnitsMoveToWorkParam", dispatch)}
-              checked=${state.devUnitsMoveToWorkParam === true}
-            />
-            <label for="devUnitsMoveToWorkParam">Editable</label>
-          </div>
-        </div>
-        <div className=${styles.field}>
-          <${ParetoPoint}
-            paretoPoint=${state.paretoPoint}
-            changeSetting=${changeSetting("paretoPoint", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="paretoPointParam"
-              name="paretoPointParam"
-              onChange=${changeSetting("paretoPointParam", dispatch)}
-              checked=${state.paretoPointParam === true}
-            />
-            <label for="paretoPointParam">Editable</label>
-          </div>
-        </div>
-        <div className=${styles.field}>
-          <${FlwItmSizeLimit}
-            flwItmSizeLimit=${state.flwItmSizeLimit}
-            changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="flwItmSizeLimitParam"
-              name="flwItmSizeLimitParam"
-              onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
-              checked=${state.flwItmSizeLimitParam === true}
-            />
-            <label for="flwItmSizeLimitParam">Editable</label>
-          </div>
-        </div>
-
         <h2 className=${styles.legend}>Queue Settings</h2>
+
         <div className=${styles.field}>
           <${ArrivalRate}
             arrivalRate=${state.arrivalRate}
@@ -196,13 +146,12 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("arrivalRateParam", dispatch)}
               checked=${state.arrivalRateParam === true}
             />
-            <label for="arrivalRateParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="arrivalRateParam">Editable</label>
           </div>
         </div>
-        <${FlwTimeMin}
-          flwTimeMin=${state.flwTimeMin}
-          changeSetting=${changeSetting("flwTimeMin", dispatch)}
-        />
+
         <div className=${styles.field}>
           <${TimeBox}
             timeBox=${state.timeBox}
@@ -217,11 +166,83 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("timeBoxParam", dispatch)}
               checked=${state.timeBoxParam === true}
             />
-            <label for="timeBoxParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="timeBoxParam">Editable</label>
           </div>
         </div>
 
-        <h2 className=${styles.legend}>Unplanned Work</h2>
+        <div className=${styles.field}>
+          <${FlwItmSizeLimit}
+            flwItmSizeLimit=${state.flwItmSizeLimit}
+            changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="flwItmSizeLimitParam"
+              name="flwItmSizeLimitParam"
+              onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
+              checked=${state.flwItmSizeLimitParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="flwItmSizeLimitParam">Editable</label>
+          </div>
+        </div>
+
+        <${FlwTimeMin}
+          flwTimeMin=${state.flwTimeMin}
+          changeSetting=${changeSetting("flwTimeMin", dispatch)}
+        />
+
+        <h3 className=${styles.legendSub}>Pareto Principle</h2>
+
+        <div className=${styles.field}>
+          <${ParetoPoint}
+            paretoPoint=${state.paretoPoint}
+            changeSetting=${changeSetting("paretoPoint", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="paretoPointParam"
+              name="paretoPointParam"
+              onChange=${changeSetting("paretoPointParam", dispatch)}
+              checked=${state.paretoPointParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="paretoPointParam">Editable</label>
+          </div>
+        </div>
+
+        <h2 className=${styles.legend}>Key Constraints</h2>
+
+        <div className=${styles.field}>
+          <${DevUnitsMoveToWork}
+            devUnitsMoveToWork=${state.devUnitsMoveToWork}
+            changeSetting=${changeSetting("devUnitsMoveToWork", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="devUnitsMoveToWorkParam"
+              name="devUnitsMoveToWorkParam"
+              onChange=${changeSetting("devUnitsMoveToWorkParam", dispatch)}
+              checked=${state.devUnitsMoveToWorkParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="devUnitsMoveToWorkParam">Editable</label>
+          </div>
+        </div>
+
+        <h3 className=${styles.legendSub}>Unplanned Work</h2>
+
         <div className=${styles.field}>
           <${ExpdtQueueLength}
             expdtQueueLength=${state.expdtQueueLength}
@@ -236,7 +257,9 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("expdtQueueLengthParam", dispatch)}
               checked=${state.expdtQueueLengthParam === true}
             />
-            <label for="expdtQueueLengthParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="expdtQueueLengthParam">Editable</label>
           </div>
         </div>
         <div className=${styles.field}>
@@ -253,11 +276,14 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("expdtDvUnitsFactorParam", dispatch)}
               checked=${state.expdtDvUnitsFactorParam === true}
             />
-            <label for="expdtDvUnitsFactorParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="expdtDvUnitsFactorParam">Editable</label>
           </div>
         </div>
 
-        <h2 className=${styles.legend}>Expiry Dates</h2>
+        <h3 className=${styles.legendSub}>Expiry Dates</h2>
+
         <${Death}
           death=${state.death}
           changeSetting=${changeSetting("death", dispatch)}
@@ -276,11 +302,14 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("backlogDeathParam", dispatch)}
               checked=${state.backlogDeathParam === true}
             />
-            <label for="backlogDeathParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="backlogDeathParam">Editable</label>
           </div>
         </div>
 
-        <h2 className=${styles.legend}>Simulation Physics</h2>
+        <h3 className=${styles.legendSub}>Drag</h2>
+
         <p>Drag from excess WIP:</p>
         <div className=${styles.field}>
           <${Drag}
@@ -296,7 +325,7 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("dragParam", dispatch)}
               checked=${state.dragParam === true}
             />
-            <label for="dragParam">Editable</label>
+            <label className=${styles.legendSub}for="dragParam">Editable</label>
           </div>
         </div>
         <div className=${styles.field}>
@@ -313,24 +342,14 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("dragPointParam", dispatch)}
               checked=${state.dragPointParam === true}
             />
-            <label for="dragPointParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="dragPointParam">Editable</label>
           </div>
         </div>
-        <p>Item Spread/Clumping:</p>
-        <${RangeMax}
-          rangeMax=${state.rangeMax}
-          changeSetting=${changeSetting("rangeMax", dispatch)}
-        />
-        <${RangeIncreaseRate}
-          rangeIncreaseRate=${state.rangeIncreaseRate}
-          changeSetting=${changeSetting("rangeIncreaseRate", dispatch)}
-        />
-        <${RangeMidpoint}
-          rangeMidpoint=${state.rangeMidpoint}
-          changeSetting=${changeSetting("rangeMidpoint", dispatch)}
-        />
 
         <h2 className=${styles.legend}>UI Settings</h2>
+
         <${ParamsMaxWip}
           paramsMaxWip=${state.paramsMaxWip}
           changeSetting=${changeSetting("paramsMaxWip", dispatch)}
@@ -349,7 +368,7 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("fpsParam", dispatch)}
               checked=${state.fpsParam === true}
             />
-            <label for="fpsParam">Editable</label>
+            <label className=${styles.legendSub}for="fpsParam">Editable</label>
           </div>
         </div>
         <${ScaleCm}
@@ -357,7 +376,25 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("scaleCm", dispatch)}
         />
 
+        <p>
+          "Range" settings for the cube spread/clumping display at each step.
+        </p>
+
+        <${RangeMax}
+          rangeMax=${state.rangeMax}
+          changeSetting=${changeSetting("rangeMax", dispatch)}
+        />
+        <${RangeIncreaseRate}
+          rangeIncreaseRate=${state.rangeIncreaseRate}
+          changeSetting=${changeSetting("rangeIncreaseRate", dispatch)}
+        />
+        <${RangeMidpoint}
+          rangeMidpoint=${state.rangeMidpoint}
+          changeSetting=${changeSetting("rangeMidpoint", dispatch)}
+        />
+
         <h2 className=${styles.legend}>Tuning</h2>
+
         <div className=${styles.field}>
           <${DevPowerFix}
             devPowerFix=${state.devPowerFix}
@@ -372,7 +409,9 @@ export default (props /*: Props */) /*: string */ => {
               onChange=${changeSetting("devPowerFixParam", dispatch)}
               checked=${state.devPowerFixParam === true}
             />
-            <label for="devPowerFixParam">Editable</label>
+            <label className=${
+              styles.legendSub
+            }for="devPowerFixParam">Editable</label>
           </div>
         </div>
       </fieldset>

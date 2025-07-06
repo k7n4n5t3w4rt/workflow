@@ -34,7 +34,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The maximum range for the random distribution of work items in a step.</p>
+      <p>The maximum range for the random distribution of work items in a step. The default is 10.</p>
       <label for="rangeMax">Range Max:</label>
       <output id="rangeMaxOutput" name="rangeMaxOutput" for="rangeMax"
         >${(props.rangeMax || 0).toString()}</output

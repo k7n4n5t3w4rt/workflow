@@ -14,7 +14,7 @@ import {
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
-import FlwTimeMax from "./FlwTimeMax.js";
+// import FlwTimeMax from "./FlwTimeMax.js_NOT_USED";
 import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
 import AutoMode from "./AutoMode.js";
@@ -73,7 +73,10 @@ export const Steps = (props /*: Props */) /*: string */ => {
     <!-- Steps -->
     <!------------------------------------------------------------------>
     <div>
-      <p>If checked, the WIP limits for each step will be editable in the main UI.</p>
+      <p>
+        If checked, the WIP limits for each step will be editable in the main
+        UI.
+      </p>
       <input
         type="checkbox"
         id="movingWipLimitsParam"
@@ -86,7 +89,10 @@ export const Steps = (props /*: Props */) /*: string */ => {
       >
     </div>
     <div>
-      <p>If checked, the number of dev units for each step will be editable in the main UI.</p>
+      <p>
+        If checked, the number of dev units for each step will be editable in
+        the main UI.
+      </p>
       <input
         type="checkbox"
         id="movingDevUnitsParam"
@@ -171,7 +177,10 @@ export const Steps = (props /*: Props */) /*: string */ => {
               />
             </div>
             <div>
-              <p>The planned, ideal time for a step. It's used as a baseline to compare against the actual flow time.</p>
+              <p>
+                The planned, ideal time for a step. It's used as a baseline to
+                compare against the actual flow time.
+              </p>
               <label for="step${index}FlwTimeAtStart"
                 >Av. Flow Time at Start:</label
               >
@@ -197,7 +206,10 @@ export const Steps = (props /*: Props */) /*: string */ => {
               />
             </div>
             <div>
-              <p>The current, real-world time for a step. This is a configurable input that represents the measured reality.</p>
+              <p>
+                The current, real-world time for a step. This is a configurable
+                input that represents the measured reality.
+              </p>
               <label for="step${index}ActualFlwTime"
                 >Actual Av. Flow Time:</label
               >

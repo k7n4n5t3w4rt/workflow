@@ -23,7 +23,7 @@ export const Sid = (props /*: Props */) /*: string */ => {
   const { sid, changeSetting } = props;
   return html`
     <div>
-      <p>A unique identifier for this simulation configuration.</p>
+      <p>A unique identifier for this simulation configuration. The default is "START", which is a sensible default for a new, un-named simulation.</p>
       <label for="sid">ID:</label>
       <input
         type="text"

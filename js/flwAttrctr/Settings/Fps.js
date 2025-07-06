@@ -29,7 +29,7 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
   return html`
     <div>
-      <p>The frame rate of the simulation.</p>
+      <p>The frame rate of the simulation. The default is 1.</p>
       <label for="fps">FPS:</label>
       <output id="fpsOutput" name="fpsOutput" for="fps"
         >${(props.fps || 0).toString()}</output

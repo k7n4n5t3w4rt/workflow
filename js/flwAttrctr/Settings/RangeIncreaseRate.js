@@ -34,7 +34,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The rate at which the range of the random distribution increases.</p>
+      <p>The rate at which the range of the random distribution increases. The default is 0.1.</p>
       <label for="rangeIncreaseRate">Range Increase Rate:</label>
       <output
         id="rangeIncreaseRateOutput"

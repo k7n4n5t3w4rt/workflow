@@ -30,7 +30,7 @@ export const DevUnitsTerm = (props /*: Props */) /*: string */ => {
   const { devUnitsTerm, changeSetting } = props;
   return html`
     <div>
-      <p>The term used to describe the development units (e.g., "Devs", "Engineers", "Team").</p>
+      <p>The term used to describe the development units (e.g., "Devs", "Engineers", "Team"). The default is "Devs".</p>
       <label for="devUnitsTerm">Term for "Dev Units":</label>
       <input
         type="text"

@@ -34,7 +34,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The midpoint of the random distribution of work items in a step.</p>
+      <p>The midpoint of the random distribution of work items in a step. The default is 0.1.</p>
       <label for="rangeMidpoint">Range Midpoint:</label>
       <output
         id="rangeMidpointOutput"

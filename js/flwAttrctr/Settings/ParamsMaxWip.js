@@ -34,7 +34,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The maximum value for the WIP limit sliders in the main UI.</p>
+      <p>The maximum value for the WIP limit sliders in the main UI. The default is 20.</p>
       <label for="paramsMaxWip">Params Max. WIP:</label>
       <output
         id="paramsMaxWipOutput"

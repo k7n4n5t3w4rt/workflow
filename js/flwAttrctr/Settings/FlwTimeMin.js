@@ -34,7 +34,13 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The minimum time a work item can take to complete, in days.</p>
+      <p>
+        The minimum time a work item can take to complete, in days. Because
+        there's a 1:1 mapping between how long work items take to get done (Flow
+        Time), cube size and the value delivered by each cube getting done, this
+        is both a display setting for cube size, a factor in overall flow, and a
+        factor in determining the value delivered. The default is 1.
+      </p>
       <label for="flwTimeMin">Flow Time Min.:</label>
       <output id="flwTimeMinOutput" name="flwTimeMinOutput" for="flwTimeMin"
         >${(props.flwTimeMin || 0).toString()}</output

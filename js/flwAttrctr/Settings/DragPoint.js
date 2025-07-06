@@ -19,7 +19,7 @@ type Props = {
 export const DragPoint = (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The WIP level (as a % of the limit) at which drag begins to take effect.</p>
+      <p>The WIP level (as a % of the limit) at which drag begins to take effect. The default is 0.5.</p>
       <label for="dragPoint">The point at which drag kicks in:</label>
       <output id="dragPointOutput" name="dragPointOutput" for="dragPoint"
         >${(props.dragPoint || 0).toString()}</output
