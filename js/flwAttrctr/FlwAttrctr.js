@@ -45,6 +45,7 @@ import {
 import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
 import setUpFlwMap from "./actions/setUpFlwMap.js";
 import updateStartButtonText from "./actions/updateStartButtonText.js";
+import defaultPreset from "./actions/defaultPreset.js";
 //------------------------------------------------------------------
 // FUNCTION: FlwAttrctr()
 //------------------------------------------------------------------
@@ -80,8 +81,8 @@ export default (props /*: Props */) /*: string */ => {
     const url = new URL(window.location.href);
     const sid = url.searchParams.get("sid");
     const share = url.searchParams.get("share");
-    if (sid && !share) {
-      window.location.href = EXAMPLE_0;
+    if (!sid && !share) {
+      route(defaultPreset);
     }
   }, []);
   //------------------------------------------------------------------

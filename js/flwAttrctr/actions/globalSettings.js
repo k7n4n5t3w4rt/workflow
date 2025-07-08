@@ -32,15 +32,15 @@ export default async () /*: Promise<void> */ => {
   //------------------------------------------------------------------
   //------------------------------------------------------------------
   // A fix to get the flow time correct
-  const devPowerFix = await gSttngs().setIfNotCached("devPowerFix", 2.23);
+  const devPowerFix = await gSttngs().setIfNotCached("devPowerFix", 1);
   // The drag that kicks in when the ratio of dev units to WIP is 1:2
   const drag = await gSttngs().setIfNotCached("drag", 0);
   // The point at which the drag kicks in 1:2 = 0.5, 1:3 = 0.33, 1:4 = 0.25
   const dragPoint = await gSttngs().setIfNotCached("dragPoint", 0.5);
   // Q: At what flwItmSizeLimit do we get 0.8 of the value from a flow item?
-  const paretoPoint = await gSttngs().setIfNotCached("paretoPoint", 0.2);
+  const paretoPoint = await gSttngs().setIfNotCached("paretoPoint", 0.8);
   // Q: How many new items arrive in your backlog each day?
-  const arrivalRate = await gSttngs().setIfNotCached("arrivalRate", 10);
+  const arrivalRate = await gSttngs().setIfNotCached("arrivalRate", 1);
   // Q: What is the shortest flow time?
   const flwTimeMin = await gSttngs().setIfNotCached("flwTimeMin", 1); // Max. flow time is dynamic
   // Q: What interval do we use for timeboxing or reporting (in working days)?
@@ -75,7 +75,7 @@ export default async () /*: Promise<void> */ => {
   gSttngs().set("colorBlue", "1d2570");
   gSttngs().setIfNotCached("paramsMaxWip", 20);
   // We'll await scaleCM one because it is required for setting some other values
-  const scaleCm = await gSttngs().setIfNotCached("scaleCm", 2);
+  const scaleCm = await gSttngs().setIfNotCached("scaleCm", 7);
   const scale = gSttngs().set("scale", scaleCm / 100);
   gSttngs().set("x", scale);
   gSttngs().set("y", scale);
