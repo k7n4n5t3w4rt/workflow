@@ -11,6 +11,7 @@ import isParsable from "../actions/isParsable.js";
 import touchStepsCount from "../actions/touchStepsCount.js";
 // import calculateDevUnits from "../actions/calculateDevUnits.js";
 import calculateDevPower from "../actions/calculateDevPower.js";
+import updateStartButtonText from "../actions/updateStartButtonText.js";
 //------------------------------------------------------------------
 // FUNCTION: changeSetting()
 //------------------------------------------------------------------
@@ -40,4 +41,9 @@ export default (
     }
     const action = { type: "SET", payload: { key, value } };
     dispatch(action);
+
+    // A little hack
+    if (key === "displayName") {
+      updateStartButtonText();
+    }
   };

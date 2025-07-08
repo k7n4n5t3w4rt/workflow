@@ -1,6 +1,10 @@
 /// <reference types="cypress" />
 
 context('Share Functionality', () => {
+  beforeEach(() => {
+    cy.clearLocalStorage();
+  });
+
   it('should load a shared configuration', () => {
     cy.visit('/')
 
@@ -35,6 +39,8 @@ context('Share Functionality', () => {
 
         // Visit the share URL from the 3rd option
         cy.visit(shareUrl)
+        cy.waitForLocalStorage("sid", expectedSid);
+        cy.wait(100);
 
         // Check that the DisplayName and Sid value match
         cy.get('#start-button').should('contain', expectedDisplayName)

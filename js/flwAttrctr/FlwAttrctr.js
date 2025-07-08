@@ -82,7 +82,12 @@ export default (props /*: Props */) /*: string */ => {
     const sid = url.searchParams.get("sid");
     const share = url.searchParams.get("share");
     if (!sid && !share) {
-      route(defaultPreset);
+      // Check if a config has been loaded from localStorage
+      // If it hasn't, the sid will be "START" which is set
+      // in the ./actions/globalSettings.js
+      if (gSttngs().get("sid") === "FlwAttractor_v0.1.0") {
+        route(defaultPreset);
+      }
     }
   }, []);
   //------------------------------------------------------------------

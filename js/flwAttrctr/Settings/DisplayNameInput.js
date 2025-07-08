@@ -44,7 +44,9 @@ export const DisplayNameInput = (props /*: Props */) /*: string */ => {
         value=${displayName}
         onInput=${changeSetting}
         onFocus=${() => setUpdtngCnfg(true)}
-        onBlur=${() => setUpdtngCnfg(false)}
+        onBlur=${() => {
+          setUpdtngCnfg(false);
+        }}
       />
     </div>
   `;

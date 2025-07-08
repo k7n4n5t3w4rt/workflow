@@ -14,7 +14,6 @@ import touchStepsCount from "./touchStepsCount.js";
 // globalSettings()
 //------------------------------------------------------------------
 export default async () /*: Promise<void> */ => {
-  gSttngs().setSidIfNotInLocalStore("START");
   //------------------------------------------------------------------
   // Development
   //------------------------------------------------------------------

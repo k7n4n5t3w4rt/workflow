@@ -23,3 +23,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('waitForLocalStorage', (key, value) => {
+  const stringifiedValue = JSON.stringify(value);
+  cy.window().then((win) => {
+    return new Cypress.Promise((resolve, reject) => {
+      const interval = setInterval(() => {
+        const storedValue = win.localStorage.getItem(key);
+        if (storedValue && storedValue.includes(stringifiedValue)) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        reject(new Error(`waitForLocalStorage: Timed out waiting for key "${key}" with value "${value}"`));
+      }, 10000);
+    });
+  });
+});

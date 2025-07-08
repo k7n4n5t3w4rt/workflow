@@ -158,3 +158,18 @@ When making changes to the codebase, please adhere to the following guidelines:
     }
     ```
 - When I say "tag and push", I mean please tag with the latest version number in the format "v" + the version, e.g. "v0.28.4.0", then "git push".
+- After any step where one or more files have been changed, if you think the task is complete, run `npm run test` to verify the change.
+
+## Gemini CLI Settings
+
+The Gemini CLI tool has a configuration file located at `~/.gemini/settings.json`. This file contains settings that control the behavior of the CLI.
+
+To require confirmation before making any changes, set the `autoAccept` property to `false`:
+
+```json
+{
+  "autoAccept": false
+}
+```
+
+After changing this setting, you will need to restart the CLI for it to take effect.
