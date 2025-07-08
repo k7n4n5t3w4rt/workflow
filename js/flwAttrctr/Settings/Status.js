@@ -20,7 +20,7 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <label for="status${props.index}">Status:</label>
+      <label for="status${props.index}">Type of Step:</label>
       <select
         class="browser-default"
         id="status${props.index}"

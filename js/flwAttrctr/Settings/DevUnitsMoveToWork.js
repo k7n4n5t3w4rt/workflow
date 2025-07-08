@@ -6,7 +6,7 @@ import { useContext } from "../../../web_modules/preact/hooks.js";
 import { html } from "../../../web_modules/htm/preact.js";
 import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
-// IMPORT: HELPERS
+// IMPORT: GLOBALS
 //------------------------------------------------------------------
 import gSttngs from "../actions/gSttngs.js";
 
@@ -24,7 +24,13 @@ export const DevUnitsMoveToWork = (props /*: Props */) /*: string */ => {
 
   return html`
     <div>
-      <p>If checked, dev units will move to the step where the work is, rather than being fixed to a specific step. The default is false.</p>
+      <p>
+        If ${devUnitsTerm} Move to Work is checked, ${devUnitsTerm} will be free
+        to move to any step where the work is, rather than being fixed to a
+        specific step. This models a situation in which there are no 'silos'
+        between or within teams. In the future, we plan to make this a sliding
+        scale rather than a binary.
+      </p>
       <input
         type="checkbox"
         id="devUnitsMoveToWork"

@@ -19,7 +19,17 @@ type Props = {
 export const ParetoPoint = (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The Pareto principle (80/20 rule) applied to value. The default of 0.2 means 80% of the value comes from 20% of the work items.</p>
+      <p>
+        The Pareto Point is 20% by default, meaning that 20% of the work items
+        in a workflow will deliver 80% of the value. Setting it to, say, 80%
+        means that 80% of the work items in a workflow will deliver 80% of the
+        value. This would be basically saying that we always get the expected
+        value from every work item, we're never wrong, we never have to guess,
+        or iterate. We nail everything first time and users are always happy
+        with the results, and use the features we build in the way we expect
+        them to use them. Which is pretty unrealistic but it is a basic
+        assumption that many people seem to make.
+      </p>
       <label for="paretoPoint">80% of value comes from:</label>
       <output id="paretoPointOutput" name="paretoPointOutput" for="paretoPoint"
         >${((props.paretoPoint || 0) * 100).toString() + "%"}</output

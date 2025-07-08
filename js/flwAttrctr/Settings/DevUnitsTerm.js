@@ -30,7 +30,13 @@ export const DevUnitsTerm = (props /*: Props */) /*: string */ => {
   const { devUnitsTerm, changeSetting } = props;
   return html`
     <div>
-      <p>The term used to describe the development units (e.g., "Devs", "Engineers", "Team"). The default is "Devs".</p>
+      <p>
+        The Dev Units Term is used to describe the development units (e.g.,
+        "Devs", "Engineers", "Squads", "Teams") in the UI. This is a setting
+        partly because everyone has their own preference, but also because it
+        allows for simulations of different levels or organisation - single
+        team, or team of teams.
+      </p>
       <label for="devUnitsTerm">Term for "Dev Units":</label>
       <input
         type="text"

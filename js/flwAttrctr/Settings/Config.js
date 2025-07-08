@@ -111,6 +111,9 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("sid", dispatch)}
         />
 
+        <!-------------------------------------------------------------------->
+        <!-- DISPLAY TERMS -->
+        <!-------------------------------------------------------------------->
         <h2 className=${styles.legend}>Display Terms</h2>
 
         <${DisplayNameInput}
@@ -123,13 +126,20 @@ export default (props /*: Props */) /*: string */ => {
           changeSetting=${changeSetting("devUnitsTerm", dispatch)}
         />
 
+        <!-------------------------------------------------------------------->
+        <!-- WORKFLOW STEPS-->
+        <!-------------------------------------------------------------------->
         <h2 className=${styles.legend}>Workflow Steps</h2>
+
         <${NumberOfSteps}
           numberOfSteps=${state.numberOfSteps}
           changeSetting=${changeSetting("numberOfSteps", dispatch)}
         />
         <${Steps} numberOfSteps=${state.numberOfSteps} />
 
+        <!-------------------------------------------------------------------->
+        <!-- QUEUE SETTINGS -->
+        <!-------------------------------------------------------------------->
         <h2 className=${styles.legend}>Queue Settings</h2>
 
         <div className=${styles.field}>
@@ -172,32 +182,16 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <div className=${styles.field}>
-          <${FlwItmSizeLimit}
-            flwItmSizeLimit=${state.flwItmSizeLimit}
-            changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="flwItmSizeLimitParam"
-              name="flwItmSizeLimitParam"
-              onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
-              checked=${state.flwItmSizeLimitParam === true}
-            />
-            <label className=${
-              styles.legendSub
-            }for="flwItmSizeLimitParam">Editable</label>
-          </div>
-        </div>
-
         <${FlwTimeMin}
           flwTimeMin=${state.flwTimeMin}
           changeSetting=${changeSetting("flwTimeMin", dispatch)}
         />
 
-        <h3 className=${styles.legendSub}>Pareto Principle</h2>
+        <h3 className=${styles.legendH3}>Pareto Principle</h2>
+
+        <p>
+          The Pareto Principle (80/20 rule) is often applied to software development to suggest that 20% of features deliver 80% of the value that users derive from a product. Here we're extrapolating that to suggest that 20% of the work items in a workflow will deliver 80% of the value. But the 80/20 rule is always a guess. In any particular situation the actual ratio may be different, so we can change the ratio to reflect what we feel about the particular context for the workflow.
+        </p>
 
         <div className=${styles.field}>
           <${ParetoPoint}
@@ -217,9 +211,100 @@ export default (props /*: Props */) /*: string */ => {
               styles.legendSub
             }for="paretoPointParam">Editable</label>
           </div>
+
         </div>
 
-        <h2 className=${styles.legend}>Key Constraints</h2>
+        <h3 className=${styles.legendH3}>Expiry Dates</h3>
+
+        <${Death}
+          death=${state.death}
+          changeSetting=${changeSetting("death", dispatch)}
+        />
+        <div className=${styles.field}>
+          <${BacklogDeath}
+            backlogDeath=${state.backlogDeath}
+            changeSetting=${changeSetting("backlogDeath", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="backlogDeathParam"
+              name="backlogDeathParam"
+              onChange=${changeSetting("backlogDeathParam", dispatch)}
+              checked=${state.backlogDeathParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="backlogDeathParam">Editable</label>
+          </div>
+        </div>
+
+        <h3 className=${styles.legendH3}>Drag</h2>
+
+        <p>Drag from excess WIP:</p>
+        <div className=${styles.field}>
+          <${Drag}
+            drag=${state.drag}
+            changeSetting=${changeSetting("drag", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="dragParam"
+              name="dragParam"
+              onChange=${changeSetting("dragParam", dispatch)}
+              checked=${state.dragParam === true}
+            />
+            <label className=${styles.legendSub}for="dragParam">Editable</label>
+          </div>
+        </div>
+        <div className=${styles.field}>
+          <${DragPoint}
+            dragPoint=${state.dragPoint}
+            changeSetting=${changeSetting("dragPoint", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="dragPointParam"
+              name="dragPointParam"
+              onChange=${changeSetting("dragPointParam", dispatch)}
+              checked=${state.dragPointParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="dragPointParam">Editable</label>
+          </div>
+        </div>
+
+        <!-------------------------------------------------------------------->
+        <!-- ENABLING CONSTRAINTS -->
+        <!-------------------------------------------------------------------->
+
+        <h2 className=${styles.legend}>Enabling Constraints</h2>
+
+        <div className=${styles.field}>
+          <${FlwItmSizeLimit}
+            flwItmSizeLimit=${state.flwItmSizeLimit}
+            changeSetting=${changeSetting("flwItmSizeLimit", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="flwItmSizeLimitParam"
+              name="flwItmSizeLimitParam"
+              onChange=${changeSetting("flwItmSizeLimitParam", dispatch)}
+              checked=${state.flwItmSizeLimitParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="flwItmSizeLimitParam">Editable</label>
+          </div>
+        </div>
 
         <div className=${styles.field}>
           <${DevUnitsMoveToWork}
@@ -241,7 +326,7 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <h3 className=${styles.legendSub}>Unplanned Work</h2>
+        <h3 className=${styles.legendH3}>Unplanned Work</h2>
 
         <div className=${styles.field}>
           <${ExpdtQueueLength}
@@ -282,71 +367,9 @@ export default (props /*: Props */) /*: string */ => {
           </div>
         </div>
 
-        <h3 className=${styles.legendSub}>Expiry Dates</h2>
-
-        <${Death}
-          death=${state.death}
-          changeSetting=${changeSetting("death", dispatch)}
-        />
-        <div className=${styles.field}>
-          <${BacklogDeath}
-            backlogDeath=${state.backlogDeath}
-            changeSetting=${changeSetting("backlogDeath", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="backlogDeathParam"
-              name="backlogDeathParam"
-              onChange=${changeSetting("backlogDeathParam", dispatch)}
-              checked=${state.backlogDeathParam === true}
-            />
-            <label className=${
-              styles.legendSub
-            }for="backlogDeathParam">Editable</label>
-          </div>
-        </div>
-
-        <h3 className=${styles.legendSub}>Drag</h2>
-
-        <p>Drag from excess WIP:</p>
-        <div className=${styles.field}>
-          <${Drag}
-            drag=${state.drag}
-            changeSetting=${changeSetting("drag", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="dragParam"
-              name="dragParam"
-              onChange=${changeSetting("dragParam", dispatch)}
-              checked=${state.dragParam === true}
-            />
-            <label className=${styles.legendSub}for="dragParam">Editable</label>
-          </div>
-        </div>
-        <div className=${styles.field}>
-          <${DragPoint}
-            dragPoint=${state.dragPoint}
-            changeSetting=${changeSetting("dragPoint", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="dragPointParam"
-              name="dragPointParam"
-              onChange=${changeSetting("dragPointParam", dispatch)}
-              checked=${state.dragPointParam === true}
-            />
-            <label className=${
-              styles.legendSub
-            }for="dragPointParam">Editable</label>
-          </div>
-        </div>
+        <!-------------------------------------------------------------------->
+        <!-- UI SETTINGS -->
+        <!-------------------------------------------------------------------->
 
         <h2 className=${styles.legend}>UI Settings</h2>
 
@@ -392,6 +415,10 @@ export default (props /*: Props */) /*: string */ => {
           rangeMidpoint=${state.rangeMidpoint}
           changeSetting=${changeSetting("rangeMidpoint", dispatch)}
         />
+
+        <!-------------------------------------------------------------------->
+        <!-- TUNING -->
+        <!-------------------------------------------------------------------->
 
         <h2 className=${styles.legend}>Tuning</h2>
 

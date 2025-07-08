@@ -84,7 +84,11 @@ export default () /*: Object */ => {
     legendSub: {
       fontSize: "14px",
       fontWeight: "bold",
-      marginBottom: "16px",
+      color: "#fabd20",
+    },
+    legendH3: {
+      fontSize: "14px",
+      fontWeight: "bold",
       color: "#ff7f00",
     },
     editableCheckbox: {

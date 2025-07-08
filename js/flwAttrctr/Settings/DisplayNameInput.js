@@ -32,7 +32,10 @@ export const DisplayNameInput = (props /*: Props */) /*: string */ => {
   const [state, dispatch] = useContext(AppContext);
   return html`
     <div>
-      <p>The name of this simulation, which will be displayed on the start button. The default is "FlowAttractor_v0.1.0".</p>
+      <p>
+        The Display Name is the user-friendly name of the simulation, which will
+        be displayed on the start button.
+      </p>
       <label for="displayName">Display Name:</label>
       <input
         type="text"

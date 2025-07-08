@@ -19,7 +19,12 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The number of steps in your workflow. The default is 6.</p>
+      <p>
+        The number of steps in the workflow, including the "backlog" and the
+        "done" steps. For example, a simple "To Do", "Doing", "Done" workflow is
+        3 steps. "To Do", "In Progress", "Ready for Review", "Reviewing", "Done"
+        is 5 steps.
+      </p>
       <label for="numberOfSteps">No. of Steps:</label>
       <output
         id="numberOfStepsOutput"

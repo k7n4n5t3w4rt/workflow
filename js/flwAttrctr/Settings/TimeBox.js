@@ -19,7 +19,12 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The number of days in a timebox (e.g., 10 for a 2-week sprint). The default is 10.</p>
+      <p>
+        The number of days in a timebox - e.g. a sprint, or a quarter. The unit
+        of measurement is work days, but it is displayed as weeks, where a week
+        is 5 work days. So, for a 2-week sprint, put 10 (10 days = 2 x 5 day
+        week). For a 12-week quarter, put 60 (60 days = 12 x 5 day weeks).
+      </p>
       <label for="timeBox">TimeBox:</label>
       <output id="timeBoxOutput" name="timeBoxOutput" for="timeBox"
         >${(props.timeBox || 0).toString()}</output
