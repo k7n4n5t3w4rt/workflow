@@ -12,7 +12,6 @@ import setUpdtngCnfg from "./setUpdtngCnfg.js";
 type Props = {
   targetFlowTime: number,
   changeSetting: () => void,
-  handleTuneClick: () => void,
 }
 */
 export default (props /*: Props */) /*: string */ => {
@@ -31,7 +30,6 @@ export default (props /*: Props */) /*: string */ => {
         onBlur=${setUpdtngCnfg(false)}
         value="${(props.targetFlowTime || 10).toString()}"
       />
-      <button onClick=${props.handleTuneClick}>Tune</button>
     </div>
   `;
 };

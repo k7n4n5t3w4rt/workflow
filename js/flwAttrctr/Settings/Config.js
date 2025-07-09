@@ -2,6 +2,7 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
+import gSttngs from "../actions/gSttngs.js";
 import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
@@ -74,10 +75,13 @@ export default (props /*: Props */) /*: string */ => {
   const handleTuneClick = async () => {
     await trainModel();
     const predictedFix = await predictDevPowerFix(state.targetFlowTime);
+    // First, update the central gSttngs store
+    gSttngs().set("devPowerFix", predictedFix);
+    // Then, dispatch the action to update the component's local state
     dispatch({
-      type: "changeSetting",
+      type: "SET",
       payload: {
-        setting: "devPowerFix",
+        key: "devPowerFix",
         value: predictedFix,
       },
     });
@@ -433,8 +437,8 @@ export default (props /*: Props */) /*: string */ => {
         <${TargetFlowTime}
           targetFlowTime=${state.targetFlowTime}
           changeSetting=${changeSetting("targetFlowTime", dispatch)}
-          handleTuneClick=${handleTuneClick}
         />
+        <button onClick=${handleTuneClick}>Tune</button>
         <${DevPowerFix}
           devPowerFix=${state.devPowerFix}
           changeSetting=${changeSetting("devPowerFix", dispatch)}
