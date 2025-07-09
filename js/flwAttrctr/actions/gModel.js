@@ -2,11 +2,11 @@
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import easyStorage from "./easyStorage";
-import isParsable from "./isParsable";
-import readEasyStore from "./readEasyStore";
-import readLocalStore from "./readLocalStore";
-import readSidFromLocalStore from "./readSidFromLocalStore";
+import easyStorage from "./easyStorage.js";
+import isParsable from "./isParsable.js";
+import readEasyStore from "./readEasyStore.js";
+import readLocalStore from "./readLocalStore.js";
+import readSidFromLocalStore from "./readSidFromLocalStore.js";
 //------------------------------------------------------------------------------
 // gModel() - Needs to use the `function` keyword so we can do `new gModel()`
 //------------------------------------------------------------------------------

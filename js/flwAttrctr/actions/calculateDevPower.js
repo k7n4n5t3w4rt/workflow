@@ -2,14 +2,14 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateMovingDevUnits from "./calculateMovingDevUnits";
-import calculateTouchWipLimits from "./calculateTouchWipLimits";
-import calculateTouchSteps from "./calculateTouchSteps";
+import calculateMovingDevUnits from "./calculateMovingDevUnits.js";
+import calculateTouchWipLimits from "./calculateTouchWipLimits.js";
+import calculateTouchSteps from "./calculateTouchSteps.js";
 //------------------------------------------------------------------
 // calculateDevPower()
 //------------------------------------------------------------------

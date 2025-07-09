@@ -1,5 +1,5 @@
 // @flow
-import shouldFunction from "../web_modules/should/as-function.js";
+import shouldFunction from "should/as-function.js";
 import fs from "fs";
 
 export { shouldFunction as should };
@@ -33,7 +33,7 @@ export const testPromise = (
       .then(() => {
         console.log("ok - " + message, ":)");
       })
-      .catch(e => {
+      .catch((e) => {
         console.log("not ok - " + message, ":(");
         console.error(e.message);
       });
