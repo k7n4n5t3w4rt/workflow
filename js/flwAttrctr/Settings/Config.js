@@ -72,7 +72,9 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
 
   const [state, dispatch] = useContext(AppContext);
+  const [isTuning, setIsTuning] = useState(false);
   const handleTuneClick = async () => {
+    setIsTuning(true);
     await trainModel();
     const predictedFix = await predictDevPowerFix(state.targetFlowTime);
     // First, update the central gSttngs store
@@ -85,6 +87,7 @@ export default (props /*: Props */) /*: string */ => {
         value: predictedFix,
       },
     });
+    setIsTuning(false);
   };
   // A toggle to show or hide the config
   const [configToggle, setConfigToggle] = useState(false);
@@ -438,7 +441,9 @@ export default (props /*: Props */) /*: string */ => {
           targetFlowTime=${state.targetFlowTime}
           changeSetting=${changeSetting("targetFlowTime", dispatch)}
         />
-        <button onClick=${handleTuneClick}>Tune</button>
+        <button data-cy="tune-button" onClick=${handleTuneClick} disabled=${isTuning}>
+          ${isTuning ? "Tuning..." : "Tune"}
+        </button>
         <${DevPowerFix}
           devPowerFix=${state.devPowerFix}
           changeSetting=${changeSetting("devPowerFix", dispatch)}
