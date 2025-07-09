@@ -56,6 +56,7 @@ import cssStyles from "./cssStylesConfig";
 import getRawStyles from "./getRawStyles";
 // import dispatchStore from "./dispatchStore";
 import changeSetting from "./changeSetting";
+import { trainModel, predictDevPowerFix } from "../actions/tensorFlow.js";
 
 /*::
 type Props = {
@@ -70,6 +71,17 @@ export default (props /*: Props */) /*: string */ => {
   }, []);
 
   const [state, dispatch] = useContext(AppContext);
+  const handleTuneClick = async () => {
+    await trainModel();
+    const predictedFix = await predictDevPowerFix(state.targetFlowTime);
+    dispatch({
+      type: "changeSetting",
+      payload: {
+        setting: "devPowerFix",
+        value: predictedFix,
+      },
+    });
+  };
   // A toggle to show or hide the config
   const [configToggle, setConfigToggle] = useState(false);
   // Hide or show the config divs when the toggle changes
@@ -421,6 +433,7 @@ export default (props /*: Props */) /*: string */ => {
         <${TargetFlowTime}
           targetFlowTime=${state.targetFlowTime}
           changeSetting=${changeSetting("targetFlowTime", dispatch)}
+          handleTuneClick=${handleTuneClick}
         />
         <${DevPowerFix}
           devPowerFix=${state.devPowerFix}
