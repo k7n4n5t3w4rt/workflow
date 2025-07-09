@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "./gSttngs";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import expdtIsOn from "./expdtIsOn.js";
-import getAllFlwItems from "./getAllFlwItems.js";
+import expdtIsOn from "./expdtIsOn";
+import getAllFlwItems from "./getAllFlwItems";
 
 //------------------------------------------------------------------
 // calculateExpdtWip()

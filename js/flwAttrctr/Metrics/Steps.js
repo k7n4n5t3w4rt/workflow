@@ -5,20 +5,16 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useEffect,
-  useState,
-  useReducer,
-} from "../../../web_modules/preact/hooks.js";
-import { html } from "../../../web_modules/htm/preact.js";
+import { useEffect, useState, useReducer } from "preact/hooks";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { rawStyles } from "../../../web_modules/simplestyle-js.js";
-import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval.js";
-import cssStyles from "./cssStyles.js";
-import getRawStyles from "./getRawStyles.js";
-import updateStepMetrics from "../actions/updateStepMetrics.js";
+import { rawStyles } from "simplestyle-js";
+import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval";
+import cssStyles from "./cssStyles";
+import getRawStyles from "./getRawStyles";
+import updateStepMetrics from "../actions/updateStepMetrics";
 //------------------------------------------------------------------
 // Steps()
 //------------------------------------------------------------------

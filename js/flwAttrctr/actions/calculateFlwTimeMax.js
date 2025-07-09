@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "./gSttngs";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart";
 //------------------------------------------------------------------
 // calculateFlwTimeMax()
 //------------------------------------------------------------------

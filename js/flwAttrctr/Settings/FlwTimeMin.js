@@ -7,12 +7,8 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useEffect,
-  useState,
-  useReducer,
-} from "../../../web_modules/preact/hooks.js";
-import { html } from "../../../web_modules/htm/preact.js";
+import { useEffect, useState, useReducer } from "preact/hooks";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -20,8 +16,8 @@ import {
   isParsableAsNumber,
   isParsableAsBoolean,
   isParsableAsArray,
-} from "../actions/isParsable.js";
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+} from "../actions/isParsable";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: FlwTimeMin
 //------------------------------------------------------------------

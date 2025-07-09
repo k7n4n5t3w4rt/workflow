@@ -2,15 +2,15 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateTotalWipLimits from "./calculateTotalWipLimits.js";
-import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
-import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
-import updateStepMetrics from "./updateStepMetrics.js";
+import calculateTotalWipLimits from "./calculateTotalWipLimits";
+import calculateFlwTimeMax from "./calculateFlwTimeMax";
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart";
+import updateStepMetrics from "./updateStepMetrics";
 //------------------------------------------------------------------
 // FUNCTION: updateClickMetrics()
 //------------------------------------------------------------------

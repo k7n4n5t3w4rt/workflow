@@ -2,14 +2,14 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "./gSttngs";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import cleanInt from "../calculations/cleanInt.js";
-import round2Places from "../calculations/round2Places.js";
-import calculateDevPower from "./calculateDevPower.js";
-import touchStepsCount from "./touchStepsCount.js";
+import cleanInt from "../calculations/cleanInt";
+import round2Places from "../calculations/round2Places";
+import calculateDevPower from "./calculateDevPower";
+import touchStepsCount from "./touchStepsCount";
 //------------------------------------------------------------------
 // globalParamsSettings()
 //------------------------------------------------------------------

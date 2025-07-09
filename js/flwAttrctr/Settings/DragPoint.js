@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { html } from "../../../web_modules/htm/preact.js";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: DragPoint
 //------------------------------------------------------------------
@@ -19,7 +19,10 @@ type Props = {
 export const DragPoint = (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The WIP level (as a % of the limit) at which drag begins to take effect. The default is 0.5.</p>
+      <p>
+        The WIP level (as a % of the limit) at which drag begins to take effect.
+        The default is 0.5.
+      </p>
       <label for="dragPoint">The point at which drag kicks in:</label>
       <output id="dragPointOutput" name="dragPointOutput" for="dragPoint"
         >${(props.dragPoint || 0).toString()}</output

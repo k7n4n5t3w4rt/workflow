@@ -7,42 +7,37 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "../../../web_modules/preact/hooks.js";
-import { html } from "../../../web_modules/htm/preact.js";
-import AutoMode from "./AutoMode.js";
-import BacklogDeath from "./BacklogDeath.js";
-import Death from "./Death.js";
-import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
-import ExpdtQueueLength from "./ExpdtQueueLength.js";
-import FlwItmSizeLimit from "./FlwItmSizeLimit.js";
-import DevUnitsMoveToWork from "./DevUnitsMoveToWork.js";
-import Fps from "./Fps.js";
-import ScaleCm from "./ScaleCm.js";
-import DevPowerFix from "./DevPowerFix.js";
-import Drag from "./Drag.js";
-import DragPoint from "./DragPoint.js";
-import ParetoPoint from "./ParetoPoint.js";
-import TimeBox from "./TimeBox.js";
-import ArrivalRate from "./ArrivalRate.js";
-import { AppContext } from "../../AppContext.js";
+import { useContext, useEffect, useState, useReducer } from "preact/hooks";
+import { html } from "htm/preact";
+import AutoMode from "./AutoMode";
+import BacklogDeath from "./BacklogDeath";
+import Death from "./Death";
+import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor";
+import ExpdtQueueLength from "./ExpdtQueueLength";
+import FlwItmSizeLimit from "./FlwItmSizeLimit";
+import DevUnitsMoveToWork from "./DevUnitsMoveToWork";
+import Fps from "./Fps";
+import ScaleCm from "./ScaleCm";
+import DevPowerFix from "./DevPowerFix";
+import Drag from "./Drag";
+import DragPoint from "./DragPoint";
+import ParetoPoint from "./ParetoPoint";
+import TimeBox from "./TimeBox";
+import ArrivalRate from "./ArrivalRate";
+import { AppContext } from "../../AppContext";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { rawStyles } from "../../../web_modules/simplestyle-js.js";
-import calculateDevUnits from "../actions/calculateDevUnits.js";
-import calculateMovingDevUnits from "../actions/calculateMovingDevUnits.js";
-import changeSetting from "./changeSetting.js";
-import changeStepDevUnits from "./changeStepMovingDevUnits.js";
-import changeStepMovingLimit from "./changeStepMovingLimit.js";
-import cssStyles from "./cssStylesParams.js";
-import getRawStyles from "./getRawStyles.js";
-import hideOrShowParamsDivs from "./hideOrShowParamsDivs.js";
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import { rawStyles } from "simplestyle-js";
+import calculateDevUnits from "../actions/calculateDevUnits";
+import calculateMovingDevUnits from "../actions/calculateMovingDevUnits";
+import changeSetting from "./changeSetting";
+import changeStepDevUnits from "./changeStepMovingDevUnits";
+import changeStepMovingLimit from "./changeStepMovingLimit";
+import cssStyles from "./cssStylesParams";
+import getRawStyles from "./getRawStyles";
+import hideOrShowParamsDivs from "./hideOrShowParamsDivs";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // Params
 //------------------------------------------------------------------

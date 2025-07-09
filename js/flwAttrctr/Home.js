@@ -5,22 +5,13 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "../../../web_modules/preact/hooks.js";
-import { html } from "../../web_modules/htm/preact.js";
+import { useContext, useEffect, useState, useReducer } from "preact/hooks";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import seedString from "../simple_css_seed.js";
-import {
-  rawStyles,
-  createStyles,
-  setSeed,
-} from "../../web_modules/simplestyle-js.js";
+import seedString from "../simple_css_seed";
+import { rawStyles, createStyles, setSeed } from "simplestyle-js";
 
 setSeed(seedString("flwhome"));
 

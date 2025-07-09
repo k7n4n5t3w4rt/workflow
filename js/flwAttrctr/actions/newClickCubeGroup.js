@@ -2,16 +2,16 @@
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
+import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import newClickCube from "./newClickCube.js";
+import newClickCube from "./newClickCube";
 
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group

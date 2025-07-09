@@ -21,9 +21,9 @@
     "three": "^0.136.0"
   },
   "devDependencies": {
-    "browser-sync": "^2.27.7",
+    "@preact/preset-vite": "^2.8.2",
+    "vite": "^5.3.1",
     "cypress": "^14.5.1",
-    "esinstall": "^1.1.7",
     "faucet": "^0.0.4",
     "fixpack": "^3.0.6",
     "flow-bin": "^0.156.0",
@@ -34,17 +34,17 @@
     "wait-on": "^5.1.0"
   },
   "scripts": {
-    "browsersync": "browser-sync start --server",
+    "dev": "vite",
+    "build": "vite build",
     "browsersync:proxy": "browser-sync start --proxy 'localhost:4000' --files \".\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "esinstall": "node esinstall.js",
     "fixpack": "fixpack",
     "flow": "flow check",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "goodthing:update": "rsync -a --exclude='.git' --exclude='docs' --exclude='web_modules' ../goodthing/ ./",
     "lint": "prettier --check \"src/**/*.{js,jsx}\"",
-    "start": "npm run browsersync",
+    "start": "npm run dev",
     "test": "npm run testy && npm run cypress:run",
     "testy": "export RUN_CONTEXT='testy'; node --no-warnings server/testyrunner.js | faucet"
   },

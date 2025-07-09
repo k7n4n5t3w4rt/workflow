@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "./getFlwMpSteps.js";
-import calculateExpdtWip from "./calculateExpdtWip.js";
+import getFlwMpSteps from "./getFlwMpSteps";
+import calculateExpdtWip from "./calculateExpdtWip";
 //------------------------------------------------------------------
 // updateWIP()
 //------------------------------------------------------------------

@@ -2,19 +2,19 @@
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
-import { CSS2DObject } from "../../../web_modules/three/examples/jsm/renderers/CSS2DRenderer.js";
+import * as THREE from "three";
+import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateZPosFromStep from "./calculateZPosFromStep.js";
+import calculateZPosFromStep from "./calculateZPosFromStep";
 
-import createTextCanvas from "./createTextCanvas.js";
+import createTextCanvas from "./createTextCanvas";
 
 export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   // Get the step info

@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState.js";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import pullFlowItem from "./pullFlowItem.js";
-import move from "./click.js_move.js";
-import updateFlowMap from "./updateFlowMap.js";
+import pullFlowItem from "./pullFlowItem";
+import move from "./click.js_move";
+import updateFlowMap from "./updateFlowMap";
 //------------------------------------------------------------------
 // FUNCTION: pullFromPreviousStep()
 //------------------------------------------------------------------

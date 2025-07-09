@@ -1,10 +1,10 @@
 // @flow
-import { h } from "../web_modules/preact.js";
-import Router from "../web_modules/preact-router.js";
-import { html } from "../web_modules/htm/preact.js";
-import { AppProvider } from "./AppContext.js";
-import FlwAttrctr from "./flwAttrctr/FlwAttrctr.js";
-import Settings from "./flwAttrctr/Settings/Config.js";
+import { h } from "preact";
+import Router from "preact-router";
+import { html } from "htm/preact";
+import { AppProvider } from "./AppContext";
+import FlwAttrctr from "./flwAttrctr/FlwAttrctr";
+import Settings from "./flwAttrctr/Settings/Config";
 
 const finishCounter = {
   ALGORITHMS: [],

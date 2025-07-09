@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateDevUnits from "./calculateDevUnits.js";
-import calculateTotalWip from "./calculateTotalWip.js";
+import calculateDevUnits from "./calculateDevUnits";
+import calculateTotalWip from "./calculateTotalWip";
 
 export const autoMoveDevUnits = () => {
   const steps = gSttngs().get("steps");

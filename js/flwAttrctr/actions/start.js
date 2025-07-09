@@ -2,21 +2,21 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import click from "./click.js";
-import populateStepsOnStart from "./populateStepsOnStart.js";
-import ambientLightSetup from "./ambientLightSetup.js";
-import directionalLightSetup from "./directionalLightSetup.js";
-import createValueSphere from "./createValueSphere.js";
-import setEndPosition from "./setEndPosition.js";
-import setStartPosition from "./setStartPosition.js";
-import orientEverythingToTheClickCube from "./orientEverythingToTheClickCube.js";
-import createClickCubeGroup from "./createClickCubeGroup.js";
-import hideReticule from "./hideReticule.js";
+import click from "./click";
+import populateStepsOnStart from "./populateStepsOnStart";
+import ambientLightSetup from "./ambientLightSetup";
+import directionalLightSetup from "./directionalLightSetup";
+import createValueSphere from "./createValueSphere";
+import setEndPosition from "./setEndPosition";
+import setStartPosition from "./setStartPosition";
+import orientEverythingToTheClickCube from "./orientEverythingToTheClickCube";
+import createClickCubeGroup from "./createClickCubeGroup";
+import hideReticule from "./hideReticule";
 //------------------------------------------------------------------
 // FUNCTION: start()
 //------------------------------------------------------------------

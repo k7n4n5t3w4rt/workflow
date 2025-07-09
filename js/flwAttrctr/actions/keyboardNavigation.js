@@ -2,7 +2,7 @@
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
+import * as THREE from "three";
 
 //------------------------------------------------------------------
 // KEYBOARD NAVIGATION HANDLER
@@ -27,9 +27,11 @@ type NavigationConfig = {
  * Creates a keyboard navigation system for 2D camera movement
  * Moves camera relative to its current orientation
  */
-export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { cleanup: () => void, update: () => void } */ => {
+export const createKeyboardNavigation = (
+  config /*: NavigationConfig */,
+) /*: { cleanup: () => void, update: () => void } */ => {
   const { moveSpeed, camera, controller } = config;
-  
+
   // Track which keys are currently pressed
   const keyState /*: KeyboardState */ = {
     up: false,
@@ -42,25 +44,25 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
   const moveVector = new THREE.Vector3();
   const cameraDirection = new THREE.Vector3();
   const cameraRight = new THREE.Vector3();
-  
+
   /**
    * Handle keydown events
    */
   const onKeyDown = (event /*: KeyboardEvent */) /*: void */ => {
     switch (event.code) {
-      case 'ArrowUp':
+      case "ArrowUp":
         keyState.up = true;
         event.preventDefault();
         break;
-      case 'ArrowDown':
+      case "ArrowDown":
         keyState.down = true;
         event.preventDefault();
         break;
-      case 'ArrowLeft':
+      case "ArrowLeft":
         keyState.left = true;
         event.preventDefault();
         break;
-      case 'ArrowRight':
+      case "ArrowRight":
         keyState.right = true;
         event.preventDefault();
         break;
@@ -72,19 +74,19 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
    */
   const onKeyUp = (event /*: KeyboardEvent */) /*: void */ => {
     switch (event.code) {
-      case 'ArrowUp':
+      case "ArrowUp":
         keyState.up = false;
         event.preventDefault();
         break;
-      case 'ArrowDown':
+      case "ArrowDown":
         keyState.down = false;
         event.preventDefault();
         break;
-      case 'ArrowLeft':
+      case "ArrowLeft":
         keyState.left = false;
         event.preventDefault();
         break;
-      case 'ArrowRight':
+      case "ArrowRight":
         keyState.right = false;
         event.preventDefault();
         break;
@@ -130,16 +132,15 @@ export const createKeyboardNavigation = (config /*: NavigationConfig */) /*: { c
   };
 
   // Add event listeners
-  window.addEventListener('keydown', onKeyDown);
-  window.addEventListener('keyup', onKeyUp);
+  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("keyup", onKeyUp);
 
   // Return cleanup function and update function
   return {
     cleanup: () /*: void */ => {
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
     },
-    update: updateMovement
+    update: updateMovement,
   };
 };
-

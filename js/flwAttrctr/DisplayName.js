@@ -2,24 +2,16 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useContext,
-  useEffect,
-  useState,
-} from "../../../web_modules/preact/hooks.js";
-import { html } from "../../../web_modules/htm/preact.js";
-import { AppContext } from "../AppContext.js";
+import { useContext, useEffect, useState } from "preact/hooks";
+import { html } from "htm/preact";
+import { AppContext } from "../AppContext";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import gState from "./actions/gState.js";
-import gSttngs from "./actions/gSttngs.js";
-import seedString from "../simple_css_seed.js";
-import {
-  rawStyles,
-  createStyles,
-  setSeed,
-} from "../../web_modules/simplestyle-js.js";
+import gState from "./actions/gState";
+import gSttngs from "./actions/gSttngs";
+import seedString from "../simple_css_seed";
+import { rawStyles, createStyles, setSeed } from "simplestyle-js";
 
 setSeed(seedString("flwdisplayname"));
 

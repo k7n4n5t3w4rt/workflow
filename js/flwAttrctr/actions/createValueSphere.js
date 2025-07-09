@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORTS: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState.js";
-import gSttngs from "./gSttngs.js";
+import gState from "./gState";
+import gSttngs from "./gSttngs";
 //------------------------------------------------------------------
 // IMPORTS: HELPERS
 //------------------------------------------------------------------
-import newVSphere from "./newVSphere.js";
+import newVSphere from "./newVSphere";
 //------------------------------------------------------------------
 // FUNCTION: createValueSphere()
 //------------------------------------------------------------------

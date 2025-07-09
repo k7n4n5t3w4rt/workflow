@@ -1,5 +1,5 @@
 // @flow
-import { rawStyles } from "../../../web_modules/simplestyle-js.js";
+import { rawStyles } from "simplestyle-js";
 //------------------------------------------------------------------
 // FUNCTION: getRawStyles()
 //------------------------------------------------------------------

@@ -2,16 +2,16 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "./getFlwMpSteps.js";
-import newFlwItem from "./newFlwItem.js";
-import newStepLabel from "./newStepLabel.js";
-import newStepMetrics from "./newStepMetrics.js";
-import expediteNewFlwItems from "./expediteNewFlwItems.js";
+import getFlwMpSteps from "./getFlwMpSteps";
+import newFlwItem from "./newFlwItem";
+import newStepLabel from "./newStepLabel";
+import newStepMetrics from "./newStepMetrics";
+import expediteNewFlwItems from "./expediteNewFlwItems";
 
 //------------------------------------------------------------------
 // populateSteps()

@@ -2,50 +2,42 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./actions/gSttngs.js";
-import gState from "./actions/gState.js";
+import gSttngs from "./actions/gSttngs";
+import gState from "./actions/gState";
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../web_modules/three.js";
-import Stats from "../../web_modules/three/examples/jsm/libs/stats.module.js";
-import { OrbitControls } from "../../web_modules/three/examples/jsm/controls/OrbitControls.js";
-import { TGALoader } from "../../web_modules/three/examples/jsm/loaders/TGALoader.js";
+import * as THREE from "three";
+import Stats from "three/examples/jsm/libs/stats.module";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { TGALoader } from "three/examples/jsm/loaders/TGALoader";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useEffect,
-  useState,
-  useReducer,
-} from "../../web_modules/preact/hooks.js";
-import { html } from "../../web_modules/htm/preact.js";
-import { route } from "../../web_modules/preact-router.js";
+import { useEffect, useState, useReducer } from "preact/hooks";
+import { html } from "htm/preact";
+import { route } from "preact-router";
 //------------------------------------------------------------------
 // COMPONENTS
 //------------------------------------------------------------------
-import Metrics from "./Metrics/Metrics.js";
-import Share from "./Share.js";
-import Controls from "./Controls.js";
-import Params from "./Settings/Params.js";
-import Config from "./Settings/Config.js";
-import LinkedIn from "./LinkedIn.js";
-import Home from "./Home.js";
+import Metrics from "./Metrics/Metrics";
+import Share from "./Share";
+import Controls from "./Controls";
+import Params from "./Settings/Params";
+import Config from "./Settings/Config";
+import LinkedIn from "./LinkedIn";
+import Home from "./Home";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import createStats from "../create_stats.js";
-import init from "./actions/init.js";
-import seedString from "../simple_css_seed.js";
-import {
-  rawStyles,
-  createStyles,
-  setSeed,
-} from "../../web_modules/simplestyle-js.js";
-import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
-import setUpFlwMap from "./actions/setUpFlwMap.js";
-import updateStartButtonText from "./actions/updateStartButtonText.js";
-import defaultPreset from "./actions/defaultPreset.js";
+import createStats from "../create_stats";
+import init from "./actions/init";
+import seedString from "../simple_css_seed";
+import { rawStyles, createStyles, setSeed } from "simplestyle-js";
+import populateStepsGlobal from "./Settings/populateStepsGlobal";
+import setUpFlwMap from "./actions/setUpFlwMap";
+import updateStartButtonText from "./actions/updateStartButtonText";
+import defaultPreset from "./actions/defaultPreset";
 //------------------------------------------------------------------
 // FUNCTION: FlwAttrctr()
 //------------------------------------------------------------------

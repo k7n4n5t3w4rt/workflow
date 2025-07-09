@@ -4,11 +4,11 @@
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
 // Do the rest of the imports
-import * as THREE from "../../../web_modules/three.js";
+import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "./gSttngs";
 
 //------------------------------------------------------------------
 // cameraSetup2D()

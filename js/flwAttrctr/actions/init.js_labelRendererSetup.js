@@ -3,11 +3,11 @@
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
+import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { CSS2DRenderer } from "../../../web_modules/three/examples/jsm/renderers/CSS2DRenderer.js";
+import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
 
 //------------------------------------------------------------------
 // labelRendererSetup()

@@ -2,17 +2,12 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { html } from "../../../web_modules/htm/preact.js";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
-import {
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "../../../web_modules/preact/hooks.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
+import { useContext, useEffect, useState, useReducer } from "preact/hooks";
 //------------------------------------------------------------------
 // FUNCTION: Fps
 //------------------------------------------------------------------

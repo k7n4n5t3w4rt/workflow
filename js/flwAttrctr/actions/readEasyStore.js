@@ -2,8 +2,8 @@
 //---------------------------------------------------------------------------
 // IMPORT: HELPERS
 //---------------------------------------------------------------------------
-import easyStorage from "./easyStorage.js";
-import isParsable from "./isParsable.js";
+import easyStorage from "./easyStorage";
+import isParsable from "./isParsable";
 //---------------------------------------------------------------------------
 // readEasyStore()
 //---------------------------------------------------------------------------

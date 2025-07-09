@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import makeItOneClickOlder from "./makeItOneClickOlder.js";
-import getAllFlwItems from "./getAllFlwItems.js";
+import makeItOneClickOlder from "./makeItOneClickOlder";
+import getAllFlwItems from "./getAllFlwItems";
 //------------------------------------------------------------------
 // updateAge()
 //------------------------------------------------------------------

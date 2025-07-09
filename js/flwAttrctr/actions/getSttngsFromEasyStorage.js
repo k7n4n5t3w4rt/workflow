@@ -2,14 +2,14 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "./gSttngs";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-//import readEasyStore from "./readEasyStore.js";
-import readLocalStore from "./readLocalStore.js";
-import easyStorage from "./easyStorage.js";
-import isParsable from "./isParsable.js";
+//import readEasyStore from "./readEasyStore";
+import readLocalStore from "./readLocalStore";
+import easyStorage from "./easyStorage";
+import isParsable from "./isParsable";
 //------------------------------------------------------------------
 // getSttngsFromEasyStorage()
 //------------------------------------------------------------------

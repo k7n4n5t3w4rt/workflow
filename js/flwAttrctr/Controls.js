@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./actions/gSttngs.js";
-import gState from "./actions/gState.js";
+import gSttngs from "./actions/gSttngs";
+import gState from "./actions/gState";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -12,18 +12,18 @@ import {
   useEffect,
   useState,
   useReducer,
-} from "../../web_modules/preact/hooks.js";
-import { AppContext } from "../AppContext.js";
-import { html } from "../../web_modules/htm/preact.js";
+} from "preact/hooks";
+import { AppContext } from "../AppContext";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import seedString from "../simple_css_seed.js";
+import seedString from "../simple_css_seed";
 import {
   rawStyles,
   createStyles,
   setSeed,
-} from "../../web_modules/simplestyle-js.js";
+} from "simplestyle-js";
 
 setSeed(seedString("flwcontrols"));
 

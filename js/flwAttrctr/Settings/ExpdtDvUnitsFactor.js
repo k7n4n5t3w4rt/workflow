@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { html } from "../../../web_modules/htm/preact.js";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: ExpdtDvUnitsFactor
 //------------------------------------------------------------------
@@ -19,7 +19,10 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The percentage of dev units that will focus on expedited items. The default is 1 (100%).</p>
+      <p>
+        The percentage of dev units that will focus on expedited items. The
+        default is 1 (100%).
+      </p>
       <label for="expdtDvUnitsFactor"
         >% of dev units focused on expedited items:</label
       >

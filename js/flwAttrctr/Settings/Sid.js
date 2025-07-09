@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { useContext } from "../../../web_modules/preact/hooks.js";
-import { html } from "../../../web_modules/htm/preact.js";
-import { AppContext } from "../../AppContext.js";
+import { useContext } from "preact/hooks";
+import { html } from "htm/preact";
+import { AppContext } from "../../AppContext";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: Sid()
 //------------------------------------------------------------------

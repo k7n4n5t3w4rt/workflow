@@ -7,7 +7,7 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "../actions/getFlwMpSteps.js";
+import getFlwMpSteps from "../actions/getFlwMpSteps";
 //------------------------------------------------------------------
 // FUNCTION: updateStepsStateFromGlobalState()
 //------------------------------------------------------------------

@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import getFlowStepLimit from "./getFlowStepLimit.js";
-import getAvailableLimitForStep from "./getAvailableLimitForStep.js";
+import getFlowStepLimit from "./getFlowStepLimit";
+import getAvailableLimitForStep from "./getAvailableLimitForStep";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import pullFromPreviousStep from "./pullFromPreviousStep.js";
+import pullFromPreviousStep from "./pullFromPreviousStep";
 //------------------------------------------------------------------
 // checkStepLimitAndPull()
 //------------------------------------------------------------------

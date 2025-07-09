@@ -1,5 +1,5 @@
 // @flow
-import gModel from "./gModel.js";
+import gModel from "./gModel";
 
 export default () /*: GlobalModel */ => {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis

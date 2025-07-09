@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { html } from "../../../web_modules/htm/preact.js";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: ExpdtQueueLength
 //------------------------------------------------------------------
@@ -19,7 +19,10 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The number of expedited (unplanned) work items that can be in the system at any one time. The default is 0.</p>
+      <p>
+        The number of expedited (unplanned) work items that can be in the system
+        at any one time. The default is 0.
+      </p>
       <label for="expdtQueueLength"
         >Number of expedited items in the system:</label
       >

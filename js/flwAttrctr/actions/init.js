@@ -3,20 +3,20 @@
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
+import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { init2D } from "./init.js_init2D.js";
-import { init3D } from "./init.js_init3D.js";
+import { init2D } from "./init.js_init2D";
+import { init3D } from "./init.js_init3D";
 // Actions only used in this file
-import rendererSetup from "./init.js_rendererSetup.js";
-import startButtonSetup from "./init.js_startButtonSetup.js";
+import rendererSetup from "./init.js_rendererSetup";
+import startButtonSetup from "./init.js_startButtonSetup";
 
 //------------------------------------------------------------------
 // FUNCTION: init()

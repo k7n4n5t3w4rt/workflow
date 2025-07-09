@@ -486,120 +486,120 @@ type VQueue = {
   mean: () => number,
 };
 
+declare module "preact/hooks" {
+  declare module.exports: any;
+}
+
 //------------------------------------------------------------------
 // MODULES
 //------------------------------------------------------------------
-declare module "finalhandler" {
-  declare module.exports: any;
-}
+// declare module "finalhandler" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/immer.js" {
-  declare module.exports: any;
-}
+// declare module "immer" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/preact.js" {
-  declare module.exports: any;
-}
+// declare module "preact" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/preact-render-to-string.js" {
-  declare module.exports: any;
-}
+// declare module "preact-render-to-string" {
+//   declare module.exports: any;
+// }
 
-declare module "serve-static" {
-  declare module.exports: any;
-}
+// declare module "serve-static" {
+//   declare module.exports: any;
+// }
 
-declare module "glob" {
-  declare module.exports: any;
-}
+// declare module "glob" {
+//   declare module.exports: any;
+// }
 
-//------------------------------------------------------------------
-// WEB_MODULES: Level 1
-//------------------------------------------------------------------
+// //------------------------------------------------------------------
+// // WEB_MODULES: Level 1
+// //------------------------------------------------------------------
 
-declare module "../web_modules/should/as-function.js" {
-  declare module.exports: any;
-}
+// declare module "should/as-function" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/htm/preact.js" {
-  declare module.exports: any;
-}
+// declare module "htm/preact" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/preact-router.js" {
-  declare module.exports: any;
-}
+// declare module "preact-router" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/preact-router.js" {
-  declare module.exports: any;
-}
+// declare module "preact-router" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/preact/hooks.js" {
-  declare module.exports: any;
-}
+// declare module "preact/hooks" {
+//   declare module.exports: any;
+// }
 
-declare module "../web_modules/history.js" {
-  declare module.exports: any;
-}
+// declare module "history" {
+//   declare module.exports: any;
+// }
 
-//------------------------------------------------------------------
-// WEB_MODULES: Level 2
-//------------------------------------------------------------------
+// //------------------------------------------------------------------
+// // WEB_MODULES: Level 2
+// //------------------------------------------------------------------
 
-declare module "../../web_modules/htm/preact.js" {
-  declare module.exports: any;
-}
+// declare module "htm/preact" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/preact/hooks.js" {
-  declare module.exports: any;
-}
+// declare module "preact/hooks" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/simplestyle-js.js" {
-  declare module.exports: any;
-}
+// declare module "simplestyle-js" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/three.js" {
-  declare module.exports: any;
-}
+// declare module "three" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/three/examples/jsm/controls/OrbitControls.js" {
-  declare module.exports: any;
-}
+// declare module "three/examples/jsm/controls/OrbitControls" {
+//   declare module.exports: any;
+// }
 
-//------------------------------------------------------------------
-// WEB_MODULES: Level 3
-//------------------------------------------------------------------
+// //------------------------------------------------------------------
+// // WEB_MODULES: Level 3
+// //------------------------------------------------------------------
 
-declare module "../../../web_modules/htm/preact.js" {
-  declare module.exports: any;
-}
+// declare module "htm/preact" {
+//   declare module.exports: any;
+// }
 
-declare module "../../../web_modules/preact/hooks.js" {
-  declare module.exports: any;
-}
+// declare module "simplestyle-js" {
+//   declare module.exports: any;
+// }
 
-declare module "../../../web_modules/simplestyle-js.js" {
-  declare module.exports: any;
-}
+// declare module "three" {
+//   declare module.exports: any;
+// }
 
-declare module "../../../web_modules/three.js" {
-  declare module.exports: any;
-}
+// declare module "three/examples/jsm/libs/stats.module" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/three/examples/jsm/libs/stats.module.js" {
-  declare module.exports: any;
-}
+// declare module "three/examples/jsm/controls/OrbitControls" {
+//   declare module.exports: any;
+// }
 
-declare module "../../../web_modules/three/examples/jsm/controls/OrbitControls.js" {
-  declare module.exports: any;
-}
+// declare module "three/examples/jsm/loaders/TGALoader" {
+//   declare module.exports: any;
+// }
 
-declare module "../../web_modules/three/examples/jsm/loaders/TGALoader.js" {
-  declare module.exports: any;
-}
-
-declare module "../../../web_modules/three/examples/jsm/renderers/CSS2DRenderer.js" {
-  declare module.exports: any;
-}
-declare module "../../../web_modules/animejs.js" {
-  declare module.exports: any;
-}
+// declare module "three/examples/jsm/renderers/CSS2DRenderer" {
+//   declare module.exports: any;
+// }
+// declare module "animejs" {
+//   declare module.exports: any;
+// }

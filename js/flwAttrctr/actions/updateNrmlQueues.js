@@ -2,9 +2,9 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
-import expdtIsOn from "./expdtIsOn.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
+import expdtIsOn from "./expdtIsOn";
 //------------------------------------------------------------------
 // updateQueues()
 //------------------------------------------------------------------

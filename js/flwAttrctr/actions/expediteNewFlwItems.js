@@ -7,10 +7,10 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
-import expdtIsOn from "./expdtIsOn.js";
-import gState from "./gState.js";
-import gSttngs from "./gSttngs.js";
-import setFlowItemColor from "./setFlowItemColor.js";
+import expdtIsOn from "./expdtIsOn";
+import gState from "./gState";
+import gSttngs from "./gSttngs";
+import setFlowItemColor from "./setFlowItemColor";
 //------------------------------------------------------------------
 // expediteNewFlwItems();
 //------------------------------------------------------------------

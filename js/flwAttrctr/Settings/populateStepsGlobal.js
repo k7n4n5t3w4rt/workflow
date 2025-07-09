@@ -7,7 +7,7 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpFlwMap from "../actions/setUpFlwMap.js";
+import setUpFlwMap from "../actions/setUpFlwMap";
 //------------------------------------------------------------------
 // populateStepsGlobal()
 //------------------------------------------------------------------

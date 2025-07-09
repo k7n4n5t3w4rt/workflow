@@ -6,7 +6,7 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import isParsable from "../actions/isParsable.js";
+import isParsable from "../actions/isParsable";
 //------------------------------------------------------------------
 // changeStepLimit()
 //------------------------------------------------------------------

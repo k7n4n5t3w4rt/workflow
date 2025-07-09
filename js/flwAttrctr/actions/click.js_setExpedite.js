@@ -5,13 +5,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState.js";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "./getFlwMpSteps.js";
-import countExpeditedFlwItems from "./countExpeditedFlwItems.js";
-import expediteNewFlwItems from "./expediteNewFlwItems.js";
+import getFlwMpSteps from "./getFlwMpSteps";
+import countExpeditedFlwItems from "./countExpeditedFlwItems";
+import expediteNewFlwItems from "./expediteNewFlwItems";
 
 //------------------------------------------------------------------
 // setExpedite(flwItem)

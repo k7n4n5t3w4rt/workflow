@@ -2,11 +2,11 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { html } from "../../../web_modules/htm/preact.js";
+import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: Drag
 //------------------------------------------------------------------
@@ -19,7 +19,10 @@ type Props = {
 export const Drag = (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The percentage of dev capacity that is lost when there is too much WIP. The default is 0.</p>
+      <p>
+        The percentage of dev capacity that is lost when there is too much WIP.
+        The default is 0.
+      </p>
       <label for="drag">Dev. capacity lost when there is too much WIP:</label>
       <output id="dragOutput" name="dragOutput" for="drag"
         >${(props.drag || 0).toString()}</output

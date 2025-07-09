@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
+import gSttngs from "./gSttngs";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import removeFlowItem from "./removeFlowItem.js";
-import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
+import removeFlowItem from "./removeFlowItem";
+import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap";
 //------------------------------------------------------------------
 // theNonDead()
 //------------------------------------------------------------------

@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import { html } from "../../../web_modules/htm/preact.js";
+import { html } from "htm/preact";
 
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import setUpdtngCnfg from "./setUpdtngCnfg";
 //------------------------------------------------------------------
 // FUNCTION: Death
 //------------------------------------------------------------------
@@ -20,7 +20,10 @@ type Props = {
 export default (props /*: Props */) /*: string */ => {
   return html`
     <div>
-      <p>The number of days after which a work item will be removed from the system (0 = no limit). The default is 0.</p>
+      <p>
+        The number of days after which a work item will be removed from the
+        system (0 = no limit). The default is 0.
+      </p>
       <label for="death">Lifespan for work items (0 = no limit):</label>
       <output id="deathOutput" name="deathOutput" for="death"
         >${(props.death || 0).toString()}</output

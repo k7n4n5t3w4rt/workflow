@@ -2,16 +2,16 @@
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
-import * as THREE from "../../../web_modules/three.js";
+import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs.js";
-import gState from "./gState.js";
+import gSttngs from "./gSttngs";
+import gState from "./gState";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import initializeHitTestSource from "./init.js_render.js_initializeHitTestSource.js";
+import initializeHitTestSource from "./init.js_render.js_initializeHitTestSource";
 //------------------------------------------------------------------
 // FUNCTION: render()
 //------------------------------------------------------------------
