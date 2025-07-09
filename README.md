@@ -34,7 +34,7 @@ This project is a web application built with Preact and HTM, designed to run dir
     ```
 
 4.  **Start the development server:**
-    This will serve the application locally at `http://localhost:3000`.
+    This will serve the application locally at `http://localhost:5174`.
     ```bash
     npm run browsersync
     ```

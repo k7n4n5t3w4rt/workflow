@@ -71,6 +71,7 @@ type GlobalSettings = {
     colorGrey: string,
     death: number,
     devPowerFix: number,
+  targetFlowTime: number,
     devUnits: number,
     dfntnOfReady: number,
     dragMidpoint: number,

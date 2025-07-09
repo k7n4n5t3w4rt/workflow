@@ -1,12 +1,13 @@
 {
   "name": "flow-attractor",
   "description": "Visualising flow of work.",
-  "version": "0.28.9.0",
+  "version": "0.28.9.1",
   "author": "Kynan Stewart Hughes",
   "bugs": {
     "url": "https://github.com/k7n4n5t3w4rt/workflow/issues"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
     "animejs": "^3.2.1",
     "finalhandler": "^1.1.2",
     "history": "^4.10.1",
@@ -22,7 +23,6 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.2",
-    "vite": "^5.3.1",
     "cypress": "^14.5.1",
     "faucet": "^0.0.4",
     "fixpack": "^3.0.6",
@@ -31,6 +31,7 @@
     "nodemon": "^2.0.2",
     "prettier": "^2.0.0",
     "should": "^13.2.3",
+    "vite": "^5.3.1",
     "wait-on": "^5.1.0"
   },
   "scripts": {

@@ -11,7 +11,8 @@ import { html } from "htm/preact";
 import ArrivalRate from "./ArrivalRate";
 import FlwTimeMin from "./FlwTimeMin";
 import DevUnits from "./DevUnits";
-import DevPowerFix from "./DevPowerFix";
+import DevPowerFix from "./DevPowerFix.js";
+import TargetFlowTime from "./TargetFlowTime.js";
 import Drag from "./Drag";
 import DragPoint from "./DragPoint";
 import ParetoPoint from "./ParetoPoint";
@@ -417,25 +418,14 @@ export default (props /*: Props */) /*: string */ => {
 
         <h2 className=${styles.legend}>Tuning</h2>
 
-        <div className=${styles.field}>
-          <${DevPowerFix}
-            devPowerFix=${state.devPowerFix}
-            changeSetting=${changeSetting("devPowerFix", dispatch)}
-          />
-          <div className=${styles.checkboxContainer}>
-            <input
-              type="checkbox"
-              className=${styles.editableCheckbox}
-              id="devPowerFixParam"
-              name="devPowerFixParam"
-              onChange=${changeSetting("devPowerFixParam", dispatch)}
-              checked=${state.devPowerFixParam === true}
-            />
-            <label className=${
-              styles.legendSub
-            }for="devPowerFixParam">Editable</label>
-          </div>
-        </div>
+        <${TargetFlowTime}
+          targetFlowTime=${state.targetFlowTime}
+          changeSetting=${changeSetting("targetFlowTime", dispatch)}
+        />
+        <${DevPowerFix}
+          devPowerFix=${state.devPowerFix}
+          changeSetting=${changeSetting("devPowerFix", dispatch)}
+        />
       </fieldset>
     </div>
     <div

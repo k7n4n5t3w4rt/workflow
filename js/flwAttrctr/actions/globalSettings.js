@@ -32,6 +32,7 @@ export default async () /*: Promise<void> */ => {
   //------------------------------------------------------------------
   // A fix to get the flow time correct
   const devPowerFix = await gSttngs().setIfNotCached("devPowerFix", 1);
+  const targetFlowTime = await gSttngs().setIfNotCached("targetFlowTime", 10);
   // The drag that kicks in when the ratio of dev units to WIP is 1:2
   const drag = await gSttngs().setIfNotCached("drag", 0);
   // The point at which the drag kicks in 1:2 = 0.5, 1:3 = 0.33, 1:4 = 0.25
