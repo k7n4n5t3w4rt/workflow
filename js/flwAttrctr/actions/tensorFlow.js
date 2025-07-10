@@ -31,7 +31,9 @@ export const trainModel = async () /*: Promise<void> */ => {
   }
 
   const mockInputs = [120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5];
-  const mockLabels = [0.4, 0.45, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.2, 2.5, 4.0, 5.0];
+  const mockLabels = [
+    0.4, 0.45, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.2, 2.5, 4.0, 5.0,
+  ];
 
   // Normalize the data to a 0-1 range to stabilize training
   const inputTensor = tf.tensor2d(mockInputs, [mockInputs.length, 1]);
@@ -42,8 +44,12 @@ export const trainModel = async () /*: Promise<void> */ => {
   labelMin = labelTensor.min();
   labelMax = labelTensor.max();
 
-  const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
-  const normalizedLabels = labelTensor.sub(labelMin).div(labelMax.sub(labelMin));
+  const normalizedInputs = inputTensor
+    .sub(inputMin)
+    .div(inputMax.sub(inputMin));
+  const normalizedLabels = labelTensor
+    .sub(labelMin)
+    .div(labelMax.sub(labelMin));
 
   if (model) {
     await model.fit(normalizedInputs, normalizedLabels, {
@@ -67,18 +73,34 @@ export const predictDevPowerFix = async (
   }
 
   // Normalize the input using the same min/max values from training
-  const normalizedInput = tf.tensor2d([targetFlowTime], [1, 1]).sub(inputMin).div(inputMax.sub(inputMin));
+  const numericTarget = parseFloat(targetFlowTime) || 0;
+  if (numericTarget < 0) {
+    return 1; // Return default if prediction is not a number
+  }
+  const normalizedInput = tf
+    .tensor2d([numericTarget], [1, 1])
+    .sub(inputMin)
+    .div(inputMax.sub(inputMin));
 
   if (model) {
     const prediction = model.predict(normalizedInput);
-    
+
     // De-normalize the output
-    const denormalizedPrediction = prediction.mul(labelMax.sub(labelMin)).add(labelMin);
-    
+    const denormalizedPrediction = prediction
+      .mul(labelMax.sub(labelMin))
+      .add(labelMin);
+
     const [predictedValue] = await denormalizedPrediction.data();
     console.log("Raw predicted value:", predictedValue);
-    const roundedPrediction = Math.round(predictedValue * 100) / 100;
-    return roundedPrediction || 1;
+
+    if (isNaN(predictedValue)) {
+      return 1; // Return default if prediction is not a number
+    }
+
+    // Ensure the prediction is never below a sensible minimum (e.g., 0.01)
+    const clampedPrediction = Math.max(0.01, predictedValue);
+    const roundedPrediction = Math.round(clampedPrediction * 100) / 100;
+    return roundedPrediction;
   }
 
   return 1;

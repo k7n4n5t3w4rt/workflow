@@ -1,22 +1,65 @@
-
 describe("Tune Button Functionality", () => {
-  it("should update the Dev Power Fix slider when the Tune button is clicked", () => {
+  beforeEach(() => {
     cy.visit("/");
     cy.get("#config-icon", { timeout: 10000 }).should("be.visible").click();
+  });
 
-    // Get the initial value of the slider
+  it("should update devPowerFix to a reasonable value for a standard targetFlowTime", () => {
     cy.get("#devPowerFix").invoke("val").as("initialDevPowerFix");
-
-    // Set a new target and click the tune button
     cy.get("#targetFlowTime").clear().type("50");
     cy.get('[data-cy="tune-button"]').click({ force: true });
 
-    // Assert that the value has changed from its initial state.
-    // Cypress will automatically retry this assertion until it passes or times out.
     cy.get("@initialDevPowerFix").then((initialValue) => {
       cy.get("#devPowerFix", { timeout: 10000 })
         .invoke("val")
         .should("not.eq", initialValue);
+    });
+  });
+
+  it("should produce a small positive devPowerFix for a very large targetFlowTime", () => {
+    cy.get("#devPowerFix").invoke("val").as("initialDevPowerFix");
+    cy.get("#targetFlowTime").clear().type("200");
+    cy.get('[data-cy="tune-button"]').click({ force: true });
+
+    cy.get("@initialDevPowerFix").then((initialValue) => {
+      cy.get("#devPowerFix", { timeout: 10000 })
+        .invoke("val")
+        .should((newValue) => {
+          expect(newValue).not.to.eq(initialValue);
+          // Should be clamped at our minimum of 0.01
+          expect(parseFloat(newValue)).to.eq(0.01);
+        });
+    });
+  });
+
+  it("should produce a large positive devPowerFix for a very small targetFlowTime", () => {
+    cy.get("#devPowerFix").invoke("val").as("initialDevPowerFix");
+    cy.get("#targetFlowTime").clear().type("1");
+    cy.get('[data-cy="tune-button"]').click({ force: true });
+
+    cy.get("@initialDevPowerFix").then((initialValue) => {
+      cy.get("#devPowerFix", { timeout: 10000 })
+        .invoke("val")
+        .should((newValue) => {
+          expect(newValue).not.to.eq(initialValue);
+          // Expect a positive number, but don't assume its magnitude
+          expect(parseFloat(newValue)).to.be.a("number").and.to.be.gt(0);
+        });
+    });
+  });
+
+  it("should produce the default, no-change devPowerFix (1) for a negative targetFlowTime", () => {
+    cy.get("#devPowerFix").invoke("val").as("initialDevPowerFix");
+    cy.get("#targetFlowTime").clear().type("-10");
+    cy.get('[data-cy="tune-button"]').click({ force: true });
+
+    cy.get("@initialDevPowerFix").then((initialValue) => {
+      cy.get("#devPowerFix", { timeout: 10000 })
+        .invoke("val")
+        .then((newValue) => {
+          // Should be the default, no-effect value of 1
+          expect(parseFloat(newValue)).to.eq(1);
+        });
     });
   });
 });

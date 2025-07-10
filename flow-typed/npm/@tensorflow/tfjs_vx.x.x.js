@@ -13,5 +13,9 @@ declare module '@tensorflow/tfjs' {
     dense(config: { units: number, inputShape: [number] }): any,
   };
 
+  declare export var train: {
+    sgd(learningRate: number): any,
+  };
+
   declare export function tensor2d(data: any, shape?: [number, number]): any;
 }
