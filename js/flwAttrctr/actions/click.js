@@ -73,4 +73,30 @@ export const onClickComplete = () /*: void */ => {
   click();
   // }
 };
+
+//------------------------------------------------------------------
+// headlessClickLoop()
+//------------------------------------------------------------------
+export const headlessClickLoop = () /*: void */ => {
+  // Globals
+  const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
+  const timeBox = gSttngs().get("timeBox");
+  const clicks = gState().get("clicks");
+  if (gSttngs().get("devUnitsMoveToWork")) {
+    autoMoveDevUnits();
+  }
+  // NOTE: The order of these function calls is important
+  addNewFlowItemsAtArrivalRate();
+  resizeVSphere();
+  updateAge();
+  updateDays();
+  recursivelyPullFlwItems();
+  updateNrmlWip();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  updateClickMetrics();
+  if (gState().get("clicks") === 1) {
+    updateTimeBoxMetrics();
+  }
+};
+
 export default click;
