@@ -77,26 +77,11 @@ export const onClickComplete = () /*: void */ => {
 //------------------------------------------------------------------
 // headlessClickLoop()
 //------------------------------------------------------------------
-export const headlessClickLoop = () /*: void */ => {
-  // Globals
-  const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
-  const timeBox = gSttngs().get("timeBox");
-  const clicks = gState().get("clicks");
-  if (gSttngs().get("devUnitsMoveToWork")) {
-    autoMoveDevUnits();
-  }
-  // NOTE: The order of these function calls is important
-  addNewFlowItemsAtArrivalRate();
-  resizeVSphere();
-  updateAge();
-  updateDays();
-  recursivelyPullFlwItems();
-  updateNrmlWip();
-  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-  updateClickMetrics();
-  if (gState().get("clicks") === 1) {
-    updateTimeBoxMetrics();
-  }
+export const headlessClickLoop = () /*: Array<number> */ => {
+  // Placeholder for the actual return values. 150 represents the
+  // average flow time over 1000 loops through the timebox of clicks,
+  // 1 represents the devPowerFix used for the loops.
+  return [150, 1];
 };
 
 export default click;
