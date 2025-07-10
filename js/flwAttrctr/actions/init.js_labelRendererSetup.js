@@ -7,7 +7,7 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
+import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 //------------------------------------------------------------------
 // labelRendererSetup()

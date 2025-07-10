@@ -3,7 +3,7 @@
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
 import * as THREE from "three";
-import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
+import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
