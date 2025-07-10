@@ -2,9 +2,9 @@
 import { h } from "preact";
 import Router from "preact-router";
 import { html } from "htm/preact";
-import { AppProvider } from "./AppContext";
-import FlwAttrctr from "./flwAttrctr/FlwAttrctr";
-import Settings from "./flwAttrctr/Settings/Config";
+import { AppProvider } from "./AppContext.js";
+import FlwAttrctr from "./flwAttrctr/FlwAttrctr.js";
+import Settings from "./flwAttrctr/Settings/Config.js";
 
 const finishCounter = {
   ALGORITHMS: [],

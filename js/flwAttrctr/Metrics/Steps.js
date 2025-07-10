@@ -11,10 +11,10 @@ import { html } from "htm/preact";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "simplestyle-js";
-import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval";
-import cssStyles from "./cssStyles";
-import getRawStyles from "./getRawStyles";
-import updateStepMetrics from "../actions/updateStepMetrics";
+import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval.js";
+import cssStyles from "./cssStyles.js";
+import getRawStyles from "./getRawStyles.js";
+import updateStepMetrics from "../actions/updateStepMetrics.js";
 //------------------------------------------------------------------
 // Steps()
 //------------------------------------------------------------------

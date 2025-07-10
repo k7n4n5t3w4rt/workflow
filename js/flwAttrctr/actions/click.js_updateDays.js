@@ -2,20 +2,20 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "./getFlwMpSteps";
-import skipForWip from "./skipForWip";
-import makeItOneClickOlder from "./makeItOneClickOlder";
-import expediteNewFlwItems from "./expediteNewFlwItems";
-import getAllFlwItems from "./getAllFlwItems";
-import theNonDead from "./theNonDead";
-import inTouchWithDaysRemaining from "./click.js_updateDays.js_inTouchWithDaysRemaining";
-import updateDaysRemainingExpdt from "./updateDaysRemainingExpdt";
-import updateDaysRemainingNrml from "./updateDaysRemainingNrml";
+import getFlwMpSteps from "./getFlwMpSteps.js";
+import skipForWip from "./skipForWip.js";
+import makeItOneClickOlder from "./makeItOneClickOlder.js";
+import expediteNewFlwItems from "./expediteNewFlwItems.js";
+import getAllFlwItems from "./getAllFlwItems.js";
+import theNonDead from "./theNonDead.js";
+import inTouchWithDaysRemaining from "./click.js_updateDays.js_inTouchWithDaysRemaining.js";
+import updateDaysRemainingExpdt from "./updateDaysRemainingExpdt.js";
+import updateDaysRemainingNrml from "./updateDaysRemainingNrml.js";
 //------------------------------------------------------------------
 // updateDays()
 //------------------------------------------------------------------

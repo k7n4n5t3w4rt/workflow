@@ -7,10 +7,10 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateTotalWipLimits from "../actions/calculateTotalWipLimits";
-import calculateFlwTimeMax from "../actions/calculateFlwTimeMax";
-import calculateFlwTimeAtStart from "../actions/calculateFlwTimeAtStart";
-import updateStepMetrics from "../actions/updateStepMetrics";
+import calculateTotalWipLimits from "../actions/calculateTotalWipLimits.js";
+import calculateFlwTimeMax from "../actions/calculateFlwTimeMax.js";
+import calculateFlwTimeAtStart from "../actions/calculateFlwTimeAtStart.js";
+import updateStepMetrics from "../actions/updateStepMetrics.js";
 //------------------------------------------------------------------
 // updateMetricsOnClickInterval()
 //------------------------------------------------------------------

@@ -4,13 +4,13 @@
 //------------------------------------------------------------------
 import { useContext, useEffect, useState } from "preact/hooks";
 import { html } from "htm/preact";
-import { AppContext } from "../AppContext";
+import { AppContext } from "../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import gState from "./actions/gState";
-import gSttngs from "./actions/gSttngs";
-import seedString from "../simple_css_seed";
+import gState from "./actions/gState.js";
+import gSttngs from "./actions/gSttngs.js";
+import seedString from "../simple_css_seed.js";
 import { rawStyles, createStyles, setSeed } from "simplestyle-js";
 
 setSeed(seedString("flwdisplayname"));

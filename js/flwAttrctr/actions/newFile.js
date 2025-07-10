@@ -1,9 +1,9 @@
-import gSttngs from "./gSttngs";
-import expdtIsOn from "./expdtIsOn";
-import calculateDevPower from "./calculateDevPower";
-import calculateDevPowerFactor from "./calculateDevPowerFactor";
-import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart";
-import calculateTouchSteps from "./calculateTouchSteps";
+import gSttngs from "./gSttngs.js";
+import expdtIsOn from "./expdtIsOn.js";
+import calculateDevPower from "./calculateDevPower.js";
+import calculateDevPowerFactor from "./calculateDevPowerFactor.js";
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
+import calculateTouchSteps from "./calculateTouchSteps.js";
 
 //------------------------------------------------------------------
 // applyDevCapacityAllFlwItems()

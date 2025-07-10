@@ -10,7 +10,7 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 //------------------------------------------------------------------
 // FUNCTION: DevPowerFix
 //------------------------------------------------------------------

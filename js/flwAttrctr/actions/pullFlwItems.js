@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "./getFlwMpSteps";
-import checkStepLimitAndPull from "./checkStepLimitAndPull";
+import getFlwMpSteps from "./getFlwMpSteps.js";
+import checkStepLimitAndPull from "./checkStepLimitAndPull.js";
 //------------------------------------------------------------------
 // pullFlwItems()
 //------------------------------------------------------------------

@@ -2,14 +2,14 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import expdtIsOn from "./expdtIsOn";
-import updateExpdtQueues from "./updateExpdtQueues";
-import updateNrmlQueues from "./updateNrmlQueues";
+import expdtIsOn from "./expdtIsOn.js";
+import updateExpdtQueues from "./updateExpdtQueues.js";
+import updateNrmlQueues from "./updateNrmlQueues.js";
 //------------------------------------------------------------------
 // filterDoneItems()
 //------------------------------------------------------------------

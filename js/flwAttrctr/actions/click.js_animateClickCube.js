@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import anime from "animejs";
-import { onClickComplete } from "./click";
+import { onClickComplete } from "./click.js";
 //------------------------------------------------------------------
 // animateClickCube()
 //------------------------------------------------------------------

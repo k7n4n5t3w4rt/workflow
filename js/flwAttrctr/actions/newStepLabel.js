@@ -7,14 +7,14 @@ import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateZPosFromStep from "./calculateZPosFromStep";
+import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
-import createTextCanvas from "./createTextCanvas";
+import createTextCanvas from "./createTextCanvas.js";
 
 export const newStepLabel = (stepIndex /*: number */) /*: void */ => {
   // Get the step info

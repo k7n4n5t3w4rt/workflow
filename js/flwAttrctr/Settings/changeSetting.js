@@ -6,12 +6,12 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import isParsable from "../actions/isParsable";
-// import calculateFlwTimeMax from "../actions/calculateFlwTimeMax";
-import touchStepsCount from "../actions/touchStepsCount";
-// import calculateDevUnits from "../actions/calculateDevUnits";
-import calculateDevPower from "../actions/calculateDevPower";
-import updateStartButtonText from "../actions/updateStartButtonText";
+import isParsable from "../actions/isParsable.js";
+// import calculateFlwTimeMax from "../actions/calculateFlwTimeMax.js";
+import touchStepsCount from "../actions/touchStepsCount.js";
+// import calculateDevUnits from "../actions/calculateDevUnits.js";
+import calculateDevPower from "../actions/calculateDevPower.js";
+import updateStartButtonText from "../actions/updateStartButtonText.js";
 //------------------------------------------------------------------
 // FUNCTION: changeSetting()
 //------------------------------------------------------------------

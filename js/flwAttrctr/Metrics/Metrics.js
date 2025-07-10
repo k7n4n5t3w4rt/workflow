@@ -8,14 +8,14 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 import { useEffect, useState, useReducer } from "preact/hooks";
 import { html } from "htm/preact";
-import Steps from "./Steps";
+import Steps from "./Steps.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "simplestyle-js";
-import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval";
-import cssStyles from "./cssStyles";
-import getRawStyles from "./getRawStyles";
+import updateMetricsOnClickInterval from "./updateMetricsOnClickInterval.js";
+import cssStyles from "./cssStyles.js";
+import getRawStyles from "./getRawStyles.js";
 //------------------------------------------------------------------
 // Metrics()
 //------------------------------------------------------------------

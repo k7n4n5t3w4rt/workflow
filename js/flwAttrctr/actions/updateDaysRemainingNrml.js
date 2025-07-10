@@ -2,15 +2,15 @@
 //------------------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------------------
-import gSttngs from "./gSttngs";
+import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------------------
-import { numberNormalDevUnits } from "./numberDevUnits";
-import applyDevCapacityAllFlwItems from "./applyDevCapacityAllFlwItems";
-import stepWip from "./stepWip";
-import skipForWip from "./skipForWip";
-import expdtIsOn from "./expdtIsOn";
+import { numberNormalDevUnits } from "./numberDevUnits.js";
+import applyDevCapacityAllFlwItems from "./applyDevCapacityAllFlwItems.js";
+import stepWip from "./stepWip.js";
+import skipForWip from "./skipForWip.js";
+import expdtIsOn from "./expdtIsOn.js";
 //------------------------------------------------------------------------------
 // updateDaysRemainingNrml()
 //------------------------------------------------------------------------------

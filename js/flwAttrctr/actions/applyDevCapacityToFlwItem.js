@@ -2,17 +2,17 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import expdtIsOn from "./expdtIsOn";
-import calculateDevPower from "./calculateDevPower";
-import calculateDevPowerFactor from "./calculateDevPowerFactor";
-import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart";
-import calculateTouchSteps from "./calculateTouchSteps";
-import stepWip from "./stepWip";
+import expdtIsOn from "./expdtIsOn.js";
+import calculateDevPower from "./calculateDevPower.js";
+import calculateDevPowerFactor from "./calculateDevPowerFactor.js";
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
+import calculateTouchSteps from "./calculateTouchSteps.js";
+import stepWip from "./stepWip.js";
 //------------------------------------------------------------------
 // FUNCTION: applyDevCapacityToFlwItem()
 //------------------------------------------------------------------

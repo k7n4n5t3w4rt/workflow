@@ -7,14 +7,14 @@ import { CSS2DObject } from "three/examples/jsm/renderers/CSS2DRenderer";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateZPosFromStep from "./calculateZPosFromStep";
-import setDProps from "./setMetricsDProps";
-import createTextCanvas from "./createTextCanvas";
+import calculateZPosFromStep from "./calculateZPosFromStep.js";
+import setDProps from "./setMetricsDProps.js";
+import createTextCanvas from "./createTextCanvas.js";
 //------------------------------------------------------------------
 // FUNCTION: newStepMetrics()
 //------------------------------------------------------------------

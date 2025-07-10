@@ -6,11 +6,11 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import animateScaleToZero from "./animateScaleToZero";
+import animateScaleToZero from "./animateScaleToZero.js";
 //------------------------------------------------------------------
 // FUNCTION: removeFlowItem()
 //------------------------------------------------------------------

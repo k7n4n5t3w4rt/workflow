@@ -2,15 +2,15 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import applyDevCapacityToFlwItem from "./applyDevCapacityToFlwItem";
+import applyDevCapacityToFlwItem from "./applyDevCapacityToFlwItem.js";
 
-import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems";
-import updateDays from "./click.js_updateDays";
+import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
+import updateDays from "./click.js_updateDays.js";
 //------------------------------------------------------------------
 // applyDevCapacityAllFlwItems()
 //------------------------------------------------------------------

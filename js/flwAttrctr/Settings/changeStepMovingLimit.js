@@ -7,7 +7,7 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import isParsable from "../actions/isParsable";
+import isParsable from "../actions/isParsable.js";
 //------------------------------------------------------------------
 // changeStepMovingLimit()
 //------------------------------------------------------------------

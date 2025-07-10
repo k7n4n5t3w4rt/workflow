@@ -2,14 +2,14 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
-// import globalSettings from "./globalSettings";
-// import globalstate from "./globalstate";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
+// import globalSettings from "./globalSettings.js";
+// import globalstate from "./globalstate.js";
 //------------------------------------------------------------------
 // TESTY
 //------------------------------------------------------------------
-// import { test, testPromise, should } from "../server/testy";
+// import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // calculateZPosFromStep()
 //------------------------------------------------------------------

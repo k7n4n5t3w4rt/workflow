@@ -9,43 +9,43 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 import { useContext, useEffect, useState, useReducer } from "preact/hooks";
 import { html } from "htm/preact";
-import ArrivalRate from "./ArrivalRate";
-import FlwTimeMin from "./FlwTimeMin";
-// import FlwTimeMax from "./FlwTimeMax.js_NOT_USED";
-import DevUnits from "./DevUnits";
-import DevPowerFix from "./DevPowerFix";
-import AutoMode from "./AutoMode";
-import ShowMetrics from "./ShowMetrics";
-import Debug from "./Debug";
-import TimeBox from "./TimeBox";
-import Death from "./Death";
-import BacklogDeath from "./BacklogDeath";
-import FlwItmSizeFactor from "./FlwItmSizeLimit";
-import DfntnOfReady from "./DfntnOfReady";
-import Fps from "./Fps";
-import ExpdtQueueLength from "./ExpdtQueueLength";
-import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor";
-import ScaleCm from "./ScaleCm";
-import Status from "./Status";
-import StepName from "./StepName";
-import { AppContext } from "../../AppContext";
+import ArrivalRate from "./ArrivalRate.js";
+import FlwTimeMin from "./FlwTimeMin.js";
+// import FlwTimeMax from "./FlwTimeMax.js_NOT_USED.js";
+import DevUnits from "./DevUnits.js";
+import DevPowerFix from "./DevPowerFix.js";
+import AutoMode from "./AutoMode.js";
+import ShowMetrics from "./ShowMetrics.js";
+import Debug from "./Debug.js";
+import TimeBox from "./TimeBox.js";
+import Death from "./Death.js";
+import BacklogDeath from "./BacklogDeath.js";
+import FlwItmSizeFactor from "./FlwItmSizeLimit.js";
+import DfntnOfReady from "./DfntnOfReady.js";
+import Fps from "./Fps.js";
+import ExpdtQueueLength from "./ExpdtQueueLength.js";
+import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
+import ScaleCm from "./ScaleCm.js";
+import Status from "./Status.js";
+import StepName from "./StepName.js";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import { rawStyles } from "simplestyle-js";
-import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState";
-import cssStyles from "./cssStylesSettings";
-import getRawStyles from "./getRawStyles";
-import setStateFunctionsStore from "./setStateFunctionsStore";
-import changeSetting from "./changeSetting";
-import setUpdtngCnfg from "./setUpdtngCnfg";
-import populateSteps from "./populateSteps";
-import changeStepName from "./changeStepName";
-import changeStepLimit from "./changeStepLimit";
-import changeStepDevUnits from "./changeStepDevUnits";
-import changeStepStatus from "./changeStepStatus";
-import changeStepFlwTimeAtStart from "./changeStepFlwTimeAtStart";
-import changeStepActualFlwTime from "./changeStepActualFlwTime";
+import updateLocalStateFromGlobalState from "./updateLocalStateFromGlobalState.js";
+import cssStyles from "./cssStylesSettings.js";
+import getRawStyles from "./getRawStyles.js";
+import setStateFunctionsStore from "./setStateFunctionsStore.js";
+import changeSetting from "./changeSetting.js";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
+import populateSteps from "./populateSteps.js";
+import changeStepName from "./changeStepName.js";
+import changeStepLimit from "./changeStepLimit.js";
+import changeStepDevUnits from "./changeStepDevUnits.js";
+import changeStepStatus from "./changeStepStatus.js";
+import changeStepFlwTimeAtStart from "./changeStepFlwTimeAtStart.js";
+import changeStepActualFlwTime from "./changeStepActualFlwTime.js";
 //------------------------------------------------------------------
 // FUNCTION: Steps
 //------------------------------------------------------------------

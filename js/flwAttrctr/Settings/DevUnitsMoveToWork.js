@@ -4,7 +4,7 @@
 //------------------------------------------------------------------
 import { useContext } from "preact/hooks";
 import { html } from "htm/preact";
-import { AppContext } from "../../AppContext";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------

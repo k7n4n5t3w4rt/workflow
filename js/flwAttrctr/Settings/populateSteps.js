@@ -6,7 +6,7 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpFlwMap from "../actions/setUpFlwMap";
+import setUpFlwMap from "../actions/setUpFlwMap.js";
 //------------------------------------------------------------------
 // populateSteps()
 //------------------------------------------------------------------

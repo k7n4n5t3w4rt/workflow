@@ -6,21 +6,21 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import rndmPosOrNeg from "./rndmPosOrNeg";
-import rndmBetween from "./rndmBetweenWhatever";
-import flwItmTracker from "./flwItmTracker";
-import calculateRange from "./calculateRange";
-import calculateTouchSteps from "./calculateTouchSteps";
-import calculateWaitSteps from "./calculateWaitSteps";
-import calculateValueForScale from "./calculateValueForScale";
-import calculateZPosFromStep from "./calculateZPosFromStep";
-import calculateFlwTimeMax from "./calculateFlwTimeMax";
-import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart";
+import rndmPosOrNeg from "./rndmPosOrNeg.js";
+import rndmBetween from "./rndmBetweenWhatever.js";
+import flwItmTracker from "./flwItmTracker.js";
+import calculateRange from "./calculateRange.js";
+import calculateTouchSteps from "./calculateTouchSteps.js";
+import calculateWaitSteps from "./calculateWaitSteps.js";
+import calculateValueForScale from "./calculateValueForScale.js";
+import calculateZPosFromStep from "./calculateZPosFromStep.js";
+import calculateFlwTimeMax from "./calculateFlwTimeMax.js";
+import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
 
 export default (stepIndex /*: number */ = 0) /*: FlwItem */ => {
   // Create the cube

@@ -8,11 +8,11 @@ import gSttngs from "../actions/gSttngs.js";
 //------------------------------------------------------------------
 import { useContext, useEffect, useState, useReducer } from "preact/hooks";
 import { html } from "htm/preact";
-import { AppContext } from "../../AppContext";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {

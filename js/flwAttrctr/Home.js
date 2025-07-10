@@ -10,7 +10,7 @@ import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import seedString from "../simple_css_seed";
+import seedString from "../simple_css_seed.js";
 import { rawStyles, createStyles, setSeed } from "simplestyle-js";
 
 setSeed(seedString("flwhome"));

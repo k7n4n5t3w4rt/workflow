@@ -2,14 +2,14 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getFlwMpSteps from "./getFlwMpSteps";
-import getAllFlwItems from "./getAllFlwItems";
-import calculateNrmlWip from "./calculateNrmlWip";
+import getFlwMpSteps from "./getFlwMpSteps.js";
+import getAllFlwItems from "./getAllFlwItems.js";
+import calculateNrmlWip from "./calculateNrmlWip.js";
 //------------------------------------------------------------------
 // updateWIP()
 //------------------------------------------------------------------

@@ -3,12 +3,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
+import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import ARButton from "./ARButton";
-import hideLandingPageElementsShowSceneElements from "./hideLandingPageElementsShowSceneElements";
+import ARButton from "./ARButton.js";
+import hideLandingPageElementsShowSceneElements from "./hideLandingPageElementsShowSceneElements.js";
 
 //------------------------------------------------------------------
 // startButtonSetup()

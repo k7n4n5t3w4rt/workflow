@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState";
-import gSttngs from "./gSttngs";
+import gState from "./gState.js";
+import gSttngs from "./gSttngs.js";
 //------------------------------------------------------------------
 // IMPORT: THREE.js
 //------------------------------------------------------------------
@@ -11,9 +11,9 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import start from "./start";
-import reset from "./reset";
-import hideLandingPageElementsShowSceneElements from "./hideLandingPageElementsShowSceneElements";
+import start from "./start.js";
+import reset from "./reset.js";
+import hideLandingPageElementsShowSceneElements from "./hideLandingPageElementsShowSceneElements.js";
 
 const createButton = (
   renderer /*: function */,

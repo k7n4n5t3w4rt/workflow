@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORTS: HELPERS
 //------------------------------------------------------------------
-import rndmBetweenIntegers from "./rndmBetweenIntegers";
+import rndmBetweenIntegers from "./rndmBetweenIntegers.js";
 //------------------------------------------------------------------
 // FUNCTION: share()
 //------------------------------------------------------------------

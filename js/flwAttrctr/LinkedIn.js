@@ -2,28 +2,20 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./actions/gSttngs";
-import gState from "./actions/gState";
+import gSttngs from "./actions/gSttngs.js";
+import gState from "./actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
-import {
-  useEffect,
-  useState,
-  useReducer,
-} from "preact/hooks";
+import { useEffect, useState, useReducer } from "preact/hooks";
 import { html } from "htm/preact";
-import Steps from "./Metrics/Steps";
+import Steps from "./Metrics/Steps.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import share from "./actions/share";
-import seedString from "../simple_css_seed";
-import {
-  rawStyles,
-  createStyles,
-  setSeed,
-} from "simplestyle-js";
+import share from "./actions/share.js";
+import seedString from "../simple_css_seed.js";
+import { rawStyles, createStyles, setSeed } from "simplestyle-js";
 setSeed(seedString("flwshare"));
 const [styles] = createStyles({
   linkedIn: {

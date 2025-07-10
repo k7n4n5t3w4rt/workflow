@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { numberExpiditedDevUnits } from "./numberDevUnits";
-import applyDevCapacityAllFlwItems from "./applyDevCapacityAllFlwItems";
+import { numberExpiditedDevUnits } from "./numberDevUnits.js";
+import applyDevCapacityAllFlwItems from "./applyDevCapacityAllFlwItems.js";
 //------------------------------------------------------------------
 // updateDaysRemaining()
 //------------------------------------------------------------------

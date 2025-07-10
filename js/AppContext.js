@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./flwAttrctr/actions/gSttngs";
-import gState from "./flwAttrctr/actions/gState";
+import gSttngs from "./flwAttrctr/actions/gSttngs.js";
+import gState from "./flwAttrctr/actions/gState.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
@@ -14,7 +14,7 @@ import Router from "preact-router";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import globalReducer from "./flwAttrctr/calculations/globalReducer";
+import globalReducer from "./flwAttrctr/calculations/globalReducer.js";
 
 // A context for the state global management
 // $FlowFixMe

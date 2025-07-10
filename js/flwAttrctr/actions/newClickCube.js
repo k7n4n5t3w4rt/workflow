@@ -6,8 +6,8 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 
 export default () /*: Object */ => {
   // Cubes in a group can be rotated / scaled etc as a group

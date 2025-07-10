@@ -1,5 +1,5 @@
 // @flow
-import gSttngs from "./gSttngs";
+import gSttngs from "./gSttngs.js";
 
 export default () => {
   const startButton = document.getElementById("start-button");

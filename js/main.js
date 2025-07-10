@@ -2,21 +2,21 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./flwAttrctr/actions/gSttngs";
-import gState from "./flwAttrctr/actions/gState";
+import gSttngs from "./flwAttrctr/actions/gSttngs.js";
+import gState from "./flwAttrctr/actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import getSttngsFromEasyStorage from "./flwAttrctr/actions/getSttngsFromEasyStorage";
-import globalSettings from "./flwAttrctr/actions/globalSettings";
-import globalStepSettings from "./flwAttrctr/actions/main.js_globalStepSettings";
-import globalState from "./flwAttrctr/actions/globalState";
-import globalParamsSettings from "./flwAttrctr/actions/globalParamsSettings";
+import getSttngsFromEasyStorage from "./flwAttrctr/actions/getSttngsFromEasyStorage.js";
+import globalSettings from "./flwAttrctr/actions/globalSettings.js";
+import globalStepSettings from "./flwAttrctr/actions/main.js_globalStepSettings.js";
+import globalState from "./flwAttrctr/actions/globalState.js";
+import globalParamsSettings from "./flwAttrctr/actions/globalParamsSettings.js";
 //------------------------------------------------------------------
 // PREACT
 //------------------------------------------------------------------
 import { h, hydrate, render } from "preact";
-import App from "./App";
+import App from "./App.js";
 import { html } from "htm/preact";
 //------------------------------------------------------------------
 // MAIN

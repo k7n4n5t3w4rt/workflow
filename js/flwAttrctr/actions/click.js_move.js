@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
@@ -12,13 +12,13 @@ import * as THREE from "three";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import anime from "animejs";
-import flwItmTracker from "./flwItmTracker";
-import calculateRange from "./calculateRange";
-import rndmPosOrNeg from "./rndmPosOrNeg";
-import animateScaleToZero from "./animateScaleToZero";
-import rndmBetween from "./rndmBetweenWhatever";
-import removeFlowItem from "./removeFlowItem";
-import calculateZPosFromStep from "./calculateZPosFromStep";
+import flwItmTracker from "./flwItmTracker.js";
+import calculateRange from "./calculateRange.js";
+import rndmPosOrNeg from "./rndmPosOrNeg.js";
+import animateScaleToZero from "./animateScaleToZero.js";
+import rndmBetween from "./rndmBetweenWhatever.js";
+import removeFlowItem from "./removeFlowItem.js";
+import calculateZPosFromStep from "./calculateZPosFromStep.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
   if (flwItem.dMoving === false) {

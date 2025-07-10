@@ -2,7 +2,7 @@
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import seedString from "../../simple_css_seed";
+import seedString from "../../simple_css_seed.js";
 import { createStyles, setSeed } from "simplestyle-js";
 
 //------------------------------------------------------------------

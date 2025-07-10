@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateEndPositionZ from "./calculateEndPositionZ";
+import calculateEndPositionZ from "./calculateEndPositionZ.js";
 //------------------------------------------------------------------
 // setEndPosition()
 //------------------------------------------------------------------

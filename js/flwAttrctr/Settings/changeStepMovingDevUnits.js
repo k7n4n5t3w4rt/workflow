@@ -7,9 +7,9 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import calculateDevUnits from "../actions/calculateDevUnits";
-import calculateMovingDevUnits from "../actions/calculateMovingDevUnits";
-import isParsable from "../actions/isParsable";
+import calculateDevUnits from "../actions/calculateDevUnits.js";
+import calculateMovingDevUnits from "../actions/calculateMovingDevUnits.js";
+import isParsable from "../actions/isParsable.js";
 //------------------------------------------------------------------
 // changeStepDevUnits()
 //------------------------------------------------------------------

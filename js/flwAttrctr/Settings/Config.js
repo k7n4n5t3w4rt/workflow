@@ -9,38 +9,38 @@ import gState from "../actions/gState.js";
 //------------------------------------------------------------------
 import { useContext, useEffect, useState, useReducer } from "preact/hooks";
 import { html } from "htm/preact";
-import ArrivalRate from "./ArrivalRate";
-import FlwTimeMin from "./FlwTimeMin";
-import DevUnits from "./DevUnits";
+import ArrivalRate from "./ArrivalRate.js";
+import FlwTimeMin from "./FlwTimeMin.js";
+import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
 import TargetFlowTime from "./TargetFlowTime.js";
-import Drag from "./Drag";
-import DragPoint from "./DragPoint";
-import ParetoPoint from "./ParetoPoint";
-import AutoMode from "./AutoMode";
-import EasyStorage from "./EasyStorage";
-import ShowMetrics from "./ShowMetrics";
-import Debug from "./Debug";
-import TimeBox from "./TimeBox";
-import Death from "./Death";
-import BacklogDeath from "./BacklogDeath";
-import FlwItmSizeLimit from "./FlwItmSizeLimit";
-import DfntnOfReady from "./DfntnOfReady";
-import Fps from "./Fps";
-import ExpdtQueueLength from "./ExpdtQueueLength";
-import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor";
-import ScaleCm from "./ScaleCm";
-import RangeMax from "./RangeMax";
-import RangeIncreaseRate from "./RangeIncreaseRate";
-import RangeMidpoint from "./RangeMidpoint";
-import DevUnitsTerm from "./DevUnitsTerm";
-import DisplayNameInput from "./DisplayNameInput";
-import DevUnitsMoveToWork from "./DevUnitsMoveToWork";
-import Sid from "./Sid";
-import Steps from "./Steps";
-import NumberOfSteps from "./NumberOfSteps";
-import ParamsMaxWip from "./ParamsMaxWip";
-import { AppContext } from "../../AppContext";
+import Drag from "./Drag.js";
+import DragPoint from "./DragPoint.js";
+import ParetoPoint from "./ParetoPoint.js";
+import AutoMode from "./AutoMode.js";
+import EasyStorage from "./EasyStorage.js";
+import ShowMetrics from "./ShowMetrics.js";
+import Debug from "./Debug.js";
+import TimeBox from "./TimeBox.js";
+import Death from "./Death.js";
+import BacklogDeath from "./BacklogDeath.js";
+import FlwItmSizeLimit from "./FlwItmSizeLimit.js";
+import DfntnOfReady from "./DfntnOfReady.js";
+import Fps from "./Fps.js";
+import ExpdtQueueLength from "./ExpdtQueueLength.js";
+import ExpdtDvUnitsFactor from "./ExpdtDvUnitsFactor.js";
+import ScaleCm from "./ScaleCm.js";
+import RangeMax from "./RangeMax.js";
+import RangeIncreaseRate from "./RangeIncreaseRate.js";
+import RangeMidpoint from "./RangeMidpoint.js";
+import DevUnitsTerm from "./DevUnitsTerm.js";
+import DisplayNameInput from "./DisplayNameInput.js";
+import DevUnitsMoveToWork from "./DevUnitsMoveToWork.js";
+import Sid from "./Sid.js";
+import Steps from "./Steps.js";
+import NumberOfSteps from "./NumberOfSteps.js";
+import ParamsMaxWip from "./ParamsMaxWip.js";
+import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
@@ -51,12 +51,12 @@ rawStyles({
     marginTop: "1rem",
   },
 });
-// import updateLocastateFromGlobastate from "./updateLocastateFromGlobastate";
-import hideOrShowConfigDivs from "./hideOrShowConfigDivs";
-import cssStyles from "./cssStylesConfig";
-import getRawStyles from "./getRawStyles";
-// import dispatchStore from "./dispatchStore";
-import changeSetting from "./changeSetting";
+// import updateLocastateFromGlobastate from "./updateLocastateFromGlobastate.js";
+import hideOrShowConfigDivs from "./hideOrShowConfigDivs.js";
+import cssStyles from "./cssStylesConfig.js";
+import getRawStyles from "./getRawStyles.js";
+// import dispatchStore from "./dispatchStore.js";
+import changeSetting from "./changeSetting.js";
 import { trainModel, predictDevPowerFix } from "../actions/tensorFlow.js";
 
 /*::

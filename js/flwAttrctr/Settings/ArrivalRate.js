@@ -16,8 +16,8 @@ import {
   isParsableAsNumber,
   isParsableAsBoolean,
   isParsableAsArray,
-} from "../actions/isParsable";
-import setUpdtngCnfg from "./setUpdtngCnfg";
+} from "../actions/isParsable.js";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 
 /*::
 type Props = {

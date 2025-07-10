@@ -6,12 +6,12 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import initializeHitTestSource from "./init.js_render.js_initializeHitTestSource";
+import initializeHitTestSource from "./init.js_render.js_initializeHitTestSource.js";
 //------------------------------------------------------------------
 // FUNCTION: render()
 //------------------------------------------------------------------

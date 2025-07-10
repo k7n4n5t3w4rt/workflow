@@ -2,8 +2,8 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./actions/gSttngs";
-import gState from "./actions/gState";
+import gSttngs from "./actions/gSttngs.js";
+import gState from "./actions/gState.js";
 //------------------------------------------------------------------
 // IMPORTS: THREE.js
 //------------------------------------------------------------------
@@ -20,24 +20,24 @@ import { route } from "preact-router";
 //------------------------------------------------------------------
 // COMPONENTS
 //------------------------------------------------------------------
-import Metrics from "./Metrics/Metrics";
-import Share from "./Share";
-import Controls from "./Controls";
-import Params from "./Settings/Params";
-import Config from "./Settings/Config";
-import LinkedIn from "./LinkedIn";
-import Home from "./Home";
+import Metrics from "./Metrics/Metrics.js";
+import Share from "./Share.js";
+import Controls from "./Controls.js";
+import Params from "./Settings/Params.js";
+import Config from "./Settings/Config.js";
+import LinkedIn from "./LinkedIn.js";
+import Home from "./Home.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import createStats from "../create_stats";
-import init from "./actions/init";
-import seedString from "../simple_css_seed";
+import createStats from "../create_stats.js";
+import init from "./actions/init.js";
+import seedString from "../simple_css_seed.js";
 import { rawStyles, createStyles, setSeed } from "simplestyle-js";
-import populateStepsGlobal from "./Settings/populateStepsGlobal";
-import setUpFlwMap from "./actions/setUpFlwMap";
-import updateStartButtonText from "./actions/updateStartButtonText";
-import defaultPreset from "./actions/defaultPreset";
+import populateStepsGlobal from "./Settings/populateStepsGlobal.js";
+import setUpFlwMap from "./actions/setUpFlwMap.js";
+import updateStartButtonText from "./actions/updateStartButtonText.js";
+import defaultPreset from "./actions/defaultPreset.js";
 //------------------------------------------------------------------
 // FUNCTION: FlwAttrctr()
 //------------------------------------------------------------------

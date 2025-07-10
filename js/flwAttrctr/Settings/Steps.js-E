@@ -16,7 +16,7 @@ import {
 import { html } from "../../../web_modules/htm/preact.js";
 import ArrivalRate from "./ArrivalRate.js";
 import FlwTimeMin from "./FlwTimeMin.js";
-// import FlwTimeMax from "./FlwTimeMax.js_NOT_USED";
+// import FlwTimeMax from "./FlwTimeMax.js_NOT_USED.js";
 import DevUnits from "./DevUnits.js";
 import DevPowerFix from "./DevPowerFix.js";
 import AutoMode from "./AutoMode.js";

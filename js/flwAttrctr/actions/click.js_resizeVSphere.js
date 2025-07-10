@@ -2,13 +2,13 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 import anime from "animejs";
-import findRadius from "../calculations/findRadius";
-import calculateEndPositionZ from "./calculateEndPositionZ";
+import findRadius from "../calculations/findRadius.js";
+import calculateEndPositionZ from "./calculateEndPositionZ.js";
 //------------------------------------------------------------------
 // resizeVSphere()
 //------------------------------------------------------------------

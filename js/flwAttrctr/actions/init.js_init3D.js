@@ -7,18 +7,18 @@ import * as THREE from "three";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gState from "./gState";
+import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { cameraSetupAR } from "./init.js_cameraSetup";
-import addReticleToScene from "./init.js_addReticleToScene";
-import render from "./init.js_render";
-import addArContainerToDom from "./init.js_addArContainerToDom";
-import rendererSetup from "./init.js_rendererSetup";
-import labelRendererSetup from "./init.js_labelRendererSetup";
-import onWindowResize from "../actions/init.js_onWindowResize";
-import start from "./start";
+import { cameraSetupAR } from "./init.js_cameraSetup.js";
+import addReticleToScene from "./init.js_addReticleToScene.js";
+import render from "./init.js_render.js";
+import addArContainerToDom from "./init.js_addArContainerToDom.js";
+import rendererSetup from "./init.js_rendererSetup.js";
+import labelRendererSetup from "./init.js_labelRendererSetup.js";
+import onWindowResize from "../actions/init.js_onWindowResize.js";
+import start from "./start.js";
 
 //
 // renderer: WebGLRenderer

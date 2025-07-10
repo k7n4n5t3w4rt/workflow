@@ -2,12 +2,12 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import gSttngs from "./gSttngs";
-import gState from "./gState";
+import gSttngs from "./gSttngs.js";
+import gState from "./gState.js";
 //------------------------------------------------------------------------------
 // TESTY
 //------------------------------------------------------------------------------
-// import { test, testPromise, should } from "../server/testy";
+// import { test, testPromise, should } from "../server/testy.js";
 //------------------------------------------------------------------
 // calculateDevPowerFactor()
 //------------------------------------------------------------------

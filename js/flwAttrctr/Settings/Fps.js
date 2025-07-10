@@ -6,7 +6,7 @@ import { html } from "htm/preact";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import setUpdtngCnfg from "./setUpdtngCnfg";
+import setUpdtngCnfg from "./setUpdtngCnfg.js";
 import { useContext, useEffect, useState, useReducer } from "preact/hooks";
 //------------------------------------------------------------------
 // FUNCTION: Fps

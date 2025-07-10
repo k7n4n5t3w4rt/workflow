@@ -2,7 +2,7 @@
 //------------------------------------------------------------------
 // FUNCTION: hideOrShowConfigDiv()
 //------------------------------------------------------------------
-import updateStartButtonText from "../actions/updateStartButtonText";
+import updateStartButtonText from "../actions/updateStartButtonText.js";
 
 export default (configToggle /*: boolean */) /*: () => void */ =>
   () /*: void */ => {
