@@ -1,7 +1,7 @@
 // @flow
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
-import { headlessClickLoop } from "./click.js";
+import { headlessClickLoop } from "./headlessClickLoop.js";
 import newFlwItem from "./newFlwItem.js";
 
 // This function will run the simulation headless-ly to generate training data.

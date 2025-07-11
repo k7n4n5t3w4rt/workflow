@@ -15,7 +15,7 @@ import globalState from "../js/flwattrctr/actions/globalState.js";
 //------------------------------------------------------------------
 // IMPORT: FUNCTION UNDER TEST
 //------------------------------------------------------------------
-import { headlessClickLoop } from "../js/flwAttrctr/actions/click.js";
+import { headlessClickLoop } from "../js/flwAttrctr/actions/headlessClickLoop.js";
 
 //------------------------------------------------------------------
 // TEST: headlessClickLoop
@@ -94,11 +94,15 @@ const fixture = () /*: void */ => {
       movingDevUnits: 0,
     },
   ]);
+  gSttngs().set("timeBox", 10);
   globalState();
 };
+
 test("headlessClickLoop()", async () => {
   fixture();
   const data = headlessClickLoop();
   should(Array.isArray(data)).be.true();
-  should(data.length).be.greaterThan(0);
+  if (data !== undefined) {
+    should(data.length).be.greaterThan(0);
+  }
 });
