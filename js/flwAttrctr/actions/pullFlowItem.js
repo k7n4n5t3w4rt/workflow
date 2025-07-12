@@ -7,7 +7,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import move from "./click.js_move.js";
+import move from "./move.js";
 import updateFlowMap from "./updateFlowMap.js";
 //------------------------------------------------------------------
 // pullFlowItem()

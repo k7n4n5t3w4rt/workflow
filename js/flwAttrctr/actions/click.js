@@ -20,7 +20,7 @@ import updateTimeBoxMetrics from "./click.js_updateTimeBoxMetrics.js";
 import updateClickMetrics from "./click.js_updateClickMetrics.js";
 import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
 import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
-import move from "./click.js_move.js";
+import move from "./move.js";
 import autoMoveDevUnits from "./autoMoveDevUnits.js";
 //------------------------------------------------------------------
 // FUNCTION: click()
