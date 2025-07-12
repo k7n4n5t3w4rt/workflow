@@ -10,20 +10,19 @@ import gState from "./gState.js";
 import filterDoneItems from "./click.js_filterDoneItems.js";
 import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
 import updateNrmlWip from "./click.js_updateNrmlWip.js";
-import resizeVSphere from "./resizeVSphere.js";
-import updateAge from "./updateAge.js";
+import resizeVSphereHeadless from "./resizeVSphereHeadless.js";
+import updateAgeHeadless from "./updateAgeHeadless.js";
 import updateDays from "./click.js_updateDays.js";
-import updateTimeBoxMetrics from "./click.js_updateTimeBoxMetrics.js";
+import updateTimeBoxMetricsHeadless from "./updateTimeBoxMetricsHeadless.js";
 import updateClickMetrics from "./click.js_updateClickMetrics.js";
 import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
-import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
-import move from "./move.js";
+import recursivelyPullFlwItemsHeadless from "./recursivelyPullFlwItemsHeadless.js";
+import moveHeadless from "./moveHeadless.js";
 import autoMoveDevUnits from "./autoMoveDevUnits.js";
-import click from "./click.js";
 //------------------------------------------------------------------
-// postClickActions()
+// postClickActionsHeadless()
 //------------------------------------------------------------------
-export const postClickActions = () /*: void */ => {
+export const clickActionsHeadless = () /*: void */ => {
   // Globals
   const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
   const timeBox = gSttngs().get("timeBox");
@@ -34,7 +33,7 @@ export const postClickActions = () /*: void */ => {
     for (let i = 0; i < keys.length; ++i) {
       const flwItem = flwItmsToMove[keys[i]];
       delete flwItmsToMove[keys[i]];
-      move(flwItem);
+      moveHeadless(flwItem);
     }
     if (gSttngs().get("devUnitsMoveToWork")) {
       autoMoveDevUnits();
@@ -42,21 +41,19 @@ export const postClickActions = () /*: void */ => {
     // NOTE: The order of these function calls is important
     addNewFlowItemsAtArrivalRate();
     // setExpedite();
-    resizeVSphere();
-    updateAge();
+    resizeVSphereHeadless();
+    updateAgeHeadless();
     updateDays();
-    recursivelyPullFlwItems();
+    recursivelyPullFlwItemsHeadless();
     // updateExpdtWip();
     updateNrmlWip();
     filterDoneItems(removeDoneFlwItmsFromFlwMap)();
     updateClickMetrics();
     if (gState().get("clicks") === 1) {
-      updateTimeBoxMetrics();
+      updateTimeBoxMetricsHeadless();
     }
   }
-  // if (gState().get("clicks") <= 3) {
-  click();
-  // }
+  
 };
 
-export default postClickActions;
+export default clickActionsHeadless;

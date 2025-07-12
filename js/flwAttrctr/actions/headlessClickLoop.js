@@ -7,7 +7,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import postClickActionsHeadless from './postClickActionsHeadless.js';
+import clickActionsHeadless from './clickActionsHeadless.js';
 //------------------------------------------------------------------
 // headlessClickLoop()
 //------------------------------------------------------------------
@@ -26,7 +26,7 @@ export const headlessClickLoop = () /*: Array<number> | void */ => {
   } else {
     gState().set("clicks", 1);
   }
-  postClickActionsHeadless();
+  clickActionsHeadless();
   if (gState().get("clicks") === timeBox) {
     return [150, 1];
   } else {
