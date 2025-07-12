@@ -19,6 +19,7 @@ import animateScaleToZero from "./animateScaleToZero.js";
 import rndmBetween from "./rndmBetweenWhatever.js";
 import removeFlowItem from "./removeFlowItem.js";
 import calculateZPosFromStep from "./calculateZPosFromStep.js";
+import calculateNewPosition from "./calculateNewPosition.js";
 
 export default (flwItem /*: Object */) /*: void */ => {
   if (flwItem.dMoving === false) {
@@ -109,25 +110,11 @@ const newColor = (flwItem /*: FlwItem */) /*: string */ => {
 // refineNewPosition()
 //------------------------------------------------------------------
 const refineNewPosition = (flwItem /*: FlwItem */) /*: ThrMeshPosition */ => {
-  const range = calculateRange(flwItem.dStpIndex);
-  const newPosition = { ...flwItem.dPosition };
+  const newPosition = calculateNewPosition(flwItem);
   const nextStatus = gSttngs().get("steps")[flwItem.dStpIndex].status;
 
   if (nextStatus === "done") {
-    newPosition.x = gState().get("vSphere").dPosition.x;
-    newPosition.y = gState().get("vSphere").dPosition.y;
-    newPosition.z = gState().get("endPosition").z;
-
     animateScaleToZero(flwItem);
-  } else {
-    newPosition.x =
-      gState().get("strtPosition").x +
-      (Math.round(rndmPosOrNeg() * rndmBetween(0, range) * 100) / 100) *
-        rndmPosOrNeg();
-    newPosition.y =
-      gState().get("strtPosition").y +
-      (Math.round(rndmBetween(0, range) * 100) / 100) * rndmPosOrNeg();
-    newPosition.z = calculateZPosFromStep(flwItem.dStpIndex);
   }
   return newPosition;
 };
