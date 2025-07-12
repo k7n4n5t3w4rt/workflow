@@ -79,7 +79,9 @@ export const Metrics = (props /*: Props */) /*: string */ => {
       <div className="${styles.metricsDivs}">
         <div className="${styles.metricsSpans}">FlwTm: ${flowTime}</div>
         <div className="${styles.metricsSpans}">ThrPt: ${thruPutPerDay}</div>
-        <div className="${styles.metricsSpans}">FlwLoad(WIP): ${wip}</div>
+        <div id="wip-running-total" className="${styles.metricsSpans}">
+          FlwLoad(WIP): ${wip}
+        </div>
       </div>
       ${gSttngs().get("expdtQueueLength") > 0 &&
       html` <div className="${styles.metricsDivs}">
