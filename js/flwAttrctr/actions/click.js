@@ -14,7 +14,7 @@ import updateNrmlWip from "./click.js_updateNrmlWip.js";
 import setExpedite from "./click.js_setExpedite.js";
 import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./click.js_animateClickCube.js";
-import updateAge from "./click.js_updateAge.js";
+import updateAge from "./updateAge.js";
 import updateDays from "./click.js_updateDays.js";
 import updateTimeBoxMetrics from "./click.js_updateTimeBoxMetrics.js";
 import updateClickMetrics from "./click.js_updateClickMetrics.js";

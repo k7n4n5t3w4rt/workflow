@@ -19,7 +19,6 @@ import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.
 import recursivelyPullFlwItemsHeadless from "./recursivelyPullFlwItemsHeadless.js";
 import moveHeadless from "./moveHeadless.js";
 import autoMoveDevUnits from "./autoMoveDevUnits.js";
-import click from "./click.js";
 //------------------------------------------------------------------
 // postClickActionsHeadless()
 //------------------------------------------------------------------
