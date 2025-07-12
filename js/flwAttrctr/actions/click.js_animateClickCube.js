@@ -8,7 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import anime from "animejs";
-import { onClickComplete } from "./click.js";
+import { postClickActions } from "./click.js";
 //------------------------------------------------------------------
 // animateClickCube()
 //------------------------------------------------------------------
@@ -19,6 +19,6 @@ export default () => {
     y: gState().get("clckCbGroup").clckCube.rotation.y + Math.PI / 2,
     duration: 1000 / gSttngs().get("fps"),
     easing: "easeInOutSine",
-    complete: onClickComplete,
+    complete: postClickActions,
   });
 };

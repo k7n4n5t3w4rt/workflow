@@ -36,9 +36,9 @@ export const click = () /*: void */ => {
   animateClickCube();
 };
 //------------------------------------------------------------------
-// onClickComplete()
+// postClickActions()
 //------------------------------------------------------------------
-export const onClickComplete = () /*: void */ => {
+export const postClickActions = () /*: void */ => {
   // Globals
   const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
   const timeBox = gSttngs().get("timeBox");
@@ -73,7 +73,5 @@ export const onClickComplete = () /*: void */ => {
   click();
   // }
 };
-
-
 
 export default click;
