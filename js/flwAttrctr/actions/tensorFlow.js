@@ -30,9 +30,9 @@ export const trainModel = async () /*: Promise<void> */ => {
     init();
   }
 
-  const mockInputs = [120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5];
+  const mockInputs = [120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 1];
   const mockLabels = [
-    0.4, 0.45, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.2, 2.5, 4.0, 5.0,
+    0.4, 0.45, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.2, 2.5, 4.0, 5.0, 6.0,
   ];
 
   // Normalize the data to a 0-1 range to stabilize training
