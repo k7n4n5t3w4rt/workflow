@@ -7,21 +7,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import filterDoneItems from "./click.js_filterDoneItems.js";
-import updateExpdtWip from "./click.js_updateExpdtWip.js";
-import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
-import updateNrmlWip from "./click.js_updateNrmlWip.js";
-import setExpedite from "./click.js_setExpedite.js";
-import resizeVSphere from "./click.js_resizeVSphere.js";
-import animateClickCube from "./click.js_animateClickCube.js";
-import updateAge from "./click.js_updateAge.js";
-import updateDays from "./click.js_updateDays.js";
-import updateTimeBoxMetrics from "./click.js_updateTimeBoxMetrics.js";
-import updateClickMetrics from "./click.js_updateClickMetrics.js";
-import removeDoneFlwItmsFromFlwMap from "./click.js_removeDoneFlwItmsFromFlwMap.js";
-import recursivelyPullFlwItems from "./click.js_recursivelyPullFlwItems.js";
-import move from "./click.js_move.js";
-import autoMoveDevUnits from "./autoMoveDevUnits.js";
+import postClickActionsHeadless from './postClickActionsHeadless.js';
 //------------------------------------------------------------------
 // headlessClickLoop()
 //------------------------------------------------------------------
@@ -40,6 +26,7 @@ export const headlessClickLoop = () /*: Array<number> | void */ => {
   } else {
     gState().set("clicks", 1);
   }
+  postClickActionsHeadless();
   if (gState().get("clicks") === timeBox) {
     return [150, 1];
   } else {
