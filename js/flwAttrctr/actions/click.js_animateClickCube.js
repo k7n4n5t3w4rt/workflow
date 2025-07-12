@@ -8,7 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import anime from "animejs";
-import { postClickActions } from "./click.js";
+import postClickActions from "./postClickActions.js";
 //------------------------------------------------------------------
 // animateClickCube()
 //------------------------------------------------------------------
