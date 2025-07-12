@@ -1,47 +1,45 @@
 // @flow
+//------------------------------------------------------------------
+// IMPORT: GLOBALS
+//------------------------------------------------------------------
 import gSttngs from "./gSttngs.js";
 import gState from "./gState.js";
+//------------------------------------------------------------------
+// IMPORT: HELPERS
+//------------------------------------------------------------------
 import { headlessClickLoop } from "./headlessClickLoop.js";
-import newFlwItem from "./newFlwItem.js";
+import globalSettings from "./globalSettings.js";
+import globalState from "./globalState.js";
 
-// This function will run the simulation headless-ly to generate training data.
-export const generateData =
-  async () /*: Promise<Array<{x: number, y: number}>> */ => {
-    console.log("Starting data generation...");
-    const trainingData = [];
-    const originalFps = gSttngs().get("fps");
-    gSttngs().set("fps", 1000); // Run simulation at max speed
+//------------------------------------------------------------------
+// generateTrainingData()
+//------------------------------------------------------------------
+export const generateTrainingData = () /*: [Array<number>, Array<number>] */ => {
+  const inputs = [];
+  const labels = [];
 
-    // Add a check to prevent an infinite loop if newFlwItem is not creating items
-    let lastFlwItemCount = 0;
-    let stagnantCount = 0;
+  // Define a range of devPowerFix values to test
+  const devPowerFixValues = [
+    0.4, 0.45, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.2, 2.5, 4.0, 5.0, 6.0,
+  ];
 
-    // Run the simulation for 1000 "days"
-    for (let day = 0; day < 1000; day++) {
-      headlessClickLoop();
-      if (gState().get("flwItems").length === lastFlwItemCount) {
-        stagnantCount++;
-      } else {
-        stagnantCount = 0;
-      }
-      lastFlwItemCount = gState().get("flwItems").length;
-      if (stagnantCount > 10) {
-        // If no new items have been created for 10 days, add one manually
-        newFlwItem(0);
-      }
+  devPowerFixValues.forEach((devPowerFix) => {
+    // Reset the state for each run
+    globalSettings();
+    globalState();
+    gSttngs().set("devPowerFix", devPowerFix);
+
+    // Run the simulation
+    const result = headlessClickLoop();
+    
+    // The loop might return undefined if the timebox isn't hit,
+    // which can happen in some configs. We only store valid results.
+    if (result && typeof result[0] === 'number' && typeof result[1] === 'number') {
+      const [flowTime, _] = result;
+      inputs.push(flowTime);
+      labels.push(devPowerFix);
     }
+  });
 
-    const resultingFlowTime = gState().get("flwTime");
-    if (resultingFlowTime > 0) {
-      trainingData.push({
-        x: gSttngs().get("devPowerFix"),
-        y: resultingFlowTime,
-      });
-    }
-
-    gSttngs().set("fps", originalFps); // Restore original speed
-    gSttngs().set("headless", false);
-    console.log("Data generation complete.");
-    console.log(trainingData);
-    return trainingData;
-  };
+  return [inputs, labels];
+};
