@@ -7,7 +7,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import clickActionsHeadless from './clickActionsHeadless.js';
+import clickActionsHeadless from "./clickActionsHeadless.js";
 //------------------------------------------------------------------
 // headlessClickLoop()
 //------------------------------------------------------------------
@@ -26,9 +26,10 @@ export const headlessClickLoop = () /*: Array<number> | void */ => {
   } else {
     gState().set("clicks", 1);
   }
+  // Updates the global state.
   clickActionsHeadless();
   if (gState().get("clicks") === timeBox) {
-    return [150, 1];
+    return [gState().get("flwTime"), gSttngs().get("devPowerFix")];
   } else {
     return headlessClickLoop();
   }
