@@ -12,7 +12,7 @@ import updateExpdtWip from "./click.js_updateExpdtWip.js";
 import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
 import updateNrmlWip from "./click.js_updateNrmlWip.js";
 import setExpedite from "./click.js_setExpedite.js";
-import resizeVSphere from "./click.js_resizeVSphere.js";
+import resizeVSphere from "./resizeVSphere.js";
 import animateClickCube from "./click.js_animateClickCube.js";
 import updateAge from "./click.js_updateAge.js";
 import updateDays from "./click.js_updateDays.js";
