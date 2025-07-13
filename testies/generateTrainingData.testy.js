@@ -99,27 +99,35 @@ const fixture = () /*: void */ => {
   globalState();
 };
 
-test("generateTrainingData() returns two arrays of numbers", async () => {
+//------------------------------------------------------------------
+// STUBS
+//------------------------------------------------------------------
+// Define a range of devPowerFix values to test
+const devPowerFixValues = [
+  0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5,
+  1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0,
+];
+const headlessClickLoop = (
+  nmbrOfTmbxLoops /*: number */,
+  flwTms /*: Array<number> */,
+) /*: { inputs: Array<number>, labels: Array<number> } */ => {
+  return { inputs: [], labels: devPowerFixValues };
+};
+
+test("generateTrainingData() returns inputs and labels", async () => {
   fixture();
-  const data = generateTrainingData();
 
-  // 1. Check that the top-level return value is an array
-  should(Array.isArray(data)).be.true();
-  // 2. Check that it contains exactly two inner arrays
-  should(data.length).be.exactly(2);
+  const data = generateTrainingData(devPowerFixValues);
 
-  const inputs = data[0];
-  const labels = data[1];
+  // 1. Check that both inner arrays are, in fact, arrays
+  should(Array.isArray(data.inputs)).be.true();
+  should(Array.isArray(data.labels)).be.true();
 
-  // 3. Check that both inner arrays are, in fact, arrays
-  should(Array.isArray(inputs)).be.true();
-  should(Array.isArray(labels)).be.true();
+  // 2. Check that both inner arrays have a non-zero length
+  should(data.inputs.length).be.greaterThan(0);
+  should(data.labels.length).be.greaterThan(0);
 
-  // 4. Check that both inner arrays have a non-zero length
-  should(inputs.length).be.greaterThan(0);
-  should(labels.length).be.greaterThan(0);
-
-  // 5. Check that every element in both arrays is a number
-  should(inputs.every((i) => typeof i === "number")).be.true();
-  should(labels.every((l) => typeof l === "number")).be.true();
+  // 3. Check that every element in both arrays is a number
+  should(data.inputs.every((i) => typeof i === "number")).be.true();
+  should(data.labels.every((l) => typeof l === "number")).be.true();
 });

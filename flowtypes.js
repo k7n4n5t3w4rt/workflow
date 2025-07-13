@@ -71,7 +71,7 @@ type GlobalSettings = {
     colorGrey: string,
     death: number,
     devPowerFix: number,
-  targetFlowTime: number,
+    targetFlowTime: number,
     devUnits: number,
     dfntnOfReady: number,
     dragMidpoint: number,
@@ -114,6 +114,11 @@ type FlwStep = {
   actualFlwTime: number,
   avAge: number,
 };
+
+//-----------------------
+// FlwTms
+//-----------------------
+type FlwTms = Array<number>;
 
 //------------------------------------------------------------------
 // gState

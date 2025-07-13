@@ -11,28 +11,28 @@ import clickActionsHeadless from "./clickActionsHeadless.js";
 //------------------------------------------------------------------
 // headlessClickLoop()
 //------------------------------------------------------------------
-export const headlessClickLoop = () /*: Array<number> | void */ => {
-  const timeBox = gSttngs().get("timeBox");
-  // Placeholder for the actual return values. 150 represents the
-  // average flow time over 1000 loops through the timebojjx of clicks,
-  // 1 represents the devPowerFix used for the loops.
 
+export const headlessClickLoop = (
+  nmbrOfTmbxLoops /*: number */,
+  flwTms /*: FlwTms */,
+) /*: FlwTms */ => {
+  const timeBox = gSttngs().get("timeBox");
   const clicks = gState().get("clicks");
 
-  // First time through, gState().get("clicks") will be 0, as set in
-  // globalState.js
-  if (clicks < timeBox) {
-    gState().set("clicks", gState().get("clicks") + 1);
-  } else {
-    gState().set("clicks", 1);
+  if (nmbrOfTmbxLoops === 0) {
+    return flwTms;
   }
-  // Updates the global state.
-  clickActionsHeadless();
-  if (gState().get("clicks") === timeBox) {
-    return [gState().get("flwTime"), gSttngs().get("devPowerFix")];
-  } else {
-    return headlessClickLoop();
+
+  // Call clickActionsHeadless timeBox number of times
+  for (let i = 0; i < timeBox; i++) {
+    gState().set("clicks", i + 1);
+    clickActionsHeadless();
   }
+  const currentFlwTime = gState().get("flwTime");
+  if (currentFlwTime > 0) {
+    flwTms.push(currentFlwTime);
+  }
+  return headlessClickLoop(--nmbrOfTmbxLoops, flwTms);
 };
 
 export default headlessClickLoop;

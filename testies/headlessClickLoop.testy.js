@@ -98,11 +98,9 @@ const fixture = () /*: void */ => {
   globalState();
 };
 
-test("headlessClickLoop()", async () => {
+test("headlessClickLoop() returns a flow time number", async () => {
   fixture();
-  const data = headlessClickLoop();
-  should(Array.isArray(data)).be.true();
-  if (data !== undefined) {
-    should(data.length).be.greaterThan(0);
-  }
+  const flwTime = headlessClickLoop(10, []);
+  should(Array.isArray(flwTime)).be.true;
+  should(flwTime.length).be.above(0);
 });
