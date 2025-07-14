@@ -30,8 +30,8 @@ const fixture = () /*: void */ => {
     {
       name: "Open",
       status: "backlog",
-      limit: 0,
-      movingLimit: 0,
+      limit: 10,
+      movingLimit: 10,
       avAge: 0,
       devUnits: 0,
       flwTimeAtStart: 0,
@@ -41,9 +41,9 @@ const fixture = () /*: void */ => {
     {
       name: "Ready",
       status: "wait",
-      limit: 3,
-      movingLimit: 3,
-      avAge: 0,
+      limit: 2,
+      movingLimit: 2,
+      avAge: 1,
       devUnits: 0,
       flwTimeAtStart: 0,
       actualFlwTime: 0,
@@ -52,20 +52,20 @@ const fixture = () /*: void */ => {
     {
       name: "Doing",
       status: "touch",
-      limit: 3,
-      movingLimit: 3,
-      avAge: 0,
-      devUnits: 0,
-      flwTimeAtStart: 0,
-      actualFlwTime: 0,
+      limit: 2,
+      movingLimit: 2,
+      avAge: 1,
+      devUnits: 2,
+      flwTimeAtStart: 1,
+      actualFlwTime: 1,
       movingDevUnits: 0,
     },
     {
       name: "Ready for Test",
       status: "wait",
-      limit: 3,
-      movingLimit: 3,
-      avAge: 0,
+      limit: 2,
+      movingLimit: 2,
+      avAge: 1,
       devUnits: 0,
       flwTimeAtStart: 0,
       actualFlwTime: 0,
@@ -74,13 +74,13 @@ const fixture = () /*: void */ => {
     {
       name: "In Test",
       status: "touch",
-      limit: 3,
-      movingLimit: 3,
-      avAge: 0,
-      devUnits: 0,
-      flwTimeAtStart: 0,
-      actualFlwTime: 0,
-      movingDevUnits: 0,
+      limit: 2,
+      movingLimit: 2,
+      avAge: 1,
+      devUnits: 2,
+      flwTimeAtStart: 1,
+      actualFlwTime: 1,
+      movingDevUnits: 2,
     },
     {
       name: "Done",
@@ -95,6 +95,7 @@ const fixture = () /*: void */ => {
     },
   ]);
   gSttngs().set("timeBox", 10);
+  gSttngs().set("arrivalRate", 1);
   globalState();
 };
 
