@@ -131,7 +131,7 @@ test("headlessClickLoop() returns an array of 10 flwTimes", async () => {
   should(Array.isArray(flwTime)).be.true;
   should(flwTime.length).be.exactly(10);
   const avg = flwTime.reduce((a, b) => a + b, 0) / flwTime.length;
-  console.log(`headlessClickLoop() avg flwTime: ${avg}`);
+  // console.log(`headlessClickLoop() avg flwTime: ${avg}`);
   should(avg).be.above(2);
   lastAvg = avg;
 });
@@ -142,7 +142,7 @@ test("headlessClickLoop() returns longer flwTimes for a bit of drag", async () =
   gSttngs().set("dragPoint", 0.2);
   const flwTime = headlessClickLoop(10, 1, []);
   const avg = flwTime.reduce((a, b) => a + b, 0) / flwTime.length;
-  console.log(`headlessClickLoop() avg flwTime: ${avg}`);
+  // console.log(`headlessClickLoop() avg flwTime: ${avg}`);
   should(avg).be.above(lastAvg);
   lastAvg = avg;
 });
@@ -153,6 +153,6 @@ test("headlessClickLoop() returns shorter flwTimes again with more devPowerFix",
   gSttngs().set("dragPoint", 0.2);
   const flwTime = headlessClickLoop(10, 1.12, []);
   const avg = flwTime.reduce((a, b) => a + b, 0) / flwTime.length;
-  console.log(`headlessClickLoop() avg flwTime: ${avg}`);
+  // console.log(`headlessClickLoop() avg flwTime: ${avg}`);
   should(avg).be.below(lastAvg);
 });

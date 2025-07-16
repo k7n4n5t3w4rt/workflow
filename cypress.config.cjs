@@ -15,6 +15,6 @@ module.exports = defineConfig({
       });
       return require("./cypress/plugins/index.cjs")(on, config);
     },
-    baseUrl: "http://localhost:5174",
+    baseUrl: "http://localhost:5173",
   },
 });

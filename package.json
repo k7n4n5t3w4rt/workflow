@@ -46,8 +46,8 @@
     "goodthing:update": "rsync -a --exclude='.git' --exclude='docs' --exclude='web_modules' ../goodthing/ ./",
     "lint": "prettier --check \"src/**/*.{js,jsx}\"",
     "start": "npm run dev",
-    "test": "npm run testy && npm run cypress:run",
-    "testy": "export RUN_CONTEXT='testy'; node --no-warnings server/testyrunner.js | faucet"
+    "test": "npm run testy | faucet && npm run cypress:run",
+    "testy": "export RUN_CONTEXT='testy'; node --no-warnings server/testyrunner.js"
   },
   "type": "module"
 }

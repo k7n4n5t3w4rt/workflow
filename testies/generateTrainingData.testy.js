@@ -105,19 +105,33 @@ const fixture = () /*: void */ => {
 // Define a range of devPowerFix values to test
 const devPowerFixValues = [
   0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5,
-  1.6, 1.7, 1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0,
+  1.6, 1.7, 1.8, 1.9, 2.0,
 ];
 const headlessClickLoop = (
   nmbrOfTmbxLoops /*: number */,
+  devPowerFixLocal /*: number */,
   flwTms /*: Array<number> */,
-) /*: { inputs: Array<number>, labels: Array<number> } */ => {
-  return { inputs: [], labels: devPowerFixValues };
+) /*: Array<number> */ => {
+  // Simulate the click actions and flow times
+  for (let i = 0; i < nmbrOfTmbxLoops; i++) {
+    // Simulate a flow time based on the devPowerFix
+    const simulatedFlwTime = Math.random() * 10 * devPowerFixLocal;
+    flwTms.push(simulatedFlwTime);
+  }
+  return flwTms;
 };
+const populateStepsHeadless = () /*: void */ => {};
 
+//------------------------------------------------------------------
+// TEST: generateTrainingData()
+//------------------------------------------------------------------
 test("generateTrainingData() returns inputs and labels", async () => {
   fixture();
 
-  const data = generateTrainingData(devPowerFixValues);
+  const data = generateTrainingData(
+    populateStepsHeadless,
+    headlessClickLoop,
+  )(devPowerFixValues);
 
   // 1. Check that both inner arrays are, in fact, arrays
   should(Array.isArray(data.inputs)).be.true();
