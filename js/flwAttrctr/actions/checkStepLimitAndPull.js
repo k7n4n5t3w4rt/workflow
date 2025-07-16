@@ -36,9 +36,9 @@ export const checkStepLimitAndPull =
     // if (availableLimit === 0) {
     //   return;
     // }t
-    console.log(
-      `checkStepLimitAndPull: Just about to call pullFromPreviousStep()`,
-    );
+    // console\.log\(
+    //   `checkStepLimitAndPull: Just about to call pullFromPreviousStep()`,
+    // \);
     pullFromPreviousStep(flwMpStpKeyNumber - 1, availableLimit);
   };
 export default checkStepLimitAndPull;

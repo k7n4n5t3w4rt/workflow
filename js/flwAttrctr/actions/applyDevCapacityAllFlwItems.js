@@ -48,9 +48,9 @@ export const applyDevCapacityAllFlwItems = (
     // Pull flow items as usual as if this was a cick. Hopefully, this will
     // also update throughput etc.
     // Call this function again, but using up the spare capacity.
-    console.log(
-      `applyDevCapacityAllFlwItems(): Just about to call recursivelyPullFlwItems()`,
-    );
+    // console\.log\(
+    //   `applyDevCapacityAllFlwItems(): Just about to call recursivelyPullFlwItems()`,
+    // \);
     recursivelyPullFlwItems();
     updateDays(spareDevDays, usingSpareDevDays);
   }

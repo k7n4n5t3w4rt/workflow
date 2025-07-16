@@ -32,26 +32,26 @@ export const clickActionsHeadless = () /*: void */ => {
   for (let i = 0; i < keys.length; ++i) {
     const flwItem = flwItmsToMove[keys[i]];
     delete flwItmsToMove[keys[i]];
-    console.log(`clickActionsHeadless(): Just about to call moveHeadless()`);
+    // console.log(`clickActionsHeadless(): Just about to call moveHeadless()`);
     moveHeadless(flwItem);
   }
   if (gSttngs().get("devUnitsMoveToWork")) {
     autoMoveDevUnits();
   }
-  console.log(
-    `clickActionsHeadless(): Just about to call addNewFlowItemsAtArrivalRateHeadless()`,
-  );
+  // console.log(
+  //   `clickActionsHeadless(): Just about to call addNewFlowItemsAtArrivalRateHeadless()`,
+  // );
   // NOTE: The order of these function calls is important
   addNewFlowItemsAtArrivalRateHeadless();
   // setExpedite();
   // resizeVSphereHeadless();
-  console.log(`clickActionsHeadless(): Just about to call updateAgeHeadless()`);
+  // console.log(`clickActionsHeadless(): Just about to call updateAgeHeadless()`);
   updateAgeHeadless();
-  console.log(`clickActionsHeadless(): Just about to call updateDays()`);
+  // console.log(`clickActionsHeadless(): Just about to call updateDays()`);
   updateDays();
-  console.log(
-    `clickActionsHeadless(): Just about to recursively pull flow items with recursivelyPullFlwItemsHeadless()`,
-  );
+  // console.log(
+  //   `clickActionsHeadless(): Just about to recursively pull flow items with recursivelyPullFlwItemsHeadless()`,
+  // );
   recursivelyPullFlwItemsHeadless();
   // updateExpdtWip();
   updateNrmlWip();

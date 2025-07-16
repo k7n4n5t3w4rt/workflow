@@ -12,7 +12,7 @@ export const test = (
   testFunction /*: function */,
   skip /*: "skip" | boolean */ = false,
 ) /*: void */ => {
-  if (!skip !== "skip") {
+  if (skip !== "skip") {
     try {
       testFunction();
       console.log("ok - " + message, ":)");

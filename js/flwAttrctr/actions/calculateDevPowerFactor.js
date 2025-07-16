@@ -26,9 +26,9 @@ const calculateDevPowerFactor = (
   }
   const devRatio = devUnits / wip;
   const devPowerFactor = calculateDevPowerForDevToWipRatio(devRatio);
-  console.log(
-    `calculateDevPowerFactor(): devUnits: ${devUnits}, wip: ${wip}, devRatio: ${devRatio}, devPowerFactor: ${devPowerFactor}`,
-  );
+  // console.log(
+  //   `calculateDevPowerFactor(): devUnits: ${devUnits}, wip: ${wip}, devRatio: ${devRatio}, devPowerFactor: ${devPowerFactor}`,
+  // );
   return devPowerFactor;
 };
 //------------------------------------------------------------------------------
@@ -61,9 +61,9 @@ const calculateDevPowerForDevToWipRatio = (
   // k = log(0.8) / log(0.5) = 0.3219;
   const k = Math.log(1 - drag) / Math.log(0.5);
   const y = Math.round(Math.pow(devUnitsToWipRatio, k) * 100) / 100;
-  console.log(
-    `calculateDevPowerForDevToWipRatio(): devUnitsToWipRatio: ${devUnitsToWipRatio}, drag: ${drag}, dragPoint: ${dragPoint}, k: ${k}, y: ${y}`,
-  );
+  // console.log(
+  //   `calculateDevPowerForDevToWipRatio(): devUnitsToWipRatio: ${devUnitsToWipRatio}, drag: ${drag}, dragPoint: ${dragPoint}, k: ${k}, y: ${y}`,
+  // );
   return y; // Scale the y value to the same range as x
 };
 export default calculateDevPowerFactor;

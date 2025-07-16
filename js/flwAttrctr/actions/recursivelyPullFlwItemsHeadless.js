@@ -11,7 +11,7 @@ import pullFlwItemsHeadless from "./pullFlwItemsHeadless.js";
 // FUNCTION: recursivelyPullFlwItemsHeadless()
 //------------------------------------------------------------------
 export const recursivelyPullFlwItemsHeadless = () /*: void */ => {
-  console.log("recursivelyPullFlwItemsHeadless(): Starting to pull flow items");
+  // console.log("recursivelyPullFlwItemsHeadless(): Starting to pull flow items");
   gState().set("flwItmsPulledCount", 0);
   pullFlwItemsHeadless();
 };

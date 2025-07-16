@@ -87,9 +87,9 @@ export default (
       // ACTIONS - We have a flwItem that we can pull, so we move it
       // and update the flwMap
       // --------------------------------------------------------------
-      console.log(
-        `pullFlowItem(): Yes! There is an available limit left to pull flwItem ${flwItem.name} from step ${dStpIndex}`,
-      );
+      // console.log(
+      //   `pullFlowItem(): Yes! There is an available limit left to pull flwItem ${flwItem.name} from step ${dStpIndex}`,
+      // );
       // Update the step index to the next step
       flwItem.dStpIndex += 1;
       // We don't want to reset the days remaining if the item is
@@ -106,9 +106,9 @@ export default (
         gState().get("flwItmsPulledCount") + 1,
       );
     } else {
-      console.log(
-        `pullFlowItem(): No! The flow item called "${flwItem.name}" from step ${dStpIndex} has days remaining: ${flwItem.dDysRmnngThisStep}`,
-      );
+      // console.log(
+      //   `pullFlowItem(): No! The flow item called "${flwItem.name}" from step ${dStpIndex} has days remaining: ${flwItem.dDysRmnngThisStep}`,
+      // );
     }
     // `availableLimit` is the accumulator. If we have a limit, that is not yet
     // zero, then decrement it

@@ -12,7 +12,7 @@ import pullFlwItems from "./pullFlwItems.js";
 //------------------------------------------------------------------
 export const recursivelyPullFlwItems = () /*: void */ => {
   gState().set("flwItmsPulledCount", 0);
-  console.log("recursivelyPullFlwItems(): Calling pullFlwItems()");
+  // console.log("recursivelyPullFlwItems(): Calling pullFlwItems()");
   pullFlwItems();
 };
 export default recursivelyPullFlwItems;

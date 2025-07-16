@@ -30,9 +30,9 @@ export const pullFromPreviousStep = (
       availableLimit,
     );
     expediteFlag = false;
-    console.log(
-      `pullFromPreviousStep(): For ${flwItems.length} flow items from step ${stpKey} calling pullFlowItem on each to fill ${availableLimit} available limit in this step`,
-    );
+    // console\.log\(
+    //   `pullFromPreviousStep(): For ${flwItems.length} flow items from step ${stpKey} calling pullFlowItem on each to fill ${availableLimit} available limit in this step`,
+    // \);
     flwItems.reduce(
       pullFlowItem(expediteFlag, move, updateFlowMap),
       nrmlAvailableLimit,

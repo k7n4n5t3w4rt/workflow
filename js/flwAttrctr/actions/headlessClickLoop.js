@@ -14,10 +14,15 @@ import clickActionsHeadless from "./clickActionsHeadless.js";
 
 export const headlessClickLoop = (
   tmbxLoopsRemaining /*: number */,
+  devPowerFixLocal /*: number */,
   flwTms /*: FlwTms */,
 ) /*: FlwTms */ => {
   const timeBox = gSttngs().get("timeBox");
   const clicks = gState().get("clicks");
+
+  // Set the devPowerFix in gSttngs to the local value
+  // for this set of loops
+  gSttngs().set("devPowerFix", devPowerFixLocal);
 
   if (tmbxLoopsRemaining === 0) {
     return flwTms;
@@ -26,8 +31,8 @@ export const headlessClickLoop = (
   // Call clickActionsHeadless timeBox number of times
   for (let i = 0; i < timeBox; i++) {
     gState().set("clicks", i + 1);
-    console.log(`headlessClickLoop(): Click number ${i + 1} of ${timeBox}.`);
-    console.log(`headlessClickLoop(): Calling clickActionsHeadless().`);
+    // console.log(`headlessClickLoop(): Click number ${i + 1} of ${timeBox}.`);
+    // console.log(`headlessClickLoop(): Calling clickActionsHeadless().`);
     clickActionsHeadless();
   }
 
@@ -40,9 +45,9 @@ export const headlessClickLoop = (
   //   currentFlwTime,
   // );
   // if (currentFlwTime > 0) {
-  flwTms.push([currentFlwTime, tmbxLoopsRemaining]);
+  flwTms.push(currentFlwTime);
   // }
-  return headlessClickLoop(--tmbxLoopsRemaining, flwTms);
+  return headlessClickLoop(--tmbxLoopsRemaining, devPowerFixLocal, flwTms);
 };
 
 export default headlessClickLoop;

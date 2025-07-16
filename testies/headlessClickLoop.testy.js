@@ -57,13 +57,13 @@ const fixture = () /*: void */ => {
     {
       name: "Doing",
       status: "touch",
-      limit: 2,
-      movingLimit: 2,
-      avAge: 1,
-      devUnits: 2,
-      flwTimeAtStart: 1,
-      actualFlwTime: 1,
-      movingDevUnits: 2,
+      limit: 10,
+      movingLimit: 10,
+      avAge: 5,
+      devUnits: 15,
+      flwTimeAtStart: 5,
+      actualFlwTime: 5,
+      movingDevUnits: 15,
     },
     {
       name: "Ready for Test",
@@ -79,13 +79,13 @@ const fixture = () /*: void */ => {
     {
       name: "In Test",
       status: "touch",
-      limit: 2,
-      movingLimit: 2,
-      avAge: 1,
-      devUnits: 2,
-      flwTimeAtStart: 1,
-      actualFlwTime: 1,
-      movingDevUnits: 2,
+      limit: 5,
+      movingLimit: 5,
+      avAge: 2,
+      devUnits: 5,
+      flwTimeAtStart: 2,
+      actualFlwTime: 2,
+      movingDevUnits: 5,
     },
     {
       name: "Done",
@@ -101,7 +101,7 @@ const fixture = () /*: void */ => {
   ]);
   gSttngs().set("timeBox", 10);
   gSttngs().set("arrivalRate", 1);
-  gSttngs().set("flwTimeMin", 3);
+  gSttngs().set("flwTimeMin", 5);
   gSttngs().set("x", 1);
   gSttngs().set("y", 1);
   gSttngs().set("z", 1);
@@ -109,22 +109,50 @@ const fixture = () /*: void */ => {
   gSttngs().set("dragPoint", 0);
   globalState();
   gState().set("uuid", 0);
-  console.log(
-    "headlessClickLoop.testy.js: fixture() - Just about to call populateStepsHeadless()",
-  );
+  // console.log(
+  //   "headlessClickLoop.testy.js: fixture() - Just about to call populateStepsHeadless()",
+  // );
   populateStepsHeadless();
-  console.log(
-    "headlessClickLoop.testy.js: fixture() - Just called populateStepsHeadless()",
-  );
+  // console.log(
+  //   "headlessClickLoop.testy.js: fixture() - Just called populateStepsHeadless()",
+  // );
 };
 
-test("headlessClickLoop() returns a flow time number", async () => {
+let lastAvg = 0;
+
+test("headlessClickLoop() returns an array of 10 flwTimes", async () => {
   fixture();
-  console.log(
-    "headlessClickLoop.testy.js: test() - Just about to call headlessClickLoop()",
-  );
-  const flwTime = headlessClickLoop(10, []);
-  console.log("headlessClickLoop() flwTime:", flwTime);
+
+  // console.log(
+  //   "headlessClickLoop.testy.js: test() - Just about to call headlessClickLoop()",
+  // );
+  const flwTime = headlessClickLoop(10, 1, []);
+  // console.log("headlessClickLoop() flwTime:", flwTime);
   should(Array.isArray(flwTime)).be.true;
   should(flwTime.length).be.exactly(10);
+  const avg = flwTime.reduce((a, b) => a + b, 0) / flwTime.length;
+  console.log(`headlessClickLoop() avg flwTime: ${avg}`);
+  should(avg).be.above(2);
+  lastAvg = avg;
+});
+
+test("headlessClickLoop() returns longer flwTimes for a bit of drag", async () => {
+  fixture();
+  gSttngs().set("drag", 0.7);
+  gSttngs().set("dragPoint", 0.2);
+  const flwTime = headlessClickLoop(10, 1, []);
+  const avg = flwTime.reduce((a, b) => a + b, 0) / flwTime.length;
+  console.log(`headlessClickLoop() avg flwTime: ${avg}`);
+  should(avg).be.above(lastAvg);
+  lastAvg = avg;
+});
+
+test("headlessClickLoop() returns shorter flwTimes again with more devPowerFix", async () => {
+  fixture();
+  gSttngs().set("drag", 0.7);
+  gSttngs().set("dragPoint", 0.2);
+  const flwTime = headlessClickLoop(10, 1.12, []);
+  const avg = flwTime.reduce((a, b) => a + b, 0) / flwTime.length;
+  console.log(`headlessClickLoop() avg flwTime: ${avg}`);
+  should(avg).be.below(lastAvg);
 });

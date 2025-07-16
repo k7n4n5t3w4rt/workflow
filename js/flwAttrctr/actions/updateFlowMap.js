@@ -19,12 +19,12 @@ export default (flwItem /*: FlwItem */, index /*: number */) => {
   const deletedFlwItem = gState()
     .get("flwMap")
     [(dStpIndex - 1).toString()].splice(index, 1);
-  console.log(
-    `updateFlowMap(): Removed ${deletedFlwItem.length} flwItem[s] from step ${
-      dStpIndex - 1
-    } at index ${index}`,
-    deletedFlwItem,
-  );
+  // console.log(
+  //   `updateFlowMap(): Removed ${deletedFlwItem.length} flwItem[s] from step ${
+  //     dStpIndex - 1
+  //   } at index ${index}`,
+  //   deletedFlwItem,
+  // );
   // Add the flwItem to the correct step in the flwMap
   gState().get("flwMap")[dStpIndex.toString()].push(flwItem);
 };

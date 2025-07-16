@@ -33,17 +33,17 @@ export const pullFromPreviousStepHeadless = (
       availableLimit,
     );
     expediteFlag = false;
-    console.log(
-      `pullFromPreviousStepHeadless(): Pulling ${flwItems.length} flow items from step ${stpKey} to fill ${availableLimit} available limit`,
-    );
+    // console\.log\(
+    //   `pullFromPreviousStepHeadless(): Pulling ${flwItems.length} flow items from step ${stpKey} to fill ${availableLimit} available limit`,
+    // \);
     flwItems.reduce(
       pullFlowItem(expediteFlag, moveHeadless, updateFlowMap),
       availableLimit,
     );
   } else {
-    console.log(
-      `pullFromPreviousStepHeadless(): Not pulling any of the ${flwItems.length} flow items from step ${stpKey}`,
-    );
+    // console\.log\(
+    //   `pullFromPreviousStepHeadless(): Not pulling any of the ${flwItems.length} flow items from step ${stpKey}`,
+    // \);
   }
 };
 export default pullFromPreviousStepHeadless;

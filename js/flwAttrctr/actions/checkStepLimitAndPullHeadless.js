@@ -19,17 +19,17 @@ export const checkStepLimitAndPullHeadless =
     flwMpStpKeyNumber /*: number */,
   ) /*: void */ => {
     if (flwMpStpKeyNumber === 0) {
-      console.log(
-        `checkStepLimitAndPullHeadless: Step ${flwMpStpKeyNumber} is the Backlog, no pull needed`,
-      );
+      // console.log(
+      //   `checkStepLimitAndPullHeadless: Step ${flwMpStpKeyNumber} is the Backlog, no pull needed`,
+      // );
       return;
     }
     let flwStpLimit = getFlowStepLimit(flwMpStpKeyNumber);
     let availableLimit /*: "no limit" | 0 | number */ =
       getAvailableLimitForStep(flwStpLimit, flwMpStpItems);
-    console.log(
-      `checkStepLimitAndPullHeadless: Step ${flwMpStpKeyNumber} has an availableLimit of ${availableLimit}`,
-    );
+    // console\.log\(
+    //   `checkStepLimitAndPullHeadless: Step ${flwMpStpKeyNumber} has an availableLimit of ${availableLimit}`,
+    // \);
     pullFromPreviousStepHeadless(flwMpStpKeyNumber - 1, availableLimit);
   };
 export default checkStepLimitAndPullHeadless;
