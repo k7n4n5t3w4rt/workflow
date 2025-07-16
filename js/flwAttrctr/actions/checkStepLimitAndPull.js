@@ -35,7 +35,10 @@ export const checkStepLimitAndPull =
       getAvailableLimitForStep(flwStpLimit, flwMpStpItems);
     // if (availableLimit === 0) {
     //   return;
-    // }
+    // }t
+    console.log(
+      `checkStepLimitAndPull: Just about to call pullFromPreviousStep()`,
+    );
     pullFromPreviousStep(flwMpStpKeyNumber - 1, availableLimit);
   };
 export default checkStepLimitAndPull;

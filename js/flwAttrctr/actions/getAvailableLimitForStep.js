@@ -2,6 +2,7 @@
 //------------------------------------------------------------------
 // getAvailableLimitForStep()
 //------------------------------------------------------------------
+
 export default (
   flwStpLimit /*: number */,
   flwMpStpItems /*: FlwItem[] */,
@@ -12,12 +13,21 @@ export default (
   let availableLimit /*: "no limit" | 0 | number */ = "no limit";
   // `flwStpLimit` may be an actual limit
   if (flwStpLimit > 0) {
+    console.log(
+      `getAvailableLimitForStep(): Checking available limit for step with limit ${flwStpLimit} and ${flwMpStpItems.length} items`,
+    );
     availableLimit = flwStpLimit - flwMpStpItems.length;
+    console.log(
+      `getAvailableLimitForStep(): Available limit for step with limit ${flwStpLimit} is ${availableLimit}`,
+    );
   }
   // Account for the (hopefully rare) case where the limit is
   // exceeded - like if there's is one or more expedited items
   if (availableLimit !== "no limit" && availableLimit < 0) {
     availableLimit = 0;
+    console.log(
+      `getAvailableLimitForStep(): Available limit is negative, setting to 0 for step with limit ${flwStpLimit} and ${flwMpStpItems.length} items`,
+    );
   }
   return availableLimit;
 };

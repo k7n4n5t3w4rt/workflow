@@ -26,6 +26,9 @@ const calculateDevPowerFactor = (
   }
   const devRatio = devUnits / wip;
   const devPowerFactor = calculateDevPowerForDevToWipRatio(devRatio);
+  console.log(
+    `calculateDevPowerFactor(): devUnits: ${devUnits}, wip: ${wip}, devRatio: ${devRatio}, devPowerFactor: ${devPowerFactor}`,
+  );
   return devPowerFactor;
 };
 //------------------------------------------------------------------------------
@@ -58,25 +61,9 @@ const calculateDevPowerForDevToWipRatio = (
   // k = log(0.8) / log(0.5) = 0.3219;
   const k = Math.log(1 - drag) / Math.log(0.5);
   const y = Math.round(Math.pow(devUnitsToWipRatio, k) * 100) / 100;
+  console.log(
+    `calculateDevPowerForDevToWipRatio(): devUnitsToWipRatio: ${devUnitsToWipRatio}, drag: ${drag}, dragPoint: ${dragPoint}, k: ${k}, y: ${y}`,
+  );
   return y; // Scale the y value to the same range as x
 };
 export default calculateDevPowerFactor;
-//------------------------------------------------------------------------------
-// TESTS
-//------------------------------------------------------------------------------
-// test("------- calculateDevPowerFactor.js -------", () /*: void */ => {
-//   should(1).be.exactly(1);
-// });
-// test("Return devPower according to the power law", () /*: void */ => {
-//   gSttngs().set("drag", 0.2);
-//   should(calculateDevPowerFactor(10, 10)).be.exactly(1);
-//   should(calculateDevPowerFactor(10, 9)).be.exactly(0.97);
-//   should(calculateDevPowerFactor(10, 8)).be.exactly(0.93);
-//   should(calculateDevPowerFactor(10, 7)).be.exactly(0.89);
-//   should(calculateDevPowerFactor(10, 6)).be.exactly(0.85);
-//   should(calculateDevPowerFactor(10, 5)).be.exactly(0.8);
-//   should(calculateDevPowerFactor(10, 4)).be.exactly(0.74);
-//   should(calculateDevPowerFactor(10, 3)).be.exactly(0.68);
-//   should(calculateDevPowerFactor(10, 2)).be.exactly(0.6);
-//   should(calculateDevPowerFactor(10, 1)).be.exactly(0.48);
-// });

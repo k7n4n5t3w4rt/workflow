@@ -13,26 +13,36 @@ import clickActionsHeadless from "./clickActionsHeadless.js";
 //------------------------------------------------------------------
 
 export const headlessClickLoop = (
-  nmbrOfTmbxLoops /*: number */,
+  tmbxLoopsRemaining /*: number */,
   flwTms /*: FlwTms */,
 ) /*: FlwTms */ => {
   const timeBox = gSttngs().get("timeBox");
   const clicks = gState().get("clicks");
 
-  if (nmbrOfTmbxLoops === 0) {
+  if (tmbxLoopsRemaining === 0) {
     return flwTms;
   }
 
   // Call clickActionsHeadless timeBox number of times
   for (let i = 0; i < timeBox; i++) {
     gState().set("clicks", i + 1);
+    console.log(`headlessClickLoop(): Click number ${i + 1} of ${timeBox}.`);
+    console.log(`headlessClickLoop(): Calling clickActionsHeadless().`);
     clickActionsHeadless();
   }
+
   const currentFlwTime = gState().get("flwTime");
-  if (currentFlwTime > 0) {
-    flwTms.push(currentFlwTime);
-  }
-  return headlessClickLoop(--nmbrOfTmbxLoops, flwTms);
+
+  // console.log(
+  //   "[headlessClickLoop] tmbxLoopsRemaining:",
+  //   tmbxLoopsRemaining,
+  //   "currentFlwTime:",
+  //   currentFlwTime,
+  // );
+  // if (currentFlwTime > 0) {
+  flwTms.push([currentFlwTime, tmbxLoopsRemaining]);
+  // }
+  return headlessClickLoop(--tmbxLoopsRemaining, flwTms);
 };
 
 export default headlessClickLoop;

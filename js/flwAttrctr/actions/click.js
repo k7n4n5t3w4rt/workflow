@@ -9,7 +9,7 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import filterDoneItems from "./click.js_filterDoneItems.js";
 import updateExpdtWip from "./click.js_updateExpdtWip.js";
-import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
+import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
 import updateNrmlWip from "./click.js_updateNrmlWip.js";
 import setExpedite from "./click.js_setExpedite.js";
 import resizeVSphere from "./resizeVSphere.js";
@@ -35,6 +35,5 @@ export const click = () /*: void */ => {
   }
   animateClickCube();
 };
-
 
 export default click;

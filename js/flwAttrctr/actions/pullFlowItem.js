@@ -48,12 +48,18 @@ export default (
     }
     // Check if the fwItem has died of old age and ignore it if it has
     if (gSttngs().get("death") > 0 && flwItem.dAge >= gSttngs().get("death")) {
+      console.log(
+        `pullFlowItem(): Ignoring flwItem ${flwItem.name} at step index ${flwItem.dStpIndex} because it has died of old age`,
+      );
       return availableLimit;
     }
     let dStpIndex = flwItem.dStpIndex;
     if (dStpIndex > gSttngs().get("steps").length - 1) {
       dStpIndex = gSttngs().get("steps").length - 1;
       flwItem.dStpIndex = dStpIndex;
+      console.log(
+        `pullFlowItem(): Adjusting flwItem ${flwItem.name} dStpIndex to ${dStpIndex} because it is out of bounds`,
+      );
     }
     if (
       // If the flwItem.dStpIndex is 0, then we are at the backlog, in
@@ -71,6 +77,9 @@ export default (
         // This will happen when we have used up the availableLimit
         // and we've pulled the last flwItem we can pull -
         if (availableLimit === 0) {
+          // console.log(
+          //   `pullFlowItem(): No available limit left to pull flwItem ${flwItem.name} at step index ${dStpIndex}`,
+          // );
           return availableLimit;
         }
       }
@@ -78,6 +87,9 @@ export default (
       // ACTIONS - We have a flwItem that we can pull, so we move it
       // and update the flwMap
       // --------------------------------------------------------------
+      console.log(
+        `pullFlowItem(): Yes! There is an available limit left to pull flwItem ${flwItem.name} from step ${dStpIndex}`,
+      );
       // Update the step index to the next step
       flwItem.dStpIndex += 1;
       // We don't want to reset the days remaining if the item is
@@ -90,8 +102,12 @@ export default (
       // In `pullFlwItems()` we check this is > 0 and do another run through.
       // We only stop when there is nothing left to pull
       gState().set(
-        "flwItmsPulledCount",
+        "pullFlowItem(): flwItmsPulledCount",
         gState().get("flwItmsPulledCount") + 1,
+      );
+    } else {
+      console.log(
+        `pullFlowItem(): No! The flow item called "${flwItem.name}" from step ${dStpIndex} has days remaining: ${flwItem.dDysRmnngThisStep}`,
       );
     }
     // `availableLimit` is the accumulator. If we have a limit, that is not yet

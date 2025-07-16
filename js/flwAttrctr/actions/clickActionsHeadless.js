@@ -8,7 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import filterDoneItems from "./click.js_filterDoneItems.js";
-import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
+import addNewFlowItemsAtArrivalRateHeadless from "./addNewFlowItemsAtArrivalRateHeadless.js";
 import updateNrmlWip from "./click.js_updateNrmlWip.js";
 import resizeVSphereHeadless from "./resizeVSphereHeadless.js";
 import updateAgeHeadless from "./updateAgeHeadless.js";
@@ -27,33 +27,39 @@ export const clickActionsHeadless = () /*: void */ => {
   const flwItmsToMove /*: FlwItmsToMove */ = gState().get("flwItmsToMove");
   const timeBox = gSttngs().get("timeBox");
   const clicks = gState().get("clicks");
-  if (gState().get("paused") === false) {
-    // Do all the moving
-    const keys = Object.keys(flwItmsToMove);
-    for (let i = 0; i < keys.length; ++i) {
-      const flwItem = flwItmsToMove[keys[i]];
-      delete flwItmsToMove[keys[i]];
-      moveHeadless(flwItem);
-    }
-    if (gSttngs().get("devUnitsMoveToWork")) {
-      autoMoveDevUnits();
-    }
-    // NOTE: The order of these function calls is important
-    addNewFlowItemsAtArrivalRate();
-    // setExpedite();
-    resizeVSphereHeadless();
-    updateAgeHeadless();
-    updateDays();
-    recursivelyPullFlwItemsHeadless();
-    // updateExpdtWip();
-    updateNrmlWip();
-    filterDoneItems(removeDoneFlwItmsFromFlwMap)();
-    updateClickMetrics();
-    if (gState().get("clicks") === 1) {
-      updateTimeBoxMetricsHeadless();
-    }
+  // Do all the moving
+  const keys = Object.keys(flwItmsToMove);
+  for (let i = 0; i < keys.length; ++i) {
+    const flwItem = flwItmsToMove[keys[i]];
+    delete flwItmsToMove[keys[i]];
+    console.log(`clickActionsHeadless(): Just about to call moveHeadless()`);
+    moveHeadless(flwItem);
   }
-  
+  if (gSttngs().get("devUnitsMoveToWork")) {
+    autoMoveDevUnits();
+  }
+  console.log(
+    `clickActionsHeadless(): Just about to call addNewFlowItemsAtArrivalRateHeadless()`,
+  );
+  // NOTE: The order of these function calls is important
+  addNewFlowItemsAtArrivalRateHeadless();
+  // setExpedite();
+  // resizeVSphereHeadless();
+  console.log(`clickActionsHeadless(): Just about to call updateAgeHeadless()`);
+  updateAgeHeadless();
+  console.log(`clickActionsHeadless(): Just about to call updateDays()`);
+  updateDays();
+  console.log(
+    `clickActionsHeadless(): Just about to recursively pull flow items with recursivelyPullFlwItemsHeadless()`,
+  );
+  recursivelyPullFlwItemsHeadless();
+  // updateExpdtWip();
+  updateNrmlWip();
+  filterDoneItems(removeDoneFlwItmsFromFlwMap)();
+  updateClickMetrics();
+  if (gState().get("clicks") === timeBox) {
+    updateTimeBoxMetricsHeadless();
+  }
 };
 
 export default clickActionsHeadless;

@@ -8,7 +8,7 @@ import gState from "./gState.js";
 // IMPORT: HELPERS
 //------------------------------------------------------------------
 import filterDoneItems from "./click.js_filterDoneItems.js";
-import addNewFlowItemsAtArrivalRate from "./click.js_addNewFlowItemsAtArrivalRate.js";
+import addNewFlowItemsAtArrivalRate from "./addNewFlowItemsAtArrivalRate.js";
 import updateNrmlWip from "./click.js_updateNrmlWip.js";
 import resizeVSphere from "./resizeVSphere.js";
 import updateAge from "./updateAge.js";

@@ -61,6 +61,11 @@ export const updateFlowTimeQueue = (
 ) /*: void */ => {
   while (gState().get("flwTmQueue").length() >= gSttngs().get("timeBox")) {
     gState().get("flwTmQueue").dequeue();
+    // console.log(
+    //   `There are ${gSttngs().get("timeBox")} flow times in the queue.`,
+    //   flwTimeArray,
+    // );
   }
   gState().get("flwTmQueue").enqueue(flwTimeArray);
+  console.log("Adding to the queue: ", flwTimeArray);
 };

@@ -10,6 +10,7 @@ import gState from "./gState.js";
 import { headlessClickLoop } from "./headlessClickLoop.js";
 import globalSettings from "./globalSettings.js";
 import globalState from "./globalState.js";
+import populateStepsHeadless from "./populateStepsHeadless.js";
 
 //------------------------------------------------------------------
 // generateTrainingData()
@@ -18,6 +19,8 @@ export const generateTrainingData = (
   devPowerFixValues /*: Array<number> */,
 ) /*: {inputs: Array<number>, labels:Array<number>} */ => {
   const inputs = [];
+  // Ensure steps are populated before running the loop
+  populateStepsHeadless();
 
   devPowerFixValues.forEach((devPowerFix) => {
     // Set the devPowerFix for each run
@@ -27,10 +30,12 @@ export const generateTrainingData = (
     const result = headlessClickLoop(10, []);
 
     // Get the average of all the flow times in the result
-    const flowTime =
-      result.reduce((acc, time) => acc + time, 0) / result.length;
+    result.forEach((flwTimeArray) => {
+      const flowTime =
+        flwTimeArray.reduce((acc, time) => acc + time, 0) / result.length;
 
-    inputs.push(flowTime);
+      inputs.push(flowTime);
+    });
   });
 
   return { inputs, labels: devPowerFixValues };

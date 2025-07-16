@@ -22,7 +22,10 @@ export const pullFromPreviousStepHeadless = (
   }
   const stpKey = flwStpIndex.toString();
   const flwItems = gState().get("flwMap")[stpKey];
-  if (flwItems.length > 0) {
+  if (
+    flwItems.length > 0 &&
+    (availableLimit === "no limit" || availableLimit > 0)
+  ) {
     // Pull the expedited flwItems first
     let expediteFlag = true;
     const nrmlAvailableLimit = flwItems.reduce(
@@ -30,11 +33,17 @@ export const pullFromPreviousStepHeadless = (
       availableLimit,
     );
     expediteFlag = false;
+    console.log(
+      `pullFromPreviousStepHeadless(): Pulling ${flwItems.length} flow items from step ${stpKey} to fill ${availableLimit} available limit`,
+    );
     flwItems.reduce(
       pullFlowItem(expediteFlag, moveHeadless, updateFlowMap),
-      nrmlAvailableLimit,
+      availableLimit,
     );
   } else {
+    console.log(
+      `pullFromPreviousStepHeadless(): Not pulling any of the ${flwItems.length} flow items from step ${stpKey}`,
+    );
   }
 };
 export default pullFromPreviousStepHeadless;

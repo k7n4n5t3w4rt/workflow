@@ -29,8 +29,10 @@ export const updateClickMetrics = () => {
     gState().set("thrPutPerDay", thrPutPerDay);
     const thrPutExpPerDay = gState().get("thrPtExpQueue").dailyMean();
     gState().set("thrPutExpPerDay", thrPutExpPerDay);
+    console.log("Clicks:", gState().get("clicks"));
     const flwTime = gState().get("flwTmQueue").flwItemMean();
     gState().set("flwTime", flwTime);
+    console.log(`updateClickMetrics(): Resetting flwTime to ${flwTime}`);
     const flwTmExp = gState().get("flwTmExpQueue").flwItemMean();
     gState().set("flwTmExp", flwTmExp);
     const wip = gState().get("wipQueue").dailyMean();

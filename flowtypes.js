@@ -118,7 +118,7 @@ type FlwStep = {
 //-----------------------
 // FlwTms
 //-----------------------
-type FlwTms = Array<number>;
+type FlwTms = Array<Array<number>>;
 
 //------------------------------------------------------------------
 // gState

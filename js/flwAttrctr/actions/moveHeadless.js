@@ -24,7 +24,7 @@ const moveHeadless = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dMoving = true;
 
   // Calculate the item's new coordinates and update its state.
-  flwItem.dPosition = { ...calculateNewPosition(flwItem) };
+  // flwItem.dPosition = { ...calculateNewPosition(flwItem) };
 
   // Reset the days remaining for the item in its new step, but
   // only if it's not in the final "Done" step.
