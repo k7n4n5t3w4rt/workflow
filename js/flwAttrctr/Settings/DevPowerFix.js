@@ -21,7 +21,6 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
-  console.log("DevPowerFix component received value:", props.devPowerFix);
   const devUnitsTerm = gSttngs().get("devUnitsTerm");
   return html`
     <div>

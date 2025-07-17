@@ -1,11 +1,4 @@
-// Type definition for generateTrainingData
-export type GenerateTrainingDataType = (
-  populateStepsHeadless: PopulateStepsHeadlessType,
-  headlessClickLoop: HeadlessClickLoopType,
-) => (devPowerFixValues: Array<number>) => {
-  inputs: Array<number>,
-  labels: Array<number>,
-};
+// Type definition for generateTrainingData is now in flowtypes.js
 // @flow
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
@@ -18,9 +11,7 @@ import gState from "./gState.js";
 import globalSettings from "./globalSettings.js";
 import globalState from "./globalState.js";
 import populateStepsHeadless from "./populateStepsHeadless.js";
-import type { PopulateStepsHeadlessType } from "./populateStepsHeadless.js";
 import { headlessClickLoop } from "./headlessClickLoop.js";
-import type { HeadlessClickLoopType } from "./headlessClickLoop.js";
 
 //------------------------------------------------------------------
 // generateTrainingData()
@@ -30,10 +21,24 @@ export const generateTrainingData =
     populateStepsHeadless /*: PopulateStepsHeadlessType */,
     headlessClickLoop /*: HeadlessClickLoopType */,
   ) /*: Function */ =>
-  (
-    devPowerFixValues /*: Array<number> */,
-  ) /*: {inputs: Array<number>, labels:Array<number>} */ => {
+  (devPowerFixValues /*: Array<number> */) /*: TrainingData */ => {
     const inputs = [];
+
+    // Ensure global positions are set for headless mode
+    // Explicitly set strtPosition for headless mode
+    gState().set("strtPosition", { x: 0, y: 0, z: 0 });
+    if (!gState().get("endPosition")) {
+      gState().set("endPosition", { x: 10, y: 0, z: -10 });
+    }
+    if (!gState().get("vSphere")) {
+      gState().set("vSphere", {
+        dPosition: { x: 10, y: 0, z: -10 },
+        x: 10,
+        y: 0,
+        z: -10,
+      });
+    }
+
     // Ensure steps are populated before running the loop
     populateStepsHeadless();
 

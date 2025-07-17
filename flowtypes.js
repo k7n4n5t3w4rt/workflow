@@ -1,4 +1,34 @@
 //-----------------------
+// TrainingData Type
+//-----------------------
+type TrainingData = {
+  inputs: Array<number>,
+  labels: Array<number>,
+};
+//-----------------------
+// populateStepsHeadless Type
+//-----------------------
+type PopulateStepsHeadlessType = () => void;
+
+//-----------------------
+// headlessClickLoop Type
+//-----------------------
+type HeadlessClickLoopType = (
+  tmbxLoopsRemaining: number,
+  devPowerFixLocal: number,
+  flwTms: FlwTms,
+) => FlwTms;
+//-----------------------
+// generateTrainingData Type
+//-----------------------
+type GenerateTrainingDataType = (
+  populateStepsHeadless: PopulateStepsHeadlessType,
+  headlessClickLoop: HeadlessClickLoopType,
+) => (devPowerFixValues: Array<number>) => {
+  inputs: Array<number>,
+  labels: Array<number>,
+};
+//-----------------------
 // Three.js Camera
 //-----------------------
 type ThrCamera = {

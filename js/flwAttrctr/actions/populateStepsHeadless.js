@@ -38,5 +38,3 @@ export const populateStepsHeadless = () /*: void */ => {
   });
 };
 export default populateStepsHeadless;
-// Type definition for populateStepsHeadless
-export type PopulateStepsHeadlessType = () => void;
