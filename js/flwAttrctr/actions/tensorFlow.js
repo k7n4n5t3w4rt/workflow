@@ -30,10 +30,27 @@ export const trainModel = async () /*: Promise<void> */ => {
     init();
   }
 
-  const mockInputs = [120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 1];
-  const mockLabels = [
-    0.4, 0.45, 0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 1.8, 2.2, 2.5, 4.0, 5.0, 6.0,
-  ];
+  // Generate 10 devPowerFix values between 0.001 and 2
+  const devPowerFixValues = Array.from(
+    { length: 10 },
+    (_, i) => 0.001 + (2 - 0.001) * (i / 9),
+  );
+  // Import generateTrainingData and its dependencies
+  // If not already imported, add:
+  // import { generateTrainingData } from "./generateTrainingData.js";
+  // import populateStepsHeadless from "./populateStepsHeadless.js";
+  // import { headlessClickLoop } from "./headlessClickLoop.js";
+  const { generateTrainingData } = await import("./generateTrainingData.js");
+  const populateStepsHeadless =
+    (await import("./populateStepsHeadless.js")).default ||
+    (await import("./populateStepsHeadless.js")).populateStepsHeadless;
+  const { headlessClickLoop } = await import("./headlessClickLoop.js");
+  const trainingData = generateTrainingData(
+    populateStepsHeadless,
+    headlessClickLoop,
+  )(devPowerFixValues);
+  const mockInputs = trainingData.inputs;
+  const mockLabels = trainingData.labels;
 
   // Normalize the data to a 0-1 range to stabilize training
   const inputTensor = tf.tensor2d(mockInputs, [mockInputs.length, 1]);

@@ -1,3 +1,11 @@
+// Type definition for generateTrainingData
+export type GenerateTrainingDataType = (
+  populateStepsHeadless: PopulateStepsHeadlessType,
+  headlessClickLoop: HeadlessClickLoopType,
+) => (devPowerFixValues: Array<number>) => {
+  inputs: Array<number>,
+  labels: Array<number>,
+};
 // @flow
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
@@ -7,18 +15,20 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
 //------------------------------------------------------------------
-import { headlessClickLoop } from "./headlessClickLoop.js";
 import globalSettings from "./globalSettings.js";
 import globalState from "./globalState.js";
 import populateStepsHeadless from "./populateStepsHeadless.js";
+import type { PopulateStepsHeadlessType } from "./populateStepsHeadless.js";
+import { headlessClickLoop } from "./headlessClickLoop.js";
+import type { HeadlessClickLoopType } from "./headlessClickLoop.js";
 
 //------------------------------------------------------------------
 // generateTrainingData()
 //------------------------------------------------------------------
 export const generateTrainingData =
   (
-    populateStepsHeadless /*: Function */,
-    headlessClickLoop /*: Function */,
+    populateStepsHeadless /*: PopulateStepsHeadlessType */,
+    headlessClickLoop /*: HeadlessClickLoopType */,
   ) /*: Function */ =>
   (
     devPowerFixValues /*: Array<number> */,

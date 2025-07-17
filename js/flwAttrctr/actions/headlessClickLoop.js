@@ -51,3 +51,9 @@ export const headlessClickLoop = (
 };
 
 export default headlessClickLoop;
+// Type definition for headlessClickLoop
+export type HeadlessClickLoopType = (
+  tmbxLoopsRemaining: number,
+  devPowerFixLocal: number,
+  flwTms: Array<number>,
+) => Array<number>;
