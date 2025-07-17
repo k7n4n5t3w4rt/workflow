@@ -21,7 +21,9 @@ export const generateTrainingData =
     populateStepsHeadless /*: PopulateStepsHeadlessType */,
     headlessClickLoop /*: HeadlessClickLoopType */,
   ) /*: Function */ =>
-  (devPowerFixValues /*: Array<number> */) /*: TrainingData */ => {
+  async (
+    devPowerFixValues /*: Array<number> */,
+  ) /*: Promise<TrainingData> */ => {
     const inputs = [];
 
     // Ensure global positions are set for headless mode
@@ -42,7 +44,9 @@ export const generateTrainingData =
     // Ensure steps are populated before running the loop
     populateStepsHeadless();
 
-    devPowerFixValues.forEach((devPowerFix) => {
+    for (const devPowerFix of devPowerFixValues) {
+      // Set global for UI feedback
+      gState().set("currentDevPowerFix", devPowerFix);
       // Run the simulation
       const flwTimes = headlessClickLoop(10, devPowerFix, []);
 
@@ -58,7 +62,8 @@ export const generateTrainingData =
       // console.log(
       //   `Average flow time for devPowerFix ${devPowerFix}: ${roundedAvFlwTime}`,
       // );
-    });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
 
     return { inputs, labels: devPowerFixValues };
   };

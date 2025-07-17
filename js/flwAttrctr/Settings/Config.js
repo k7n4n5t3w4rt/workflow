@@ -64,6 +64,17 @@ type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
+  // State for displaying currentDevPowerFix
+  const [currentDevPowerFix, setCurrentDevPowerFix] = useState(null);
+
+  // Poll global state every second for UI feedback
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const val = gState().get("currentDevPowerFix");
+      setCurrentDevPowerFix(val);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   // Styles
   const [styles /*: Object */, setStyles /*: function */] = useState({});
   useEffect(() => {
@@ -444,6 +455,13 @@ export default (props /*: Props */) /*: string */ => {
         <button data-cy="tune-button" onClick=${handleTuneClick} disabled=${isTuning}>
           ${isTuning ? "Tuning..." : "Tune"}
         </button>
+        <div style="margin-top: 0.5rem; color: #fff; font-size: 1rem;">
+          ${
+            isTuning && currentDevPowerFix !== null
+              ? `Testing with devPowerFix value: ${currentDevPowerFix}`
+              : ""
+          }
+        </div>
         <${DevPowerFix}
           devPowerFix=${state.devPowerFix}
           changeSetting=${changeSetting("devPowerFix", dispatch)}

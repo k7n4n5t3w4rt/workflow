@@ -4,6 +4,7 @@
  * Its primary purpose is to create, train, and use a simple machine learning model
  * to predict the optimal `devPowerFix` required to achieve a user-defined `targetFlowTime`.
  */
+import gState from "./gState";
 import * as tf from "@tensorflow/tfjs";
 
 let model /*: tf.Sequential | null */ = null;
@@ -30,22 +31,28 @@ export const trainModel = async () /*: Promise<void> */ => {
     init();
   }
 
-  // Generate 10 devPowerFix values between 0.001 and 2
+  // Step 1: Decide how many values you want to generate
+  const numValues = 40;
+
+  // Step 2: Set the minimum and maximum values for devPowerFix
+  const minDevPowerFix = 0.001;
+  // Set the current devPowerFix for UI feedback
+  gState().set("currentDevPowerFix", minDevPowerFix);
+  const maxDevPowerFix = 7;
+
+  // Step 3: Generate an array of devPowerFix values evenly spaced between min and max
   const devPowerFixValues = Array.from(
-    { length: 10 },
-    (_, i) => 0.001 + (2 - 0.001) * (i / 9),
+    { length: numValues },
+    (_, i) =>
+      minDevPowerFix +
+      (maxDevPowerFix - minDevPowerFix) * (i / (numValues - 1)),
   );
-  // Import generateTrainingData and its dependencies
-  // If not already imported, add:
-  // import { generateTrainingData } from "./generateTrainingData.js";
-  // import populateStepsHeadless from "./populateStepsHeadless.js";
-  // import { headlessClickLoop } from "./headlessClickLoop.js";
   const { generateTrainingData } = await import("./generateTrainingData.js");
   const populateStepsHeadless =
     (await import("./populateStepsHeadless.js")).default ||
     (await import("./populateStepsHeadless.js")).populateStepsHeadless;
   const { headlessClickLoop } = await import("./headlessClickLoop.js");
-  const trainingData = generateTrainingData(
+  const trainingData = await generateTrainingData(
     populateStepsHeadless,
     headlessClickLoop,
   )(devPowerFixValues);
