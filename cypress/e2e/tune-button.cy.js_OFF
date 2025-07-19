@@ -1,4 +1,6 @@
-describe("Tune Button Functionality", () => {
+/// <reference types="cypress" />
+
+context("Tune Button Functionality", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#config-icon", { timeout: 10000 }).should("be.visible").click();
@@ -21,6 +23,10 @@ describe("Tune Button Functionality", () => {
     cy.get("#targetFlowTime").clear().type("200");
     cy.get('[data-cy="tune-button"]').click({ force: true });
 
+    cy.get('[data-cy="tune-button"]', { timeout: 10000 }).should(
+      "have.text",
+      "Tune",
+    );
     cy.get("@initialDevPowerFix").then((initialValue) => {
       cy.get("#devPowerFix", { timeout: 10000 })
         .invoke("val")
@@ -37,6 +43,10 @@ describe("Tune Button Functionality", () => {
     cy.get("#targetFlowTime").clear().type("1");
     cy.get('[data-cy="tune-button"]').click({ force: true });
 
+    cy.get('[data-cy="tune-button"]', { timeout: 10000 }).should(
+      "have.text",
+      "Tune",
+    );
     cy.get("@initialDevPowerFix").then((initialValue) => {
       cy.get("#devPowerFix", { timeout: 10000 })
         .invoke("val")

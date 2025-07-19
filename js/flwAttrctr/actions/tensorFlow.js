@@ -32,13 +32,13 @@ export const trainModel = async () /*: Promise<void> */ => {
   }
 
   // Step 1: Decide how many values you want to generate
-  const numValues = 40;
+  const numValues = 3;
 
   // Step 2: Set the minimum and maximum values for devPowerFix
   const minDevPowerFix = 0.001;
   // Set the current devPowerFix for UI feedback
   gState().set("currentDevPowerFix", minDevPowerFix);
-  const maxDevPowerFix = 7;
+  const maxDevPowerFix = 2;
 
   // Step 3: Generate an array of devPowerFix values evenly spaced between min and max
   const devPowerFixValues = Array.from(

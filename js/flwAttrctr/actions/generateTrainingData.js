@@ -1,4 +1,3 @@
-// Type definition for generateTrainingData is now in flowtypes.js
 // @flow
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
@@ -10,8 +9,10 @@ import gState from "./gState.js";
 //------------------------------------------------------------------
 import globalSettings from "./globalSettings.js";
 import globalState from "./globalState.js";
-import populateStepsHeadless from "./populateStepsHeadless.js";
+import setUpState from "./setUpState.js";
+import tearDownState from "./tearDownState.js";
 import { headlessClickLoop } from "./headlessClickLoop.js";
+// import JoinNode from "three/examples/jsm/nodes/utils/JoinNode";
 
 //------------------------------------------------------------------
 // generateTrainingData()
@@ -26,23 +27,10 @@ export const generateTrainingData =
   ) /*: Promise<TrainingData> */ => {
     const inputs = [];
 
-    // Ensure global positions are set for headless mode
-    // Explicitly set strtPosition for headless mode
-    gState().set("strtPosition", { x: 0, y: 0, z: 0 });
-    if (!gState().get("endPosition")) {
-      gState().set("endPosition", { x: 10, y: 0, z: -10 });
-    }
-    if (!gState().get("vSphere")) {
-      gState().set("vSphere", {
-        dPosition: { x: 10, y: 0, z: -10 },
-        x: 10,
-        y: 0,
-        z: -10,
-      });
-    }
+    // Copy the initial gState with a deep clone so that we can reset it later
+    const initialState = gState().getAllKeyValuePairsDeepCopy();
 
-    // Ensure steps are populated before running the loop
-    populateStepsHeadless();
+    setUpState();
 
     for (const devPowerFix of devPowerFixValues) {
       // Set global for UI feedback
@@ -62,8 +50,16 @@ export const generateTrainingData =
       // console.log(
       //   `Average flow time for devPowerFix ${devPowerFix}: ${roundedAvFlwTime}`,
       // );
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 250));
     }
 
-    return { inputs, labels: devPowerFixValues };
+    const result = { inputs, labels: devPowerFixValues };
+
+    // Restore original properties
+    gState().clear();
+    gState().setAllKeyValuePairsWithFreshQueues(initialState);
+
+    return result;
   };
+
+export default generateTrainingData;

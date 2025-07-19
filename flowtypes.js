@@ -81,6 +81,10 @@ type GlobalModel = {
   ) => Object,
   setNoCache: (key: string, value: any) => Object,
   get: (key: string) => any,
+  getAllKeyValuePairsDeepCopy: () => { [string]: any },
+  setAllKeyValuePairsWithFreshQueues: (keyValuePairs: {
+    [string]: any,
+  }) => Object,
   keyValuePairs: { [string]: any },
 };
 //------------------------------------------------------------------

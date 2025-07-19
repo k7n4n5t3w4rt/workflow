@@ -1,4 +1,3 @@
-import { headlessClickLoop } from "./headlessClickLoop.js";
 // @flow
 // Refer to copilot.md for TDD rules.
 export default (

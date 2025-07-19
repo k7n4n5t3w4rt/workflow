@@ -2,7 +2,7 @@
 //------------------------------------------------------------------
 // IMPORT: TESTY
 //------------------------------------------------------------------
-import { should, test } from "../server/testy.js";
+import { should, test, testPromise } from "../server/testy.js";
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
@@ -125,10 +125,10 @@ const populateStepsHeadless = () /*: void */ => {};
 //------------------------------------------------------------------
 // TEST: generateTrainingData()
 //------------------------------------------------------------------
-test("generateTrainingData() returns inputs and labels", async () => {
+testPromise("generateTrainingData() returns inputs and labels", async () => {
   fixture();
 
-  const data = generateTrainingData(
+  const data = await generateTrainingData(
     populateStepsHeadless,
     headlessClickLoop,
   )(devPowerFixValues);

@@ -70,7 +70,7 @@ export default globalState;
 //------------------------------------------------------------------
 // new vQueue()
 //------------------------------------------------------------------
-function xQueue() {
+export function xQueue() {
   this.items = {};
   this.headIndex = 0;
   this.tailIndex = 0;

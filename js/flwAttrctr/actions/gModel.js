@@ -7,6 +7,7 @@ import isParsable from "./isParsable.js";
 import readEasyStore from "./readEasyStore.js";
 import readLocalStore from "./readLocalStore.js";
 import readSidFromLocalStore from "./readSidFromLocalStore.js";
+import { xQueue } from "./globalState.js";
 //------------------------------------------------------------------------------
 // gModel() - Needs to use the `function` keyword so we can do `new gModel()`
 //------------------------------------------------------------------------------
@@ -94,6 +95,46 @@ function gModel() /*: void */ {
     return this;
   };
   //------------------------------------------------------------------------------
+  // getAllKeyValuePairsDeepCopy()
+  //------------------------------------------------------------------------------
+  this.getAllKeyValuePairsDeepCopy = () /*: { [key: string]: any } */ => {
+    return JSON.parse(JSON.stringify(this.keyValuePairs));
+  };
+  //------------------------------------------------------------------------------
+  // setAllKeyValuePairsWithFreshQueues()
+  //------------------------------------------------------------------------------
+  this.setAllKeyValuePairsWithFreshQueues = (
+    keyValuePairsBackupCopy /*: { [key: string]: any } */,
+  ) /*:  () => GlobalModel */ => {
+    // Cycle through the keyValuePairs object
+    Object.keys(keyValuePairsBackupCopy).forEach((key) => {
+      // Skip the queues
+      if (
+        key !== "vQueue" &&
+        key !== "flwTmExpQueue" &&
+        key !== "flwTmQueue" &&
+        key !== "thrPtExpQueue" &&
+        key !== "thrPtQueue" &&
+        key !== "wipExpQueue" &&
+        key !== "wipQueue"
+      ) {
+        // If the key is not a queue, set it in the keyValuePairs object
+        this.set(key, keyValuePairsBackupCopy[key]);
+      }
+    });
+
+    // Create fresh empty queues using xQueue
+    this.set("flwTmExpQueue", new xQueue());
+    this.set("flwTmQueue", new xQueue());
+    this.set("thrPtExpQueue", new xQueue());
+    this.set("thrPtQueue", new xQueue());
+    this.set("vQueue", new xQueue());
+    this.set("wipExpQueue", new xQueue());
+    this.set("wipQueue", new xQueue());
+
+    return this;
+  };
+  //------------------------------------------------------------------------------
   // set()
   //------------------------------------------------------------------------------
   this.set = (key /*: string */, value /*: any  */) /*: any */ => {
@@ -105,9 +146,10 @@ function gModel() /*: void */ {
       return value;
     }
     // Because localStorage and easyStoryage can only store strings,
-    // we need to stringify. But we don't want to stringify strings.
+    // we need to stringify - we even stringify strings.
     const valueValue = value;
-    const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
+    const valueWithTimestamp =
+      JSON.stringify(value) + "___" + Date.now().toString();
     try {
       // Set localStorage
       localStorage.setItem(key, valueWithTimestamp);
@@ -152,7 +194,8 @@ function gModel() /*: void */ {
     if (eSTimestamp > lSTimestamp) {
       this.keyValuePairs[key] = eSValue;
       // And set localStorage
-      const valueWithTimestamp = JSON.stringify(eSValue) + "___" + eSTimestamp.toString();
+      const valueWithTimestamp =
+        JSON.stringify(eSValue) + "___" + eSTimestamp.toString();
       try {
         localStorage.setItem(key, valueWithTimestamp);
       } catch (e) {}
@@ -166,7 +209,8 @@ function gModel() /*: void */ {
       this.keyValuePairs[key] = lSValue;
       value = lSValue;
       // And set localStorage
-      const valueWithTimestamp = JSON.stringify(value) + "___" + lSTimestamp.toString();
+      const valueWithTimestamp =
+        JSON.stringify(value) + "___" + lSTimestamp.toString();
       if (this.keyValuePairs.easyStorage === true) {
         easyStorage.set(this.sid, key, valueWithTimestamp);
       }
@@ -186,7 +230,8 @@ function gModel() /*: void */ {
     // If nothing was cached, use the value provided and set both caches
     if (lSTimestamp === 0 && eSTimestamp === 0) {
       this.keyValuePairs[key] = value;
-      const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
+      const valueWithTimestamp =
+        JSON.stringify(value) + "___" + Date.now().toString();
       if (this.keyValuePairs.easyStorage === true) {
         easyStorage.set(this.sid, key, valueWithTimestamp);
       }
@@ -220,7 +265,8 @@ function gModel() /*: void */ {
       "autoMode",
     ));
     // No Easy storage cache, but we still set localStorage
-    const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
+    const valueWithTimestamp =
+      JSON.stringify(value) + "___" + Date.now().toString();
     try {
       localStorage.setItem(key, valueWithTimestamp);
     } catch (e) {}
@@ -246,7 +292,8 @@ function gModel() /*: void */ {
     ({ lSTimestamp, lSValue } = readLocalStore(lSValue, lSTimestamp, key));
     if (lSValue === "NOT SET 2") {
       // No Easy storage cache, but we still set localStorage
-      const valueWithTimestamp = JSON.stringify(value) + "___" + Date.now().toString();
+      const valueWithTimestamp =
+        JSON.stringify(value) + "___" + Date.now().toString();
       try {
         localStorage.setItem(key, valueWithTimestamp);
       } catch (e) {}
@@ -257,4 +304,5 @@ function gModel() /*: void */ {
     return value;
   };
 }
+
 export default gModel;
