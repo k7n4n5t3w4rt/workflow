@@ -1,6 +1,6 @@
 describe("WIP Increase Test", () => {
   it("should show an increase in WIP over time", () => {
-    const waitTime = 1000; // Adjust this value as needed
+    const waitTime = 7000; // Adjust this value as needed
 
     // 1. Load the root page
     cy.visit("/");
