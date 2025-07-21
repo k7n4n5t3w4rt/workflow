@@ -30,6 +30,8 @@ export const generateTrainingData =
     // Copy the initial gState with a deep clone so that we can reset it later
     const initialState = gState().getAllKeyValuePairsDeepCopy();
 
+    // Initialize the global state properly
+    globalState();
     setUpState();
 
     for (const devPowerFix of devPowerFixValues) {

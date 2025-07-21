@@ -6,9 +6,22 @@
  */
 import gState from "./gState";
 import * as tf from "@tensorflow/tfjs";
+import {
+  getAllTrainingData,
+  addTrainingDataPoint,
+  getTrainingDataCount,
+  exportTrainingDataForModel,
+} from "./trainingDataStore.js";
 
 let model /*: tf.Sequential | null */ = null;
 let inputMin, inputMax, labelMin, labelMax;
+let isTraining = false;
+let shouldStopTraining = false;
+
+// How many data points we want to collect in total
+const TARGET_DATA_POINTS = 100;
+// How many data points to collect in one training session
+const DATA_POINTS_PER_SESSION = 5;
 
 const buildAndCompileModel = () /*: tf.Sequential */ => {
   const newModel = tf.sequential();
@@ -26,36 +39,173 @@ export const init = () => {
   }
 };
 
+export const cancelTraining = () /*: void */ => {
+  shouldStopTraining = true;
+};
+
+export const isCurrentlyTraining = () /*: boolean */ => {
+  return isTraining;
+};
+
+/*::
+type TrainingProgress = {
+  current: number,
+  target: number,
+  percentage: number
+};
+*/
+
+export const getTrainingProgress = () /*: TrainingProgress */ => {
+  const currentCount = getTrainingDataCount();
+  return {
+    current: currentCount,
+    target: TARGET_DATA_POINTS,
+    percentage: Math.round((currentCount / TARGET_DATA_POINTS) * 100),
+  };
+};
+
 export const trainModel = async () /*: Promise<void> */ => {
+  if (isTraining) {
+    console.log("Training already in progress");
+    return;
+  }
+
   if (!model) {
     init();
   }
 
-  // Step 1: Decide how many values you want to generate
-  const numValues = 3;
+  isTraining = true;
+  shouldStopTraining = false;
 
-  // Step 2: Set the minimum and maximum values for devPowerFix
-  const minDevPowerFix = 0.001;
-  // Set the current devPowerFix for UI feedback
-  gState().set("currentDevPowerFix", minDevPowerFix);
-  const maxDevPowerFix = 2;
+  try {
+    // Check how many data points we already have
+    const existingDataPoints = getTrainingDataCount();
+    gState().set(
+      "trainingProgress",
+      Math.round((existingDataPoints / TARGET_DATA_POINTS) * 100),
+    );
 
-  // Step 3: Generate an array of devPowerFix values evenly spaced between min and max
-  const devPowerFixValues = Array.from(
-    { length: numValues },
-    (_, i) =>
-      minDevPowerFix +
-      (maxDevPowerFix - minDevPowerFix) * (i / (numValues - 1)),
-  );
-  const { generateTrainingData } = await import("./generateTrainingData.js");
-  const populateStepsHeadless =
-    (await import("./populateStepsHeadless.js")).default ||
-    (await import("./populateStepsHeadless.js")).populateStepsHeadless;
-  const { headlessClickLoop } = await import("./headlessClickLoop.js");
-  const trainingData = await generateTrainingData(
-    populateStepsHeadless,
-    headlessClickLoop,
-  )(devPowerFixValues);
+    // If we already have enough data points, just train the model with existing data
+    if (existingDataPoints >= TARGET_DATA_POINTS) {
+      await trainModelWithExistingData();
+      return;
+    }
+
+    // Calculate how many more points we need
+    const pointsToCollect = Math.min(
+      DATA_POINTS_PER_SESSION,
+      TARGET_DATA_POINTS - existingDataPoints,
+    );
+
+    // Set the minimum and maximum values for devPowerFix
+    const minDevPowerFix = 0.001;
+    const maxDevPowerFix = 5;
+
+    // Choose devPowerFix values that fill gaps in our existing data
+    // This is a simple approach - we could use more sophisticated methods
+    const existingData = getAllTrainingData();
+    const existingLabels = existingData.map((dp) => dp.label);
+
+    // Create an array of devPowerFix values evenly spaced between min and max
+    const devPowerFixValues = [];
+    for (let i = 0; i < pointsToCollect; i++) {
+      // Find the largest gap in our existing values
+      let bestGap = 0;
+      let bestValue = minDevPowerFix;
+
+      // Sort existing labels for gap finding
+      const sortedLabels = [...existingLabels].sort((a, b) => a - b);
+
+      if (sortedLabels.length < 2) {
+        // Not enough data points yet, just distribute evenly
+        bestValue =
+          minDevPowerFix +
+          (maxDevPowerFix - minDevPowerFix) * (i / pointsToCollect);
+      } else {
+        // Check gap before first point
+        if (sortedLabels[0] - minDevPowerFix > bestGap) {
+          bestGap = sortedLabels[0] - minDevPowerFix;
+          bestValue = (minDevPowerFix + sortedLabels[0]) / 2;
+        }
+
+        // Check gaps between points
+        for (let j = 0; j < sortedLabels.length - 1; j++) {
+          const gap = sortedLabels[j + 1] - sortedLabels[j];
+          if (gap > bestGap) {
+            bestGap = gap;
+            bestValue = (sortedLabels[j] + sortedLabels[j + 1]) / 2;
+          }
+        }
+
+        // Check gap after last point
+        if (maxDevPowerFix - sortedLabels[sortedLabels.length - 1] > bestGap) {
+          bestGap = maxDevPowerFix - sortedLabels[sortedLabels.length - 1];
+          bestValue =
+            (sortedLabels[sortedLabels.length - 1] + maxDevPowerFix) / 2;
+        }
+      }
+
+      devPowerFixValues.push(bestValue);
+      existingLabels.push(bestValue); // Add to our list for the next iteration
+    }
+
+    const { generateTrainingData } = await import("./generateTrainingData.js");
+    const populateStepsHeadless =
+      (await import("./populateStepsHeadless.js")).default ||
+      (await import("./populateStepsHeadless.js")).populateStepsHeadless;
+    const { headlessClickLoop } = await import("./headlessClickLoop.js");
+
+    // Process one devPowerFix value at a time to keep the UI responsive
+    for (let i = 0; i < devPowerFixValues.length; i++) {
+      if (shouldStopTraining) {
+        break;
+      }
+
+      // Set current devPowerFix value for UI feedback
+      const currentDevPowerFix = devPowerFixValues[i];
+      gState().set("currentDevPowerFix", currentDevPowerFix);
+
+      // Generate data for this single value
+      const singleValueArray = [currentDevPowerFix];
+      const trainingData = await generateTrainingData(
+        populateStepsHeadless,
+        headlessClickLoop,
+      )(singleValueArray);
+
+      // Add this data point to our persistent store
+      if (trainingData.inputs.length > 0) {
+        addTrainingDataPoint(trainingData.inputs[0], trainingData.labels[0]);
+      }
+
+      // Update progress
+      const currentCount = getTrainingDataCount();
+      gState().set(
+        "trainingProgress",
+        Math.round((currentCount / TARGET_DATA_POINTS) * 100),
+      );
+
+      // Small delay to let the UI breathe
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    // Train the model with all the data we have so far
+    await trainModelWithExistingData();
+  } finally {
+    isTraining = false;
+    shouldStopTraining = false;
+  }
+};
+
+// Helper function to train the model with existing data from store
+const trainModelWithExistingData = async () => {
+  const trainingData = exportTrainingDataForModel();
+
+  // Only proceed if we have some data
+  if (trainingData.inputs.length === 0) {
+    console.error("No training data available");
+    return;
+  }
+
   const mockInputs = trainingData.inputs;
   const mockLabels = trainingData.labels;
 
@@ -91,6 +241,24 @@ export const trainModel = async () /*: Promise<void> */ => {
 export const predictDevPowerFix = async (
   targetFlowTime /*: number */,
 ) /*: Promise<number> */ => {
+  if (!model) {
+    init();
+  }
+
+  // Check if we have enough data to make a good prediction
+  const trainingProgress = getTrainingProgress();
+  if (trainingProgress.current < 3) {
+    console.log(
+      "Not enough training data available for prediction. Using default value.",
+    );
+    return 1;
+  }
+
+  // If we have data but model isn't trained, train it first
+  if (!inputMin || !inputMax || !labelMin || !labelMax) {
+    await trainModelWithExistingData();
+  }
+
   if (!model || !inputMin || !inputMax || !labelMin || !labelMax) {
     console.error("Model or normalization tensors are not ready.");
     return 1;

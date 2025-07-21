@@ -57,21 +57,35 @@ import cssStyles from "./cssStylesConfig.js";
 import getRawStyles from "./getRawStyles.js";
 // import dispatchStore from "./dispatchStore.js";
 import changeSetting from "./changeSetting.js";
-import { trainModel, predictDevPowerFix } from "../actions/tensorFlow.js";
+import {
+  trainModel,
+  predictDevPowerFix,
+  isCurrentlyTraining,
+  getTrainingProgress,
+  cancelTraining,
+} from "../actions/tensorFlow.js";
 
 /*::
 type Props = {
 }
 */
 export default (props /*: Props */) /*: string */ => {
-  // State for displaying currentDevPowerFix
+  // State for displaying currentDevPowerFix and training progress
   const [currentDevPowerFix, setCurrentDevPowerFix] = useState(null);
+  const [trainingProgress, setTrainingProgress] = useState(
+    getTrainingProgress(),
+  );
 
   // Poll global state every second for UI feedback
   useEffect(() => {
     const interval = setInterval(() => {
       const val = gState().get("currentDevPowerFix");
       setCurrentDevPowerFix(val);
+
+      // Update training progress if we're currently training
+      if (isCurrentlyTraining()) {
+        setTrainingProgress(getTrainingProgress());
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -84,21 +98,41 @@ export default (props /*: Props */) /*: string */ => {
 
   const [state, dispatch] = useContext(AppContext);
   const [isTuning, setIsTuning] = useState(false);
+
   const handleTuneClick = async () => {
+    if (isTuning) {
+      // If already tuning, cancel the process
+      cancelTraining();
+      setIsTuning(false);
+      return;
+    }
+
     setIsTuning(true);
-    await trainModel();
-    const predictedFix = await predictDevPowerFix(state.targetFlowTime);
-    // First, update the central gSttngs store
-    gSttngs().set("devPowerFix", predictedFix);
-    // Then, dispatch the action to update the component's local state
-    dispatch({
-      type: "SET",
-      payload: {
-        key: "devPowerFix",
-        value: predictedFix,
-      },
-    });
-    setIsTuning(false);
+    try {
+      // Start the training process
+      await trainModel();
+
+      // Only predict if we're still in tuning state (not cancelled)
+      if (isTuning) {
+        const predictedFix = await predictDevPowerFix(state.targetFlowTime);
+        // First, update the central gSttngs store
+        gSttngs().set("devPowerFix", predictedFix);
+        // Then, dispatch the action to update the component's local state
+        dispatch({
+          type: "SET",
+          payload: {
+            key: "devPowerFix",
+            value: predictedFix,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error during training:", error);
+    } finally {
+      setIsTuning(false);
+      // Refresh the training progress one more time
+      setTrainingProgress(getTrainingProgress());
+    }
   };
   // A toggle to show or hide the config
   const [configToggle, setConfigToggle] = useState(false);
@@ -452,8 +486,8 @@ export default (props /*: Props */) /*: string */ => {
           targetFlowTime=${state.targetFlowTime}
           changeSetting=${changeSetting("targetFlowTime", dispatch)}
         />
-        <button data-cy="tune-button" onClick=${handleTuneClick} disabled=${isTuning}>
-          ${isTuning ? "Tuning..." : "Tune"}
+        <button data-cy="tune-button" onClick=${handleTuneClick}>
+          ${isTuning ? "Cancel Tuning" : "Tune"}
         </button>
         <div style="margin-top: 0.5rem; color: #fff; font-size: 1rem;">
           ${
@@ -461,6 +495,16 @@ export default (props /*: Props */) /*: string */ => {
               ? `Testing with devPowerFix value: ${currentDevPowerFix}`
               : ""
           }
+          ${
+            trainingProgress.current > 0
+              ? `Data points collected: ${trainingProgress.current}/${trainingProgress.target} (${trainingProgress.percentage}%)`
+              : ""
+          }
+        </div>
+        <div style="margin-bottom: 1rem; width: 100%; height: 5px; background: #333;">
+          <div style="height: 100%; width: ${
+            trainingProgress.percentage
+          }%; background: #4CAF50;"></div>
         </div>
         <${DevPowerFix}
           devPowerFix=${state.devPowerFix}
