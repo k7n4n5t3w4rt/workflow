@@ -172,8 +172,10 @@ export const trainModel = async () /*: Promise<void> */ => {
         headlessClickLoop,
       )(singleValueArray);
 
+      trainingData;
+
       // Add this data point to our persistent store
-      if (trainingData.inputs.length > 0) {
+      if (trainingData.inputs.length > 0 && trainingData.inputs[0] > 0) {
         addTrainingDataPoint(trainingData.inputs[0], trainingData.labels[0]);
       }
 
