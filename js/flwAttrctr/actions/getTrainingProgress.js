@@ -6,7 +6,8 @@
 import { getTrainingDataCount } from "./trainingDataStore.js";
 
 // How many data points we want to collect in total
-const TARGET_DATA_POINTS = 100;
+// Temporarily reduced from 100 to 10 for debugging purposes
+export const TARGET_DATA_POINTS = 100;
 
 /*::
 type TrainingProgress = {

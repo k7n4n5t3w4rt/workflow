@@ -80,16 +80,34 @@ export const addTrainingDataPoint = (
       data || '{"version":"1","lastUpdated":0,"dataPoints":[]}',
     );
 
-    // Check if we already have a data point with very similar label to avoid duplicates
-    const isDuplicate = parsedData.dataPoints.some((point) => {
-      // Consider it a duplicate if the devPowerFix (label) is within 0.001
-      return Math.abs(point.label - label) < 0.001;
-    });
+    // Only check for duplicates if we have enough points already
+    let isDuplicate = false;
+
+    if (parsedData.dataPoints.length >= 9) {
+      // Be less strict when approaching target
+      // Less strict duplicate detection - only check for exact matches
+      isDuplicate = parsedData.dataPoints.some((point) => {
+        return point.label === label && point.input === input;
+      });
+    } else {
+      // Check if we already have a data point with very similar label to avoid duplicates
+      isDuplicate = parsedData.dataPoints.some((point) => {
+        // Consider it a duplicate if the devPowerFix (label) is within 0.001
+        return Math.abs(point.label - label) < 0.001;
+      });
+    }
 
     if (!isDuplicate) {
       parsedData.dataPoints.push({ input, label });
       parsedData.lastUpdated = Date.now();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsedData));
+      console.log(
+        `Successfully stored data point: input=${input}, label=${label}`,
+      );
+    } else {
+      console.log(
+        `Skipped duplicate data point: input=${input}, label=${label}`,
+      );
     }
   } catch (error) {
     console.error("Error adding training data point:", error);

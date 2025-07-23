@@ -19,8 +19,8 @@ type Props = {
 */
 export default (props /*: Props */) /*: string */ => {
   useEffect(() => {
-    console.log("Fps.js mounted");
-    console.log(props);
+    // console.log("Fps.js mounted");
+    // console.log(props);
   }, []);
   return html`
     <div>

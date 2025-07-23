@@ -114,9 +114,16 @@ export default (props /*: Props */) /*: string */ => {
 
       // Only predict if we're still in tuning state (not cancelled)
       if (isTuning) {
+        // Clear any cached value to prevent using old values
+        gState().set("currentDevPowerFix", null);
+
+        // Get a prediction from the model
         const predictedFix = await predictDevPowerFix(state.targetFlowTime);
+        console.log("PREDICTION RECEIVED IN CONFIG:", predictedFix);
+
         // First, update the central gSttngs store
         gSttngs().set("devPowerFix", predictedFix);
+
         // Then, dispatch the action to update the component's local state
         dispatch({
           type: "SET",
