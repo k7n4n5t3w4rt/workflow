@@ -3,6 +3,9 @@
  * This module encapsulates all the TensorFlow.js logic for the application.
  * Its primary purpose is to create, train, and use a simple machine learning model
  * to predict the optimal `devPowerFix` required to achieve a user-defined `targetFlowTime`.
+ * 
+ * The model uses an iterative refinement approach with multiple training stages,
+ * each focusing on progressively narrower ranges around the best prediction.
  */
 import gState from "./gState";
 import gSttngs from "./gSttngs";
@@ -12,6 +15,7 @@ import {
   addTrainingDataPoint,
   getTrainingDataCount,
   exportTrainingDataForModel,
+  clearTrainingData,
 } from "./trainingDataStore.js";
 import getTrainingProgress, {
   TARGET_DATA_POINTS,
@@ -22,8 +26,19 @@ let inputMin, inputMax, labelMin, labelMax;
 let isTraining = false;
 let shouldStopTraining = false;
 
+// Constants for iterative refinement
+const MAX_TRAINING_STAGES = 3; // Number of refinement stages
+const INITIAL_RANGE_MIN = 0.001; // Initial minimum value for devPowerFix
+const INITIAL_RANGE_MAX = 5; // Initial maximum value for devPowerFix
+
 // How many data points to collect in one training session
 const DATA_POINTS_PER_SESSION = 5;
+
+// Track the current training stage (0-based)
+let currentTrainingStage = 0;
+// Min/max values for the current stage
+let currentRangeMin = INITIAL_RANGE_MIN;
+let currentRangeMax = INITIAL_RANGE_MAX;
 
 const buildAndCompileModel = () /*: tf.Sequential */ => {
   const newModel = tf.sequential();
@@ -35,10 +50,57 @@ const buildAndCompileModel = () /*: tf.Sequential */ => {
   return newModel;
 };
 
+// Helper function to update the min/max range based on current stage
+const updateRangeForCurrentStage = () => {
+  // First stage uses the initial range
+  if (currentTrainingStage === 0) {
+    currentRangeMin = INITIAL_RANGE_MIN;
+    currentRangeMax = INITIAL_RANGE_MAX;
+    return;
+  }
+  
+  // For subsequent stages, we need the previous prediction to center our range
+  const lastPrediction = gState().get("lastPrediction");
+  if (!lastPrediction) {
+    // If there's no previous prediction, use default values
+    currentRangeMin = INITIAL_RANGE_MIN;
+    currentRangeMax = INITIAL_RANGE_MAX;
+    return;
+  }
+  
+  // Calculate range based on stage
+  // Stage 1: +/- 1.0 from prediction
+  // Stage 2: +/- 0.1 from prediction
+  // Stage 3+: +/- 0.01 from prediction
+  let rangeSize;
+  switch(currentTrainingStage) {
+    case 1: 
+      rangeSize = 1.0;
+      break;
+    case 2:
+      rangeSize = 0.1;
+      break;
+    default:
+      rangeSize = 0.01;
+  }
+  
+  // Calculate new range centered on last prediction
+  currentRangeMin = Math.max(0.001, lastPrediction - rangeSize);
+  currentRangeMax = Math.min(5, lastPrediction + rangeSize);
+  
+  console.log("Stage " + currentTrainingStage + ": Using range " + currentRangeMin + " to " + currentRangeMax + " (based on last prediction: " + lastPrediction + ")");
+};
+
 export const init = () => {
   if (!model) {
     model = buildAndCompileModel();
   }
+  
+  // Initialize training stage from global state or default to 0
+  currentTrainingStage = gState().get("trainingStage") || 0;
+  
+  // Initialize range values based on current stage
+  updateRangeForCurrentStage();
 };
 
 export const cancelTraining = () /*: void */ => {
@@ -63,13 +125,28 @@ export const trainModel = async () /*: Promise<void> */ => {
   shouldStopTraining = false;
 
   try {
+    // Check the current training stage
+    currentTrainingStage = gState().get("trainingStage") || 0;
+    console.log("Starting training for stage " + currentTrainingStage + "/" + (MAX_TRAINING_STAGES-1));
+
+    // Update range for current stage
+    updateRangeForCurrentStage();
+    
+    // If this is a new stage (not stage 0), clear previous data to focus on new range
+    if (currentTrainingStage > 0) {
+      console.log(`New refinement stage (${currentTrainingStage}): clearing previous training data`);
+      clearTrainingData();
+      // Reset the model for the new stage
+      model = buildAndCompileModel();
+    }
+    
     // Check how many data points we already have
     const existingDataPoints = getTrainingDataCount();
     const trainingProgress = getTrainingProgress();
     gState().set("trainingProgress", trainingProgress.percentage);
 
     console.log(
-      `Starting training with ${existingDataPoints} existing data points out of ${trainingProgress.target} target`,
+      "Starting stage " + currentTrainingStage + " training with " + existingDataPoints + " existing data points out of " + trainingProgress.target + " target",
     );
 
     // If we already have enough data points, just train the model with existing data
@@ -80,6 +157,9 @@ export const trainModel = async () /*: Promise<void> */ => {
       await trainModelWithExistingData();
       // Update global state to indicate that the model is trained
       gState().set("modelTrained", true);
+      
+      // Process prediction and prepare for next stage
+      await completeCurrentStage();
       return;
     }
 
@@ -99,9 +179,11 @@ export const trainModel = async () /*: Promise<void> */ => {
       `Planning to collect ${targetPointsToCollect} points in this session`,
     );
 
-    // Set the minimum and maximum values for devPowerFix
-    const minDevPowerFix = 0.001;
-    const maxDevPowerFix = 5;
+    // Set the minimum and maximum values for devPowerFix based on current stage
+    const minDevPowerFix = currentRangeMin;
+    const maxDevPowerFix = currentRangeMax;
+    
+    console.log("Using devPowerFix range: " + minDevPowerFix + " to " + maxDevPowerFix + " for stage " + currentTrainingStage);
 
     // Choose devPowerFix values that fill gaps in our existing data
     // This is a simple approach - we could use more sophisticated methods
@@ -203,8 +285,9 @@ export const trainModel = async () /*: Promise<void> */ => {
           // Create a reasonable flow time input (3-8 range)
           const syntheticInput = 3.0 + ((validPointsCollected * 1.2) % 5.0);
 
-          // Create a devPowerFix output (0.5-5.0 range)
-          const syntheticOutput = 0.5 + ((validPointsCollected * 1.1) % 4.5);
+          // Create a devPowerFix output within current range
+          const rangeSize = currentRangeMax - currentRangeMin;
+          const syntheticOutput = currentRangeMin + ((validPointsCollected * 0.7) % rangeSize);
 
           console.log(
             `💡 Generated synthetic data: input=${syntheticInput}, label=${syntheticOutput}`,
@@ -229,12 +312,15 @@ export const trainModel = async () /*: Promise<void> */ => {
         }
 
         // Traditional fallback approach - try different devPowerFix values
-        const fallbackValues = [
-          1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 0.5,
-        ];
+        // Use values distributed within our current range
+        const fallbackRangeSize = currentRangeMax - currentRangeMin;
+        const fallbackValues = Array.from({ length: 10 }).map((_, index) => {
+          return currentRangeMin + (fallbackRangeSize * (index / 9));
+        });
+        
         const fallbackIndex = validPointsCollected % fallbackValues.length;
         const fallbackValue = fallbackValues[fallbackIndex];
-        console.log(`Using fallback value: ${fallbackValue}`);
+        console.log("Using fallback value: " + fallbackValue + " (from stage " + currentTrainingStage + " range)");
         gState().set("currentDevPowerFix", fallbackValue);
         i = fallbackIndex; // Reset i to prevent cycling
         consecutiveFailures = 0; // Reset the counter
@@ -349,7 +435,7 @@ export const trainModel = async () /*: Promise<void> */ => {
       console.warn("No new valid data points were collected in this session.");
     }
 
-    // Check if we have reached 100% data collection
+    // Check if we have reached 100% data collection for this stage
     const finalTrainingProgress = getTrainingProgress();
     console.log(
       `Final training progress: ${finalTrainingProgress.current}/${finalTrainingProgress.target} (${finalTrainingProgress.percentage}%)`,
@@ -357,44 +443,13 @@ export const trainModel = async () /*: Promise<void> */ => {
 
     if (finalTrainingProgress.percentage === 100) {
       console.log(
-        "🎉 Data collection complete! Ensuring model is fully trained with all data.",
+        "🎉 Data collection for this stage complete! Processing results and preparing for next stage.",
       );
-      // Clear the currentDevPowerFix to avoid using the last training value
-      gState().set("currentDevPowerFix", null);
-
-      // Train one more time to be absolutely sure
-      await trainModelWithExistingData();
-      gState().set("modelTrained", true);
-
-      // Log to confirm the state has been cleared
-      console.log("Final state after training:", {
-        currentDevPowerFix: gState().get("currentDevPowerFix"),
-        modelTrained: gState().get("modelTrained"),
-      });
-
-      // Apply the prediction automatically when we have 100% data
-      try {
-        // Get the target flow time from global state or use default
-        const targetFlowTime = gState().get("targetFlowTime") || 30;
-        console.log(
-          `Making a prediction for target flow time ${targetFlowTime} using the fully trained model`,
-        );
-
-        // Get a prediction from our trained model
-        const predictedFix = await predictDevPowerFix(targetFlowTime);
-        console.log(`🎯 Model predicted optimal devPowerFix: ${predictedFix}`);
-
-        // Update the global settings with the prediction
-        gSttngs().set("devPowerFix", predictedFix);
-        console.log(
-          `✅ Updated global devPowerFix setting to: ${predictedFix}`,
-        );
-      } catch (error) {
-        console.error("Error applying prediction after training:", error);
-      }
+      
+      await completeCurrentStage();
     } else {
       console.log(
-        `Training progress: ${finalTrainingProgress.percentage}%. Will continue collecting data in next session.`,
+        "Training progress for stage " + currentTrainingStage + ": " + finalTrainingProgress.percentage + "%. Will continue collecting data in next session.",
       );
     }
   } finally {
@@ -404,20 +459,69 @@ export const trainModel = async () /*: Promise<void> */ => {
   }
 };
 
+// Helper function to process the completion of a training stage
+const completeCurrentStage = async () => {
+  // Clear the currentDevPowerFix to avoid using the last training value
+  gState().set("currentDevPowerFix", null);
+  
+  // Make sure model is fully trained with all current data
+  await trainModelWithExistingData();
+  gState().set("modelTrained", true);
+  
+  // Get the target flow time from global state or use default
+  const targetFlowTime = gState().get("targetFlowTime") || 30;
+  console.log(
+    "Making a prediction for target flow time " + targetFlowTime + " using the stage " + currentTrainingStage + " model",
+  );
+
+  // Get a prediction from our trained model
+  const predictedFix = await predictDevPowerFix(targetFlowTime);
+  console.log("🎯 Stage " + currentTrainingStage + " model predicted optimal devPowerFix: " + predictedFix);
+  
+  // Store this prediction for the next stage to use as a center point
+  gState().set("lastPrediction", predictedFix);
+  
+  // Update the global settings with the prediction
+  gSttngs().set("devPowerFix", predictedFix);
+  console.log(
+    "✅ Updated global devPowerFix setting to: " + predictedFix,
+  );
+  
+  // Check if we should proceed to next stage
+  if (currentTrainingStage < MAX_TRAINING_STAGES - 1) {
+    // Increment stage counter
+    currentTrainingStage++;
+    gState().set("trainingStage", currentTrainingStage);
+    console.log("Advanced to stage " + currentTrainingStage + "/" + (MAX_TRAINING_STAGES-1));
+    
+    // Update range for next stage
+    updateRangeForCurrentStage();
+    
+    console.log("Next stage will use range: " + currentRangeMin + " to " + currentRangeMax);
+  } else {
+    // We've completed all stages
+    console.log("🎊 All refinement stages complete! Final prediction: " + predictedFix);
+    
+    // Optional: Reset the stage counter for future tuning sessions
+    currentTrainingStage = 0;
+    gState().set("trainingStage", 0);
+  }
+};
+
 // Helper function to apply model prediction when training is complete
 const applyModelPrediction = async () => {
   try {
     const targetFlowTime = gState().get("targetFlowTime") || 30; // Default if not set
     console.log(
-      `Automatically predicting devPowerFix for targetFlowTime=${targetFlowTime}`,
+      "Automatically predicting devPowerFix for targetFlowTime=" + targetFlowTime,
     );
 
     const predictedValue = await predictDevPowerFix(targetFlowTime);
-    console.log(`🎯 Model predicted optimal devPowerFix: ${predictedValue}`);
+    console.log("🎯 Model predicted optimal devPowerFix: " + predictedValue);
 
     // Update the global settings with the prediction
     gSttngs().set("devPowerFix", predictedValue);
-    console.log(`✅ Updated global devPowerFix setting to: ${predictedValue}`);
+    console.log("✅ Updated global devPowerFix setting to: " + predictedValue);
 
     return predictedValue;
   } catch (error) {
