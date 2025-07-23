@@ -61,9 +61,9 @@ import {
   trainModel,
   predictDevPowerFix,
   isCurrentlyTraining,
-  getTrainingProgress,
   cancelTraining,
 } from "../actions/tensorFlow.js";
+import getTrainingProgress from "../actions/getTrainingProgress.js";
 
 /*::
 type Props = {

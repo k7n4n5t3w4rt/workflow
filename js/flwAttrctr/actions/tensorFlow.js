@@ -12,14 +12,13 @@ import {
   getTrainingDataCount,
   exportTrainingDataForModel,
 } from "./trainingDataStore.js";
+import getTrainingProgress from "./getTrainingProgress.js";
 
 let model /*: tf.Sequential | null */ = null;
 let inputMin, inputMax, labelMin, labelMax;
 let isTraining = false;
 let shouldStopTraining = false;
 
-// How many data points we want to collect in total
-const TARGET_DATA_POINTS = 100;
 // How many data points to collect in one training session
 const DATA_POINTS_PER_SESSION = 5;
 
@@ -47,23 +46,6 @@ export const isCurrentlyTraining = () /*: boolean */ => {
   return isTraining;
 };
 
-/*::
-type TrainingProgress = {
-  current: number,
-  target: number,
-  percentage: number
-};
-*/
-
-export const getTrainingProgress = () /*: TrainingProgress */ => {
-  const currentCount = getTrainingDataCount();
-  return {
-    current: currentCount,
-    target: TARGET_DATA_POINTS,
-    percentage: Math.round((currentCount / TARGET_DATA_POINTS) * 100),
-  };
-};
-
 export const trainModel = async () /*: Promise<void> */ => {
   if (isTraining) {
     console.log("Training already in progress");
@@ -80,13 +62,11 @@ export const trainModel = async () /*: Promise<void> */ => {
   try {
     // Check how many data points we already have
     const existingDataPoints = getTrainingDataCount();
-    gState().set(
-      "trainingProgress",
-      Math.round((existingDataPoints / TARGET_DATA_POINTS) * 100),
-    );
+    const trainingProgress = getTrainingProgress();
+    gState().set("trainingProgress", trainingProgress.percentage);
 
     // If we already have enough data points, just train the model with existing data
-    if (existingDataPoints >= TARGET_DATA_POINTS) {
+    if (existingDataPoints >= trainingProgress.target) {
       await trainModelWithExistingData();
       return;
     }
@@ -94,7 +74,7 @@ export const trainModel = async () /*: Promise<void> */ => {
     // Calculate how many more points we need
     const pointsToCollect = Math.min(
       DATA_POINTS_PER_SESSION,
-      TARGET_DATA_POINTS - existingDataPoints,
+      trainingProgress.target - existingDataPoints,
     );
 
     // Set the minimum and maximum values for devPowerFix
@@ -180,11 +160,8 @@ export const trainModel = async () /*: Promise<void> */ => {
       }
 
       // Update progress
-      const currentCount = getTrainingDataCount();
-      gState().set(
-        "trainingProgress",
-        Math.round((currentCount / TARGET_DATA_POINTS) * 100),
-      );
+      const updatedTrainingProgress = getTrainingProgress();
+      gState().set("trainingProgress", updatedTrainingProgress.percentage);
 
       // Small delay to let the UI breathe
       await new Promise((resolve) => setTimeout(resolve, 100));
