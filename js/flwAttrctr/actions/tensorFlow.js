@@ -28,7 +28,7 @@ let isTraining = false;
 let shouldStopTraining = false;
 
 // Constants for iterative refinement
-const MAX_TRAINING_STAGES = 3; // Number of refinement stages
+const MAX_TRAINING_STAGES = 2; // Number of refinement stages
 const INITIAL_RANGE_MIN = 0.001; // Initial minimum value for devPowerFix
 const INITIAL_RANGE_MAX = 5; // Initial maximum value for devPowerFix
 
