@@ -18,6 +18,9 @@ import {
 import getTrainingProgress, {
   TARGET_DATA_POINTS,
 } from "./getTrainingProgress.js";
+import { generateTrainingData } from "./generateTrainingData.js";
+import populateStepsHeadless from "./populateStepsHeadless.js";
+import { headlessClickLoop } from "./headlessClickLoop.js";
 
 let model /*: tf.Sequential | null */ = null;
 let inputMin, inputMax, labelMin, labelMax;
@@ -30,7 +33,7 @@ const INITIAL_RANGE_MIN = 0.001; // Initial minimum value for devPowerFix
 const INITIAL_RANGE_MAX = 5; // Initial maximum value for devPowerFix
 
 // How many data points to collect in one training session
-const DATA_POINTS_PER_SESSION = 5;
+const DATA_POINTS_PER_SESSION = 2;
 
 // Track the current training stage (0-based)
 let currentTrainingStage = 0;
@@ -104,8 +107,16 @@ export const init = () => {
     model = buildAndCompileModel();
   }
 
-  // Initialize training stage from global state or default to 0
-  currentTrainingStage = gState().get("trainingStage") || 0;
+  if (gState().get("trainingStage") === undefined) {
+    console.log(
+      "The global state trainingStage is undefined, initializing to 0",
+    );
+    gState().set("trainingStage", 0);
+    currentTrainingStage = 0;
+  } else {
+    // Initialize training stage from global state
+    currentTrainingStage = gState().get("trainingStage");
+  }
 
   // Initialize range values based on current stage
   updateRangeForCurrentStage();
@@ -134,7 +145,15 @@ export const trainModel = async () /*: Promise<void> */ => {
 
   try {
     // Check the current training stage
-    currentTrainingStage = gState().get("trainingStage") || 0;
+    if (gState().get("trainingStage") === undefined) {
+      currentTrainingStage = 0;
+      console.log(
+        "The global state trainingStage is undefined, initializing to 0",
+      );
+      gState().set("trainingStage", 0);
+    } else {
+      currentTrainingStage = gState().get("trainingStage");
+    }
     console.log(
       "Starting training for stage " +
         currentTrainingStage +
@@ -145,13 +164,13 @@ export const trainModel = async () /*: Promise<void> */ => {
     // Update range for current stage
     updateRangeForCurrentStage();
 
-    // If this is a new stage (not stage 0), clear previous data to focus on new range
+    // If this is a new stage (not stage 0), adjust the model for the new range
     if (currentTrainingStage > 0) {
       console.log(
-        `New refinement stage (${currentTrainingStage}): clearing previous training data`,
+        `New refinement stage (${currentTrainingStage}): using existing data and narrowed range`,
       );
-      clearTrainingData();
-      // Reset the model for the new stage
+      // REMOVED: clearTrainingData(); -- Don't clear previous training data
+      // Reset the model for the new stage but keep the data
       model = buildAndCompileModel();
     }
 
@@ -261,11 +280,11 @@ export const trainModel = async () /*: Promise<void> */ => {
       existingLabels.push(bestValue); // Add to our list for the next iteration
     }
 
-    const { generateTrainingData } = await import("./generateTrainingData.js");
-    const populateStepsHeadless =
-      (await import("./populateStepsHeadless.js")).default ||
-      (await import("./populateStepsHeadless.js")).populateStepsHeadless;
-    const { headlessClickLoop } = await import("./headlessClickLoop.js");
+    // const { generateTrainingData } = await import("./generateTrainingData.js");
+    // const populateStepsHeadless =
+    //   (await import("./populateStepsHeadless.js")).default ||
+    //   (await import("./populateStepsHeadless.js")).populateStepsHeadless;
+    // const { headlessClickLoop } = await import("./headlessClickLoop.js");
 
     // Process one devPowerFix value at a time to keep the UI responsive
     let i = 0;

@@ -38,7 +38,7 @@ export const generateTrainingData =
       // Set global for UI feedback
       gState().set("currentDevPowerFix", devPowerFix);
       // Run the simulation
-      const flwTimes = headlessClickLoop(10, devPowerFix, []);
+      const flwTimes = headlessClickLoop(2, devPowerFix, []);
 
       // Get the average of all the flow times in the result
       // Round the average flow time to 3 decimal places
@@ -58,8 +58,22 @@ export const generateTrainingData =
     const result = { inputs, labels: devPowerFixValues };
 
     // Restore original properties
+    // ...but first, grab the training state from the global state
+    const trainingStage = gState().get("trainingStage");
+    const lastPrediction = gState().get("lastPrediction");
+    const modelTrained = gState().get("modelTrained");
+    const lastDataPoint = gState().get("lastDataPoint");
+    const currentDevPowerFix = gState().get("currentDevPowerFix");
+    const trainingProgress = gState().get("trainingProgress");
     gState().clear();
     gState().setAllKeyValuePairsWithFreshQueues(initialState);
+    // Set the training state back to the global state
+    gState().set("trainingStage", trainingStage);
+    gState().set("lastPrediction", lastPrediction);
+    gState().set("lastDataPoint", lastDataPoint);
+    gState().set("modelTrained", modelTrained);
+    gState().set("currentDevPowerFix", currentDevPowerFix);
+    gState().set("trainingProgress", trainingProgress);
 
     return result;
   };
