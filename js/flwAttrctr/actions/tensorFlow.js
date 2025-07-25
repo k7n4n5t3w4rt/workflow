@@ -33,13 +33,16 @@ const INITIAL_RANGE_MIN = 0.001; // Initial minimum value for devPowerFix
 const INITIAL_RANGE_MAX = 5; // Initial maximum value for devPowerFix
 
 // How many data points to collect in one training session
-const DATA_POINTS_PER_SESSION = 2;
+const DATA_POINTS_PER_SESSION = 5;
 
 // Track the current training stage (0-based)
 let currentTrainingStage = 0;
 // Min/max values for the current stage
 let currentRangeMin = INITIAL_RANGE_MIN;
 let currentRangeMax = INITIAL_RANGE_MAX;
+
+// Flag to track if we've cleared data at the start of each stage
+let hasDataBeenClearedForCurrentStage = false;
 
 const buildAndCompileModel = () /*: tf.Sequential */ => {
   const newModel = tf.sequential();
@@ -113,9 +116,21 @@ export const init = () => {
     );
     gState().set("trainingStage", 0);
     currentTrainingStage = 0;
+    // Stage 0 doesn't need data clearing, so set this to true
+    hasDataBeenClearedForCurrentStage = true;
   } else {
     // Initialize training stage from global state
     currentTrainingStage = gState().get("trainingStage");
+
+    // If we're starting at a stage > 0, we need to check if data has been cleared
+    if (currentTrainingStage > 0) {
+      // We'll assume data has not been cleared when initializing at a higher stage
+      // This will trigger data clearing on the next training session
+      hasDataBeenClearedForCurrentStage = false;
+    } else {
+      // For stage 0, data doesn't need clearing
+      hasDataBeenClearedForCurrentStage = true;
+    }
   }
 
   // Initialize range values based on current stage
@@ -166,11 +181,21 @@ export const trainModel = async () /*: Promise<void> */ => {
 
     // If this is a new stage (not stage 0), adjust the model for the new range
     if (currentTrainingStage > 0) {
-      console.log(
-        `New refinement stage (${currentTrainingStage}): using existing data and narrowed range`,
-      );
-      // REMOVED: clearTrainingData(); -- Don't clear previous training data
-      // Reset the model for the new stage but keep the data
+      // Only clear data once at the beginning of each new stage
+      if (!hasDataBeenClearedForCurrentStage) {
+        console.log(
+          `New refinement stage (${currentTrainingStage}): clearing previous training data once for this stage`,
+        );
+        clearTrainingData(); // Clear data only once per stage
+        hasDataBeenClearedForCurrentStage = true; // Set flag to prevent multiple clears
+        console.log("Training data cleared for stage", currentTrainingStage);
+      } else {
+        console.log(
+          `Continuing refinement stage (${currentTrainingStage}): using existing data and narrowed range`,
+        );
+      }
+
+      // Reset the model for the new stage
       model = buildAndCompileModel();
     }
 
@@ -563,6 +588,9 @@ const completeCurrentStage = async () => {
         "/" +
         (MAX_TRAINING_STAGES - 1),
     );
+
+    // Reset the flag so data will be cleared at the beginning of the next stage
+    hasDataBeenClearedForCurrentStage = false;
 
     // Update range for next stage
     updateRangeForCurrentStage();
