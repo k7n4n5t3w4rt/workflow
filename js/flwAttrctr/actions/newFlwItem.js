@@ -171,7 +171,7 @@ const setAge = (
   let dStpIndex = flwItem.dStpIndex;
   if (stepIndex > 0) {
     // flwItem.dAge = rndmBetween(0, calculateFlwTimeMax());
-    // flwItem.dAge = 0;
+    // flwItem.dAge = 0; // DEBUG
     flwItem.dAge = rndmBetween(
       Math.min(0.1, gSttngs().get("steps")[dStpIndex].actualFlwTime), // Minimum positive value
       gSttngs().get("steps")[dStpIndex].actualFlwTime,
@@ -193,10 +193,9 @@ const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   flwItem.dDysRmnngThisStep = 0;
   // This will only be the case for prepopulated items that are in the touch step. Real new items will only be created in the Backlog step.
   if (gSttngs().get("steps")[dStpIndex].status === "touch") {
-    flwItem.dDysRmnngThisStep = rndmBetween(
-      Math.min(0.1, gSttngs().get("steps")[dStpIndex].actualFlwTime), // Minimum positive value
-      gSttngs().get("steps")[dStpIndex].actualFlwTime,
-    );
+    // flwItem.dDysRmnngThisStep = gSttngs().get("steps")[dStpIndex].actualFlwTime; // DEBUG
+    flwItem.dDysRmnngThisStep =
+      gSttngs().get("steps")[dStpIndex].actualFlwTime - flwItem.dAge;
   }
 };
 

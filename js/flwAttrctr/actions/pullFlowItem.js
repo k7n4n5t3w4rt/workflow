@@ -13,13 +13,14 @@ import updateFlowMap from "./updateFlowMap.js";
 // pullFlowItem()
 //------------------------------------------------------------------
 // This function is called from pullFromPreviousStep() in a reduce() to
-// pull flwItems from the previous step - if ther is availableLimit or
+// pull flwItems from the previous step - if there is availableLimit or
 // expedited flwItems
 // NOTE: It's not great because it is doing three things at once. The
 // `availableLimit` is being decremented and eventually returned as the
 // output of `reduce()`, the flwItem is being moved AND the
 // gState().get("flwItmsPulledCount") is being incremented. Also the flwMap
-// is being updated.
+// is being updated - which is brittle because it is also being used by the function
+// that calls pullFlowItem(). So it's asking for trouble.
 // First, we make the `expediteFlag` available in a closure because it can't
 // be passed around in the reduce() function. Also `move()` and `updateFlowMap()`
 // for testing purposes
@@ -38,14 +39,15 @@ export default (
     // CHECKS -  We start with a log of checks to see if we should pull
     // the flwItem. If not, we return the availableLimit unchanged
     //------------------------------------------------------------------
-    // We're either looking for expedited flwItems or normal flwItems - or
-    // we don't care
-    if (
-      gSttngs().get("expdtQueueLength") > 0 &&
-      flwItem.dExpedite !== expediteFlag
-    ) {
-      return availableLimit;
-    }
+    // Removing the expedite logic because it is not needed, currently
+    // // We're either looking for expedited flwItems or normal flwItems - or
+    // // we don't care
+    // if (
+    //   gSttngs().get("expdtQueueLength") > 0 &&
+    //   flwItem.dExpedite !== expediteFlag
+    // ) {
+    //   return availableLimit;
+    // }
     // Check if the fwItem has died of old age and ignore it if it has
     if (gSttngs().get("death") > 0 && flwItem.dAge >= gSttngs().get("death")) {
       console.log(
@@ -77,9 +79,6 @@ export default (
         // This will happen when we have used up the availableLimit
         // and we've pulled the last flwItem we can pull -
         if (availableLimit === 0) {
-          // console.log(
-          //   `pullFlowItem(): No available limit left to pull flwItem ${flwItem.name} at step index ${dStpIndex}`,
-          // );
           return availableLimit;
         }
       }
@@ -87,9 +86,6 @@ export default (
       // ACTIONS - We have a flwItem that we can pull, so we move it
       // and update the flwMap
       // --------------------------------------------------------------
-      // console.log(
-      //   `pullFlowItem(): Yes! There is an available limit left to pull flwItem ${flwItem.name} from step ${dStpIndex}`,
-      // );
       // Update the step index to the next step
       flwItem.dStpIndex += 1;
       // We don't want to reset the days remaining if the item is
@@ -105,10 +101,6 @@ export default (
         "pullFlowItem(): flwItmsPulledCount",
         gState().get("flwItmsPulledCount") + 1,
       );
-    } else {
-      // console.log(
-      //   `pullFlowItem(): No! The flow item called "${flwItem.name}" from step ${dStpIndex} has days remaining: ${flwItem.dDysRmnngThisStep}`,
-      // );
     }
     // `availableLimit` is the accumulator. If we have a limit, that is not yet
     // zero, then decrement it

@@ -23,17 +23,20 @@ export const pullFromPreviousStep = (
   const stpKey = flwStpIndex.toString();
   const flwItems = gState().get("flwMap")[stpKey];
   if (flwItems.length > 0) {
-    // Pull the expedited flwItems first
-    let expediteFlag = true;
-    const nrmlAvailableLimit = flwItems.reduce(
-      pullFlowItem(expediteFlag, move, updateFlowMap),
-      availableLimit,
-    );
-    expediteFlag = false;
-    // console\.log\(
-    //   `pullFromPreviousStep(): For ${flwItems.length} flow items from step ${stpKey} calling pullFlowItem on each to fill ${availableLimit} available limit in this step`,
-    // \);
-    flwItems.reduce(
+    // // Pull the expedited flwItems first
+    // let expediteFlag = true;
+    // const nrmlAvailableLimit = flwItems.reduce(
+    //   pullFlowItem(expediteFlag, move, updateFlowMap),
+    //   availableLimit,
+    // );
+    // I took out the expedite logic because it is not needed, currently
+    // so now we just use the availableLimit as the limit
+    let nrmlAvailableLimit = availableLimit;
+    // The expedite logic is still in the pullFlowItem() function but
+    // we want to ignore it
+    let expediteFlag = false;
+    // The reduceRight() is important because deep in pullFlowItem(), there is a call to updateFlowMap(), which splices the flwItems array. If we don't go from the end to the beginning, we will skip some items as te array indices change.
+    flwItems.reduceRight(
       pullFlowItem(expediteFlag, move, updateFlowMap),
       nrmlAvailableLimit,
     );
