@@ -13,7 +13,7 @@ import calculateFlwTimeAtStart from "./calculateFlwTimeAtStart.js";
 export const calculateFlwTimeMax = () /*: number */ => {
   const flwTimeAtStart = calculateFlwTimeAtStart();
   const flwTimeMin = gSttngs().get("flwTimeMin");
-  if (flwTimeMin > flwTimeAtStart) {
+  if (flwTimeMin >= flwTimeAtStart) {
     // A safety check in case the user has set flwTimeMin to a value that is
     // higher than flwTimeAtStart as it is calculated based on the flwTime
     // settings for each step.

@@ -28,12 +28,12 @@ let isTraining = false;
 let shouldStopTraining = false;
 
 // Constants for iterative refinement
-const MAX_TRAINING_STAGES = 2; // Number of refinement stages
+const MAX_TRAINING_STAGES = 1; // Number of refinement stages
 const INITIAL_RANGE_MIN = 0.001; // Initial minimum value for devPowerFix
 const INITIAL_RANGE_MAX = 5; // Initial maximum value for devPowerFix
 
 // How many data points to collect in one training session
-const DATA_POINTS_PER_SESSION = 5;
+const DATA_POINTS_PER_SESSION = 1;
 
 // Track the current training stage (0-based)
 let currentTrainingStage = 0;

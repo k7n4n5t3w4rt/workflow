@@ -38,7 +38,7 @@ export const generateTrainingData =
       // Set global for UI feedback
       gState().set("currentDevPowerFix", devPowerFix);
       // Run the simulation
-      const flwTimes = headlessClickLoop(10, devPowerFix, []);
+      const flwTimes = headlessClickLoop(20, devPowerFix, []);
 
       // Get the average of all the flow times in the result
       // Round the average flow time to 3 decimal places

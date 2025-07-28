@@ -2,15 +2,11 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
+import StepName from "../Settings/StepName";
 import gSttngs from "./gSttngs.js";
 
 //------------------------------------------------------------------
-// makeItOneClickOlderHeadless()
-//
-// This function updates the state of a flow item to make it one
-// "click" older, but without any visual changes. It's the
-// state-only counterpart to the visual `makeItOneClickOlder()`
-// function.
+// makeItOneClickOlder()
 //------------------------------------------------------------------
 export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
   let dStpIndex = flwItem.dStpIndex;
@@ -19,8 +15,14 @@ export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
     flwItem.dStpIndex = dStpIndex;
   }
   flwItem.dStepsAges[dStpIndex.toString()] += 1;
-  if (dStpIndex !== 0) {
+  // Only increment if the step is not "Done"
+  // This is to prevent the age from increasing in the Done step
+  const isDoneStep = gSttngs().get("steps")[dStpIndex].status === "done";
+  if (dStpIndex !== 0 && !isDoneStep) {
     flwItem.dAge += 1;
+    console.log(
+      `makeItOneClickOlder: ${dStpIndex} - Incrementing age of item ${flwItem.name} to ${flwItem.dAge}`,
+    );
   }
   return flwItem;
 };

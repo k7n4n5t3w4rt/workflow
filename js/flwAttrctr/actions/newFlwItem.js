@@ -168,8 +168,14 @@ const setAge = (
     });
   // If this is not the first step we assume that it has some age.
   flwItem.dAge = stepIndex;
+  let dStpIndex = flwItem.dStpIndex;
   if (stepIndex > 0) {
-    flwItem.dAge = rndmBetween(0, calculateFlwTimeMax());
+    // flwItem.dAge = rndmBetween(0, calculateFlwTimeMax());
+    // flwItem.dAge = 0;
+    flwItem.dAge = rndmBetween(
+      Math.min(0.1, gSttngs().get("steps")[dStpIndex].actualFlwTime), // Minimum positive value
+      gSttngs().get("steps")[dStpIndex].actualFlwTime,
+    );
     // Bit of a hack but it will do for now
     flwItem.dStepsAges[stepIndex.toString()] = flwItem.dAge;
   }
@@ -185,9 +191,12 @@ const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   }
   flwItem.dDysEachTouchStep = flwItem.dDysTotal / calculateTouchSteps();
   flwItem.dDysRmnngThisStep = 0;
-  // This will only be the case for prepopulated items
+  // This will only be the case for prepopulated items that are in the touch step. Real new items will only be created in the Backlog step.
   if (gSttngs().get("steps")[dStpIndex].status === "touch") {
-    flwItem.dDysRmnngThisStep = rndmBetween(0, flwItem.dDysEachTouchStep);
+    flwItem.dDysRmnngThisStep = rndmBetween(
+      Math.min(0.1, gSttngs().get("steps")[dStpIndex].actualFlwTime), // Minimum positive value
+      gSttngs().get("steps")[dStpIndex].actualFlwTime,
+    );
   }
 };
 
