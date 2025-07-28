@@ -39,8 +39,36 @@ const AppProvider /*: function */ = (props /*: Props */) => {
         if (isUpdtngCnfg !== true) {
           Object.keys(gSttngs().keyValuePairs).forEach(
             (key /*: any */) /*: void */ => {
-              const value = gSttngs().get(key);
-              dispatch({ type: "SET", payload: { key, value } });
+              // Get the current value from both sources
+              const globalValue = gSttngs().get(key);
+
+              // Special handling for staggeredStart to ensure consistency
+              if (key === "staggeredStart") {
+                try {
+                  const localStorageItem =
+                    localStorage.getItem("staggeredStart");
+                  if (localStorageItem) {
+                    const localValueStr = localStorageItem.split("___")[0];
+                    if (localValueStr) {
+                      const localValue = JSON.parse(localValueStr);
+                      // Use the localStorage value for consistency
+                      dispatch({
+                        type: "SET",
+                        payload: { key, value: localValue },
+                      });
+                      return;
+                    }
+                  }
+                } catch (e) {
+                  console.error(
+                    "Error reading staggeredStart in AppContext:",
+                    e,
+                  );
+                }
+              }
+
+              // Normal behavior for other settings
+              dispatch({ type: "SET", payload: { key, value: globalValue } });
             },
           );
           Object.keys(gState().keyValuePairs).forEach(

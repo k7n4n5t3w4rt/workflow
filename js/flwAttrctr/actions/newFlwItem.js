@@ -166,18 +166,22 @@ const setAge = (
     .forEach((step, index) => {
       flwItem.dStepsAges[index.toString()] = 0;
     });
-  // If this is not the first step we assume that it has some age.
-  flwItem.dAge = stepIndex;
-  let dStpIndex = flwItem.dStpIndex;
-  if (stepIndex > 0) {
-    // flwItem.dAge = rndmBetween(0, calculateFlwTimeMax());
-    // flwItem.dAge = 0; // DEBUG
+
+  // Get staggeredStart setting, defaulting to false if not set
+  const staggeredStart = gSttngs().get("staggeredStart") || false;
+
+  // If staggeredStart is enabled or this is not the first step
+  if (staggeredStart) {
+    let dStpIndex = flwItem.dStpIndex;
     flwItem.dAge = rndmBetween(
       Math.min(0.1, gSttngs().get("steps")[dStpIndex].actualFlwTime), // Minimum positive value
       gSttngs().get("steps")[dStpIndex].actualFlwTime,
     );
-    // Bit of a hack but it will do for now
-    flwItem.dStepsAges[stepIndex.toString()] = flwItem.dAge;
+    // // Bit of a hack but it will do for now
+    // flwItem.dStepsAges[stepIndex.toString()] = flwItem.dAge;
+  } else {
+    // Standard behavior when staggeredStart is disabled
+    flwItem.dAge = 0;
   }
 };
 //------------------------------------------------------------------
@@ -191,12 +195,14 @@ const setDays = (flwItem /*: FlwItem */) /*: void */ => {
   }
   flwItem.dDysEachTouchStep = flwItem.dDysTotal / calculateTouchSteps();
   flwItem.dDysRmnngThisStep = 0;
-  // This will only be the case for prepopulated items that are in the touch step. Real new items will only be created in the Backlog step.
-  if (gSttngs().get("steps")[dStpIndex].status === "touch") {
-    // flwItem.dDysRmnngThisStep = gSttngs().get("steps")[dStpIndex].actualFlwTime; // DEBUG
-    flwItem.dDysRmnngThisStep =
-      gSttngs().get("steps")[dStpIndex].actualFlwTime - flwItem.dAge;
-  }
+
+  // Get staggeredStart setting
+  const staggeredStart = gSttngs().get("staggeredStart") || false;
+
+  // Calculate remaining days based on the status and staggeredStart setting
+  // For touch steps, adjust remaining days based on age
+  flwItem.dDysRmnngThisStep =
+    gSttngs().get("steps")[dStpIndex].actualFlwTime - flwItem.dAge;
 };
 
 //------------------------------------------------------------------

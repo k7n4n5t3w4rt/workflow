@@ -67,6 +67,10 @@ export const globalParamsSettings = async () /*: Promise<void> */ => {
     "devUnitsMoveToWorkParam",
     false,
   );
+  const staggeredStartParam = await gSttngs().setIfNotCached(
+    "staggeredStartParam",
+    false,
+  );
   //------------------------------------------------------------------
   // Display
   //------------------------------------------------------------------

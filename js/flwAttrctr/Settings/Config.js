@@ -40,6 +40,7 @@ import Sid from "./Sid.js";
 import Steps from "./Steps.js";
 import NumberOfSteps from "./NumberOfSteps.js";
 import ParamsMaxWip from "./ParamsMaxWip.js";
+import StaggeredStart from "./StaggeredStart.js";
 import { AppContext } from "../../AppContext.js";
 //------------------------------------------------------------------
 // IMPORT: HELPERS
@@ -304,6 +305,26 @@ export default (props /*: Props */) /*: string */ => {
             <label className=${
               styles.legendSub
             }for="backlogDeathParam">Editable</label>
+          </div>
+        </div>
+        
+        <div className=${styles.field}>
+          <${StaggeredStart}
+            staggeredStart=${state.staggeredStart}
+            changeSetting=${changeSetting("staggeredStart", dispatch)}
+          />
+          <div className=${styles.checkboxContainer}>
+            <input
+              type="checkbox"
+              className=${styles.editableCheckbox}
+              id="staggeredStartParam"
+              name="staggeredStartParam"
+              onChange=${changeSetting("staggeredStartParam", dispatch)}
+              checked=${state.staggeredStartParam === true}
+            />
+            <label className=${
+              styles.legendSub
+            }for="staggeredStartParam">Editable</label>
           </div>
         </div>
 
