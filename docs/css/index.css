@@ -1,0 +1,72 @@
+html,
+body,
+#goodthing,
+div {
+	box-sizing: border-box;
+}
+
+html,
+body,
+#goodthing {
+  	width: 100%;
+  	height: 100%;
+}
+
+body {
+	font-family: "Poppins","Helvetica","Arial","Lucida",sans-serif;
+	font-size: 14px;
+	line-height: 1.2rem;
+	background-color: white;
+}
+
+#ar-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+input[type="text"],
+input[type="range"],
+select
+{
+    width: 100%;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1.2rem;
+}
+
+input[type="text"] {
+	margin-top: 1rem;
+}
+
+input[type="checkbox"] {
+	box-sizing: border-box;
+	padding: 10px;
+	display: inline-block;
+	height: 20px;
+	margin-right: 0%;
+	width: 20px;
+}
+output {
+	display: inline;
+	font-size: 1rem;
+	padding: 0.2rem;
+	color: white;
+	font-weight: bold;
+	clear: left;
+}
+label {
+	display: inline;
+	padding: 0.2rem;
+	color: #fabd20;
+	font-weight: bold;
+	vertical-align: top;
+    line-height: 20px;
+}
+fieldset {
+	display: block;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: auto;
+}
