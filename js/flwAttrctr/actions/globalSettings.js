@@ -86,10 +86,7 @@ export default async () /*: Promise<void> */ => {
   gSttngs().setIfNotCached("devUnitsTerm", "Devs");
   gSttngs().setIfNotCached("displayName", "FlowAttractor_v0.1.0");
   gSttngs().setIfNotCached("devUnitsMoveToWork", false);
-  const staggeredStart = await gSttngs().setIfNotCached(
-    "staggeredStart",
-    false,
-  );
+  const staggeredStart = await gSttngs().setIfNotCached("staggeredStart", true);
   //------------------------------------------------------------------
   // Not yet used...
   //------------------------------------------------------------------
