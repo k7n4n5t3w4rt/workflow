@@ -19,8 +19,8 @@ import findRadius from "../calculations/findRadius.js";
 // visual `resizeVSphere()` function.
 //------------------------------------------------------------------
 export const resizeVSphereHeadless = () => {
-  // const total = gState().get("vQueue").total(); // PREV: total value from queue sum
-  const lastValue /*: number */ = gState().get("vQueue").lastValueAdded(); // NOW: only last added value (this is flwItem.dValue i.e., cube scale)
+  const lastValue = gState().get("vQueue").total(); // PREV: total value from queue sum
+  // const lastValue /*: number */ = gState().get("vQueue").lastValueAdded(); // NOW: only last added value (this is flwItem.dValue i.e., cube scale)
   // console.log("resizeVSphereHeadless: lastValue =", lastValue);
   if (lastValue === 0) {
     return;
@@ -31,7 +31,8 @@ export const resizeVSphereHeadless = () => {
   const baseX = gSttngs().get("x");
   const baseY = gSttngs().get("y");
   const baseZ = gSttngs().get("z");
-  const cubeVolume /*: number */ = baseX * baseY * baseZ * Math.pow(lastValue, 3);
+  const cubeVolume /*: number */ =
+    baseX * baseY * baseZ * Math.pow(lastValue, 3);
 
   // 2. Calculate the radius from this cube-equivalent volume
   const newRadius = findRadius(cubeVolume);
@@ -39,16 +40,16 @@ export const resizeVSphereHeadless = () => {
   // DEBUG: Verify that sphere volume from radius equals cube volume
   const vCube = cubeVolume;
   const vFromRadius = (4 / 3) * Math.PI * Math.pow(newRadius, 3);
-  console.log(
-    "cubeVolume=",
-    vCube,
-    "vFromRadius=",
-    vFromRadius,
-    "edge=",
-    baseX * lastValue,
-    "radius=",
-    newRadius,
-  );
+  // console.log(
+  //   "cubeVolume=",
+  //   vCube,
+  //   "vFromRadius=",
+  //   vFromRadius,
+  //   "edge=",
+  //   baseX * lastValue,
+  //   "radius=",
+  //   newRadius,
+  // );
 
   gState().get("vSphere").dNewRadius = newRadius;
 

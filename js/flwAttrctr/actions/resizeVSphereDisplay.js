@@ -52,10 +52,10 @@ const animateScale = () => {
     // CHANGED: Use absolute target scale based on geometry base radius, not ratio of radii
     const baseRadius /*: number */ =
       gState().get("vSphere").geometry.parameters.radius;
-    console.log("baseRadius =", baseRadius);
+    // console.log("baseRadius =", baseRadius);
     const targetScale /*: number */ =
       gState().get("vSphere").dNewRadius / baseRadius;
-    console.log("targetScale =", targetScale);
+    // console.log("targetScale =", targetScale);
 
     // Keep animating a plain object and apply to THREE.Vector3 in update
     let scaleObject = { scale: gState().get("vSphere").scale.x };
