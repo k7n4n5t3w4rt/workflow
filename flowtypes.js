@@ -461,6 +461,7 @@ type FlwTmQueue = {
   dequeue: () => Array<number>,
   enqueue: (item: Array<number>) => void,
   total: () => number,
+  lastValueAdded: () => number,
   length: () => number,
   dailyMean: () => number,
   mean: () => number,

@@ -19,39 +19,43 @@ import findRadius from "../calculations/findRadius.js";
 // visual `resizeVSphere()` function.
 //------------------------------------------------------------------
 export const resizeVSphereHeadless = () => {
-  const total = gState().get("vQueue").total();
-  if (total === 0) {
+  // const total = gState().get("vQueue").total(); // PREV: total value from queue sum
+  const lastValue /*: number */ = gState().get("vQueue").lastValueAdded(); // NOW: only last added value (this is flwItem.dValue i.e., cube scale)
+  // console.log("resizeVSphereHeadless: lastValue =", lastValue);
+  if (lastValue === 0) {
     return;
   }
 
-  // --- State logic from animateScale() ---
-  const scale = gSttngs().get("scale") || 0.07;
+  // --- Compute equal-volume sphere target from the last cube's world volume ---
+  // lastValue is the cube's scale (s). World cube volume: x*y*z*s^3
+  const baseX = gSttngs().get("x");
+  const baseY = gSttngs().get("y");
+  const baseZ = gSttngs().get("z");
+  const cubeVolume /*: number */ = baseX * baseY * baseZ * Math.pow(lastValue, 3);
 
-  // We need to preserve the 1:1 relationship between value percentage and volume percentage
-  // In the previous implementation, radius was calculated as (total * scale) / 10
-  // To maintain visual similarity with a proper volume-based approach:
+  // 2. Calculate the radius from this cube-equivalent volume
+  const newRadius = findRadius(cubeVolume);
 
-  // 1. Calculate base value proportional to the total
-  const baseValue = total * scale;
+  // DEBUG: Verify that sphere volume from radius equals cube volume
+  const vCube = cubeVolume;
+  const vFromRadius = (4 / 3) * Math.PI * Math.pow(newRadius, 3);
+  console.log(
+    "cubeVolume=",
+    vCube,
+    "vFromRadius=",
+    vFromRadius,
+    "edge=",
+    baseX * lastValue,
+    "radius=",
+    newRadius,
+  );
 
-  // 2. Calculate a baseline volume for sizing reference
-  //    This helps set the initial scale of the sphere to match previous appearance
-  const baselineVolume = 0.5; // Adjust if needed for initial sphere size
-
-  // 3. Calculate the volume with a direct 1:1 relationship to value
-  //    When baseValue doubles, volume doubles exactly
-  const volume = (baseValue * baselineVolume) / 10;
-
-  // 4. Calculate the radius from this volume
-  //    This maintains the exact 1:1 relationship between value % increase and volume % increase
-  const newRadius = findRadius(volume);
-
-  gState().get("vSphere").dRadius = newRadius;
+  gState().get("vSphere").dNewRadius = newRadius;
 
   // --- State logic from animatePosition() ---
   const offset =
     (Math.floor(
-      (gState().get("vSphere").dRadius / gSttngs().get("step")) * 100,
+      (gState().get("vSphere").dNewRadius / gSttngs().get("step")) * 100,
     ) /
       100) *
     gSttngs().get("step");

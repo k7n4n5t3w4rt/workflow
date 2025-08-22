@@ -80,6 +80,15 @@ export function xQueue() {
     this.tailIndex++;
   };
 
+  this.lastValueAdded = () /*: any */ => {
+    const flatItems = Object.values(this.items).flat().flat();
+    if (flatItems.length === 0) {
+      return 0;
+    } else {
+      return flatItems.pop();
+    }
+  };
+
   this.dequeue = () /*: Array<number> */ => {
     const item = this.items[this.headIndex];
     delete this.items[this.headIndex];

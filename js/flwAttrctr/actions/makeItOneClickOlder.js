@@ -20,9 +20,9 @@ export default (flwItem /*: FlwItem */) /*: FlwItem */ => {
   const isDoneStep = gSttngs().get("steps")[dStpIndex].status === "done";
   if (dStpIndex !== 0 && !isDoneStep) {
     flwItem.dAge += 1;
-    console.log(
-      `makeItOneClickOlder: ${dStpIndex} - Incrementing age of item ${flwItem.name} to ${flwItem.dAge}`,
-    );
+    // console.log(
+    //   `makeItOneClickOlder: ${dStpIndex} - Incrementing age of item ${flwItem.name} to ${flwItem.dAge}`,
+    // );
   }
   return flwItem;
 };

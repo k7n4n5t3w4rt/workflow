@@ -32,10 +32,10 @@ export default (props /*: Props */) /*: string */ => {
 
           // First time only, force the value from localStorage
           if (localValue !== props.staggeredStart) {
-            console.log(
-              "Initial setting of staggeredStart from localStorage:",
-              localValue,
-            );
+            // console.log(
+            //   "Initial setting of staggeredStart from localStorage:",
+            //   localValue,
+            // );
 
             // Update both the UI state and the internal state
             setIsSettingValue(true);
@@ -78,7 +78,7 @@ export default (props /*: Props */) /*: string */ => {
 
     // Update the value
     props.changeSetting(e);
-    console.log("StaggeredStart manually changed to:", e.target.checked);
+    // console.log("StaggeredStart manually changed to:", e.target.checked);
 
     // Make sure the gSttngs value is correctly set
     gSttngs().set("staggeredStart", e.target.checked);

@@ -17,14 +17,14 @@ export const newVSphere = async () /*: Promise<Object> */ => {
   const textureMap = await new THREE.TextureLoader()
     .loadAsync("../../../img/assets/textures/gold_7.jpg")
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
   const material = new THREE.MeshLambertMaterial({
     // color: 0xc1c1c1,
     map: textureMap,
     side: THREE.FrontSide,
   });
-  const geometry = new THREE.SphereGeometry(1, 32, 32);
+  const geometry = new THREE.SphereGeometry(gSttngs().get("x") * 0.62, 32, 32);
   const sphere = new THREE.Mesh(geometry, material);
   sphere.receiveShadow = true;
   sphere.castShadow = true;

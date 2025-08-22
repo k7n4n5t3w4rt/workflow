@@ -18,7 +18,7 @@ type Props = {
 };
 */
 const App /*: function */ = (props /*: Props */) => {
-  console.log("App rendered");
+  // console.log("App rendered");
   return html`
     <${AppProvider}>
       <${Router}>

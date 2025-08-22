@@ -50,7 +50,7 @@ async function buildDeps() {
       minify: false,
     });
 
-    console.log(`✅ ${dep} → ${outfile}`);
+    // console.log(`✅ ${dep} → ${outfile}`);
   }
 
   // Build Three.js modules
@@ -73,7 +73,7 @@ async function buildDeps() {
       minify: false,
     });
 
-    console.log(`✅ ${module} → ${outfile}`);
+    // console.log(`✅ ${module} → ${outfile}`);
   }
 }
 

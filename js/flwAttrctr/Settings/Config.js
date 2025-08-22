@@ -120,7 +120,7 @@ export default (props /*: Props */) /*: string */ => {
 
         // Get a prediction from the model
         const predictedFix = await predictDevPowerFix(state.targetFlowTime);
-        console.log("PREDICTION RECEIVED IN CONFIG:", predictedFix);
+        // console.log("PREDICTION RECEIVED IN CONFIG:", predictedFix);
 
         // First, update the central gSttngs store
         gSttngs().set("devPowerFix", predictedFix);

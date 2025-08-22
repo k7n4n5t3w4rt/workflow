@@ -25,6 +25,8 @@ export const setUpState = () /*: void */ => {
       x: 10,
       y: 0,
       z: -10,
+      // INIT: ensure animation flag exists
+      dMoving: false,
     });
   }
 

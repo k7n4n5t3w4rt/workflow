@@ -15,7 +15,9 @@ export const createValueSphere = async () /*: Promise<void> */ => {
   // Create the valueSphere
   gState().set("vSphere", await newVSphere());
   gState().get("vSphere").dRllngTtlVolume = 0;
-  gState().get("vSphere").dRadius = gSttngs().get("scale");
+  gState().get("vSphere").dRadius = gSttngs().get("x") * 0.62;
+  // INIT: ensure animation flags are initialized
+  gState().get("vSphere").dMoving = false;
   gState().get("vSphere").position.x = gState().get("endPosition").x;
   gState().get("vSphere").position.y = gState().get("endPosition").y;
   gState().get("vSphere").position.z = gState().get("endPosition").z;

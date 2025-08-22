@@ -50,18 +50,18 @@ export default (
     // }
     // Check if the fwItem has died of old age and ignore it if it has
     if (gSttngs().get("death") > 0 && flwItem.dAge >= gSttngs().get("death")) {
-      console.log(
-        `pullFlowItem(): Ignoring flwItem ${flwItem.name} at step index ${flwItem.dStpIndex} because it has died of old age`,
-      );
+      // console.log(
+      //   `pullFlowItem(): Ignoring flwItem ${flwItem.name} at step index ${flwItem.dStpIndex} because it has died of old age`,
+      // );
       return availableLimit;
     }
     let dStpIndex = flwItem.dStpIndex;
     if (dStpIndex > gSttngs().get("steps").length - 1) {
       dStpIndex = gSttngs().get("steps").length - 1;
       flwItem.dStpIndex = dStpIndex;
-      console.log(
-        `pullFlowItem(): Adjusting flwItem ${flwItem.name} dStpIndex to ${dStpIndex} because it is out of bounds`,
-      );
+      // console.log(
+      //   `pullFlowItem(): Adjusting flwItem ${flwItem.name} dStpIndex to ${dStpIndex} because it is out of bounds`,
+      // );
     }
     if (
       // If the flwItem.dStpIndex is 0, then we are at the backlog, in

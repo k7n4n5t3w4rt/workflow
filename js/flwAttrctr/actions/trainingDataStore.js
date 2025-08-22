@@ -101,13 +101,13 @@ export const addTrainingDataPoint = (
       parsedData.dataPoints.push({ input, label });
       parsedData.lastUpdated = Date.now();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(parsedData));
-      console.log(
-        `Successfully stored data point: input=${input}, label=${label}`,
-      );
+      // console.log(
+      //     `Successfully stored data point: input=${input}, label=${label}`,
+      //   );
     } else {
-      console.log(
-        `Skipped duplicate data point: input=${input}, label=${label}`,
-      );
+      // console.log(
+      //   `Skipped duplicate data point: input=${input}, label=${label}`,
+      // );
     }
   } catch (error) {
     console.error("Error adding training data point:", error);
