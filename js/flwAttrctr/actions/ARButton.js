@@ -133,8 +133,8 @@ const createButton = (
     button.style.display = "";
 
     button.style.cursor = "auto";
-    button.style.left = "calc(50% - 75px)";
-    button.style.width = "150px";
+    // button.style.left = "calc(50% - 75px)";
+    // button.style.width = "150px";
 
     button.onmouseenter = null;
     button.onmouseleave = null;
@@ -149,10 +149,12 @@ const createButton = (
   }
 
   function stylizeElement(element) {
-    element.style.position = "absolute";
+    element.style.width = "50%";
+    element.style.display = "flex";
+    element.style.justifyContent = "center";
+    element.style.alignItems = "flex-start";
+    element.style.margin = "0 25%";
     button.style.cursor = "pointer";
-    button.style.left = "50%";
-    button.style.transform = "translateX(-50%)";
     element.style.bottom = "24px";
     element.style.padding = "20px 40px";
     element.style.border = "none";
