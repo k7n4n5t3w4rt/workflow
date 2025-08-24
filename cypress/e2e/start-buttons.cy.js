@@ -39,7 +39,7 @@ describe("Start Buttons Rendering", () => {
   it("shows both AR and 3D start buttons when AR is supported", () => {
     visitWithARSupport(true);
     // 3D start button should exist
-    cy.get("#start-button-3d", { timeout: 15000 }).should("exist");
+    cy.get("#start-button", { timeout: 15000 }).should("exist");
     // AR button should exist
     cy.get("#ARButton", { timeout: 15000 }).should("exist");
   });
@@ -47,7 +47,7 @@ describe("Start Buttons Rendering", () => {
   it("shows only the 3D start button when AR is not supported", () => {
     visitWithARSupport(false);
     // 3D start button should exist
-    cy.get("#start-button-3d", { timeout: 15000 }).should("exist");
+    cy.get("#start-button", { timeout: 15000 }).should("exist");
     // AR button should not exist
     cy.get("#ARButton").should("not.exist");
   });

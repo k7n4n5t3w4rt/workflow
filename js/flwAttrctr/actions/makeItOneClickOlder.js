@@ -2,7 +2,7 @@
 //------------------------------------------------------------------
 // IMPORT: GLOBALS
 //------------------------------------------------------------------
-import StepName from "../Settings/StepName";
+import StepName from "../Settings/StepName.js";
 import gSttngs from "./gSttngs.js";
 
 //------------------------------------------------------------------
